@@ -1,0 +1,14 @@
+{
+  "item.blackclover.grimoire_yuno": "Wind Magic Grimoire",
+
+  "spell.blackclover.message.notenoughmana": "Not enough mana.",
+  "spell.blackclover.message.nogrimoire": "A grimoire is required to cast this spell.",
+
+  "spell.blackclover.wind_blade": "Wind Blade",
+  "spell.blackclover.towering_tornado": "Towering Tornado",
+  "spell.blackclover.wind_crescent": "Wind Crescent",
+  "spell.blackclover.wind_blade_shower": "Wind Blade Shower",
+
+  "gui.blackclover.title.yunowindspells": "Yuno's Spells"
+
+}

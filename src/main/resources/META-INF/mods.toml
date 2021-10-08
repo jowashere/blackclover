@@ -1,0 +1,30 @@
+modLoader="javafml"
+loaderVersion="[36,)"
+license="All rights reserved"
+
+[[mods]]
+modId="blackclover"
+version="${file.jarVersion}"
+displayName="Black Clover Mod"
+displayURL="https://www.curseforge.com/minecraft/mc-mods/block-clover"
+logoFile="logo.png"
+credits="Credit goes to NDY, Shin and Kami for helping with textures and WalooW and a wise man for models."
+authors="jowashere"
+
+description='''
+A Black Clover mod for minecraft adding various spells, creatures and other magical elements from the anime.
+'''
+
+[[dependencies.blackclover]]
+    modId="forge"
+    mandatory=true
+    versionRange="[36,)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.blackclover]]
+    modId="minecraft"
+    mandatory=true
+    versionRange="[1.16.5,1.17)"
+    ordering="NONE"
+    side="BOTH"
