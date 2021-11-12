@@ -7,7 +7,8 @@ import com.github.jowashere.blackclover.client.renderer.models.ModelBlackMode;
 import com.github.jowashere.blackclover.init.AttributeInit;
 import com.github.jowashere.blackclover.init.ModeInit;
 import com.github.jowashere.blackclover.init.RaceInit;
-import com.github.jowashere.blackclover.init.spells.wind.WindSpells;
+import com.github.jowashere.blackclover.init.spells.LightningSpells;
+import com.github.jowashere.blackclover.init.spells.WindSpells;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.ResourceLocation;
 
@@ -23,6 +24,8 @@ public class MainPlugin implements IBCMPlugin {
         attributeRegistry.register(AttributeInit.NULL);
         attributeRegistry.register(AttributeInit.ANTI_MAGIC);
         attributeRegistry.register(AttributeInit.WIND);
+        attributeRegistry.register(AttributeInit.LIGHTNING);
+
     }
 
     @Override
@@ -36,12 +39,13 @@ public class MainPlugin implements IBCMPlugin {
     public void registerNewModes(BCMRegistry.ModeRegistry modeRegistry) {
         modeRegistry.register(ModeInit.NULL);
         modeRegistry.register(new BCMMode(this, "black_mode", 480, 0)
-                .setAttackingEffect(Effects.WITHER).setModelOnRender(new ModelBlackMode(false), new ResourceLocation(Main.MODID, "textures/entities/layers/bodymodes/blackmode.png")));
+                .setAttackingEffect(Effects.WITHER));
     }
 
     @Override
     public void registerNewSpells(BCMRegistry.SpellRegistry spellRegistry) {
         WindSpells.registerWindSpells(spellRegistry, this);
+        LightningSpells.registerLightningSpells(spellRegistry, this);
     }
 
 }

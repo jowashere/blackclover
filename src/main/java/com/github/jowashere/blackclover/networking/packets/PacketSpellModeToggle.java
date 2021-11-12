@@ -3,12 +3,17 @@ package com.github.jowashere.blackclover.networking.packets;
 import com.github.jowashere.blackclover.capabilities.player.IPlayerHandler;
 import com.github.jowashere.blackclover.capabilities.player.PlayerCapability;
 import com.github.jowashere.blackclover.capabilities.player.PlayerProvider;
+import com.github.jowashere.blackclover.networking.NetworkLoader;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
+import net.minecraft.client.entity.player.RemoteClientPlayerEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraftforge.fml.network.PacketDistributor;
 
+import java.rmi.Remote;
 import java.util.function.Supplier;
 
 public class PacketSpellModeToggle {
@@ -44,7 +49,7 @@ public class PacketSpellModeToggle {
         ctx.get().enqueueWork(() -> {
             if (msg.toClient)
             {
-                ClientPlayerEntity player = (ClientPlayerEntity) Minecraft.getInstance().level.getEntity(msg.playerID);
+                PlayerEntity player = (PlayerEntity) Minecraft.getInstance().level.getEntity(msg.playerID);
                 LazyOptional<IPlayerHandler> capabilities = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
                 IPlayerHandler playercap = capabilities.orElse(new PlayerCapability());
                 playercap.setSpellModeToggle(msg.toggle);
@@ -53,6 +58,8 @@ public class PacketSpellModeToggle {
                 LazyOptional<IPlayerHandler> capabilities = ctx.get().getSender().getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
                 IPlayerHandler playercap = capabilities.orElse(new PlayerCapability());
                 playercap.setSpellModeToggle(msg.toggle);
+                NetworkLoader.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> ctx.get().getSender()), new PacketSpellModeToggle(true, msg.toggle, ctx.get().getSender().getId()));
+
             }
         });
         ctx.get().setPacketHandled(true);

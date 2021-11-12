@@ -7,10 +7,13 @@ import com.github.jowashere.blackclover.capabilities.player.PlayerProvider;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 
+@OnlyIn(Dist.CLIENT)
 public class ManaBar {
 
     private final ResourceLocation manaBar = new ResourceLocation(Main.MODID + ":textures/gui/mana_bars.png");

@@ -6,6 +6,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.entity.model.AgeableModel;
 import net.minecraft.potion.Effect;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,12 +72,6 @@ public class BCMMode {
 
     public BCMMode setAttackingEffect(Effect effect) {
         this.attackingEffect = effect;
-        return this;
-    }
-
-    public BCMMode setModelOnRender(AgeableModel model, ResourceLocation texture) {
-        this.model = model;
-        this.modelTexture = texture;
         return this;
     }
 

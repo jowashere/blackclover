@@ -46,8 +46,8 @@ public class CapabilityHandler {
             LazyOptional<IPlayerHandler> capabilities = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
             IPlayerHandler playercap = capabilities.orElse(new PlayerCapability());
 
-            NetworkLoader.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> player), new PacketToggleInfusionBoolean(1, true, playercap.returnManaSkinToggled(), player.getId()));
-            NetworkLoader.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> player), new PacketToggleInfusionBoolean(2, true, playercap.returnReinforcementToggled(), player.getId()));
+            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketToggleInfusionBoolean(1, true, playercap.returnManaSkinToggled(), player.getId()));
+            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketToggleInfusionBoolean(2, true, playercap.returnReinforcementToggled(), player.getId()));
 
             NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketSpellModeToggle(true, playercap.returnSpellModeToggle(), player.getId()));
 
@@ -59,7 +59,7 @@ public class CapabilityHandler {
 
             //NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketHasModeSync(1, playercap.returnPlayerCurseMark(), true));
 
-            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketSetGrimoire(playercap.returnHasGrimoire(), true));
+            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketSetGrimoire(playercap.returnHasGrimoire(), true, player.getId()));
 
             NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketKeybindSet(1, playercap.returnKeybind1(), true));
             NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketKeybindSet(2, playercap.returnKeybind2(), true));
@@ -71,21 +71,21 @@ public class CapabilityHandler {
             NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketKeybindSet(8, playercap.returnKeybind8(), true));
             NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketKeybindSet(9, playercap.returnKeybind9(), true));
 
-            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketKeybindCD(1, playercap.returnKeybind1CD(), true));
-            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketKeybindCD(2, playercap.returnKeybind2CD(), true));
-            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketKeybindCD(3, playercap.returnKeybind3CD(), true));
-            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketKeybindCD(4, playercap.returnKeybind4CD(), true));
-            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketKeybindCD(5, playercap.returnKeybind5CD(), true));
-            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketKeybindCD(6, playercap.returnKeybind6CD(), true));
-            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketKeybindCD(7, playercap.returnKeybind7CD(), true));
-            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketKeybindCD(8, playercap.returnKeybind8CD(), true));
-            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketKeybindCD(9, playercap.returnKeybind9CD(), true));
+            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketKeybindCD(1, playercap.returnKeybind1CD(), player.getId()));
+            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketKeybindCD(2, playercap.returnKeybind2CD(), player.getId()));
+            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketKeybindCD(3, playercap.returnKeybind3CD(), player.getId()));
+            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketKeybindCD(4, playercap.returnKeybind4CD(), player.getId()));
+            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketKeybindCD(5, playercap.returnKeybind5CD(), player.getId()));
+            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketKeybindCD(6, playercap.returnKeybind6CD(), player.getId()));
+            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketKeybindCD(7, playercap.returnKeybind7CD(), player.getId()));
+            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketKeybindCD(8, playercap.returnKeybind8CD(), player.getId()));
+            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketKeybindCD(9, playercap.returnKeybind9CD(), player.getId()));
 
             for (BCMSpell spell : BCMRegistry.SPELLS.getValues()) {
                 NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketSetSpellBoolean(spell.getName(), spell.hasSpell(spell, playercap), true));
                 String nbtName = spell.getCorrelatedPlugin().getPluginId() + "_" + spell.getName();
                 player.getPersistentData().putBoolean(nbtName, false);
-                NetworkLoader.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> player), new PacketSpellNBTSync(player.getId(), nbtName, false));
+                NetworkLoader.INSTANCE.send(PacketDistributor.ALL.noArg(), new PacketSpellNBTSync(player.getId(), nbtName, false));
             }
 
             //NetworkLoader.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> player), new PacketSusanooItemsSync(player.getEntityId(), playercap.getSusanooMainHand(), playercap.getSusanooOffHand(), true)); //playercap.getSusanooMainHand(), playercap.getSusanooOffHand()

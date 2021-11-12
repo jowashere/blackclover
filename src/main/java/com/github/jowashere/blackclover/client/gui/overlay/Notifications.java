@@ -10,6 +10,8 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -17,6 +19,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+@OnlyIn(Dist.CLIENT)
 public class Notifications {
 
     private static final ResourceLocation NOTIFS = new ResourceLocation(Main.MODID + ":textures/gui/notifs.png");
@@ -46,7 +49,7 @@ public class Notifications {
 
             for (BCMSpell toggledSpell : this.toggledSpell) {
                 mc.textureManager.bind(toggledSpell.getResourceLocationForGUI());
-                mc.gui.blit(event.getMatrixStack(), 5, i, toggledSpell.getU(), toggledSpell.getV(), 16, 16, 512, 512);
+                mc.gui.blit(event.getMatrixStack(), 5, i, toggledSpell.getU(), toggledSpell.getV(), 16, 16, 256, 256);
                 i += 20;
             }
             this.toggledSpell.clear();

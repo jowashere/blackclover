@@ -13,12 +13,12 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import java.util.ArrayList;
 
 @OnlyIn(Dist.CLIENT)
-public class WindSpellsScreen extends AbstractSpellScreen{
+public class LightningSpellsScreen extends AbstractSpellScreen{
 
     private ArrayList<BCMSpell> spells = new ArrayList<>();
 
-    public WindSpellsScreen() {
-        super(new TranslationTextComponent("gui." + Main.MODID + ".title.windspells"));
+    public LightningSpellsScreen() {
+        super(new TranslationTextComponent("gui." + Main.MODID + ".title.lightningspells"));
         /*for (BCMSpell spells : BCMRegistry.SPELLS.getValues()) {
             if (spells.getType() == BCMSpell.Type.WIND_MAGIC) {
                 this.spells.add(spells);
@@ -30,7 +30,7 @@ public class WindSpellsScreen extends AbstractSpellScreen{
     public void registerSpells(IPlayerHandler playerCapability) {
 
         for (BCMSpell spells : BCMRegistry.SPELLS.getValues()) {
-            if (spells.getType() == BCMSpell.Type.WIND_MAGIC) {
+            if (spells.getType() == BCMSpell.Type.LIGHTNING_MAGIC) {
                 if(playerCapability.hasSpellBoolean(spells)){
                     if(!this.spells.contains(spells)){
                         this.spells.add(spells);

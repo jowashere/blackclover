@@ -1,6 +1,8 @@
 package com.github.jowashere.blackclover.client.handler;
 
 import com.github.jowashere.blackclover.client.renderer.layers.GrimoireLayer;
+import com.github.jowashere.blackclover.client.renderer.layers.TGLayer;
+import com.github.jowashere.blackclover.client.renderer.projectiles.spells.lightning.ThunderOrbRenderer;
 import com.github.jowashere.blackclover.client.renderer.projectiles.spells.wind.WindBladeRenderer;
 import com.github.jowashere.blackclover.client.renderer.projectiles.spells.wind.WindCrescentRenderer;
 import com.github.jowashere.blackclover.client.renderer.summons.WindHawkRenderer;
@@ -11,6 +13,7 @@ import net.minecraft.client.renderer.entity.LivingRenderer;
 import net.minecraft.client.renderer.entity.PlayerRenderer;
 import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.client.renderer.entity.model.PlayerModel;
+import net.minecraft.entity.EntityType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -28,8 +31,9 @@ public class ClientHandler {
         RenderingRegistry.registerEntityRenderingHandler(EntityInit.WIND_BLADE.get(), new WindBladeRenderer.Factory());
         RenderingRegistry.registerEntityRenderingHandler(EntityInit.WIND_CRESCENT.get(), new WindCrescentRenderer.Factory());
 
-        RenderingRegistry.registerEntityRenderingHandler(EntityInit.WIND_HAWK.get(), WindHawkRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(EntityInit.THUNDER_ORB.get(), new ThunderOrbRenderer.Factory());
 
+        RenderingRegistry.registerEntityRenderingHandler(EntityInit.WIND_HAWK.get(), WindHawkRenderer::new);
 
         Map<String, PlayerRenderer> playerSkinMap = Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap();
         ClientHandler.addPlayerLayers(playerSkinMap.get("default"));
@@ -43,7 +47,7 @@ public class ClientHandler {
         if(layers != null)
         {
             layers.add(new GrimoireLayer<>(renderer));
-
+            layers.add(new TGLayer<>(renderer));
         }
     }
 

@@ -5,6 +5,7 @@ import com.github.jowashere.blackclover.capabilities.player.PlayerCapability;
 import com.github.jowashere.blackclover.capabilities.player.PlayerProvider;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fml.network.NetworkEvent;
@@ -54,7 +55,7 @@ public class PacketToggleInfusionBoolean {
                 case 1:
                     if (msg.toClient)
                     {
-                        ClientPlayerEntity player = (ClientPlayerEntity) Minecraft.getInstance().level.getEntity(msg.playerID);
+                        PlayerEntity player = (PlayerEntity) Minecraft.getInstance().level.getEntity(msg.playerID);
                         LazyOptional<IPlayerHandler> capabilities = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
                         IPlayerHandler playercap = capabilities.orElse(new PlayerCapability());
                         playercap.setManaSkinToggled(msg.toggle);
@@ -68,7 +69,7 @@ public class PacketToggleInfusionBoolean {
                 case 2:
                     if (msg.toClient)
                     {
-                        ClientPlayerEntity player = (ClientPlayerEntity) Minecraft.getInstance().level.getEntity(msg.playerID);
+                        PlayerEntity player = (PlayerEntity) Minecraft.getInstance().level.getEntity(msg.playerID);
                         LazyOptional<IPlayerHandler> capabilities = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
                         IPlayerHandler playercap = capabilities.orElse(new PlayerCapability());
                         playercap.setReinforcementToggled(msg.toggle);

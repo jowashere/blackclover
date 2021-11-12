@@ -11,11 +11,13 @@ import net.minecraft.entity.passive.TameableEntity;
 import net.minecraft.network.IPacket;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.pathfinding.FlyingPathNavigator;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.fml.network.NetworkHooks;
 
 import javax.annotation.Nullable;
+import java.util.EnumSet;
 import java.util.Random;
 
 public class WindHawkEntity extends TameableEntity implements IFlyingAnimal {
@@ -37,15 +39,54 @@ public class WindHawkEntity extends TameableEntity implements IFlyingAnimal {
 
     @Override
     protected void registerGoals() {
-
-        this.goalSelector.addGoal(1, new MoveTowardsTargetGoal(this, 1, 1));
+        super.registerGoals();
+        this.goalSelector.addGoal(1, new MoveTowardsTargetGoal(this, 1, 32));
         this.goalSelector.addGoal(2, new MeleeAttackGoal(this, 20, true));
-        this.goalSelector.addGoal(3, new FollowOwnerGoal(this, 1.0D, 10.0F, 2.0F, false));
-        this.goalSelector.addGoal(4, new LookRandomlyGoal(this));
-        this.goalSelector.addGoal(5, new LookAtGoal(this, LivingEntity.class, (float) 6));
-        this.targetSelector.addGoal(6, new OwnerHurtTargetGoal(this));
-        this.targetSelector.addGoal(7, new OwnerHurtByTargetGoal(this));
-        this.targetSelector.addGoal(8, new HurtByTargetGoal(this));
+        this.goalSelector.addGoal(3, new FollowOwnerGoal(this, 1.0D, 5.0F, 1.0F, true));
+        /*this.goalSelector.addGoal(4, new Goal() {
+            {
+                this.setFlags(EnumSet.of(Goal.Flag.MOVE));
+            }
+            public boolean canUse() {
+                if (WindHawkEntity.this.getTarget() != null && !WindHawkEntity.this.getMoveControl().hasWanted()) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+            @Override
+            public boolean canContinueToUse() {
+                return WindHawkEntity.this.getMoveControl().hasWanted() && WindHawkEntity.this.getTarget() != null
+                        && WindHawkEntity.this.getTarget().isAlive();
+            }
+
+            @Override
+            public void start() {
+                LivingEntity livingentity = WindHawkEntity.this.getTarget();
+                Vector3d vec3d = livingentity.getEyePosition(1);
+                WindHawkEntity.this.moveControl.setWantedPosition(vec3d.x, vec3d.y, vec3d.z, 60);
+            }
+
+            @Override
+            public void tick() {
+                LivingEntity livingentity = WindHawkEntity.this.getTarget();
+                if (WindHawkEntity.this.getBoundingBox().intersects(livingentity.getBoundingBox())) {
+                    WindHawkEntity.this.doHurtTarget(livingentity);
+                } else {
+                    double d0 = WindHawkEntity.this.distanceToSqr(livingentity);
+                    if (d0 < 20) {
+                        Vector3d vec3d = livingentity.getEyePosition(1);
+                        WindHawkEntity.this.moveControl.setWantedPosition(vec3d.x, vec3d.y, vec3d.z, 60);
+                    }
+                }
+            }
+        });*/
+        this.goalSelector.addGoal(5, new LookRandomlyGoal(this));
+        this.goalSelector.addGoal(6, new LookAtGoal(this, LivingEntity.class, (float) 6));
+        this.targetSelector.addGoal(7, new OwnerHurtTargetGoal(this));
+        this.targetSelector.addGoal(8, new OwnerHurtByTargetGoal(this));
+        this.targetSelector.addGoal(9, new HurtByTargetGoal(this));
     }
 
     @Override

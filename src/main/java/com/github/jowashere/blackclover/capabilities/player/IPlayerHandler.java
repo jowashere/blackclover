@@ -4,6 +4,7 @@ import com.github.jowashere.blackclover.api.internal.BCMAttribute;
 import com.github.jowashere.blackclover.api.internal.BCMMode;
 import com.github.jowashere.blackclover.api.internal.BCMRace;
 import com.github.jowashere.blackclover.api.internal.BCMSpell;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 
 public interface IPlayerHandler {

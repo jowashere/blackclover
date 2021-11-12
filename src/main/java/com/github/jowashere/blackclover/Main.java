@@ -18,6 +18,9 @@ import com.github.jowashere.blackclover.init.KeybindInit;
 import com.github.jowashere.blackclover.networking.NetworkLoader;
 import com.github.jowashere.blackclover.util.helpers.KeyboardHelper;
 import com.github.jowashere.blackclover.util.helpers.RaceHelper;
+import net.minecraft.client.Minecraft;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -37,9 +40,7 @@ public class Main
     public Main() {
 
         final IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-        MinecraftForge.EVENT_BUS.register(new ManaBar());
-        MinecraftForge.EVENT_BUS.register(new Notifications());
-        MinecraftForge.EVENT_BUS.register(new SpellMode());
+
         MinecraftForge.EVENT_BUS.register(new CapabilityHandler());
         MinecraftForge.EVENT_BUS.register(new KeyboardHelper());
         BCMRegistry.registerPlugin(new MainPlugin());
@@ -49,7 +50,6 @@ public class Main
 
         MinecraftForge.EVENT_BUS.register(this);
 
-        KeybindInit.register();
         ItemInit.ITEMS.register(modEventBus);
         EffectInit.EFFECT.register(modEventBus);
         EntityInit.ENTITIES.register(modEventBus);
@@ -76,6 +76,11 @@ public class Main
     private void onClientSetup(final FMLClientSetupEvent event) {
 
         ClientHandler.onsetup();
+        MinecraftForge.EVENT_BUS.register(new Notifications());
+        MinecraftForge.EVENT_BUS.register(new SpellMode());
+        MinecraftForge.EVENT_BUS.register(new ManaBar());
+        KeybindInit.register();
+
 
     }
 }

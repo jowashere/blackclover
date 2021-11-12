@@ -1,7 +1,6 @@
 package com.github.jowashere.blackclover.api.internal;
 
 import com.github.jowashere.blackclover.Main;
-import com.github.jowashere.blackclover.client.gui.player.spells.AbstractSpellScreen;
 import com.github.jowashere.blackclover.events.spells.AbstractAddSpells;
 import net.minecraft.util.ResourceLocation;
 
@@ -14,7 +13,6 @@ public class BCMAttribute {
     private final String attributeName;
     private final int weight;
 
-    AbstractSpellScreen spellScreen;
     private AbstractAddSpells spellAdder;
 
     private ArrayList<String> grimoireTextures;
@@ -70,7 +68,10 @@ public class BCMAttribute {
     }
 
     public AbstractAddSpells getSpellAdder(){
-        return this.spellAdder;
+        if(spellAdder instanceof AbstractAddSpells){
+            return this.spellAdder;
+        }
+        return null;
     }
 
     public String getAttributeUser(){
@@ -101,14 +102,5 @@ public class BCMAttribute {
 
     public int getAttributeColour() {
         return this.colour;
-    }
-
-    public BCMAttribute setSpellScreen(AbstractSpellScreen spellScreen){
-        this.spellScreen = spellScreen;
-        return this;
-    }
-
-    public AbstractSpellScreen returnSpellScreen(){
-        return this.spellScreen;
     }
 }

@@ -1,6 +1,4 @@
 {
-  "item.blackclover.grimoire_yuno": "Wind Magic Grimoire",
-
   "spell.blackclover.message.notenoughmana": "Not enough mana.",
   "spell.blackclover.message.nogrimoire": "A grimoire is required to cast this spell.",
 
@@ -9,6 +7,23 @@
   "spell.blackclover.wind_crescent": "Wind Crescent",
   "spell.blackclover.wind_blade_shower": "Wind Blade Shower",
 
-  "gui.blackclover.title.yunowindspells": "Yuno's Spells"
+  "attribute.blackclover.wind": "Wind",
+  "attribute.blackclover.antimagic": "Anti-Magic",
+  "attribute.blackclover.lightning": "Lightning",
+
+  "race.blackclover.elf": "Elf",
+  "race.blackclover.human": "Human",
+
+  "commands.blackclover.attribute.set": "Set %s's attribute to %s.",
+
+
+  "gui.blackclover.title.windspells": "Wind Magic Spells",
+  "gui.blackclover.title.lightningspells": "Lightning Magic Spells",
+
+  "gui.blackclover.race.name": "Race",
+  "gui.blackclover.magiclevel": "Magic Level",
+  "gui.blackclover.magicattribute": "Magic Attribute",
+  "gui.blackclover.magicexp": "Magic XP",
+  "gui.blackclover.stats.spells": "Spells"
 
 }

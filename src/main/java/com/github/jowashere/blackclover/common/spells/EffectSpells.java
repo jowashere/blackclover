@@ -49,7 +49,7 @@ public class EffectSpells {
                 }
                 playerIn.addEffect(new EffectInstance(Effects.DAMAGE_BOOST, effectDuration, Integer.min(primaryModifier/2, 20), false, false, false));
                 if (playercap.returnMagicLevel() >= 15) {
-                    playerIn.addEffect(new EffectInstance(Effects.DIG_SPEED, effectDuration, secondaryModifier, false, false, false));
+                    playerIn.addEffect(new EffectInstance(Effects.DIG_SPEED, effectDuration, Integer.min(secondaryModifier, 16), false, false, false));
                 }
                 if (!playerIn.isOnGround()){
                     playerIn.addEffect(new EffectInstance(Effects.JUMP, 60, Integer.min(secondaryModifier/2, 5), false, false, false));

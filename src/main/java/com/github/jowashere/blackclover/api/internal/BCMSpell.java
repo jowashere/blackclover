@@ -9,7 +9,10 @@ import com.github.jowashere.blackclover.client.gui.player.spells.AbstractSpellSc
 import com.github.jowashere.blackclover.client.gui.widgets.spells.GuiButtonSpell;
 import com.github.jowashere.blackclover.init.EffectInit;
 import com.github.jowashere.blackclover.networking.NetworkLoader;
+import com.github.jowashere.blackclover.networking.packets.PacketMagicExpSync;
 import com.github.jowashere.blackclover.networking.packets.mana.PacketManaSync;
+import com.github.jowashere.blackclover.networking.packets.modes.PacketModeSync;
+import com.github.jowashere.blackclover.networking.packets.server.SPacketSpellNBTSync;
 import com.github.jowashere.blackclover.networking.packets.spells.PacketKeybindCD;
 import com.github.jowashere.blackclover.networking.packets.spells.PacketSpellNBTSync;
 import com.github.jowashere.blackclover.util.helpers.SpellHelper;
@@ -21,6 +24,9 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.World;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.event.world.NoteBlockEvent;
 import net.minecraftforge.fml.network.PacketDistributor;
 
@@ -38,7 +44,6 @@ public class BCMSpell {
     private final int cooldown;
     private final boolean skillSpell;
     private final IAction action;
-    private final IBCMSpellButtonPress press;
     private ResourceLocation resourceLocation;
     private IExtraCheck extraCheck;
     private ICancelEventListener onCancelEvent;
@@ -57,18 +62,7 @@ public class BCMSpell {
         this.cooldown = cooldown;
         this.skillSpell = skillSpell;
         this.action = action;
-        this.press = new IBCMSpellButtonPress() {
-            @Override
-            public void onPress(GuiButtonSpell buttonSpell, IPlayerHandler playerCapability) {
-                if (Minecraft.getInstance().screen instanceof AbstractSpellScreen) {
-                    boolean didBuy = buttonSpell.doSpellPress((AbstractSpellScreen) Minecraft.getInstance().screen);
-                    if (didBuy) {
-                        playerCapability.setSpellBoolean(SpellHelper.getSpellFromName(buttonSpell.getSpellName()), true);
-                        buttonSpell.sendPackets(buttonSpell.getSpellName(), true);
-                    }
-                }
-            }
-        };
+
         this.resourceLocation = SPELL_LOCATION;
     }
 
@@ -155,23 +149,26 @@ public class BCMSpell {
 
         manaCost = this.getManaCost() +  ((float) Math.sqrt(playercap.returnMagicLevel()) * (this.getManaCost() / 5) );
 
-
         if(this.isSkillSpell() || playercap.returnHasGrimoire()){
             if (playercap.returnMana() >= manaCost) {
                 if (!playerIn.level.isClientSide) {
                     playercap.addMana((-manaCost));
                     NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) playerIn), new PacketManaSync(playercap.returnMana()));
+                    playercap.addMagicExp(manaCost);
+                    NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() ->(ServerPlayerEntity) playerIn), new PacketMagicExpSync(playercap.returnMagicExp(), true));
                 }
                 if (!playercap.returnToggleSpellMessage() && !this.isToggle() && !playerIn.level.isClientSide)
                     playerIn.displayClientMessage(new StringTextComponent(new TranslationTextComponent("spell." + this.getCorrelatedPlugin().getPluginId() + "." + this.getName()).getString() + "! " + + ((int) -manaCost) + " Mana"), true);
                 this.action.action(playerIn, modifier0, modifier1, playercap);
-                this.applySpellCD(this, playerIn);
+                if(!this.isToggle())
+                    this.applySpellCD(this, playerIn);
             }
             else {
                 if (isToggle()) {
                     throwCancelEvent(playerIn);
-                    playerIn.getPersistentData().putBoolean(getCorrelatedPlugin().getPluginId() + "_" + getName(), false);
-                    NetworkLoader.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> playerIn), new PacketSpellNBTSync(playerIn.getId(), getCorrelatedPlugin().getPluginId() + "_" + getName(), false));
+                    String nbtName = getCorrelatedPlugin().getPluginId() + "_" + getName();
+                    playerIn.getPersistentData().putBoolean(nbtName, false);
+                    NetworkLoader.INSTANCE.sendToServer(new SPacketSpellNBTSync(playerIn.getId(), nbtName, false));
                 }
                 playerIn.displayClientMessage(new TranslationTextComponent("spell." + Main.MODID + ".message.notenoughmana"), true);
             }
@@ -182,12 +179,12 @@ public class BCMSpell {
 
     public void update(GuiButtonSpell spellButton, BCMSpell spell, IPlayerHandler playerCapability) {
         spellButton.setHasSpell(playerCapability.hasSpellBoolean(spell));
-        //this.update.update(jutsuButton, playerCapability);
     }
 
     public void throwCancelEvent(PlayerEntity playerIn) {
         if (this.onCancelEvent != null)
             this.onCancelEvent.onCancel(playerIn);
+        this.applySpellCD(this, playerIn);
     }
     public void throwAttackEvent(PlayerEntity attacker, LivingEntity target) {
         if (this.onAttackEvent != null)
@@ -198,19 +195,15 @@ public class BCMSpell {
             return this.onDamageEvent.onDamage(amount, source, defender);
         return false;
     }
-    public boolean throwDeathEvent(PlayerEntity dieingEntity) {
+    public boolean throwDeathEvent(PlayerEntity dyingEntity) {
         if (this.onDeathEvent != null)
-            return this.onDeathEvent.onDeath(dieingEntity);
+            return this.onDeathEvent.onDeath(dyingEntity);
         return false;
     }
 
     public void sync(IPlayerHandler playerCapability, BCMSpell spell, boolean has) {
         playerCapability.setSpellBoolean(spell, has);
         //this.sync.update(playerCapability, has);
-    }
-
-    public IBCMSpellButtonPress getPress() {
-        return this.press;
     }
 
     public float getManaCost() {
@@ -222,7 +215,7 @@ public class BCMSpell {
     }
 
     public enum Type {
-        WIND_MAGIC, ANTI_MAGIC, DARKNESS_MAGIC, LIGHTNING_MAGIC
+        WIND_MAGIC, ANTI_MAGIC, DARKNESS_MAGIC, LIGHTNING_MAGIC, SLASH_MAGIC, LIGHT_MAGIC
     }
 
     public interface IAction {
@@ -264,31 +257,31 @@ public class BCMSpell {
 
         if(playercap.returnKeybind1().equals(name)){
             playercap.setKeybind1CD(spell.getCooldown());
-            NetworkLoader.INSTANCE.sendToServer(new PacketKeybindCD(1, spell.getCooldown(), false));
+            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketKeybindCD(1, spell.getCooldown(), player.getId()));
         }else if(playercap.returnKeybind2().equals(name)){
             playercap.setKeybind2CD(spell.getCooldown());
-            NetworkLoader.INSTANCE.sendToServer(new PacketKeybindCD(2, spell.getCooldown(), false));
+            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketKeybindCD(2, spell.getCooldown(), player.getId()));
         }else if(playercap.returnKeybind3().equals(name)){
             playercap.setKeybind3CD(spell.getCooldown());
-            NetworkLoader.INSTANCE.sendToServer(new PacketKeybindCD(3, spell.getCooldown(), false));
+            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketKeybindCD(3, spell.getCooldown(), player.getId()));
         }else if(playercap.returnKeybind4().equals(name)){
             playercap.setKeybind4CD(spell.getCooldown());
-            NetworkLoader.INSTANCE.sendToServer(new PacketKeybindCD(4, spell.getCooldown(), false));
+            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketKeybindCD(4, spell.getCooldown(), player.getId()));
         }else if(playercap.returnKeybind5().equals(name)){
             playercap.setKeybind5CD(spell.getCooldown());
-            NetworkLoader.INSTANCE.sendToServer(new PacketKeybindCD(5, spell.getCooldown(), false));
+            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketKeybindCD(5, spell.getCooldown(), player.getId()));
         }else if(playercap.returnKeybind6().equals(name)){
             playercap.setKeybind6CD(spell.getCooldown());
-            NetworkLoader.INSTANCE.sendToServer(new PacketKeybindCD(6, spell.getCooldown(), false));
+            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketKeybindCD(6, spell.getCooldown(), player.getId()));
         }else if(playercap.returnKeybind7().equals(name)){
             playercap.setKeybind7CD(spell.getCooldown());
-            NetworkLoader.INSTANCE.sendToServer(new PacketKeybindCD(7, spell.getCooldown(), false));
+            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketKeybindCD(7, spell.getCooldown(), player.getId()));
         }else if(playercap.returnKeybind8().equals(name)){
             playercap.setKeybind8CD(spell.getCooldown());
-            NetworkLoader.INSTANCE.sendToServer(new PacketKeybindCD(8, spell.getCooldown(), false));
+            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketKeybindCD(8, spell.getCooldown(), player.getId()));
         }else if(playercap.returnKeybind9().equals(name)){
             playercap.setKeybind9CD(spell.getCooldown());
-            NetworkLoader.INSTANCE.sendToServer(new PacketKeybindCD(9, spell.getCooldown(), false));
+            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketKeybindCD(9, spell.getCooldown(), player.getId()));
         }
 
     }

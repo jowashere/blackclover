@@ -1,6 +1,6 @@
-package com.github.jowashere.blackclover.entities.projectiles.spells.wind;
+package com.github.jowashere.blackclover.entities.projectiles.spells.lightning;
 
-import com.github.jowashere.blackclover.api.internal.entities.spells.AbstractWindSpellEntity;
+import com.github.jowashere.blackclover.api.internal.entities.spells.AbstractLightningSpellEntity;
 import com.github.jowashere.blackclover.capabilities.player.IPlayerHandler;
 import com.github.jowashere.blackclover.capabilities.player.PlayerProvider;
 import com.github.jowashere.blackclover.init.EffectInit;
@@ -11,22 +11,20 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.network.IPacket;
-import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class WindCrescentEntity extends AbstractWindSpellEntity {
+public class ThunderOrbEntity extends AbstractLightningSpellEntity {
 
-    public WindCrescentEntity(EntityType<? extends WindCrescentEntity> type, World worldIn) {
+    public ThunderOrbEntity(EntityType<? extends ThunderOrbEntity> type, World worldIn) {
         super(type, worldIn);
     }
 
-    public WindCrescentEntity(World worldIn, LivingEntity throwerIn) {
-        super(EntityInit.WIND_CRESCENT.get(), throwerIn, worldIn);
+    public ThunderOrbEntity(World worldIn, LivingEntity throwerIn) {
+        super(EntityInit.THUNDER_ORB.get(), throwerIn, worldIn);
     }
 
     @Override
@@ -43,9 +41,9 @@ public class WindCrescentEntity extends AbstractWindSpellEntity {
                 if(livingShooter instanceof PlayerEntity){
                     PlayerEntity playerIn = (PlayerEntity) livingShooter;
                     IPlayerHandler playercap = playerIn.getCapability(PlayerProvider.CAPABILITY_PLAYER).orElseThrow(() -> new RuntimeException("CAPABILITY_PLAYER NOT FOUND!"));
-                    entity.hurt(DamageSource.thrown(this, this.getOwner()), (float) playercap.returnMagicLevel() * 0.95F);
+                    entity.hurt(DamageSource.thrown(this, this.getOwner()), (float) playercap.returnMagicLevel() * 0.8F);
                 } else if(livingShooter.hasEffect(EffectInit.MAGIC_LEVEL.get())){
-                    entity.hurt(DamageSource.thrown(this, this.getOwner()), (float) livingShooter.getEffect(EffectInit.MAGIC_LEVEL.get()).getAmplifier() * 0.95F);
+                    entity.hurt(DamageSource.thrown(this, this.getOwner()), (float) livingShooter.getEffect(EffectInit.MAGIC_LEVEL.get()).getAmplifier() * 0.8F);
                 }else {
                     entity.hurt(DamageSource.thrown(this, this.getOwner()), 4F);
                 }
@@ -67,7 +65,7 @@ public class WindCrescentEntity extends AbstractWindSpellEntity {
 
     @Override
     public String getAffiliatedSpellName() {
-        return "wind_crescent";
+        return "thunder_orb";
     }
 
     @Override

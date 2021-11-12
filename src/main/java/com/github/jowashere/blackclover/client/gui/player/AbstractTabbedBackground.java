@@ -5,6 +5,7 @@ import com.github.jowashere.blackclover.capabilities.player.IPlayerHandler;
 import com.github.jowashere.blackclover.capabilities.player.PlayerCapability;
 import com.github.jowashere.blackclover.capabilities.player.PlayerProvider;
 import com.github.jowashere.blackclover.client.gui.GuiButtonTab;
+import com.github.jowashere.blackclover.util.helpers.GUIHelper;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.AbstractClientPlayerEntity;
@@ -97,7 +98,7 @@ public abstract class AbstractTabbedBackground extends Screen {
         for (Widget tab : this.buttons) {
             if (tab instanceof GuiButtonTab) {
                 if (((GuiButtonTab) tab).getTab() == openedTab) {
-                    font.drawShadow(matrixStack,((GuiButtonTab) tab).getToolTip(), this.guiLeft - (font.width(((GuiButtonTab) tab).getToolTip()) / 2), this.guiTop - 63, 0x453100);
+                    GUIHelper.drawStringWithBorder(matrixStack, font, ((GuiButtonTab) tab).getToolTip(), this.guiLeft - (font.width(((GuiButtonTab) tab).getToolTip()) / 2), this.guiTop - 63, 0x68737C);
                 }
             }
         }

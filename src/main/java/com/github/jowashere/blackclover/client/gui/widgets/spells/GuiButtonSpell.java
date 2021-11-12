@@ -1,12 +1,14 @@
 package com.github.jowashere.blackclover.client.gui.widgets.spells;
 
 import com.github.jowashere.blackclover.Main;
+import com.github.jowashere.blackclover.api.interfaces.IBCMSpellButtonPress;
 import com.github.jowashere.blackclover.capabilities.player.IPlayerHandler;
 import com.github.jowashere.blackclover.capabilities.player.PlayerCapability;
 import com.github.jowashere.blackclover.capabilities.player.PlayerProvider;
 import com.github.jowashere.blackclover.client.gui.player.spells.AbstractSpellScreen;
 import com.github.jowashere.blackclover.networking.NetworkLoader;
 import com.github.jowashere.blackclover.networking.packets.spells.PacketSetSpellBoolean;
+import com.github.jowashere.blackclover.util.helpers.SpellHelper;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.widget.button.Button;
@@ -20,7 +22,6 @@ public class GuiButtonSpell extends Button {
 
     ResourceLocation texture = new ResourceLocation(Main.MODID + ":textures/gui/spells.png");
 
-    protected final IPressable onPress;
     final int u;
     final int v;
     public int widthIn;
@@ -28,13 +29,23 @@ public class GuiButtonSpell extends Button {
     private final String name;
     private boolean has;
 
-    public GuiButtonSpell(int widthIn, int heightIn, int u, int v, String name, boolean has, ResourceLocation resourceLocation, IPressable onPress) {
-        super(widthIn, heightIn, 16, 16, new StringTextComponent(""), onPress);
+    public GuiButtonSpell(int widthIn, int heightIn, int u, int v, String name, boolean has, ResourceLocation resourceLocation) {
+        super(widthIn, heightIn, 16, 16, new StringTextComponent(""), new IBCMSpellButtonPress() {
+            @Override
+            public void onPress(GuiButtonSpell buttonSpell, IPlayerHandler playerCapability) {
+                if (Minecraft.getInstance().screen instanceof AbstractSpellScreen) {
+                    boolean didBuy = buttonSpell.doSpellPress((AbstractSpellScreen) Minecraft.getInstance().screen);
+                    if (didBuy) {
+                        playerCapability.setSpellBoolean(SpellHelper.getSpellFromName(buttonSpell.getSpellName()), true);
+                        buttonSpell.sendPackets(buttonSpell.getSpellName(), true);
+                    }
+                }
+            }
+        });
         this.widthIn = widthIn;
         this.heightIn = heightIn;
         this.u = u;
         this.v = v;
-        this.onPress = onPress;
         this.name = name;
         this.has = has;
         this.texture = resourceLocation;

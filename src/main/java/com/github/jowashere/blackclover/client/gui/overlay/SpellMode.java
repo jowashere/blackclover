@@ -5,16 +5,20 @@ import com.github.jowashere.blackclover.api.internal.BCMSpell;
 import com.github.jowashere.blackclover.capabilities.player.IPlayerHandler;
 import com.github.jowashere.blackclover.capabilities.player.PlayerCapability;
 import com.github.jowashere.blackclover.capabilities.player.PlayerProvider;
+import com.github.jowashere.blackclover.client.gui.player.spells.AbstractSpellScreen;
 import com.github.jowashere.blackclover.util.helpers.SpellHelper;
 import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.client.gui.GuiUtils;
 
+@OnlyIn(Dist.CLIENT)
 public class SpellMode {
 
 
@@ -32,9 +36,11 @@ public class SpellMode {
             int posX = mc.getWindow().getGuiScaledWidth()  - 23;
             int posY = mc.getWindow().getGuiScaledHeight() - 1;
 
-            boolean hasColorVisual = true;
-
             ResourceLocation WIDGETS = new ResourceLocation(Main.MODID + ":textures/gui/widgets.png");
+
+            if(Minecraft.getInstance().screen instanceof AbstractSpellScreen){
+                event.setCanceled(true);
+            }
 
             if(player_cap.returnSpellModeToggle()){
                 event.setCanceled(true);
@@ -101,11 +107,12 @@ public class SpellMode {
 
                         }
 
+                        String nbtName = spell.getCorrelatedPlugin().getPluginId() + "_" + spell.getName();
 
                         // Setting their color based on their state
                         if (spellcd > 10)
                             GlStateManager._color4f(1, 0, 0, 1);
-                        else if (spell.isToggle())
+                        else if (spell.isToggle() && player.getPersistentData().getBoolean(nbtName))
                             GlStateManager._color4f(0, 0, 1, 1);
                         // Drawing the slot
                         GuiUtils.drawTexturedModalRect( event.getMatrixStack(), (posX - 200 + (i * 50)) / 2, posY - 23, 0, 0, 23, 23, 0);

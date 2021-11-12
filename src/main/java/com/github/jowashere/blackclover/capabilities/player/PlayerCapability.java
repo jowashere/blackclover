@@ -8,14 +8,20 @@ import com.github.jowashere.blackclover.api.internal.BCMSpell;
 import com.github.jowashere.blackclover.init.AttributeInit;
 import com.github.jowashere.blackclover.init.ModeInit;
 import com.github.jowashere.blackclover.init.RaceInit;
+import com.github.jowashere.blackclover.networking.NetworkLoader;
+import com.github.jowashere.blackclover.networking.packets.spells.PacketSpellNBTSync;
 import com.github.jowashere.blackclover.util.helpers.AttributeHelper;
 import com.github.jowashere.blackclover.util.helpers.ModeHelper;
 import com.github.jowashere.blackclover.util.helpers.RaceHelper;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.util.Direction;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.fml.network.PacketDistributor;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
@@ -208,7 +214,7 @@ public class PlayerCapability implements IPlayerHandler {
     }
     @Override
     public void addMagicExp(float amount) {
-        this.regenMana += amount;
+        this.magicXp += amount;
     }
     @Override
     public float returnMagicExp()

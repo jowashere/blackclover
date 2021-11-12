@@ -1,13 +1,20 @@
 package com.github.jowashere.blackclover.events;
 
 import com.github.jowashere.blackclover.Main;
+import com.github.jowashere.blackclover.api.BCMRegistry;
+import com.github.jowashere.blackclover.api.internal.BCMSpell;
 import com.github.jowashere.blackclover.capabilities.player.IPlayerHandler;
 import com.github.jowashere.blackclover.capabilities.player.PlayerCapability;
 import com.github.jowashere.blackclover.capabilities.player.PlayerProvider;
 import com.github.jowashere.blackclover.entities.summons.WindHawkEntity;
 import com.github.jowashere.blackclover.init.EntityInit;
 import com.github.jowashere.blackclover.networking.NetworkLoader;
+import com.github.jowashere.blackclover.networking.packets.PacketSetGrimoire;
+import com.github.jowashere.blackclover.networking.packets.PacketSpellModeToggle;
+import com.github.jowashere.blackclover.networking.packets.PacketToggleInfusionBoolean;
 import com.github.jowashere.blackclover.networking.packets.modes.PacketModeSync;
+import com.github.jowashere.blackclover.networking.packets.settings.PacketSetGrimoireTexture;
+import com.github.jowashere.blackclover.networking.packets.spells.PacketSpellNBTSync;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
@@ -43,6 +50,17 @@ public class ForgeEventsSubscriber {
 
         if (player.isAlive()) {
             IPlayerHandler playercap = player.getCapability(PlayerProvider.CAPABILITY_PLAYER).orElseThrow(() -> new RuntimeException("CAPABILITY_PLAYER NOT FOUND!"));
+            for (BCMSpell spell : BCMRegistry.SPELLS.getValues()) {
+                if (spell.isToggle()) {
+                    String nbtName = spell.getCorrelatedPlugin().getPluginId() + "_" + spell.getName();
+                    if (player.getPersistentData().getBoolean(nbtName)) {
+
+                        int modifier0 = Math.max(0, playercap.returnMagicLevel() / 5);
+                        int modifier1 = Math.max(0, playercap.returnMagicLevel() / 5) - 1;
+                        spell.act(player, modifier0, modifier1);
+                    }
+                }
+            }
 
             if (!player.level.isClientSide) {
                 PlayerEvents.regenerateMana(event);
@@ -54,7 +72,6 @@ public class ForgeEventsSubscriber {
                 }
             }
         }
-
 
 
         if(curiosLoaded)
@@ -71,12 +88,22 @@ public class ForgeEventsSubscriber {
         {
             PlayerEntity target = (PlayerEntity) event.getTarget();
             if (!event.getEntity().level.isClientSide) {
-                int targetID = target.getId();
-                event.getTarget().getId();
-                LazyOptional<IPlayerHandler> capabilities = target.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
-                IPlayerHandler targetcap = capabilities.orElse(new PlayerCapability());
-                NetworkLoader.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> (ServerPlayerEntity) event.getPlayer()), new PacketModeSync(targetcap.returnPlayerMode().getName(), targetID, true));
+                int playerID = event.getPlayer().getId();
+                LazyOptional<IPlayerHandler> playerCapability = event.getPlayer().getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
+                IPlayerHandler playercap = playerCapability.orElse(new PlayerCapability());
 
+                int targetID = target.getId();
+                LazyOptional<IPlayerHandler> targetCapability = target.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
+                IPlayerHandler targetcap = targetCapability.orElse(new PlayerCapability());
+                NetworkLoader.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> (ServerPlayerEntity) event.getPlayer()), new PacketModeSync(targetcap.returnPlayerMode().getName(), targetID, true));
+                NetworkLoader.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> (ServerPlayerEntity) event.getPlayer()), new PacketSpellModeToggle(true, targetcap.returnSpellModeToggle(), targetID));
+                NetworkLoader.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> (ServerPlayerEntity) event.getPlayer()), new PacketToggleInfusionBoolean(1, true, targetcap.returnManaSkinToggled(), targetID));
+                NetworkLoader.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> (ServerPlayerEntity) event.getPlayer()), new PacketToggleInfusionBoolean(2, true, targetcap.returnReinforcementToggled(), targetID));
+                NetworkLoader.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> (ServerPlayerEntity) event.getPlayer()), new PacketSetGrimoire(targetcap.returnHasGrimoire(), true, targetID));
+                NetworkLoader.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> (ServerPlayerEntity) event.getPlayer()), new PacketSetGrimoireTexture(targetcap.getGrimoireTexture(), true, targetID));
+                for (BCMSpell spell : BCMRegistry.SPELLS.getValues()) {
+                    NetworkLoader.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> (ServerPlayerEntity) event.getPlayer()), new PacketSpellNBTSync(targetID, spell.getCorrelatedPlugin().getPluginId() + "_" + spell.getName(), target.getPersistentData().getBoolean(spell.getCorrelatedPlugin().getPluginId() + "_" + spell.getName())));
+                }
             }
         }
     }

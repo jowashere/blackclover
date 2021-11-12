@@ -4,6 +4,8 @@ import com.github.jowashere.blackclover.Main;
 import com.github.jowashere.blackclover.networking.packets.*;
 import com.github.jowashere.blackclover.networking.packets.mana.*;
 import com.github.jowashere.blackclover.networking.packets.modes.PacketModeSync;
+import com.github.jowashere.blackclover.networking.packets.server.SPacketSpellNBTSync;
+import com.github.jowashere.blackclover.networking.packets.server.SSyncManaPacket;
 import com.github.jowashere.blackclover.networking.packets.settings.PacketKeybindSet;
 import com.github.jowashere.blackclover.networking.packets.settings.PacketSetGrimoireTexture;
 import com.github.jowashere.blackclover.networking.packets.spells.PacketKeybindCD;
@@ -36,8 +38,10 @@ public class NetworkLoader {
         INSTANCE.registerMessage(nextID(), PacketSetSpellBoolean.class, PacketSetSpellBoolean::encode, PacketSetSpellBoolean::decode, PacketSetSpellBoolean::handle);
         INSTANCE.registerMessage(nextID(), PacketSpellCaller.class, PacketSpellCaller::encode, PacketSpellCaller::decode, PacketSpellCaller::handle);
         INSTANCE.registerMessage(nextID(), PacketSpellNBTSync.class, PacketSpellNBTSync::encode, PacketSpellNBTSync::decode, PacketSpellNBTSync::handle);
+        INSTANCE.registerMessage(nextID(), SPacketSpellNBTSync.class, SPacketSpellNBTSync::encode, SPacketSpellNBTSync::decode, SPacketSpellNBTSync::handle);
         INSTANCE.registerMessage(nextID(), PacketSpellModeToggle.class, PacketSpellModeToggle::encode, PacketSpellModeToggle::decode, PacketSpellModeToggle::handle);
         INSTANCE.registerMessage(nextID(), PacketKeybindCD.class, PacketKeybindCD::encode, PacketKeybindCD::decode, PacketKeybindCD::handle);
+        INSTANCE.registerMessage(nextID(), SSyncManaPacket.class, SSyncManaPacket::encode, SSyncManaPacket::decode, SSyncManaPacket::handle);
 
         INSTANCE.registerMessage(nextID(), PacketSetGrimoireTexture.class, PacketSetGrimoireTexture::encode, PacketSetGrimoireTexture::decode, PacketSetGrimoireTexture::handle);
 

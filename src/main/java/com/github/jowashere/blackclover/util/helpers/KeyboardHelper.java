@@ -4,6 +4,7 @@ import com.github.jowashere.blackclover.capabilities.player.IPlayerHandler;
 import com.github.jowashere.blackclover.capabilities.player.PlayerCapability;
 import com.github.jowashere.blackclover.capabilities.player.PlayerProvider;
 import com.github.jowashere.blackclover.client.gui.player.PlayerSpellsScreen;
+import com.github.jowashere.blackclover.client.gui.player.PlayerStatsScreen;
 import com.github.jowashere.blackclover.common.spells.SpellCaller;
 import com.github.jowashere.blackclover.init.AttributeInit;
 import com.github.jowashere.blackclover.init.KeybindInit;
@@ -16,6 +17,7 @@ import com.github.jowashere.blackclover.networking.packets.spells.PacketSpellCal
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.util.InputMappings;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
@@ -45,32 +47,6 @@ public class KeyboardHelper {
         return InputMappings.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_KEY_TAB);
     }
 
-    @OnlyIn(Dist.CLIENT)
-    public static int numberKey() {
-
-        if (InputMappings.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_KEY_1)) {
-            return 1;
-        }else if(InputMappings.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_KEY_2)){
-            return 2;
-        }else if(InputMappings.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_KEY_3)){
-            return 3;
-        }else if(InputMappings.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_KEY_4)){
-            return 4;
-        }else if(InputMappings.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_KEY_5)){
-            return 5;
-        }else if(InputMappings.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_KEY_6)){
-            return 6;
-        }else if(InputMappings.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_KEY_7)){
-            return 7;
-        }else if(InputMappings.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_KEY_8)){
-            return 8;
-        }else if(InputMappings.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), GLFW.GLFW_KEY_9)){
-            return 9;
-        }
-
-        return 0;
-    }
-
     @SubscribeEvent
     public void onClientTickEvent(final TickEvent.ClientTickEvent event) {
         ClientPlayerEntity player = Minecraft.getInstance().player;
@@ -87,7 +63,7 @@ public class KeyboardHelper {
     @SubscribeEvent
     @OnlyIn(Dist.CLIENT)
     public void onKeyInput(InputEvent.KeyInputEvent event) {
-        ClientPlayerEntity player = Minecraft.getInstance().player;
+        PlayerEntity player = Minecraft.getInstance().player;
         if (player != null) {
             LazyOptional<IPlayerHandler> player_cap = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
             IPlayerHandler playerc = player_cap.orElse(new PlayerCapability());
@@ -107,7 +83,7 @@ public class KeyboardHelper {
                     if(playerc.returnKeybind1CD() <= 0){
                         if(SpellHelper.getSpellFromName(playerc.returnKeybind1()) != null){
                             SpellCaller.SpellCaller(player, playerc.returnKeybind1());
-                            NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("",1));
+                            NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("",1, player.getId()));
                         }
                     }
                 }
@@ -115,7 +91,7 @@ public class KeyboardHelper {
                     if(playerc.returnKeybind2CD() <= 0){
                         if(SpellHelper.getSpellFromName(playerc.returnKeybind2()) != null){
                             SpellCaller.SpellCaller(player, playerc.returnKeybind2());
-                            NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("", 2));
+                            NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("", 2, player.getId()));
                         }
                     }
                 }
@@ -123,7 +99,7 @@ public class KeyboardHelper {
                     if(playerc.returnKeybind3CD() <= 0){
                         if(SpellHelper.getSpellFromName(playerc.returnKeybind3()) != null){
                             SpellCaller.SpellCaller(player, playerc.returnKeybind3());
-                            NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("", 3));
+                            NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("", 3, player.getId()));
                         }
                     }
                 }
@@ -131,15 +107,15 @@ public class KeyboardHelper {
                     if(playerc.returnKeybind4CD() <= 0){
                         if(SpellHelper.getSpellFromName(playerc.returnKeybind4()) != null){
                             SpellCaller.SpellCaller(player, playerc.returnKeybind4());
-                            NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("", 4));
+                            NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("", 4, player.getId()));
                         }
                     }
                 }
                 if (KeybindInit.KEYBIND5.isDown()) {
-                    if(playerc.returnKeybind9CD() <= 0){
+                    if(playerc.returnKeybind5CD() <= 0){
                         if(SpellHelper.getSpellFromName(playerc.returnKeybind5()) != null){
                             SpellCaller.SpellCaller(player, playerc.returnKeybind5());
-                            NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("", 5));
+                            NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("", 5, player.getId()));
                         }
                     }
                 }
@@ -147,7 +123,7 @@ public class KeyboardHelper {
                     if(playerc.returnKeybind6CD() <= 0){
                         if(SpellHelper.getSpellFromName(playerc.returnKeybind6()) != null){
                             SpellCaller.SpellCaller(player, playerc.returnKeybind6());
-                            NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("", 6));
+                            NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("", 6, player.getId()));
                        }
                     }
                 }
@@ -155,7 +131,7 @@ public class KeyboardHelper {
                     if(playerc.returnKeybind7CD() <= 0){
                         if(SpellHelper.getSpellFromName(playerc.returnKeybind7()) != null){
                             SpellCaller.SpellCaller(player, playerc.returnKeybind7());
-                            NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("", 7));
+                            NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("", 7, player.getId()));
                         }
                     }
                 }
@@ -163,7 +139,7 @@ public class KeyboardHelper {
                     if(playerc.returnKeybind8CD() <= 0){
                         if(SpellHelper.getSpellFromName(playerc.returnKeybind8()) != null){
                             SpellCaller.SpellCaller(player, playerc.returnKeybind8());
-                            NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("", 8));
+                            NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("", 8, player.getId()));
                         }
                     }
                 }
@@ -171,7 +147,7 @@ public class KeyboardHelper {
                     if(playerc.returnKeybind9CD() <= 0){
                         if(SpellHelper.getSpellFromName(playerc.returnKeybind9()) != null){
                             SpellCaller.SpellCaller(player, playerc.returnKeybind9());
-                            NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("", 9));
+                            NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("", 9, player.getId()));
                         }
 
                     }
@@ -198,7 +174,7 @@ public class KeyboardHelper {
             }
 
             if (KeybindInit.MAGIC_MENU.isDown()){
-                Minecraft.getInstance().setScreen(new PlayerSpellsScreen());
+                Minecraft.getInstance().setScreen(new PlayerStatsScreen());
             }
         }
     }

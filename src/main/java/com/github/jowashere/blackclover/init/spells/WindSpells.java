@@ -1,4 +1,4 @@
-package com.github.jowashere.blackclover.init.spells.wind;
+package com.github.jowashere.blackclover.init.spells;
 
 import com.github.jowashere.blackclover.api.BCMRegistry;
 import com.github.jowashere.blackclover.api.IBCMPlugin;
@@ -39,7 +39,7 @@ public class WindSpells {
                 WindBladeEntity entity = new WindBladeEntity(playerIn.level, playerIn, "wind_blade");
                 entity.shootFromRotation(playerIn, playerIn.xRot, playerIn.yRot, 0.0F, 1.3F, 5.0F);
                 playerIn.level.addFreshEntity(entity);
-                playerIn.swing(Hand.MAIN_HAND);
+                playerIn.swing(Hand.MAIN_HAND, true);
             }
         }));
         spellRegistry.register(new BCMSpell(pluginIn, "wind_crescent", BCMSpell.Type.WIND_MAGIC, 25, 70, false, 16, 48, false, (playerIn, modifier0, modifier1, playerCapability) -> {

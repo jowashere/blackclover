@@ -7,6 +7,7 @@ import com.github.jowashere.blackclover.util.helpers.ModeHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fml.network.NetworkEvent;
@@ -46,7 +47,7 @@ public class PacketModeSync {
         ctx.get().enqueueWork(() -> {
             if (msg.toClient) {
                 Entity player = Minecraft.getInstance().level.getEntity(msg.playerID);
-                if (player instanceof ClientPlayerEntity) {
+                if (player instanceof PlayerEntity) {
                     LazyOptional<IPlayerHandler> capabilities = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
                     IPlayerHandler playercap = capabilities.orElse(new PlayerCapability());
                     playercap.setPlayerBodyMode(ModeHelper.getModeFromString(msg.mode));
