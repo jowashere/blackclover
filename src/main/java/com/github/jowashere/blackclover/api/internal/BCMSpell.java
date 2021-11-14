@@ -130,7 +130,10 @@ public class BCMSpell {
     }
 
     public int getCooldown(){
-        return cooldown;
+        if(cooldown > 0){
+            return cooldown;
+        }
+        return 0;
     }
 
     public boolean isSkillSpell(){
@@ -138,42 +141,43 @@ public class BCMSpell {
     }
 
     public void act(PlayerEntity playerIn, int modifier0, int modifier1) {
-        IPlayerHandler playercap = playerIn.getCapability(PlayerProvider.CAPABILITY_PLAYER).orElseThrow(() -> new RuntimeException("CAPABILITY_PLAYER NOT FOUND!"));
-        if (this.extraCheck != null) {
-            if (!this.extraCheck.check(playerIn, modifier0, modifier1)) {
-                return;
+        if(!playerIn.level.isClientSide) {
+            IPlayerHandler playercap = playerIn.getCapability(PlayerProvider.CAPABILITY_PLAYER).orElseThrow(() -> new RuntimeException("CAPABILITY_PLAYER NOT FOUND!"));
+            if (this.extraCheck != null) {
+                if (!this.extraCheck.check(playerIn, modifier0, modifier1)) {
+                    return;
+                }
             }
-        }
 
-        float manaCost;
+            float manaCost;
 
-        manaCost = this.getManaCost() +  ((float) Math.sqrt(playercap.returnMagicLevel()) * (this.getManaCost() / 5) );
+            manaCost = this.getManaCost() +  ((float) Math.sqrt(playercap.returnMagicLevel()) * (this.getManaCost() / 5) );
 
-        if(this.isSkillSpell() || playercap.returnHasGrimoire()){
-            if (playercap.returnMana() >= manaCost) {
-                if (!playerIn.level.isClientSide) {
+            if(this.isSkillSpell() || playercap.returnHasGrimoire()){
+                if (playercap.returnMana() >= manaCost) {
                     playercap.addMana((-manaCost));
                     NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) playerIn), new PacketManaSync(playercap.returnMana()));
                     playercap.addMagicExp(manaCost);
                     NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() ->(ServerPlayerEntity) playerIn), new PacketMagicExpSync(playercap.returnMagicExp(), true));
+
+                    if (!playercap.returnToggleSpellMessage() && !this.isToggle() && !playerIn.level.isClientSide)
+                        playerIn.displayClientMessage(new StringTextComponent(new TranslationTextComponent("spell." + this.getCorrelatedPlugin().getPluginId() + "." + this.getName()).getString() + "! " + + ((int) -manaCost) + " Mana"), true);
+                    this.action.action(playerIn, modifier0, modifier1, playercap);
+                    if(!this.isToggle())
+                        this.applySpellCD(this, playerIn);
                 }
-                if (!playercap.returnToggleSpellMessage() && !this.isToggle() && !playerIn.level.isClientSide)
-                    playerIn.displayClientMessage(new StringTextComponent(new TranslationTextComponent("spell." + this.getCorrelatedPlugin().getPluginId() + "." + this.getName()).getString() + "! " + + ((int) -manaCost) + " Mana"), true);
-                this.action.action(playerIn, modifier0, modifier1, playercap);
-                if(!this.isToggle())
-                    this.applySpellCD(this, playerIn);
-            }
-            else {
-                if (isToggle()) {
-                    throwCancelEvent(playerIn);
-                    String nbtName = getCorrelatedPlugin().getPluginId() + "_" + getName();
-                    playerIn.getPersistentData().putBoolean(nbtName, false);
-                    NetworkLoader.INSTANCE.sendToServer(new SPacketSpellNBTSync(playerIn.getId(), nbtName, false));
+                else {
+                    if (isToggle()) {
+                        throwCancelEvent(playerIn);
+                        String nbtName = getCorrelatedPlugin().getPluginId() + "_" + getName();
+                        playerIn.getPersistentData().putBoolean(nbtName, false);
+                        NetworkLoader.INSTANCE.send(PacketDistributor.ALL.noArg(), new PacketSpellNBTSync(playerIn.getId(), nbtName, false));
+                    }
+                    playerIn.displayClientMessage(new TranslationTextComponent("spell." + Main.MODID + ".message.notenoughmana"), true);
                 }
-                playerIn.displayClientMessage(new TranslationTextComponent("spell." + Main.MODID + ".message.notenoughmana"), true);
+            }else {
+                playerIn.displayClientMessage(new TranslationTextComponent("spell." + Main.MODID + ".message.nogrimoire"), true);
             }
-        }else {
-            playerIn.displayClientMessage(new TranslationTextComponent("spell." + Main.MODID + ".message.nogrimoire"), true);
         }
     }
 
@@ -255,34 +259,26 @@ public class BCMSpell {
         IPlayerHandler playercap = player.getCapability(PlayerProvider.CAPABILITY_PLAYER).orElseThrow(() -> new RuntimeException("CAPABILITY_PLAYER NOT FOUND!"));
         String name = "spell." + spell.getCorrelatedPlugin().getPluginId() + "." + spell.getName();
 
-        if(playercap.returnKeybind1().equals(name)){
-            playercap.setKeybind1CD(spell.getCooldown());
-            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketKeybindCD(1, spell.getCooldown(), player.getId()));
-        }else if(playercap.returnKeybind2().equals(name)){
-            playercap.setKeybind2CD(spell.getCooldown());
-            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketKeybindCD(2, spell.getCooldown(), player.getId()));
-        }else if(playercap.returnKeybind3().equals(name)){
-            playercap.setKeybind3CD(spell.getCooldown());
-            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketKeybindCD(3, spell.getCooldown(), player.getId()));
-        }else if(playercap.returnKeybind4().equals(name)){
-            playercap.setKeybind4CD(spell.getCooldown());
-            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketKeybindCD(4, spell.getCooldown(), player.getId()));
-        }else if(playercap.returnKeybind5().equals(name)){
-            playercap.setKeybind5CD(spell.getCooldown());
-            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketKeybindCD(5, spell.getCooldown(), player.getId()));
-        }else if(playercap.returnKeybind6().equals(name)){
-            playercap.setKeybind6CD(spell.getCooldown());
-            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketKeybindCD(6, spell.getCooldown(), player.getId()));
-        }else if(playercap.returnKeybind7().equals(name)){
-            playercap.setKeybind7CD(spell.getCooldown());
-            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketKeybindCD(7, spell.getCooldown(), player.getId()));
-        }else if(playercap.returnKeybind8().equals(name)){
-            playercap.setKeybind8CD(spell.getCooldown());
-            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketKeybindCD(8, spell.getCooldown(), player.getId()));
-        }else if(playercap.returnKeybind9().equals(name)){
-            playercap.setKeybind9CD(spell.getCooldown());
-            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketKeybindCD(9, spell.getCooldown(), player.getId()));
+        if (player.level.isClientSide) {
+            if (playercap.returnKeybind(1).equals(name)) {
+                playercap.setKeybindCD(1, spell.getCooldown());
+            } else if (playercap.returnKeybind(2).equals(name)) {
+                playercap.setKeybindCD(2, spell.getCooldown());
+            } else if (playercap.returnKeybind(3).equals(name)) {
+                playercap.setKeybindCD(3, spell.getCooldown());
+            } else if (playercap.returnKeybind(4).equals(name)) {
+                playercap.setKeybindCD(4, spell.getCooldown());
+            } else if (playercap.returnKeybind(5).equals(name)) {
+                playercap.setKeybindCD(5, spell.getCooldown());
+            } else if (playercap.returnKeybind(6).equals(name)) {
+                playercap.setKeybindCD(6, spell.getCooldown());
+            } else if (playercap.returnKeybind(7).equals(name)) {
+                playercap.setKeybindCD(7, spell.getCooldown());
+            } else if (playercap.returnKeybind(8).equals(name)) {
+                playercap.setKeybindCD(8, spell.getCooldown());
+            } else if (playercap.returnKeybind(9).equals(name)) {
+                playercap.setKeybindCD(9, spell.getCooldown());
+            }
         }
-
     }
 }

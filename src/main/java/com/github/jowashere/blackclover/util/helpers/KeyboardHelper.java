@@ -80,76 +80,84 @@ public class KeyboardHelper {
 
             if (playerc.returnSpellModeToggle()) {
                 if (KeybindInit.KEYBIND1.isDown()) {
-                    if(playerc.returnKeybind1CD() <= 0){
-                        if(SpellHelper.getSpellFromName(playerc.returnKeybind1()) != null){
-                            SpellCaller.SpellCaller(player, playerc.returnKeybind1());
-                            NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("",1, player.getId()));
+                    int key = 1;
+                    if(playerc.returnKeybindCD(key) <= 0){
+                        if(SpellHelper.getSpellFromName(playerc.returnKeybind(key)) != null){
+                            NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("", key, player.getId()));
+                            playerc.setKeybindCD(key, SpellHelper.getSpellFromName(playerc.returnKeybind(key)).getCooldown());
                         }
                     }
                 }
                 if (KeybindInit.KEYBIND2.isDown()) {
-                    if(playerc.returnKeybind2CD() <= 0){
-                        if(SpellHelper.getSpellFromName(playerc.returnKeybind2()) != null){
-                            SpellCaller.SpellCaller(player, playerc.returnKeybind2());
-                            NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("", 2, player.getId()));
+                    int key = 2;
+                    if(playerc.returnKeybindCD(key) <= 0){
+                        if(SpellHelper.getSpellFromName(playerc.returnKeybind(key)) != null){
+                            NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("", key, player.getId()));
+                            playerc.setKeybindCD(key, SpellHelper.getSpellFromName(playerc.returnKeybind(key)).getCooldown());
                         }
                     }
                 }
                 if (KeybindInit.KEYBIND3.isDown()) {
-                    if(playerc.returnKeybind3CD() <= 0){
-                        if(SpellHelper.getSpellFromName(playerc.returnKeybind3()) != null){
-                            SpellCaller.SpellCaller(player, playerc.returnKeybind3());
-                            NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("", 3, player.getId()));
+                    int key = 3;
+                    if(playerc.returnKeybindCD(key) <= 0){
+                        if(SpellHelper.getSpellFromName(playerc.returnKeybind(key)) != null){
+                            NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("", key, player.getId()));
+                            playerc.setKeybindCD(key, SpellHelper.getSpellFromName(playerc.returnKeybind(key)).getCooldown());
                         }
                     }
                 }
                 if (KeybindInit.KEYBIND4.isDown()) {
-                    if(playerc.returnKeybind4CD() <= 0){
-                        if(SpellHelper.getSpellFromName(playerc.returnKeybind4()) != null){
-                            SpellCaller.SpellCaller(player, playerc.returnKeybind4());
-                            NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("", 4, player.getId()));
+                    int key = 4;
+                    if(playerc.returnKeybindCD(key) <= 0){
+                        if(SpellHelper.getSpellFromName(playerc.returnKeybind(key)) != null){
+                            NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("", key, player.getId()));
+                            playerc.setKeybindCD(key, SpellHelper.getSpellFromName(playerc.returnKeybind(key)).getCooldown());
                         }
                     }
                 }
                 if (KeybindInit.KEYBIND5.isDown()) {
-                    if(playerc.returnKeybind5CD() <= 0){
-                        if(SpellHelper.getSpellFromName(playerc.returnKeybind5()) != null){
-                            SpellCaller.SpellCaller(player, playerc.returnKeybind5());
-                            NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("", 5, player.getId()));
+                    int key = 5;
+                    if(playerc.returnKeybindCD(key) <= 0){
+                        if(SpellHelper.getSpellFromName(playerc.returnKeybind(key)) != null){
+                            NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("", key, player.getId()));
+                            playerc.setKeybindCD(key, SpellHelper.getSpellFromName(playerc.returnKeybind(key)).getCooldown());
                         }
                     }
                 }
                 if (KeybindInit.KEYBIND6.isDown()) {
-                    if(playerc.returnKeybind6CD() <= 0){
-                        if(SpellHelper.getSpellFromName(playerc.returnKeybind6()) != null){
-                            SpellCaller.SpellCaller(player, playerc.returnKeybind6());
-                            NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("", 6, player.getId()));
-                       }
+                    int key = 6;
+                    if(playerc.returnKeybindCD(key) <= 0){
+                        if(SpellHelper.getSpellFromName(playerc.returnKeybind(key)) != null){
+                            NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("", key, player.getId()));
+                            playerc.setKeybindCD(key, SpellHelper.getSpellFromName(playerc.returnKeybind(key)).getCooldown());
+                        }
                     }
                 }
                 if (KeybindInit.KEYBIND7.isDown()) {
-                    if(playerc.returnKeybind7CD() <= 0){
-                        if(SpellHelper.getSpellFromName(playerc.returnKeybind7()) != null){
-                            SpellCaller.SpellCaller(player, playerc.returnKeybind7());
-                            NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("", 7, player.getId()));
+                    int key = 7;
+                    if(playerc.returnKeybindCD(key) <= 0){
+                        if(SpellHelper.getSpellFromName(playerc.returnKeybind(key)) != null){
+                            NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("", key, player.getId()));
+                            playerc.setKeybindCD(key, SpellHelper.getSpellFromName(playerc.returnKeybind(key)).getCooldown());
                         }
                     }
                 }
                 if (KeybindInit.KEYBIND8.isDown()) {
-                    if(playerc.returnKeybind8CD() <= 0){
-                        if(SpellHelper.getSpellFromName(playerc.returnKeybind8()) != null){
-                            SpellCaller.SpellCaller(player, playerc.returnKeybind8());
-                            NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("", 8, player.getId()));
+                    int key = 8;
+                    if(playerc.returnKeybindCD(key) <= 0){
+                        if(SpellHelper.getSpellFromName(playerc.returnKeybind(key)) != null){
+                            NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("", key, player.getId()));
+                            playerc.setKeybindCD(key, SpellHelper.getSpellFromName(playerc.returnKeybind(key)).getCooldown());
                         }
                     }
                 }
                 if (KeybindInit.KEYBIND9.isDown()) {
-                    if(playerc.returnKeybind9CD() <= 0){
-                        if(SpellHelper.getSpellFromName(playerc.returnKeybind9()) != null){
-                            SpellCaller.SpellCaller(player, playerc.returnKeybind9());
-                            NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("", 9, player.getId()));
+                    int key = 9;
+                    if(playerc.returnKeybindCD(key) <= 0){
+                        if(SpellHelper.getSpellFromName(playerc.returnKeybind(key)) != null){
+                            NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("", key, player.getId()));
+                            playerc.setKeybindCD(key, SpellHelper.getSpellFromName(playerc.returnKeybind(key)).getCooldown());
                         }
-
                     }
                 }
             }

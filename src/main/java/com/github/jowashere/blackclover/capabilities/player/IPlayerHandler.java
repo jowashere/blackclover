@@ -63,45 +63,13 @@ public interface IPlayerHandler {
 	void setGrimoireTexture(String texture);
 	String getGrimoireTexture();
 
-	void setKeybind1(String k1name);
-	void setKeybind2(String k2name);
-	void setKeybind3(String k3name);
-	void setKeybind4(String k4name);
-	void setKeybind5(String k5name);
-	void setKeybind6(String k6name);
-	void setKeybind7(String k7name);
-	void setKeybind8(String k8name);
-	void setKeybind9(String k9name);
+	void setKeybind(int key, String name);
 
-	String returnKeybind1();
-	String returnKeybind2();
-	String returnKeybind3();
-	String returnKeybind4();
-	String returnKeybind5();
-	String returnKeybind6();
-	String returnKeybind7();
-	String returnKeybind8();
-	String returnKeybind9();
+	String returnKeybind(int key);
 
-	void setKeybind1CD(int cd);
-	void setKeybind2CD(int cd);
-	void setKeybind3CD(int cd);
-	void setKeybind4CD(int cd);
-	void setKeybind5CD(int cd);
-	void setKeybind6CD(int cd);
-	void setKeybind7CD(int cd);
-	void setKeybind8CD(int cd);
-	void setKeybind9CD(int cd);
+	void setKeybindCD(int key, int cd);
 
-	int returnKeybind1CD();
-	int returnKeybind2CD();
-	int returnKeybind3CD();
-	int returnKeybind4CD();
-	int returnKeybind5CD();
-	int returnKeybind6CD();
-	int returnKeybind7CD();
-	int returnKeybind8CD();
-	int returnKeybind9CD();
+	int returnKeybindCD(int key);
 
 	void setSpellBoolean(BCMSpell spell, boolean has);
 	boolean hasSpellBoolean(BCMSpell spell);

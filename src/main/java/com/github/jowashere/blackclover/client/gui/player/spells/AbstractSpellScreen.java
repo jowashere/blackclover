@@ -59,357 +59,38 @@ public abstract class AbstractSpellScreen extends Screen {
 
     protected boolean assignSpells(int keyCode, int scanCode) {
 
+        int intendedKey = 0;
+
         if(KeybindInit.KEYBIND1.isActiveAndMatches(InputMappings.getKey(keyCode, scanCode))){
-            {
-                if(playerc.returnKeybind2().equals(this.spellToggle)){
-                    playerc.setKeybind2("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(2, "", false));
-                }
-                if(playerc.returnKeybind3().equals(this.spellToggle)){
-                    playerc.setKeybind3("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(3, "", false));
-                }
-                if(playerc.returnKeybind4().equals(this.spellToggle)){
-                    playerc.setKeybind4("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(4, "", false));
-                }
-                if(playerc.returnKeybind5().equals(this.spellToggle)){
-                    playerc.setKeybind5("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(5, "", false));
-                }
-                if(playerc.returnKeybind6().equals(this.spellToggle)){
-                    playerc.setKeybind6("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(6, "", false));
-                }
-                if(playerc.returnKeybind7().equals(this.spellToggle)){
-                    playerc.setKeybind7("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(7, "", false));
-                }
-                if(playerc.returnKeybind8().equals(this.spellToggle)){
-                    playerc.setKeybind8("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(8, "", false));
-                }
-                if(playerc.returnKeybind9().equals(this.spellToggle)){
-                    playerc.setKeybind9("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(9, "", false));
-                }
-            }
-            playerc.setKeybind1(this.spellToggle);
-            NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(1, this.spellToggle, false));
-            player.sendMessage(new StringTextComponent("Keybind 1 Set to: " + new TranslationTextComponent(this.spellToggle).getString()), player.getUUID());
-            this.spellToggle = "";
+            intendedKey = 1;
         }else if(KeybindInit.KEYBIND2.isActiveAndMatches(InputMappings.getKey(keyCode, scanCode))){
-            {
-                if(playerc.returnKeybind1().equals(this.spellToggle)){
-                    playerc.setKeybind1("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(1, "", false));
-                }
-                if(playerc.returnKeybind3().equals(this.spellToggle)){
-                    playerc.setKeybind3("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(3, "", false));
-                }
-                if(playerc.returnKeybind4().equals(this.spellToggle)){
-                    playerc.setKeybind4("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(4, "", false));
-                }
-                if(playerc.returnKeybind5().equals(this.spellToggle)){
-                    playerc.setKeybind5("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(5, "", false));
-                }
-                if(playerc.returnKeybind6().equals(this.spellToggle)){
-                    playerc.setKeybind6("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(6, "", false));
-                }
-                if(playerc.returnKeybind7().equals(this.spellToggle)){
-                    playerc.setKeybind7("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(7, "", false));
-                }
-                if(playerc.returnKeybind8().equals(this.spellToggle)){
-                    playerc.setKeybind8("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(8, "", false));
-                }
-                if(playerc.returnKeybind9().equals(this.spellToggle)){
-                    playerc.setKeybind9("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(9, "", false));
-                }
-            }
-            playerc.setKeybind2(this.spellToggle);
-            NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(2, this.spellToggle, false));
-            player.sendMessage(new StringTextComponent("Keybind 2 Set to: " + new TranslationTextComponent(this.spellToggle).getString()), player.getUUID());
-            this.spellToggle = "";
+            intendedKey = 2;
         }else if(KeybindInit.KEYBIND3.isActiveAndMatches(InputMappings.getKey(keyCode, scanCode))){
-            {
-                if(playerc.returnKeybind2().equals(this.spellToggle)){
-                    playerc.setKeybind2("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(2, "", false));
-                }
-                if(playerc.returnKeybind1().equals(this.spellToggle)){
-                    playerc.setKeybind1("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(1, "", false));
-                }
-                if(playerc.returnKeybind4().equals(this.spellToggle)){
-                    playerc.setKeybind4("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(4, "", false));
-                }
-                if(playerc.returnKeybind5().equals(this.spellToggle)){
-                    playerc.setKeybind5("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(5, "", false));
-                }
-                if(playerc.returnKeybind6().equals(this.spellToggle)){
-                    playerc.setKeybind6("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(6, "", false));
-                }
-                if(playerc.returnKeybind7().equals(this.spellToggle)){
-                    playerc.setKeybind7("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(7, "", false));
-                }
-                if(playerc.returnKeybind8().equals(this.spellToggle)){
-                    playerc.setKeybind8("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(8, "", false));
-                }
-                if(playerc.returnKeybind9().equals(this.spellToggle)){
-                    playerc.setKeybind9("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(9, "", false));
-                }
-            }
-            playerc.setKeybind3(this.spellToggle);
-            NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(3, this.spellToggle, false));
-            player.sendMessage(new StringTextComponent("Keybind 3 Set to: " + new TranslationTextComponent(this.spellToggle).getString()), player.getUUID());
-            this.spellToggle = "";
+            intendedKey = 3;
         }else if(KeybindInit.KEYBIND4.isActiveAndMatches(InputMappings.getKey(keyCode, scanCode))){
-            {
-                if(playerc.returnKeybind2().equals(this.spellToggle)){
-                    playerc.setKeybind2("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(2, "", false));
-                }
-                if(playerc.returnKeybind3().equals(this.spellToggle)){
-                    playerc.setKeybind3("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(3, "", false));
-                }
-                if(playerc.returnKeybind1().equals(this.spellToggle)){
-                    playerc.setKeybind1("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(1, "", false));
-                }
-                if(playerc.returnKeybind5().equals(this.spellToggle)){
-                    playerc.setKeybind5("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(5, "", false));
-                }
-                if(playerc.returnKeybind6().equals(this.spellToggle)){
-                    playerc.setKeybind6("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(6, "", false));
-                }
-                if(playerc.returnKeybind7().equals(this.spellToggle)){
-                    playerc.setKeybind7("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(7, "", false));
-                }
-                if(playerc.returnKeybind8().equals(this.spellToggle)){
-                    playerc.setKeybind8("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(8, "", false));
-                }
-                if(playerc.returnKeybind9().equals(this.spellToggle)){
-                    playerc.setKeybind9("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(9, "", false));
-                }
-            }
-            playerc.setKeybind4(this.spellToggle);
-            NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(4, this.spellToggle, false));
-            player.sendMessage(new StringTextComponent("Keybind 4 Set to: " + new TranslationTextComponent(this.spellToggle).getString()), player.getUUID());
-            this.spellToggle = "";
+            intendedKey = 4;
         }else if(KeybindInit.KEYBIND5.isActiveAndMatches(InputMappings.getKey(keyCode, scanCode))){
-            {
-                if(playerc.returnKeybind2().equals(this.spellToggle)){
-                    playerc.setKeybind2("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(2, "", false));
-                }
-                if(playerc.returnKeybind3().equals(this.spellToggle)){
-                    playerc.setKeybind3("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(3, "", false));
-                }
-                if(playerc.returnKeybind4().equals(this.spellToggle)){
-                    playerc.setKeybind4("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(4, "", false));
-                }
-                if(playerc.returnKeybind1().equals(this.spellToggle)){
-                    playerc.setKeybind1("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(1, "", false));
-                }
-                if(playerc.returnKeybind6().equals(this.spellToggle)){
-                    playerc.setKeybind6("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(6, "", false));
-                }
-                if(playerc.returnKeybind7().equals(this.spellToggle)){
-                    playerc.setKeybind7("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(7, "", false));
-                }
-                if(playerc.returnKeybind8().equals(this.spellToggle)){
-                    playerc.setKeybind8("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(8, "", false));
-                }
-                if(playerc.returnKeybind9().equals(this.spellToggle)){
-                    playerc.setKeybind9("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(9, "", false));
-                }
-            }
-            playerc.setKeybind5(this.spellToggle);
-            NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(5, this.spellToggle, false));
-            player.sendMessage(new StringTextComponent("Keybind 5 Set to: " + new TranslationTextComponent(this.spellToggle).getString()), player.getUUID());
-            this.spellToggle = "";
+            intendedKey = 5;
         }else if(KeybindInit.KEYBIND6.isActiveAndMatches(InputMappings.getKey(keyCode, scanCode))){
-            {
-                if(playerc.returnKeybind2().equals(this.spellToggle)){
-                    playerc.setKeybind2("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(2, "", false));
-                }
-                if(playerc.returnKeybind3().equals(this.spellToggle)){
-                    playerc.setKeybind3("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(3, "", false));
-                }
-                if(playerc.returnKeybind4().equals(this.spellToggle)){
-                    playerc.setKeybind4("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(4, "", false));
-                }
-                if(playerc.returnKeybind5().equals(this.spellToggle)){
-                    playerc.setKeybind5("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(5, "", false));
-                }
-                if(playerc.returnKeybind1().equals(this.spellToggle)){
-                    playerc.setKeybind1("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(1, "", false));
-                }
-                if(playerc.returnKeybind7().equals(this.spellToggle)){
-                    playerc.setKeybind7("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(7, "", false));
-                }
-                if(playerc.returnKeybind8().equals(this.spellToggle)){
-                    playerc.setKeybind8("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(8, "", false));
-                }
-                if(playerc.returnKeybind9().equals(this.spellToggle)){
-                    playerc.setKeybind9("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(9, "", false));
-                }
-            }
-            playerc.setKeybind6(this.spellToggle);
-            NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(6, this.spellToggle, false));
-            player.sendMessage(new StringTextComponent("Keybind 6 Set to: " + new TranslationTextComponent(this.spellToggle).getString()), player.getUUID());
-            this.spellToggle = "";
+            intendedKey = 6;
         }else if(KeybindInit.KEYBIND7.isActiveAndMatches(InputMappings.getKey(keyCode, scanCode))){
-            {
-                if(playerc.returnKeybind2().equals(this.spellToggle)){
-                    playerc.setKeybind2("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(2, "", false));
-                }
-                if(playerc.returnKeybind3().equals(this.spellToggle)){
-                    playerc.setKeybind3("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(3, "", false));
-                }
-                if(playerc.returnKeybind4().equals(this.spellToggle)){
-                    playerc.setKeybind4("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(4, "", false));
-                }
-                if(playerc.returnKeybind5().equals(this.spellToggle)){
-                    playerc.setKeybind5("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(5, "", false));
-                }
-                if(playerc.returnKeybind6().equals(this.spellToggle)){
-                    playerc.setKeybind6("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(6, "", false));
-                }
-                if(playerc.returnKeybind1().equals(this.spellToggle)){
-                    playerc.setKeybind1("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(1, "", false));
-                }
-                if(playerc.returnKeybind8().equals(this.spellToggle)){
-                    playerc.setKeybind8("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(8, "", false));
-                }
-                if(playerc.returnKeybind9().equals(this.spellToggle)){
-                    playerc.setKeybind9("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(9, "", false));
-                }
-            }
-            playerc.setKeybind7(this.spellToggle);
-            NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(7, this.spellToggle, false));
-            player.sendMessage(new StringTextComponent("Keybind 7 Set to: " + new TranslationTextComponent(this.spellToggle).getString()), player.getUUID());
-            this.spellToggle = "";
+            intendedKey = 7;
         }else if(KeybindInit.KEYBIND8.isActiveAndMatches(InputMappings.getKey(keyCode, scanCode))){
-            {
-                if(playerc.returnKeybind2().equals(this.spellToggle)){
-                    playerc.setKeybind2("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(2, "", false));
-                }
-                if(playerc.returnKeybind3().equals(this.spellToggle)){
-                    playerc.setKeybind3("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(3, "", false));
-                }
-                if(playerc.returnKeybind4().equals(this.spellToggle)){
-                    playerc.setKeybind4("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(4, "", false));
-                }
-                if(playerc.returnKeybind5().equals(this.spellToggle)){
-                    playerc.setKeybind5("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(5, "", false));
-                }
-                if(playerc.returnKeybind6().equals(this.spellToggle)){
-                    playerc.setKeybind6("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(6, "", false));
-                }
-                if(playerc.returnKeybind7().equals(this.spellToggle)){
-                    playerc.setKeybind7("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(7, "", false));
-                }
-                if(playerc.returnKeybind1().equals(this.spellToggle)){
-                    playerc.setKeybind1("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(1, "", false));
-                }
-                if(playerc.returnKeybind9().equals(this.spellToggle)){
-                    playerc.setKeybind9("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(9, "", false));
-                }
-            }
-            playerc.setKeybind8(this.spellToggle);
-            NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(8, this.spellToggle, false));
-            player.sendMessage(new StringTextComponent("Keybind 8 Set to: " + new TranslationTextComponent(this.spellToggle).getString()), player.getUUID());
-            this.spellToggle = "";
+            intendedKey = 8;
         }else if(KeybindInit.KEYBIND9.isActiveAndMatches(InputMappings.getKey(keyCode, scanCode))){
-            {
-                if(playerc.returnKeybind2().equals(this.spellToggle)){
-                    playerc.setKeybind2("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(1, "", false));
-                }
-                if(playerc.returnKeybind3().equals(this.spellToggle)){
-                    playerc.setKeybind3("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(3, "", false));
-                }
-                if(playerc.returnKeybind4().equals(this.spellToggle)){
-                    playerc.setKeybind4("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(4, "", false));
-                }
-                if(playerc.returnKeybind5().equals(this.spellToggle)){
-                    playerc.setKeybind5("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(5, "", false));
-                }
-                if(playerc.returnKeybind6().equals(this.spellToggle)){
-                    playerc.setKeybind6("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(6, "", false));
-                }
-                if(playerc.returnKeybind7().equals(this.spellToggle)){
-                    playerc.setKeybind7("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(7, "", false));
-                }
-                if(playerc.returnKeybind8().equals(this.spellToggle)){
-                    playerc.setKeybind8("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(8, "", false));
-                }
-                if(playerc.returnKeybind1().equals(this.spellToggle)){
-                    playerc.setKeybind1("");
-                    NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(1, "", false));
-                }
+            intendedKey = 9;
+        }
+
+        for (int i = 1; i < 10; i ++){
+            if(i == intendedKey){
+                playerc.setKeybind(i, this.spellToggle);
+                NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(i, this.spellToggle, false));
+                player.sendMessage(new StringTextComponent("Keybind " + i + " Set to: " + new TranslationTextComponent(this.spellToggle).getString()), player.getUUID());
+                this.spellToggle = "";
+            }else if(i != intendedKey && playerc.returnKeybind(i) == this.spellToggle){
+                playerc.setKeybind(i, "");
+                NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(i, "", false));
             }
-            playerc.setKeybind9(this.spellToggle);
-            NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(9, this.spellToggle, false));
-            player.sendMessage(new StringTextComponent("Keybind 9 Set to: " + new TranslationTextComponent(this.spellToggle).getString()), player.getUUID());
-            this.spellToggle = "";
         }
 
         return false;
@@ -465,65 +146,38 @@ public abstract class AbstractSpellScreen extends Screen {
             for (int i = 0; i < 9; i++)
             {
                 BCMSpell spell = null;
-                int spellcd = 0;
 
                 if(i == 0){
-                    spell = SpellHelper.getSpellFromName(playerc.returnKeybind1());
-                    spellcd = playerc.returnKeybind1CD();
+                    spell = SpellHelper.getSpellFromName(playerc.returnKeybind(1));
                 }else if (i == 1){
-                    spell = SpellHelper.getSpellFromName(playerc.returnKeybind2());
-                    spellcd = playerc.returnKeybind2CD();
+                    spell = SpellHelper.getSpellFromName(playerc.returnKeybind(2));
                 }else if (i == 2){
-                    spell = SpellHelper.getSpellFromName(playerc.returnKeybind3());
-                    spellcd = playerc.returnKeybind3CD();
+                    spell = SpellHelper.getSpellFromName(playerc.returnKeybind(3));
                 }else if (i == 3){
-                    spell = SpellHelper.getSpellFromName(playerc.returnKeybind4());
-                    spellcd = playerc.returnKeybind4CD();
+                    spell = SpellHelper.getSpellFromName(playerc.returnKeybind(4));
                 }else if (i == 4){
-                    spell = SpellHelper.getSpellFromName(playerc.returnKeybind5());
-                    spellcd = playerc.returnKeybind5CD();
+                    spell = SpellHelper.getSpellFromName(playerc.returnKeybind(5));
                 }else if (i == 5){
-                    spell = SpellHelper.getSpellFromName(playerc.returnKeybind6());
-                    spellcd = playerc.returnKeybind6CD();
+                    spell = SpellHelper.getSpellFromName(playerc.returnKeybind(6));
                 }else if (i == 6){
-                    spell = SpellHelper.getSpellFromName(playerc.returnKeybind7());
-                    spellcd = playerc.returnKeybind7CD();
+                    spell = SpellHelper.getSpellFromName(playerc.returnKeybind(7));
                 }else if (i == 7){
-                    spell = SpellHelper.getSpellFromName(playerc.returnKeybind8());
-                    spellcd = playerc.returnKeybind8CD();
+                    spell = SpellHelper.getSpellFromName(playerc.returnKeybind(8));
                 }else if (i == 8){
-                    spell = SpellHelper.getSpellFromName(playerc.returnKeybind9());
-                    spellcd = playerc.returnKeybind9CD();
+                    spell = SpellHelper.getSpellFromName(playerc.returnKeybind(9));
                 }
 
                 if(spell == null)
                 {
                     GuiUtils.drawTexturedModalRect((posX - 200 + (i * 50)) / 2, posY - 23, 0, 0, 23, 23, 0);
                     continue;
-                }else {
-
                 }
 
                 String number = "";
 
-                float cooldown = 23 - (float) (((spellcd - 10) / spell.getCooldown()) * 23);
                 float threshold = 23;
                 float charge = 23;
 
-                if(spellcd > 0 && spellcd - 10 > 0)
-                    number = (int) spellcd - 10 + " ";
-
-                if(spell.isToggle())
-                {
-
-                }
-
-
-                // Setting their color based on their state
-                if (spellcd > 10)
-                    GlStateManager._color4f(1, 0, 0, 1);
-                else if (spell.isToggle())
-                    GlStateManager._color4f(0, 0, 1, 1);
                 // Drawing the slot
                 GuiUtils.drawTexturedModalRect( matrixStack, (posX - 200 + (i * 50)) / 2, posY - 23, 0, 0, 23, 23, 0);
                 // Reverting the color back to avoid future slots being wrongly colored

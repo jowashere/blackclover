@@ -11,6 +11,8 @@ import com.github.jowashere.blackclover.entities.projectiles.spells.wind.WindCre
 import com.github.jowashere.blackclover.entities.summons.WindHawkEntity;
 import com.github.jowashere.blackclover.init.EffectInit;
 import com.github.jowashere.blackclover.init.EntityInit;
+import com.github.jowashere.blackclover.util.helpers.BCMHelper;
+import com.github.jowashere.blackclover.util.helpers.SpellHelper;
 import net.minecraft.entity.*;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.ParticleTypes;
@@ -20,6 +22,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.RayTraceContext;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
@@ -52,61 +55,19 @@ public class WindSpells {
         spellRegistry.register(new BCMSpell(pluginIn, "towering_tornado", BCMSpell.Type.WIND_MAGIC, 15, 80, false, 16, 32, false, (playerIn, modifier0, modifier1, playerCapability) -> {
             if (!playerIn.level.isClientSide) {
                 Entity entity = playerIn;
-                double x = playerIn.getX();
-                double y = playerIn.getY();
-                double z = playerIn.getZ();
-                IWorld world = playerIn.level;
-                double speed = 0;
-                {
-                    List<Entity> _entfound = world
-                            .getEntitiesOfClass(Entity.class,
-                                    new AxisAlignedBB(x - (6 / 2d), y - (6 / 2d), z - (6 / 2d), x + (6 / 2d), y + (6 / 2d), z + (6 / 2d)), null)
-                            .stream().sorted(new Object() {
-                                Comparator<Entity> compareDistOf(double _x, double _y, double _z) {
-                                    return Comparator.comparing((Function<Entity, Double>) (_entcnd -> _entcnd.distanceToSqr(_x, _y, _z)));
-                                }
-                            }.compareDistOf(x, y, z)).collect(Collectors.toList());
-                    for (Entity entityiterator : _entfound) {
-                        if ((!(entityiterator == entity))) {
-                            speed = (double) 0.4;
-                            if (entityiterator instanceof LivingEntity) {
-                                ((LivingEntity) entityiterator).hurt(DamageSource.playerAttack(playerIn),
-                                        (float) ((new Object() {
-                                            int check(Entity _entity) {
-                                                if (_entity instanceof LivingEntity) {
-                                                    Collection<EffectInstance> effects = ((LivingEntity) _entity).getActiveEffects();
-                                                    for (EffectInstance effect : effects) {
-                                                        if (effect.getEffect() == EffectInit.MAGIC_LEVEL.get())
-                                                            return effect.getAmplifier();
-                                                    }
-                                                }
-                                                return 0;
-                                            }
-                                        }.check(entity)) + 1));
-                            }
-                            entityiterator
-                                    .setDeltaMovement(
-                                            (((entity.level.clip(new RayTraceContext(entity.getEyePosition(1f),
-                                                    entity.getEyePosition(1f).add(entity.getViewVector(1f).x * 5, entity.getViewVector(1f).y * 5,
-                                                            entity.getViewVector(1f).z * 5),
-                                                    RayTraceContext.BlockMode.OUTLINE, RayTraceContext.FluidMode.NONE, entity)).getBlockPos().getX())
-                                                    - (entity.getX())) * speed),
-                                            (((entity.level
-                                                    .clip(new RayTraceContext(entity.getEyePosition(1f),
-                                                            entity.getEyePosition(1f)
-                                                                    .add(entity.getViewVector(1f).x * 5, entity.getViewVector(1f).y * 5, entity.getViewVector(1f).z * 5),
-                                                            RayTraceContext.BlockMode.OUTLINE, RayTraceContext.FluidMode.NONE, entity))
-                                                    .getBlockPos().getY()) - (entity.getY())) * speed),
-                                            (((entity.level.clip(new RayTraceContext(entity.getEyePosition(1f),
-                                                    entity.getEyePosition(1f).add(entity.getViewVector(1f).x * 5, entity.getViewVector(1f).y * 5,
-                                                            entity.getViewVector(1f).z * 5),
-                                                    RayTraceContext.BlockMode.OUTLINE, RayTraceContext.FluidMode.NONE, entity)).getBlockPos().getZ())
-                                                    - (entity.getZ())) * speed));
+
+                List<Entity> entities = BCMHelper.getEntitiesNear(playerIn.blockPosition(), playerIn.level, 6F);
+                for (Entity entityiterator : entities) {
+                    if (entityiterator != playerIn) {
+                        if (entityiterator instanceof LivingEntity) {
+                            Vector3d speed = BCMHelper.propulsion(playerIn, 0.5, 0.5, 0.5);
+                            entityiterator.setDeltaMovement(speed.x, speed.y, speed.z);
+                            entityiterator.hurt(DamageSource.playerAttack(playerIn), SpellHelper.spellDamageCalcP(playerIn, 2, 3));
                         }
                     }
                 }
-                if (world instanceof ServerWorld) {
-                    ((ServerWorld) world).sendParticles(ParticleTypes.SPIT, x, y, z, (int) 100, 3, 2, 3, 1);
+                if (playerIn.level instanceof ServerWorld) {
+                    ((ServerWorld) playerIn.level).sendParticles(ParticleTypes.SPIT, playerIn.getX(), playerIn.getY(), playerIn.getZ(), (int) 100, 3, 2, 3, 1);
                 }
             }
         }));

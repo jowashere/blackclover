@@ -61,25 +61,15 @@ public class CapabilityHandler {
 
             NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketSetGrimoire(playercap.returnHasGrimoire(), true, player.getId()));
 
-            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketKeybindSet(1, playercap.returnKeybind1(), true));
-            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketKeybindSet(2, playercap.returnKeybind2(), true));
-            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketKeybindSet(3, playercap.returnKeybind3(), true));
-            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketKeybindSet(4, playercap.returnKeybind4(), true));
-            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketKeybindSet(5, playercap.returnKeybind5(), true));
-            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketKeybindSet(6, playercap.returnKeybind6(), true));
-            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketKeybindSet(7, playercap.returnKeybind7(), true));
-            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketKeybindSet(8, playercap.returnKeybind8(), true));
-            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketKeybindSet(9, playercap.returnKeybind9(), true));
-
-            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketKeybindCD(1, playercap.returnKeybind1CD(), player.getId()));
-            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketKeybindCD(2, playercap.returnKeybind2CD(), player.getId()));
-            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketKeybindCD(3, playercap.returnKeybind3CD(), player.getId()));
-            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketKeybindCD(4, playercap.returnKeybind4CD(), player.getId()));
-            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketKeybindCD(5, playercap.returnKeybind5CD(), player.getId()));
-            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketKeybindCD(6, playercap.returnKeybind6CD(), player.getId()));
-            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketKeybindCD(7, playercap.returnKeybind7CD(), player.getId()));
-            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketKeybindCD(8, playercap.returnKeybind8CD(), player.getId()));
-            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketKeybindCD(9, playercap.returnKeybind9CD(), player.getId()));
+            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketKeybindSet(1, playercap.returnKeybind(1), true));
+            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketKeybindSet(2, playercap.returnKeybind(2), true));
+            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketKeybindSet(3, playercap.returnKeybind(3), true));
+            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketKeybindSet(4, playercap.returnKeybind(4), true));
+            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketKeybindSet(5, playercap.returnKeybind(5), true));
+            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketKeybindSet(6, playercap.returnKeybind(6), true));
+            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketKeybindSet(7, playercap.returnKeybind(7), true));
+            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketKeybindSet(8, playercap.returnKeybind(8), true));
+            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketKeybindSet(9, playercap.returnKeybind(9), true));
 
             for (BCMSpell spell : BCMRegistry.SPELLS.getValues()) {
                 NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketSetSpellBoolean(spell.getName(), spell.hasSpell(spell, playercap), true));
@@ -103,27 +93,27 @@ public class CapabilityHandler {
 
         mana.setSpellModeToggle(oldMana.returnSpellModeToggle());
 
-        mana.setKeybind1(oldMana.returnKeybind1());
-        mana.setKeybind2(oldMana.returnKeybind2());
-        mana.setKeybind3(oldMana.returnKeybind3());
-        mana.setKeybind4(oldMana.returnKeybind4());
-        mana.setKeybind5(oldMana.returnKeybind5());
-        mana.setKeybind6(oldMana.returnKeybind6());
-        mana.setKeybind7(oldMana.returnKeybind7());
-        mana.setKeybind8(oldMana.returnKeybind8());
-        mana.setKeybind9(oldMana.returnKeybind9());
+        mana.setKeybind(1, oldMana.returnKeybind(1));
+        mana.setKeybind(2, oldMana.returnKeybind(2));
+        mana.setKeybind(3, oldMana.returnKeybind(3));
+        mana.setKeybind(4, oldMana.returnKeybind(4));
+        mana.setKeybind(5, oldMana.returnKeybind(5));
+        mana.setKeybind(6, oldMana.returnKeybind(6));
+        mana.setKeybind(7, oldMana.returnKeybind(7));
+        mana.setKeybind(8, oldMana.returnKeybind(8));
+        mana.setKeybind(9, oldMana.returnKeybind(9));
 
         mana.setGrimoireTexture(oldMana.getGrimoireTexture());
 
-        mana.setKeybind1CD(oldMana.returnKeybind1CD());
-        mana.setKeybind2CD(oldMana.returnKeybind2CD());
-        mana.setKeybind3CD(oldMana.returnKeybind3CD());
-        mana.setKeybind4CD(oldMana.returnKeybind4CD());
-        mana.setKeybind5CD(oldMana.returnKeybind5CD());
-        mana.setKeybind6CD(oldMana.returnKeybind6CD());
-        mana.setKeybind7CD(oldMana.returnKeybind7CD());
-        mana.setKeybind8CD(oldMana.returnKeybind8CD());
-        mana.setKeybind9CD(oldMana.returnKeybind9CD());
+        mana.setKeybindCD(1, oldMana.returnKeybindCD(1));
+        mana.setKeybindCD(2, oldMana.returnKeybindCD(2));
+        mana.setKeybindCD(3, oldMana.returnKeybindCD(3));
+        mana.setKeybindCD(4, oldMana.returnKeybindCD(4));
+        mana.setKeybindCD(5, oldMana.returnKeybindCD(5));
+        mana.setKeybindCD(6, oldMana.returnKeybindCD(6));
+        mana.setKeybindCD(7, oldMana.returnKeybindCD(7));
+        mana.setKeybindCD(8, oldMana.returnKeybindCD(8));
+        mana.setKeybindCD(9, oldMana.returnKeybindCD(9));
 
         mana.setToggleSpellMessage(oldMana.returnToggleSpellMessage());
 

@@ -43,162 +43,21 @@ public class PacketKeybindSet {
     public static void handle(PacketKeybindSet msg, Supplier<NetworkEvent.Context> ctx)
     {
         ctx.get().enqueueWork(() -> {
-            switch (msg.key)
-            {
-                case 1:
-                    if (msg.toClient)
-                    {
-                        Minecraft mc = Minecraft.getInstance();
-                        ClientPlayerEntity player = mc.player;
-                        LazyOptional<IPlayerHandler> capabilities = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
-                        IPlayerHandler playercap = capabilities.orElse(new PlayerCapability());
-                        playercap.setKeybind1(msg.spell);
 
-                    }
-                    else if(!msg.toClient)
-                    {
-                        ServerPlayerEntity player = ctx.get().getSender();
-                        LazyOptional<IPlayerHandler> capabilities = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
-                        IPlayerHandler playercap = capabilities.orElse(new PlayerCapability());
-                        playercap.setKeybind1(msg.spell);
-                    }
-                    break;
-                case 2:
-                    if (msg.toClient)
-                    {
-                        Minecraft mc = Minecraft.getInstance();
-                        ClientPlayerEntity player = mc.player;
-                        LazyOptional<IPlayerHandler> capabilities = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
-                        IPlayerHandler playercap = capabilities.orElse(new PlayerCapability());
-                        playercap.setKeybind2(msg.spell);
-                    }
-                    else if(!msg.toClient)
-                    {
-                        ServerPlayerEntity player = ctx.get().getSender();
-                        LazyOptional<IPlayerHandler> capabilities = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
-                        IPlayerHandler playercap = capabilities.orElse(new PlayerCapability());
-                        playercap.setKeybind2(msg.spell);
-                    }
-                    break;
-                case 3:
-                    if (msg.toClient)
-                    {
-                        Minecraft mc = Minecraft.getInstance();
-                        ClientPlayerEntity player = mc.player;
-                        LazyOptional<IPlayerHandler> capabilities = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
-                        IPlayerHandler playercap = capabilities.orElse(new PlayerCapability());
-                        playercap.setKeybind3(msg.spell);
-                    }
-                    else if(!msg.toClient)
-                    {
-                        ServerPlayerEntity player = ctx.get().getSender();
-                        LazyOptional<IPlayerHandler> capabilities = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
-                        IPlayerHandler playercap = capabilities.orElse(new PlayerCapability());
-                        playercap.setKeybind3(msg.spell);
-                    }
-                    break;
-                case 4:
-                    if (msg.toClient)
-                    {
-                        Minecraft mc = Minecraft.getInstance();
-                        ClientPlayerEntity player = mc.player;
-                        LazyOptional<IPlayerHandler> capabilities = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
-                        IPlayerHandler playercap = capabilities.orElse(new PlayerCapability());
-                        playercap.setKeybind4(msg.spell);
-                    }
-                    else if(!msg.toClient)
-                    {
-                        ServerPlayerEntity player = ctx.get().getSender();
-                        LazyOptional<IPlayerHandler> capabilities = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
-                        IPlayerHandler playercap = capabilities.orElse(new PlayerCapability());
-                        playercap.setKeybind4(msg.spell);
-                    }
-                    break;
-                case 5:
-                    if (msg.toClient)
-                    {
-                        Minecraft mc = Minecraft.getInstance();
-                        ClientPlayerEntity player = mc.player;
-                        LazyOptional<IPlayerHandler> capabilities = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
-                        IPlayerHandler playercap = capabilities.orElse(new PlayerCapability());
-                        playercap.setKeybind5(msg.spell);
-                    }
-                    else if(!msg.toClient)
-                    {
-                        ServerPlayerEntity player = ctx.get().getSender();
-                        LazyOptional<IPlayerHandler> capabilities = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
-                        IPlayerHandler playercap = capabilities.orElse(new PlayerCapability());
-                        playercap.setKeybind5(msg.spell);
-                    }
-                    break;
-                case 6:
-                    if (msg.toClient)
-                    {
-                        Minecraft mc = Minecraft.getInstance();
-                        ClientPlayerEntity player = mc.player;
-                        LazyOptional<IPlayerHandler> capabilities = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
-                        IPlayerHandler playercap = capabilities.orElse(new PlayerCapability());
-                        playercap.setKeybind6(msg.spell);
-                    }
-                    else if(!msg.toClient)
-                    {
-                        ServerPlayerEntity player = ctx.get().getSender();
-                        LazyOptional<IPlayerHandler> capabilities = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
-                        IPlayerHandler playercap = capabilities.orElse(new PlayerCapability());
-                        playercap.setKeybind6(msg.spell);
-                    }
-                    break;
-                case 7:
-                    if (msg.toClient)
-                    {
-                        Minecraft mc = Minecraft.getInstance();
-                        ClientPlayerEntity player = mc.player;
-                        LazyOptional<IPlayerHandler> capabilities = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
-                        IPlayerHandler playercap = capabilities.orElse(new PlayerCapability());
-                        playercap.setKeybind7(msg.spell);
-                    }
-                    else if(!msg.toClient)
-                    {
-                        ServerPlayerEntity player = ctx.get().getSender();
-                        LazyOptional<IPlayerHandler> capabilities = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
-                        IPlayerHandler playercap = capabilities.orElse(new PlayerCapability());
-                        playercap.setKeybind7(msg.spell);
-                    }
-                    break;
-                case 8:
-                    if (msg.toClient)
-                    {
-                        Minecraft mc = Minecraft.getInstance();
-                        ClientPlayerEntity player = mc.player;
-                        LazyOptional<IPlayerHandler> capabilities = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
-                        IPlayerHandler playercap = capabilities.orElse(new PlayerCapability());
-                        playercap.setKeybind8(msg.spell);
-                    }
-                    else if(!msg.toClient)
-                    {
-                        ServerPlayerEntity player = ctx.get().getSender();
-                        LazyOptional<IPlayerHandler> capabilities = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
-                        IPlayerHandler playercap = capabilities.orElse(new PlayerCapability());
-                        playercap.setKeybind8(msg.spell);
-                    }
-                    break;
-                case 9:
-                    if (msg.toClient)
-                    {
-                        Minecraft mc = Minecraft.getInstance();
-                        ClientPlayerEntity player = mc.player;
-                        LazyOptional<IPlayerHandler> capabilities = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
-                        IPlayerHandler playercap = capabilities.orElse(new PlayerCapability());
-                        playercap.setKeybind9(msg.spell);
-                    }
-                    else if(!msg.toClient)
-                    {
-                        ServerPlayerEntity player = ctx.get().getSender();
-                        LazyOptional<IPlayerHandler> capabilities = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
-                        IPlayerHandler playercap = capabilities.orElse(new PlayerCapability());
-                        playercap.setKeybind9(msg.spell);
-                    }
-                    break;
+            if (msg.toClient)
+            {
+                Minecraft mc = Minecraft.getInstance();
+                ClientPlayerEntity player = mc.player;
+                LazyOptional<IPlayerHandler> capabilities = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
+                IPlayerHandler playercap = capabilities.orElse(new PlayerCapability());
+                playercap.setKeybind(msg.key, msg.spell);
+            }
+            else if(!msg.toClient)
+            {
+                ServerPlayerEntity player = ctx.get().getSender();
+                LazyOptional<IPlayerHandler> capabilities = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
+                IPlayerHandler playercap = capabilities.orElse(new PlayerCapability());
+                playercap.setKeybind(msg.key, msg.spell);
             }
         });
         ctx.get().setPacketHandled(true);

@@ -2,7 +2,6 @@ package com.github.jowashere.blackclover.networking.packets.server;
 
 import com.github.jowashere.blackclover.networking.NetworkLoader;
 import com.github.jowashere.blackclover.networking.packets.spells.PacketSpellNBTSync;
-import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.network.PacketBuffer;

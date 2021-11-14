@@ -273,185 +273,99 @@ public class PlayerCapability implements IPlayerHandler {
     }
 
     @Override
-    public void setKeybind1CD(int cd)
+    public void setKeybindCD(int key, int cd)
     {
-        this.key1cd = cd;
+        if(key == 1){
+            this.key1cd = cd;
+        }else if(key == 2){
+            this.key2cd = cd;
+        }else if(key == 3){
+            this.key3cd = cd;
+        }else if(key == 4){
+            this.key4cd = cd;
+        }else if(key == 5){
+            this.key5cd = cd;
+        }else if(key == 6){
+            this.key6cd = cd;
+        }else if(key == 7){
+            this.key7cd = cd;
+        }else if(key == 8){
+            this.key8cd = cd;
+        }else if(key == 9){
+            this.key9cd = cd;
+        }
     }
     @Override
-    public int returnKeybind1CD()
+    public int returnKeybindCD(int key)
     {
-        return this.key1cd;
-    }
-    @Override
-    public void setKeybind2CD(int cd)
-    {
-        this.key2cd = cd;
-    }
-    @Override
-    public int returnKeybind2CD()
-    {
-        return this.key2cd;
-    }
-    @Override
-    public void setKeybind3CD(int cd)
-    {
-        this.key3cd = cd;
-    }
-    @Override
-    public int returnKeybind3CD()
-    {
-        return this.key3cd;
-    }
-    @Override
-    public void setKeybind4CD(int cd)
-    {
-        this.key4cd = cd;
-    }
-    @Override
-    public int returnKeybind4CD()
-    {
-        return this.key4cd;
-    }
-    @Override
-    public void setKeybind5CD(int cd)
-    {
-        this.key5cd = cd;
-    }
-    @Override
-    public int returnKeybind5CD()
-    {
-        return this.key5cd;
-    }
-    @Override
-    public void setKeybind6CD(int cd)
-    {
-        this.key6cd = cd;
-    }
-    @Override
-    public int returnKeybind6CD()
-    {
-        return this.key6cd;
-    }
-    @Override
-    public void setKeybind7CD(int cd)
-    {
-        this.key7cd = cd;
-    }
-    @Override
-    public int returnKeybind7CD()
-    {
-        return this.key7cd;
-    }
-    @Override
-    public void setKeybind8CD(int cd)
-    {
-        this.key8cd = cd;
-    }
-    @Override
-    public int returnKeybind8CD()
-    {
-        return this.key8cd;
-    }
-    @Override
-    public void setKeybind9CD(int cd)
-    {
-        this.key9cd = cd;
-    }
-    @Override
-    public int returnKeybind9CD()
-    {
-        return this.key9cd;
+        if(key == 1){
+            return this.key1cd;
+        }else if(key == 2){
+            return this.key2cd;
+        }else if(key == 3){
+            return this.key3cd;
+        }else if(key == 4){
+            return this.key4cd;
+        }else if(key == 5){
+            return this.key5cd;
+        }else if(key == 6){
+            return this.key6cd;
+        }else if(key == 7){
+            return this.key7cd;
+        }else if(key == 8){
+            return this.key8cd;
+        }else if(key == 9){
+            return this.key9cd;
+        }
+        return 0;
     }
 
     @Override
-    public void setKeybind1(String name)
+    public void setKeybind(int key, String name)
     {
-        this.key1 = name;
+        if(key == 1){
+            this.key1 = name;
+        }else if(key == 2){
+            this.key2 = name;
+        }else if(key == 3){
+            this.key3 = name;
+        }else if(key == 4){
+            this.key4 = name;
+        }else if(key == 5){
+            this.key5 = name;
+        }else if(key == 6){
+            this.key6 = name;
+        }else if(key == 7){
+            this.key7 = name;
+        }else if(key == 8){
+            this.key8 = name;
+        }else if(key == 9){
+            this.key9 = name;
+        }
     }
     @Override
-    public String returnKeybind1()
+    public String returnKeybind(int key)
     {
-        return this.key1;
-    }
-    @Override
-    public void setKeybind2(String name)
-    {
-        this.key2 = name;
-    }
-    @Override
-    public String returnKeybind2()
-    {
-        return this.key2;
-    }
-    @Override
-    public void setKeybind3(String name)
-    {
-        this.key3 = name;
-    }
-    @Override
-    public String returnKeybind3()
-    {
-        return this.key3;
-    }
-    @Override
-    public void setKeybind4(String name)
-    {
-        this.key4 = name;
-    }
-    @Override
-    public String returnKeybind4()
-    {
-        return this.key4;
-    }
-    @Override
-    public void setKeybind5(String name)
-    {
-        this.key5 = name;
-    }
-    @Override
-    public String returnKeybind5()
-    {
-        return this.key5;
-    }
-    @Override
-    public void setKeybind6(String name)
-    {
-        this.key6 = name;
-    }
-    @Override
-    public String returnKeybind6()
-    {
-        return this.key6;
-    }
-    @Override
-    public void setKeybind7(String name)
-    {
-        this.key7 = name;
-    }
-    @Override
-    public String returnKeybind7()
-    {
-        return this.key7;
-    }
-    @Override
-    public void setKeybind8(String name)
-    {
-        this.key8 = name;
-    }
-    @Override
-    public String returnKeybind8()
-    {
-        return this.key8;
-    }
-    @Override
-    public void setKeybind9(String name)
-    {
-        this.key9 = name;
-    }
-    @Override
-    public String returnKeybind9()
-    {
-        return this.key9;
+        if(key == 1){
+            return this.key1;
+        }else if(key == 2){
+            return this.key2;
+        }else if(key == 3){
+            return this.key3;
+        }else if(key == 4){
+            return this.key4;
+        }else if(key == 5){
+            return this.key5;
+        }else if(key == 6){
+            return this.key6;
+        }else if(key == 7){
+            return this.key7;
+        }else if(key == 8){
+            return this.key8;
+        }else if(key == 9){
+            return this.key9;
+        }
+        return null;
     }
 
     @Override
@@ -495,25 +409,25 @@ public class PlayerCapability implements IPlayerHandler {
 
             tag.putString("grimoireTex", instance.getGrimoireTexture());
 
-            tag.putString("key1", instance.returnKeybind1());
-            tag.putString("key2", instance.returnKeybind2());
-            tag.putString("key3", instance.returnKeybind3());
-            tag.putString("key4", instance.returnKeybind4());
-            tag.putString("key5", instance.returnKeybind5());
-            tag.putString("key6", instance.returnKeybind6());
-            tag.putString("key7", instance.returnKeybind7());
-            tag.putString("key8", instance.returnKeybind8());
-            tag.putString("key9", instance.returnKeybind9());
+            tag.putString("key1", instance.returnKeybind(1));
+            tag.putString("key2", instance.returnKeybind(2));
+            tag.putString("key3", instance.returnKeybind(3));
+            tag.putString("key4", instance.returnKeybind(4));
+            tag.putString("key5", instance.returnKeybind(5));
+            tag.putString("key6", instance.returnKeybind(6));
+            tag.putString("key7", instance.returnKeybind(7));
+            tag.putString("key8", instance.returnKeybind(8));
+            tag.putString("key9", instance.returnKeybind(9));
 
-            tag.putInt("key1cd", instance.returnKeybind1CD());
-            tag.putInt("key2cd", instance.returnKeybind2CD());
-            tag.putInt("key3cd", instance.returnKeybind3CD());
-            tag.putInt("key4cd", instance.returnKeybind4CD());
-            tag.putInt("key5cd", instance.returnKeybind5CD());
-            tag.putInt("key6cd", instance.returnKeybind6CD());
-            tag.putInt("key7cd", instance.returnKeybind7CD());
-            tag.putInt("key8cd", instance.returnKeybind8CD());
-            tag.putInt("key9cd", instance.returnKeybind9CD());
+            tag.putInt("key1cd", instance.returnKeybindCD(1));
+            tag.putInt("key2cd", instance.returnKeybindCD(2));
+            tag.putInt("key3cd", instance.returnKeybindCD(3));
+            tag.putInt("key4cd", instance.returnKeybindCD(4));
+            tag.putInt("key5cd", instance.returnKeybindCD(5));
+            tag.putInt("key6cd", instance.returnKeybindCD(6));
+            tag.putInt("key7cd", instance.returnKeybindCD(7));
+            tag.putInt("key8cd", instance.returnKeybindCD(8));
+            tag.putInt("key9cd", instance.returnKeybindCD(9));
 
             tag.putBoolean("spellmessage", instance.returnToggleSpellMessage());
 
@@ -546,25 +460,25 @@ public class PlayerCapability implements IPlayerHandler {
 
             instance.setGrimoireTexture(((CompoundNBT) tag).getString("grimoireTex"));
 
-            instance.setKeybind1(((CompoundNBT) tag).getString("key1"));
-            instance.setKeybind2(((CompoundNBT) tag).getString("key2"));
-            instance.setKeybind3(((CompoundNBT) tag).getString("key3"));
-            instance.setKeybind4(((CompoundNBT) tag).getString("key4"));
-            instance.setKeybind5(((CompoundNBT) tag).getString("key5"));
-            instance.setKeybind6(((CompoundNBT) tag).getString("key6"));
-            instance.setKeybind7(((CompoundNBT) tag).getString("key7"));
-            instance.setKeybind8(((CompoundNBT) tag).getString("key8"));
-            instance.setKeybind9(((CompoundNBT) tag).getString("key9"));
+            instance.setKeybind(1, ((CompoundNBT) tag).getString("key1"));
+            instance.setKeybind(2, ((CompoundNBT) tag).getString("key2"));
+            instance.setKeybind(3, ((CompoundNBT) tag).getString("key3"));
+            instance.setKeybind(4, ((CompoundNBT) tag).getString("key4"));
+            instance.setKeybind(5, ((CompoundNBT) tag).getString("key5"));
+            instance.setKeybind(6, ((CompoundNBT) tag).getString("key6"));
+            instance.setKeybind(7, ((CompoundNBT) tag).getString("key7"));
+            instance.setKeybind(8, ((CompoundNBT) tag).getString("key8"));
+            instance.setKeybind(9, ((CompoundNBT) tag).getString("key9"));
 
-            instance.setKeybind1CD(((CompoundNBT) tag).getInt("key1cd"));
-            instance.setKeybind2CD(((CompoundNBT) tag).getInt("key2cd"));
-            instance.setKeybind3CD(((CompoundNBT) tag).getInt("key3cd"));
-            instance.setKeybind4CD(((CompoundNBT) tag).getInt("key4cd"));
-            instance.setKeybind5CD(((CompoundNBT) tag).getInt("key5cd"));
-            instance.setKeybind6CD(((CompoundNBT) tag).getInt("key6cd"));
-            instance.setKeybind7CD(((CompoundNBT) tag).getInt("key7cd"));
-            instance.setKeybind8CD(((CompoundNBT) tag).getInt("key8cd"));
-            instance.setKeybind9CD(((CompoundNBT) tag).getInt("key9cd"));
+            instance.setKeybindCD(1, ((CompoundNBT) tag).getInt("key1cd"));
+            instance.setKeybindCD(2, ((CompoundNBT) tag).getInt("key2cd"));
+            instance.setKeybindCD(3, ((CompoundNBT) tag).getInt("key3cd"));
+            instance.setKeybindCD(4, ((CompoundNBT) tag).getInt("key4cd"));
+            instance.setKeybindCD(5, ((CompoundNBT) tag).getInt("key5cd"));
+            instance.setKeybindCD(6, ((CompoundNBT) tag).getInt("key6cd"));
+            instance.setKeybindCD(7, ((CompoundNBT) tag).getInt("key7cd"));
+            instance.setKeybindCD(8, ((CompoundNBT) tag).getInt("key8cd"));
+            instance.setKeybindCD(9, ((CompoundNBT) tag).getInt("key9cd"));
 
             instance.setToggleSpellMessage(((CompoundNBT) tag).getBoolean("spellmessage"));
 

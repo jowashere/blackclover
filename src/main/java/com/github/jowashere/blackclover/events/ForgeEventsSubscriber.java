@@ -15,8 +15,11 @@ import com.github.jowashere.blackclover.networking.packets.PacketToggleInfusionB
 import com.github.jowashere.blackclover.networking.packets.modes.PacketModeSync;
 import com.github.jowashere.blackclover.networking.packets.settings.PacketSetGrimoireTexture;
 import com.github.jowashere.blackclover.networking.packets.spells.PacketSpellNBTSync;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.TickEvent;
@@ -57,7 +60,7 @@ public class ForgeEventsSubscriber {
 
                         int modifier0 = Math.max(0, playercap.returnMagicLevel() / 5);
                         int modifier1 = Math.max(0, playercap.returnMagicLevel() / 5) - 1;
-                        spell.act(player, modifier0, modifier1);
+                        spell.  act(player, modifier0, modifier1);
                     }
                 }
             }
@@ -65,7 +68,6 @@ public class ForgeEventsSubscriber {
             if (!player.level.isClientSide) {
                 PlayerEvents.regenerateMana(event);
                 PlayerEvents.setPlayerSpells(event);
-                PlayerEvents.cooldowns(event);
                 if(playercap.hasManaBoolean()){
                     PlayerEvents.manaRuns(event);
                     PlayerEvents.magicBuffs(event);
@@ -73,12 +75,21 @@ public class ForgeEventsSubscriber {
             }
         }
 
-
         if(curiosLoaded)
             return;
 
         if(event.phase != TickEvent.Phase.START)
             return;
+    }
+
+    @SubscribeEvent
+    @OnlyIn(Dist.CLIENT)
+    public static void onClientTick(TickEvent.ClientTickEvent event) {
+        PlayerEntity player = Minecraft.getInstance().player;
+
+        if(player != null && player.isAlive()){
+            PlayerEvents.cooldowns(event);
+        }
     }
 
     @SubscribeEvent

@@ -50,36 +50,9 @@ public class PacketKeybindCD {
             LazyOptional<IPlayerHandler> capabilities = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
             IPlayerHandler playercap = capabilities.orElse(new PlayerCapability());
 
-            switch (msg.key)
-            {
-                case 1:
-                    playercap.setKeybind1CD(msg.cd);
-                    break;
-                case 2:
-                    playercap.setKeybind2CD(msg.cd);
-                    break;
-                case 3:
-                    playercap.setKeybind3CD(msg.cd);
-                    break;
-                case 4:
-                    playercap.setKeybind4CD(msg.cd);
-                    break;
-                case 5:
-                    playercap.setKeybind5CD(msg.cd);
-                    break;
-                case 6:
-                    playercap.setKeybind6CD(msg.cd);
-                    break;
-                case 7:
-                    playercap.setKeybind7CD(msg.cd);
-                    break;
-                case 8:
-                    playercap.setKeybind8CD(msg.cd);
-                    break;
-                case 9:
-                    playercap.setKeybind9CD(msg.cd);
-                    break;
-            }
+
+            playercap.setKeybindCD(msg.key, msg.cd);
+
         });
         ctx.get().setPacketHandled(true);
     }

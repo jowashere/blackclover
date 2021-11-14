@@ -12,7 +12,7 @@ import com.github.jowashere.blackclover.entities.projectiles.spells.wind.WindCre
 import com.github.jowashere.blackclover.entities.summons.WindHawkEntity;
 import com.github.jowashere.blackclover.init.EffectInit;
 import com.github.jowashere.blackclover.init.EntityInit;
-import net.minecraft.entity.*;
+import com.github.jowashere.blackclover.util.helpers.BCMHelper;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.EffectInstance;
@@ -21,6 +21,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.RayTraceContext;
+import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
@@ -59,7 +60,7 @@ public class LightningSpells {
 
             }
         }));
-        spellRegistry.register(new BCMSpell(pluginIn, "thunder_orb", BCMSpell.Type.LIGHTNING_MAGIC, 0.5F, 60, false, 32, 16, true, ((playerIn, modifier0, modifier1, playerCapability) -> {
+        spellRegistry.register(new BCMSpell(pluginIn, "thunder_orb", BCMSpell.Type.LIGHTNING_MAGIC, 20F, 60, false, 32, 32, false, ((playerIn, modifier0, modifier1, playerCapability) -> {
 
             LazyOptional<IPlayerHandler> playerInCap = playerIn.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
             IPlayerHandler player_cap = playerInCap.orElse(new PlayerCapability());
@@ -67,10 +68,22 @@ public class LightningSpells {
             if (!playerIn.level.isClientSide) {
                 ThunderOrbEntity entity = new ThunderOrbEntity(playerIn.level, playerIn);
                 entity.shootFromRotation(playerIn, playerIn.xRot, playerIn.yRot, 0.0F, 1.3F, 5.0F);
-                playerIn.level.addFreshEntity(entity);
+                entity.level.addFreshEntity(playerIn);
                 playerIn.swing(Hand.MAIN_HAND, true);
             }
         })).setExtraSpellChecks((playerIn, modifier0, modifier1) -> playerIn.getPersistentData().getBoolean("blackclover_tg_gloves")));
+        spellRegistry.register(new BCMSpell(pluginIn, "thunder_feind", BCMSpell.Type.LIGHTNING_MAGIC, 20F, 60, false, 32, 48, false, ((playerIn, modifier0, modifier1, playerCapability) -> {
+
+            LazyOptional<IPlayerHandler> playerInCap = playerIn.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
+            IPlayerHandler player_cap = playerInCap.orElse(new PlayerCapability());
+
+            if (!playerIn.level.isClientSide) {
+                Vector3d speed = BCMHelper.propulsion(playerIn, 5, 5);
+                playerIn.setDeltaMovement(speed.x, 0.4, speed.z);
+                playerIn.hasImpulse = true;
+            }
+        })).setExtraSpellChecks((playerIn, modifier0, modifier1) -> playerIn.getPersistentData().getBoolean("blackclover_tg_boots")));
+
     }
 
 }

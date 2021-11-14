@@ -57,40 +57,38 @@ public class SpellMode {
                         int spellcd = 0;
 
                         if(i == 0){
-                            spell = SpellHelper.getSpellFromName(player_cap.returnKeybind1());
-                            spellcd = player_cap.returnKeybind1CD();
+                            spell = SpellHelper.getSpellFromName(player_cap.returnKeybind(1));
+                            spellcd = player_cap.returnKeybindCD(1);
                         }else if (i == 1){
-                            spell = SpellHelper.getSpellFromName(player_cap.returnKeybind2());
-                            spellcd = player_cap.returnKeybind2CD();
+                            spell = SpellHelper.getSpellFromName(player_cap.returnKeybind(2));
+                            spellcd = player_cap.returnKeybindCD(2);
                         }else if (i == 2){
-                            spell = SpellHelper.getSpellFromName(player_cap.returnKeybind3());
-                            spellcd = player_cap.returnKeybind3CD();
+                            spell = SpellHelper.getSpellFromName(player_cap.returnKeybind(3));
+                            spellcd = player_cap.returnKeybindCD(3);
                         }else if (i == 3){
-                            spell = SpellHelper.getSpellFromName(player_cap.returnKeybind4());
-                            spellcd = player_cap.returnKeybind4CD();
+                            spell = SpellHelper.getSpellFromName(player_cap.returnKeybind(4));
+                            spellcd = player_cap.returnKeybindCD(4);
                         }else if (i == 4){
-                            spell = SpellHelper.getSpellFromName(player_cap.returnKeybind5());
-                            spellcd = player_cap.returnKeybind5CD();
+                            spell = SpellHelper.getSpellFromName(player_cap.returnKeybind(5));
+                            spellcd = player_cap.returnKeybindCD(5);
                         }else if (i == 5){
-                            spell = SpellHelper.getSpellFromName(player_cap.returnKeybind6());
-                            spellcd = player_cap.returnKeybind6CD();
+                            spell = SpellHelper.getSpellFromName(player_cap.returnKeybind(6));
+                            spellcd = player_cap.returnKeybindCD(6);
                         }else if (i == 6){
-                            spell = SpellHelper.getSpellFromName(player_cap.returnKeybind7());
-                            spellcd = player_cap.returnKeybind7CD();
+                            spell = SpellHelper.getSpellFromName(player_cap.returnKeybind(7));
+                            spellcd = player_cap.returnKeybindCD(7);
                         }else if (i == 7){
-                            spell = SpellHelper.getSpellFromName(player_cap.returnKeybind8());
-                            spellcd = player_cap.returnKeybind8CD();
+                            spell = SpellHelper.getSpellFromName(player_cap.returnKeybind(8));
+                            spellcd = player_cap.returnKeybindCD(8);
                         }else if (i == 8){
-                            spell = SpellHelper.getSpellFromName(player_cap.returnKeybind9());
-                            spellcd = player_cap.returnKeybind9CD();
+                            spell = SpellHelper.getSpellFromName(player_cap.returnKeybind(9));
+                            spellcd = player_cap.returnKeybindCD(9);
                         }
 
                         if(spell == null)
                         {
                             GuiUtils.drawTexturedModalRect((posX - 200 + (i * 50)) / 2, posY - 23, 0, 0, 23, 23, 0);
                             continue;
-                        }else {
-
                         }
 
                         String number = "";
@@ -101,11 +99,6 @@ public class SpellMode {
 
                         if(spellcd > 0 && spellcd - 10 > 0)
                             number = (int) spellcd - 10 + " ";
-
-                        if(spell.isToggle())
-                        {
-
-                        }
 
                         String nbtName = spell.getCorrelatedPlugin().getPluginId() + "_" + spell.getName();
 

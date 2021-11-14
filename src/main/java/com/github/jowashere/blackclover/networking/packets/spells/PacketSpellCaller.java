@@ -5,9 +5,13 @@ import com.github.jowashere.blackclover.api.internal.BCMSpell;
 import com.github.jowashere.blackclover.capabilities.player.IPlayerHandler;
 import com.github.jowashere.blackclover.capabilities.player.PlayerProvider;
 import com.github.jowashere.blackclover.common.spells.SpellCaller;
+import com.github.jowashere.blackclover.networking.NetworkLoader;
+import com.github.jowashere.blackclover.util.helpers.SpellHelper;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.fml.network.NetworkEvent;
+import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.function.Supplier;
 
@@ -47,35 +51,11 @@ public class PacketSpellCaller {
                 SpellCaller.SpellCaller(ctx.get().getSender(), msg.spellType);
                 return;
             }
-            switch (msg.selectedSpell) {
-                case 1:
-                    SpellCaller.SpellCaller((PlayerEntity) ctx.get().getSender().level.getEntity(msg.playerID), playercap.returnKeybind1());
-                    break;
-                case 2:
-                    SpellCaller.SpellCaller((PlayerEntity) ctx.get().getSender().level.getEntity(msg.playerID), playercap.returnKeybind2());
-                    break;
-                case 3:
-                    SpellCaller.SpellCaller((PlayerEntity) ctx.get().getSender().level.getEntity(msg.playerID), playercap.returnKeybind3());
-                    break;
-                case 4:
-                    SpellCaller.SpellCaller((PlayerEntity) ctx.get().getSender().level.getEntity(msg.playerID), playercap.returnKeybind4());
-                    break;
-                case 5:
-                    SpellCaller.SpellCaller((PlayerEntity) ctx.get().getSender().level.getEntity(msg.playerID), playercap.returnKeybind5());
-                    break;
-                case 6:
-                    SpellCaller.SpellCaller((PlayerEntity) ctx.get().getSender().level.getEntity(msg.playerID), playercap.returnKeybind6());
-                    break;
-                case 7:
-                    SpellCaller.SpellCaller((PlayerEntity) ctx.get().getSender().level.getEntity(msg.playerID), playercap.returnKeybind7());
-                    break;
-                case 8:
-                    SpellCaller.SpellCaller((PlayerEntity) ctx.get().getSender().level.getEntity(msg.playerID), playercap.returnKeybind8());
-                    break;
-                case 9:
-                    SpellCaller.SpellCaller((PlayerEntity) ctx.get().getSender().level.getEntity(msg.playerID), playercap.returnKeybind9());
-                    break;
-            }
+
+            String spell = playercap.returnKeybind(msg.selectedSpell);
+
+            SpellCaller.SpellCaller((PlayerEntity) ctx.get().getSender().level.getEntity(msg.playerID), spell);
+
         });
         ctx.get().setPacketHandled(true);
     }

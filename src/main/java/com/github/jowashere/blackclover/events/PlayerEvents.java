@@ -19,6 +19,9 @@ import com.github.jowashere.blackclover.networking.packets.server.SSyncManaPacke
 import com.github.jowashere.blackclover.networking.packets.settings.PacketKeybindSet;
 import com.github.jowashere.blackclover.networking.packets.settings.PacketSetGrimoireTexture;
 import com.github.jowashere.blackclover.networking.packets.spells.PacketKeybindCD;
+import com.github.jowashere.blackclover.util.helpers.SpellHelper;
+import com.mojang.blaze3d.platform.GlStateManager;
+import net.minecraft.client.Minecraft;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -28,10 +31,14 @@ import net.minecraft.stats.Stats;
 import net.minecraft.util.CombatRules;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.fml.client.gui.GuiUtils;
 import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.ArrayList;
@@ -63,48 +70,20 @@ public class PlayerEvents {
         }
     }
 
-    public static void cooldowns(TickEvent.PlayerTickEvent event){
-        PlayerEntity player = event.player;
+    @OnlyIn(Dist.CLIENT)
+    public static void cooldowns(TickEvent.ClientTickEvent event){
 
-        LazyOptional<IPlayerHandler> capabilities = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
-        IPlayerHandler playercap = capabilities.orElse(new PlayerCapability());
+        PlayerEntity player = Minecraft.getInstance().player;
 
-        if (player.isAlive()) {
-            if (playercap.returnKeybind1CD() > 0) {
-                playercap.setKeybind1CD(playercap.returnKeybind1CD() - 1);
-                NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketKeybindCD(1, playercap.returnKeybind1CD(), player.getId()));
-            }
-            if (playercap.returnKeybind2CD() > 0) {
-                playercap.setKeybind2CD(playercap.returnKeybind2CD() - 1);
-                NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketKeybindCD(2, playercap.returnKeybind2CD(), player.getId()));
-            }
-            if (playercap.returnKeybind3CD() > 0) {
-                playercap.setKeybind3CD(playercap.returnKeybind3CD() - 1);
-                NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketKeybindCD(3, playercap.returnKeybind3CD(), player.getId()));
-            }
-            if (playercap.returnKeybind4CD() > 0) {
-                playercap.setKeybind4CD(playercap.returnKeybind4CD() - 1);
-                NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketKeybindCD(4, playercap.returnKeybind4CD(), player.getId()));
-            }
-            if (playercap.returnKeybind5CD() > 0) {
-                playercap.setKeybind5CD(playercap.returnKeybind5CD() - 1);
-                NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketKeybindCD(5, playercap.returnKeybind5CD(), player.getId()));
-            }
-            if (playercap.returnKeybind6CD() > 0) {
-                playercap.setKeybind6CD(playercap.returnKeybind6CD() - 1);
-                NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketKeybindCD(6, playercap.returnKeybind6CD(), player.getId()));
-            }
-            if (playercap.returnKeybind7CD() > 0) {
-                playercap.setKeybind7CD(playercap.returnKeybind7CD() - 1);
-                NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketKeybindCD(7, playercap.returnKeybind7CD(), player.getId()));
-            }
-            if (playercap.returnKeybind8CD() > 0) {
-                playercap.setKeybind8CD(playercap.returnKeybind8CD() - 1);
-                NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketKeybindCD(8, playercap.returnKeybind8CD(), player.getId()));
-            }
-            if (playercap.returnKeybind9CD() > 0) {
-                playercap.setKeybind9CD(playercap.returnKeybind9CD() - 1);
-                NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketKeybindCD(9, playercap.returnKeybind9CD(), player.getId()));
+        if(player != null){
+            LazyOptional<IPlayerHandler> capabilities = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
+            IPlayerHandler playercap = capabilities.orElse(new PlayerCapability());
+
+            if (player.isAlive()) {
+                for (int i = 0; i < 9; i ++){
+                    playercap.setKeybindCD(i + 1, playercap.returnKeybindCD(i + 1) - 1);
+                }
+
             }
         }
     }
@@ -117,9 +96,20 @@ public class PlayerEvents {
             LazyOptional<IPlayerHandler> capabilities = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
             IPlayerHandler playercap = capabilities.orElse(new PlayerCapability());
 
-            if(playercap.returnMagicAttribute().getSpellAdder() != null)
+            if(playercap.returnMagicAttribute().getSpellAdder() != null) {
                 playercap.returnMagicAttribute().getSpellAdder().add(event.player);
+            }
 
+            for (int i = 0; i < 9; i++)
+            {
+                BCMSpell spell = null;
+                spell = SpellHelper.getSpellFromName(playercap.returnKeybind(i + 1));
+
+                if(spell != null && spell.getType() != playercap.returnMagicAttribute().getSpellType()){
+                    playercap.setKeybind(i + 1, "");
+                    NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketKeybindSet(i + 1, "",true));
+                }
+            }
         }
     }
 
@@ -128,10 +118,6 @@ public class PlayerEvents {
         PlayerEntity player = (PlayerEntity) event.getEntity();
         LazyOptional<IPlayerHandler> playerc = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
         IPlayerHandler player_cap = playerc.orElse(new PlayerCapability());
-
-        player.getPersistentData().putInt("randomakatsukitimerint", new Random().nextInt(24000));
-        //player.sendMessage(new StringTextComponent("You are interested in pests, an Aburame?"));
-        //player.sendMessage(new StringTextComponent("You gloat over food, an Akimichi?"));
 
         player_cap.setSpellModeToggle(false);
         NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketSpellModeToggle(true, false, player.getId()));
@@ -142,24 +128,9 @@ public class PlayerEvents {
 
         if (!player_cap.joinWorld()) {
 
-            player_cap.setKeybind1CD(0);
-            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketKeybindCD(1, 0, player.getId()));
-            player_cap.setKeybind2CD(0);
-            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketKeybindCD(2, 0, player.getId()));
-            player_cap.setKeybind3CD(0);
-            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketKeybindCD(3, 0, player.getId()));
-            player_cap.setKeybind4CD(0);
-            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketKeybindCD(4, 0, player.getId()));
-            player_cap.setKeybind5CD(0);
-            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketKeybindCD(5, 0, player.getId()));
-            player_cap.setKeybind6CD(0);
-            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketKeybindCD(6, 0, player.getId()));
-            player_cap.setKeybind7CD(0);
-            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketKeybindCD(7, 0, player.getId()));
-            player_cap.setKeybind8CD(0);
-            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketKeybindCD(8, 0, player.getId()));
-            player_cap.setKeybind9CD(0);
-            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketKeybindCD(9, 0, player.getId()));
+            for (int i = 0; i < 9; i ++){
+                player_cap.setKeybindCD(i + 1, 0);
+            }
 
             player_cap.setJoinWorld(true);
             {

@@ -17,27 +17,31 @@ public class BCMAttribute {
 
     private ArrayList<String> grimoireTextures;
 
+    private BCMSpell.Type spellType;
+
     private String message = "";
     private String owner = "";
     private int colour = 0;
     private int u;
     private int v;
 
-    public BCMAttribute(String attributeName, int weight, boolean hasNPC) {
+    public BCMAttribute(String attributeName, int weight, boolean hasNPC, BCMSpell.Type spellType) {
         this.attributeName = attributeName;
         this.weight = weight;
     }
 
-    public BCMAttribute(String attributeName, int weight, boolean hasNPC, int u, int v) {
-        this(attributeName, weight, hasNPC);
+    public BCMAttribute(String attributeName, int weight, boolean hasNPC, int u, int v, BCMSpell.Type spellType) {
+        this(attributeName, weight, hasNPC, spellType);
         this.u = u;
         this.v = v;
+        this.spellType = spellType;
     }
 
-    public BCMAttribute(String attributeName, int weight, boolean hasNPC, int u, int v, ResourceLocation resourceLocation) {
-        this(attributeName, weight, hasNPC);
+    public BCMAttribute(String attributeName, int weight, boolean hasNPC, int u, int v, BCMSpell.Type spellType, ResourceLocation resourceLocation) {
+        this(attributeName, weight, hasNPC, spellType);
         this.u = u;
         this.v = v;
+        this.spellType = spellType;
     }
 
     public int getWeight() {
@@ -72,6 +76,10 @@ public class BCMAttribute {
             return this.spellAdder;
         }
         return null;
+    }
+
+    public BCMSpell.Type getSpellType(){
+        return this.spellType;
     }
 
     public String getAttributeUser(){
