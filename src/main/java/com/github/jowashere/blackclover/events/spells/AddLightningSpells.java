@@ -45,6 +45,13 @@ public class AddLightningSpells extends AbstractAddSpells{
                         NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketSetSpellBoolean(spell.getName(), true,true));
                     }
                 }
+
+                if(spell.getName().equals("thunder_fiend")){
+                    if(!playercap.hasSpellBoolean(spell)){
+                        playercap.setSpellBoolean(spell, true);
+                        NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketSetSpellBoolean(spell.getName(), true,true));
+                    }
+                }
             }
         }
     }

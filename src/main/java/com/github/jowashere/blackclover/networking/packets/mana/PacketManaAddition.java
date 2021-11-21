@@ -36,7 +36,7 @@ public class PacketManaAddition {
             NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> ctx.get().getSender()), new PacketMaxManaSync(player_cap.returnMaxMana(), true));
             NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> ctx.get().getSender()), new PacketManaSync(player_cap.returnMana()));
             player_cap.setMagicLevel(1);
-            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> ctx.get().getSender()), new PacketMagicLevel(1, true));
+            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> ctx.get().getSender()), new PacketMagicLevel(1, ctx.get().getSender().getId()));
             player_cap.addRegenMana(7.5F);
             player_cap.setManaBoolean(true);
         });

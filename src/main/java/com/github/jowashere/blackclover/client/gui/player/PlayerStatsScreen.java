@@ -3,6 +3,7 @@ package com.github.jowashere.blackclover.client.gui.player;
 import com.github.jowashere.blackclover.capabilities.player.IPlayerHandler;
 import com.github.jowashere.blackclover.capabilities.player.PlayerCapability;
 import com.github.jowashere.blackclover.capabilities.player.PlayerProvider;
+import com.github.jowashere.blackclover.util.helpers.BCMHelper;
 import com.github.jowashere.blackclover.util.helpers.GUIHelper;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.systems.RenderSystem;
@@ -31,7 +32,6 @@ import java.util.Locale;
 @OnlyIn(Dist.CLIENT)
 public class PlayerStatsScreen extends Screen {
 
-    private PlayerEntity player;
     private IPlayerHandler playerHandler;
 
     float xMouse;
@@ -64,7 +64,7 @@ public class PlayerStatsScreen extends Screen {
         String race = this.playerHandler.returnRace().getString().toLowerCase();
         String magicAttribute = this.playerHandler.returnMagicAttribute().getString().toLowerCase();
         String magicLevel = String.valueOf(this.playerHandler.returnMagicLevel());
-        String magicExp = String.valueOf((int) this.playerHandler.returnMagicExp());
+        String magicExp = ((int) (this.playerHandler.returnMagicExp() - BCMHelper.calculateExp(this.playerHandler.returnMagicLevel()))) + " / " + ((int) (BCMHelper.calculateExp(this.playerHandler.returnMagicLevel()+1) - BCMHelper.calculateExp(this.playerHandler.returnMagicLevel())));
 
         String raceActual = I18n.get("race.blackclover." + race);
         String attributeActual = I18n.get("attribute.blackclover." + magicAttribute);
@@ -72,7 +72,7 @@ public class PlayerStatsScreen extends Screen {
         GUIHelper.drawStringWithBorder(matrixStack, this.font, TextFormatting.BOLD + magicLevelGUI + ": " + TextFormatting.RESET + magicLevel, posX - 30, posY + 70, -1);
         GUIHelper.drawStringWithBorder(matrixStack, this.font, TextFormatting.BOLD + magicAttributeGUI + ": " + TextFormatting.RESET + attributeActual, posX - 30, posY + 90, -1);
         GUIHelper.drawStringWithBorder(matrixStack, this.font, TextFormatting.BOLD + raceGUI + ": " + TextFormatting.RESET + raceActual, posX - 30, posY + 110, -1);
-        GUIHelper.drawStringWithBorder(matrixStack, this.font, TextFormatting.BOLD + magicExpGUI + ": " + TextFormatting.RESET + (int) this.playerHandler.returnMagicExp(), posX - 30, posY + 130, -1);
+        GUIHelper.drawStringWithBorder(matrixStack, this.font, TextFormatting.BOLD + magicExpGUI + ": " + TextFormatting.RESET + magicExp, posX - 30, posY + 130, -1);
 
         GUIHelper.renderEntityInInventory(posX + 190, posY + 190, 70, (float)(posX + 190) - this.xMouse, (float)(posY + 190 - 120) - this.yMouse, this.minecraft.player);
 
@@ -82,12 +82,8 @@ public class PlayerStatsScreen extends Screen {
     @Override
     public void init()
     {
-        //WyNetwork.sendToServer(new CRequestSyncWorldDataPacket());
-        //WyNetwork.sendToServer(new CRequestSyncPirateCrewsPacket());
-
         Minecraft mc = Minecraft.getInstance();
         PlayerEntity player = mc.player;
-
 
         LazyOptional<IPlayerHandler> player_cap = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
         IPlayerHandler playerc = player_cap.orElse(new PlayerCapability());

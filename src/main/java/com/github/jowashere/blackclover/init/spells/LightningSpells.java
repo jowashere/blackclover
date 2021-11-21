@@ -12,6 +12,9 @@ import com.github.jowashere.blackclover.entities.projectiles.spells.wind.WindCre
 import com.github.jowashere.blackclover.entities.summons.WindHawkEntity;
 import com.github.jowashere.blackclover.init.EffectInit;
 import com.github.jowashere.blackclover.init.EntityInit;
+import com.github.jowashere.blackclover.networking.NetworkLoader;
+import com.github.jowashere.blackclover.networking.packets.spells.PacketIntSpellNBTSync;
+import com.github.jowashere.blackclover.networking.packets.spells.PacketSpellNBTSync;
 import com.github.jowashere.blackclover.util.helpers.BCMHelper;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.particles.ParticleTypes;
@@ -26,6 +29,7 @@ import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.Collection;
 import java.util.Comparator;
@@ -42,8 +46,8 @@ public class LightningSpells {
             IPlayerHandler player_cap = playerInCap.orElse(new PlayerCapability());
 
             if (!playerIn.level.isClientSide) {
-                playerIn.addEffect(new EffectInstance(Effects.DAMAGE_BOOST, 55,  Integer.min( (int) (player_cap.returnMagicLevel() * 0.75), 26), false, false, false));
-                playerIn.addEffect(new EffectInstance(Effects.DIG_SPEED, 55, Integer.min((int) (player_cap.returnMagicLevel() * 0.75), 20), false, false, false));
+                playerIn.addEffect(new EffectInstance(Effects.DAMAGE_BOOST, 5,  Integer.min( (int) ( 1 +(player_cap.returnMagicLevel() / 4)), 19), false, false, false));
+                playerIn.addEffect(new EffectInstance(Effects.DIG_SPEED, 5, Integer.min((int) ( 1 +(player_cap.returnMagicLevel() / 4)), 10), false, false, false));
 
             }
         }));
@@ -54,9 +58,9 @@ public class LightningSpells {
 
             if (!playerIn.level.isClientSide) {
                 if(playerIn.isSprinting())
-                    playerIn.addEffect(new EffectInstance(Effects.MOVEMENT_SPEED, 55,  Integer.min( (int) (player_cap.returnMagicLevel() * 0.65), 20), false, false, false));
+                    playerIn.addEffect(new EffectInstance(Effects.MOVEMENT_SPEED, 5,  Integer.min( (int) (player_cap.returnMagicLevel() / 3), 15), false, false, false));
                 if(!playerIn.isOnGround())
-                    playerIn.addEffect(new EffectInstance(Effects.JUMP, 55, Integer.min((int) (player_cap.returnMagicLevel() * 0.65), 8), false, false, false));
+                    playerIn.addEffect(new EffectInstance(Effects.JUMP, 20, Integer.min((int) (player_cap.returnMagicLevel() / 3), 6), false, false, false));
 
             }
         }));
@@ -67,22 +71,29 @@ public class LightningSpells {
 
             if (!playerIn.level.isClientSide) {
                 ThunderOrbEntity entity = new ThunderOrbEntity(playerIn.level, playerIn);
-                entity.shootFromRotation(playerIn, playerIn.xRot, playerIn.yRot, 0.0F, 1.3F, 5.0F);
-                entity.level.addFreshEntity(playerIn);
+                entity.shootFromRotation(playerIn, playerIn.xRot, playerIn.yRot, 0.0F, 3.0F, 1F);
+                playerIn.level.addFreshEntity(entity);
                 playerIn.swing(Hand.MAIN_HAND, true);
             }
-        })).setExtraSpellChecks((playerIn, modifier0, modifier1) -> playerIn.getPersistentData().getBoolean("blackclover_tg_gloves")));
-        spellRegistry.register(new BCMSpell(pluginIn, "thunder_feind", BCMSpell.Type.LIGHTNING_MAGIC, 20F, 60, false, 32, 48, false, ((playerIn, modifier0, modifier1, playerCapability) -> {
+        })).setExtraSpellChecks((playerIn) -> playerIn.getPersistentData().getBoolean("blackclover_tg_gloves")));
+        spellRegistry.register(new BCMSpell(pluginIn, "thunder_fiend", BCMSpell.Type.LIGHTNING_MAGIC, 20F, 60, false, 32, 48, false, ((playerIn, modifier0, modifier1, playerCapability) -> {
 
             LazyOptional<IPlayerHandler> playerInCap = playerIn.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
             IPlayerHandler player_cap = playerInCap.orElse(new PlayerCapability());
 
             if (!playerIn.level.isClientSide) {
-                Vector3d speed = BCMHelper.propulsion(playerIn, 5, 5);
-                playerIn.setDeltaMovement(speed.x, 0.4, speed.z);
+                Vector3d speed = BCMHelper.propulsion(playerIn, 3, 3);
+                playerIn.setDeltaMovement(speed.x, 0.3, speed.z);
+                playerIn.hurtMarked = true;
                 playerIn.hasImpulse = true;
+                playerIn.swing(Hand.MAIN_HAND, true);
+
+                String nbtName = "thunder_fiend_dmg";
+                playerIn.getPersistentData().putInt(nbtName, 6);
+                NetworkLoader.INSTANCE.send(PacketDistributor.ALL.noArg(), new PacketIntSpellNBTSync(playerIn.getId(), nbtName, 6));
+
             }
-        })).setExtraSpellChecks((playerIn, modifier0, modifier1) -> playerIn.getPersistentData().getBoolean("blackclover_tg_boots")));
+        })).setExtraSpellChecks((playerIn) -> playerIn.getPersistentData().getBoolean("blackclover_tg_boots")));
 
     }
 

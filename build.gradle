@@ -1,150 +1,151 @@
-buildscript {
-    repositories {
-        maven { url = 'https://maven.minecraftforge.net' }
-        maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
-        mavenCentral()
-    }
-    dependencies {
-        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
-        classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
-    }
-}
+buildscript
+        {
+            repositories
+                    {
+                        maven { url = 'https://maven.minecraftforge.net' }
+                        maven { url = 'https://repo.spongepowered.org/maven' }
+                        maven { url = 'https://maven.parchmentmc.org' }
+                        mavenCentral()
+                    }
+            dependencies
+                    {
+                        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
+                        classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
+                        classpath group: 'org.parchmentmc', name: 'librarian', version: '1.+'
+                    }
+        }
+
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.spongepowered.mixin'
-
+apply plugin: 'org.parchmentmc.librarian.forgegradle'
+apply plugin: 'eclipse'
 apply plugin: 'idea'
-
 apply plugin: 'maven-publish'
 
-version = "${mc_version}-${mod_version}"
-group = package_group
-archivesBaseName = mod_id
+def commits = 'git rev-list --count HEAD'.execute().in.text.trim()
+def shortHash = 'git rev-parse --short HEAD'.execute().in.text.trim()
+version = "${mc_version}-${mod_version}-${version_type}.${shortHash}.${commits}"
+group= "${package_group}"
+archivesBaseName = "${mod_id}"
 
+compileJava.options.encoding = 'UTF-8'
 java.toolchain.languageVersion = JavaLanguageVersion.of(8)
 
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
-minecraft {
 
-        mappings channel: 'official', version: '1.16.5'
+minecraft
+        {
+            // https://ldtteam.jfrog.io/ui/native/parchmentmc-public/org/parchmentmc/data
+            mappings channel: "${mappings_channel}", version: "${mappings_version}"
 
-    runs {
-        client {
-            workingDirectory project.file('run')
-            arg "-mixin.config=blackclover.mixins.json"
+            runs
+                    {
+                        client
+                                {
+                                    arg "-mixin.config=${mod_id}.mixins.json"
 
-            property 'forge.logging.markers', 'REGISTRIES'
-            property 'forge.logging.console.level', 'debug'
+                                    workingDirectory project.file('run')
 
-            mods {
-                examplemod {
-                    source sourceSets.main
-                }
-            }
+                                    // Recommended logging data for a userdev environment
+                                    property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+
+                                    // Recommended logging level for the console
+                                    property 'forge.logging.console.level', 'debug'
+
+                                    mods
+                                            {
+                                                mineminenomi
+                                                        {
+                                                            source sourceSets.main
+                                                        }
+                                            }
+                                }
+
+                        server
+                                {
+                                    arg "-mixin.config=${mod_id}.mixins.json"
+
+                                    workingDirectory project.file('run')
+
+                                    // Recommended logging data for a userdev environment
+                                    property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+
+                                    // Recommended logging level for the console
+                                    property 'forge.logging.console.level', 'debug'
+
+                                    mods
+                                            {
+                                                mineminenomi
+                                                        {
+                                                            source sourceSets.main
+                                                        }
+                                            }
+                                }
+
+                        data
+                                {
+                                    workingDirectory project.file('run')
+
+                                    property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+                                    property 'forge.logging.console.level', 'debug'
+                                    property 'fml.earlyprogresswindow', 'false'
+
+                                    args '--mod', 'mineminenomi', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+
+                                    environment 'target', 'fmluserdevdata'
+                                    mods
+                                            {
+                                                mineminenomi
+                                                        {
+                                                            source sourceSets.main
+                                                        }
+                                            }
+                                }
+                    }
         }
 
-        server {
-            workingDirectory project.file('run')
+// Include resources generated by data generators.
+// sourceSets.main.resources { srcDir 'src/generated/resources' }
 
-            property 'forge.logging.markers', 'REGISTRIES'
-            property 'forge.logging.console.level', 'debug'
-
-            mods {
-                examplemod {
-                    source sourceSets.main
-                }
-            }
-        }
-
-        data {
-            workingDirectory project.file('run')
-
-            property 'forge.logging.markers', 'REGISTRIES'
-            property 'forge.logging.console.level', 'debug'
-
-            args '--mod', 'blackclover', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
-
-            mods {
-                examplemod {
-                    source sourceSets.main
-                }
-            }
-        }
+gradle.projectsEvaluated {
+    tasks.withType(JavaCompile) {
+        options.compilerArgs << "-Xmaxerrs" << "5000"
     }
 }
 
-sourceSets.main.resources { srcDir 'src/generated/resources' }
+repositories
+        {
+            flatDir { dirs 'libs' }
+        }
 
-dependencies {
-    implementation 'org.jetbrains:annotations:20.1.0'
-    minecraft "net.minecraftforge:forge:${mc_version}-${fg_version}"
-    annotationProcessor 'org.spongepowered:mixin:0.8:processor'
+dependencies
+        {
+            minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
+
+            // compileOnly fg.deobf(name: 'imsama-1.14.4-1.0.0')
+        }
+
+task sourceJar(type: Jar) {
+    from sourceSets.main.allSource
+    classifier = 'source'
 }
 
-createMcpToSrg {
-    outputs.upToDateWhen {false}
-    doLast {
-        fixFG5TsrgForMixinAP(output.get().asFile, file("${buildDir}/fixMcpToSrg/output.tsrg"))
-    }
+task deobfJar(type: Jar) {
+    from sourceSets.main.output
+    classifier = 'deobf'
 }
+
+build.dependsOn sourceJar, deobfJar
 
 mixin {
-    add sourceSets.main, "blackclover.refmap.json"
-    reobfSrgFile = file("${buildDir}/fixMcpToSrg/output.tsrg")
+    add sourceSets.main, "${mod_id}.refmap.json"
 }
-
-static def fixFG5TsrgForMixinAP(File inFile, File outFile) {
-    // Make directory if needed
-    outFile.parentFile.mkdirs()
-
-    try (Scanner scanner = new Scanner(inFile); PrintWriter out = new PrintWriter(outFile)) {
-        boolean firstLine = true
-        while (scanner.hasNextLine()) {
-            String next = scanner.nextLine()
-
-            // Skip first 'tsrg left right' header line
-            if (firstLine) {
-                firstLine = false
-                continue
-            }
-
-            // Skip 'static' indicators
-            if (next.trim() == "static") {
-                continue
-            }
-
-            // Export line otherwise
-            out.println(next)
-        }
-    }
-}
-
 
 jar {
     manifest {
         attributes([
-                "Specification-Title": "blackclover",
-                "Specification-Vendor": "jowashere",
-                "Specification-Version": "1",
-                "Implementation-Title": project.name,
-                "Implementation-Version": "${version}",
-                "Implementation-Vendor" :"jowashere",
-                "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
-                "MixinConfigs": "blackclover.mixins.json"
+                "MixinConfigs": "${mod_id}.mixins.json"
         ])
     }
 }
 
-jar.finalizedBy('reobfJar')
-
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            artifact jar
-        }
-    }
-    repositories {
-        maven {
-            url "file:///${project.projectDir}/mcmodsrepo"
-        }
-    }
-}

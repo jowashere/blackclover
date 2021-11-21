@@ -43,6 +43,7 @@ public interface IPlayerHandler {
 	int returnColourMana();
 
 	void setMagicLevel(int level);
+	void addMagicLevel(int add);
 	int returnMagicLevel();
 
 	void setMagicExp(float amount);

@@ -5,6 +5,7 @@ import com.github.jowashere.blackclover.capabilities.player.IPlayerHandler;
 import com.github.jowashere.blackclover.capabilities.player.PlayerProvider;
 import com.github.jowashere.blackclover.init.EffectInit;
 import com.github.jowashere.blackclover.init.EntityInit;
+import com.github.jowashere.blackclover.util.helpers.SpellHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -14,6 +15,7 @@ import net.minecraft.network.IPacket;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.world.Explosion;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
@@ -39,20 +41,19 @@ public class ThunderOrbEntity extends AbstractLightningSpellEntity {
             if (this.getOwner() instanceof LivingEntity) {
                 LivingEntity livingShooter = (LivingEntity) this.getOwner();
                 if(livingShooter instanceof PlayerEntity){
-                    PlayerEntity playerIn = (PlayerEntity) livingShooter;
-                    IPlayerHandler playercap = playerIn.getCapability(PlayerProvider.CAPABILITY_PLAYER).orElseThrow(() -> new RuntimeException("CAPABILITY_PLAYER NOT FOUND!"));
-                    entity.hurt(DamageSource.thrown(this, this.getOwner()), (float) playercap.returnMagicLevel() * 0.8F);
+                    entity.hurt(DamageSource.thrown(this, this.getOwner()), SpellHelper.spellDamageCalcP((PlayerEntity) livingShooter, 2, 3));
                 } else if(livingShooter.hasEffect(EffectInit.MAGIC_LEVEL.get())){
-                    entity.hurt(DamageSource.thrown(this, this.getOwner()), (float) livingShooter.getEffect(EffectInit.MAGIC_LEVEL.get()).getAmplifier() * 0.8F);
+                    entity.hurt(DamageSource.thrown(this, this.getOwner()), SpellHelper.spellDamageCalcE(livingShooter, 2, 3));
                 }else {
-                    entity.hurt(DamageSource.thrown(this, this.getOwner()), 4F);
+                    entity.hurt(DamageSource.thrown(this, this.getOwner()), 3F);
                 }
             }else {
-                entity.hurt(DamageSource.thrown(this, this.getOwner()), 4F);
+                entity.hurt(DamageSource.thrown(this, this.getOwner()), 3F);
             }
         }
 
         if (!this.level.isClientSide) {
+            this.level.explode(this, this.getX(), this.getY(), this.getZ(), 2, Explosion.Mode.NONE);
             this.level.broadcastEntityEvent(this, (byte)3);
             this.remove();
         }

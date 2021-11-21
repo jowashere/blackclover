@@ -1,6 +1,5 @@
 package com.github.jowashere.blackclover.events;
 
-import com.github.jowashere.blackclover.Main;
 import com.github.jowashere.blackclover.api.BCMRegistry;
 import com.github.jowashere.blackclover.api.internal.BCMAttribute;
 import com.github.jowashere.blackclover.api.internal.BCMRace;
@@ -18,9 +17,10 @@ import com.github.jowashere.blackclover.networking.packets.mana.*;
 import com.github.jowashere.blackclover.networking.packets.server.SSyncManaPacket;
 import com.github.jowashere.blackclover.networking.packets.settings.PacketKeybindSet;
 import com.github.jowashere.blackclover.networking.packets.settings.PacketSetGrimoireTexture;
-import com.github.jowashere.blackclover.networking.packets.spells.PacketKeybindCD;
+import com.github.jowashere.blackclover.networking.packets.spells.PacketIntSpellNBTSync;
+import com.github.jowashere.blackclover.networking.packets.spells.PacketSpellNBTSync;
+import com.github.jowashere.blackclover.util.helpers.BCMHelper;
 import com.github.jowashere.blackclover.util.helpers.SpellHelper;
-import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.LivingEntity;
@@ -31,19 +31,16 @@ import net.minecraft.stats.Stats;
 import net.minecraft.util.CombatRules;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
-import net.minecraftforge.fml.client.gui.GuiUtils;
 import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Random;
 
 public class PlayerEvents {
 
@@ -71,16 +68,16 @@ public class PlayerEvents {
     }
 
     @OnlyIn(Dist.CLIENT)
-    public static void cooldowns(TickEvent.ClientTickEvent event){
+    public static void cooldowns(TickEvent.ClientTickEvent event) {
 
         PlayerEntity player = Minecraft.getInstance().player;
 
-        if(player != null){
+        if (player != null) {
             LazyOptional<IPlayerHandler> capabilities = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
             IPlayerHandler playercap = capabilities.orElse(new PlayerCapability());
 
             if (player.isAlive()) {
-                for (int i = 0; i < 9; i ++){
+                for (int i = 0; i < 9; i++) {
                     playercap.setKeybindCD(i + 1, playercap.returnKeybindCD(i + 1) - 1);
                 }
 
@@ -96,18 +93,17 @@ public class PlayerEvents {
             LazyOptional<IPlayerHandler> capabilities = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
             IPlayerHandler playercap = capabilities.orElse(new PlayerCapability());
 
-            if(playercap.returnMagicAttribute().getSpellAdder() != null) {
+            if (playercap.returnMagicAttribute().getSpellAdder() != null) {
                 playercap.returnMagicAttribute().getSpellAdder().add(event.player);
             }
 
-            for (int i = 0; i < 9; i++)
-            {
+            for (int i = 0; i < 9; i++) {
                 BCMSpell spell = null;
-                spell = SpellHelper.getSpellFromName(playercap.returnKeybind(i + 1));
+                spell = SpellHelper.getSpellFromString(playercap.returnKeybind(i + 1));
 
-                if(spell != null && spell.getType() != playercap.returnMagicAttribute().getSpellType()){
+                if (spell != null && spell.getType() != playercap.returnMagicAttribute().getSpellType()) {
                     playercap.setKeybind(i + 1, "");
-                    NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketKeybindSet(i + 1, "",true));
+                    NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketKeybindSet(i + 1, "", true));
                 }
             }
         }
@@ -128,7 +124,7 @@ public class PlayerEvents {
 
         if (!player_cap.joinWorld()) {
 
-            for (int i = 0; i < 9; i ++){
+            for (int i = 0; i < 9; i++) {
                 player_cap.setKeybindCD(i + 1, 0);
             }
 
@@ -173,18 +169,15 @@ public class PlayerEvents {
                 }
 
                 double totalWeight = 0.0D;
-                for (BCMAttribute attribute : attributes)
-                {
+                for (BCMAttribute attribute : attributes) {
                     totalWeight += attribute.getWeight();
                 }
 
                 int randomIndex = -1;
                 double random = Math.random() * totalWeight;
-                for (int i = 0; i < attributes.size(); ++i)
-                {
+                for (int i = 0; i < attributes.size(); ++i) {
                     random -= attributes.get(i).getWeight();
-                    if (random <= 0.0D)
-                    {
+                    if (random <= 0.0D) {
                         randomIndex = i;
                         break;
                     }
@@ -192,7 +185,7 @@ public class PlayerEvents {
 
                 BCMAttribute randomAttribute = attributes.get(randomIndex);
 
-                if(player_cap.returnMagicAttribute() == AttributeInit.NULL){
+                if (player_cap.returnMagicAttribute() == AttributeInit.NULL) {
                     player_cap.setMagicAttribute(randomAttribute);
                     NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketAttributeSync(randomAttribute.getString(), true));
                     player.displayClientMessage(new StringTextComponent(player_cap.returnMagicAttribute().getAttributeMessage()), false);
@@ -202,22 +195,22 @@ public class PlayerEvents {
             player_cap.setMana(player_cap.returnRace().getStartingMana());
             NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketManaSync(player_cap.returnMana()));
             player_cap.setMagicLevel(1);
-            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketMagicLevel(1, true));
+            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketMagicLevel(1, player.getId()));
             player_cap.setManaBoolean(true);
 
         }
     }
 
-    public static void manaRuns(TickEvent.PlayerTickEvent event){
+    public static void manaRuns(TickEvent.PlayerTickEvent event) {
         LazyOptional<IPlayerHandler> playerCapability = event.player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
         IPlayerHandler player_cap = playerCapability.orElse(new PlayerCapability());
 
-        if(!event.player.hasEffect(EffectInit.MAGIC_LEVEL.get()))
-            event.player.addEffect(new EffectInstance(EffectInit.MAGIC_LEVEL.get(), (int) Float.POSITIVE_INFINITY, player_cap.returnMagicLevel(), false,false, false));
+        if (!event.player.hasEffect(EffectInit.MAGIC_LEVEL.get()))
+            event.player.addEffect(new EffectInstance(EffectInit.MAGIC_LEVEL.get(), (int) Float.POSITIVE_INFINITY, player_cap.returnMagicLevel(), false, false, false));
 
         int magicLevel = player_cap.returnMagicLevel();
 
-        int maxMana = (int) (player_cap.returnRace().getStartingMana() + (((player_cap.returnRace().getStartingMana()/10) * magicLevel) - 15));
+        int maxMana = (int) (player_cap.returnRace().getStartingMana() + (((player_cap.returnRace().getStartingMana() / 10) * magicLevel) - 15));
 
         player_cap.setMaxMana(maxMana);
         NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.player), new PacketMaxManaSync(maxMana, true));
@@ -226,16 +219,16 @@ public class PlayerEvents {
         player_cap.setRegenMana(regenMana);
         NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.player), new PacketRegenManaSync(regenMana, true));
 
-        if(player_cap.returnMagicAttribute().getGrimoireTextures() != null && player_cap.returnMagicAttribute().getGrimoireTextures().size() > 0){
-            if(Arrays.stream(player_cap.returnMagicAttribute().getGrimoireTextures().toArray(new String[0])).noneMatch(
+        if (player_cap.returnMagicAttribute().getGrimoireTextures() != null && player_cap.returnMagicAttribute().getGrimoireTextures().size() > 0) {
+            if (Arrays.stream(player_cap.returnMagicAttribute().getGrimoireTextures().toArray(new String[0])).noneMatch(
                     (element) -> element == player_cap.getGrimoireTexture())) {
                 String randomGrimoire = player_cap.returnMagicAttribute().getGrimoireTextures().get((int) Math.random() * player_cap.returnMagicAttribute().getGrimoireTextures().size());
                 player_cap.setGrimoireTexture(randomGrimoire);
                 NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.player), new PacketSetGrimoireTexture(randomGrimoire, true, event.player.getId()));
             }
         }
-
     }
+
 
     public static void magicBuffs(TickEvent.PlayerTickEvent event) {
         LazyOptional<IPlayerHandler> playerCapability = event.player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
@@ -253,13 +246,30 @@ public class PlayerEvents {
         }
     }
 
+
+    public static void specialSpellNbt(TickEvent.PlayerTickEvent event){
+
+        LazyOptional<IPlayerHandler> playerCapability = event.player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
+        IPlayerHandler player_cap = playerCapability.orElse(new PlayerCapability());
+
+        if(player_cap.returnMagicAttribute().equals(AttributeInit.LIGHTNING)){
+            if(event.player.getPersistentData().getInt("thunder_fiend_dmg") > 0){
+                EffectSpells.ThunderFiendDamage(event.player);
+                int newAmount = event.player.getPersistentData().getInt("thunder_fiend_dmg") - 1;
+                event.player.getPersistentData().putInt("thunder_fiend_dmg", newAmount);
+                NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(()-> (ServerPlayerEntity) event.player), new PacketIntSpellNBTSync(event.player.getId(), "thunder_fiend_dmg", 5));
+            }
+        }
+
+    }
+
     public static float manaSkinReduction(LivingHurtEvent event) {
 
         LivingEntity entity = event.getEntityLiving();
         DamageSource damageSrc = event.getSource();
         float damageAmount = event.getAmount();
 
-        if(entity instanceof PlayerEntity){
+        if (entity instanceof PlayerEntity) {
             PlayerEntity player = (PlayerEntity) entity;
 
             LazyOptional<IPlayerHandler> playerCapability = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
@@ -270,15 +280,15 @@ public class PlayerEvents {
             } else {
                 if (player_cap.returnManaSkinToggled() && damageSrc != DamageSource.OUT_OF_WORLD) {
                     float i = (float) (player_cap.returnMagicLevel() * 1.05);
-                    float f = damageAmount / (float)i;
+                    float f = damageAmount / (float) i;
                     float f1 = damageAmount;
                     damageAmount = Math.max(f / 2.0F, 0.0F);
                     float f2 = f1 - damageAmount;
                     if (f2 > 0.0F && f2 < 3.4028235E37F) {
                         if (entity instanceof ServerPlayerEntity) {
-                            ((ServerPlayerEntity)entity).awardStat(Stats.DAMAGE_RESISTED, Math.round(f2 * 10.0F));
+                            ((ServerPlayerEntity) entity).awardStat(Stats.DAMAGE_RESISTED, Math.round(f2 * 10.0F));
                         } else if (damageSrc.getEntity() instanceof ServerPlayerEntity) {
-                            ((ServerPlayerEntity)damageSrc.getEntity()).awardStat(Stats.DAMAGE_DEALT_RESISTED, Math.round(f2 * 10.0F));
+                            ((ServerPlayerEntity) damageSrc.getEntity()).awardStat(Stats.DAMAGE_DEALT_RESISTED, Math.round(f2 * 10.0F));
                         }
                     }
                 }
@@ -288,7 +298,7 @@ public class PlayerEvents {
                 } else {
                     int k = EnchantmentHelper.getDamageProtection(entity.getArmorSlots(), damageSrc);
                     if (k > 0) {
-                        damageAmount = CombatRules.getDamageAfterMagicAbsorb(damageAmount, (float)k);
+                        damageAmount = CombatRules.getDamageAfterMagicAbsorb(damageAmount, (float) k);
                     }
                     return damageAmount;
                 }
@@ -296,4 +306,16 @@ public class PlayerEvents {
         }
         return damageAmount;
     }
+
+    /*public static void magicLevel(TickEvent.PlayerTickEvent event) {
+
+        LazyOptional<IPlayerHandler> playerCapability = event.player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
+        IPlayerHandler player_cap = playerCapability.orElse(new PlayerCapability());
+
+        int magicLevel = BCMHelper.calculateLevel(player_cap.returnMagicExp());
+
+        player_cap.setMagicLevel(magicLevel);
+        NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.player), new PacketMagicLevel(magicLevel, event.player.getId()));
+
+    }*/
 }

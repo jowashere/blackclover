@@ -3,30 +3,22 @@ package com.github.jowashere.blackclover.util.helpers;
 import com.github.jowashere.blackclover.capabilities.player.IPlayerHandler;
 import com.github.jowashere.blackclover.capabilities.player.PlayerCapability;
 import com.github.jowashere.blackclover.capabilities.player.PlayerProvider;
-import com.github.jowashere.blackclover.client.gui.player.PlayerSpellsScreen;
 import com.github.jowashere.blackclover.client.gui.player.PlayerStatsScreen;
-import com.github.jowashere.blackclover.common.spells.SpellCaller;
-import com.github.jowashere.blackclover.init.AttributeInit;
 import com.github.jowashere.blackclover.init.KeybindInit;
 import com.github.jowashere.blackclover.networking.NetworkLoader;
 import com.github.jowashere.blackclover.networking.packets.PacketSpellModeToggle;
 import com.github.jowashere.blackclover.networking.packets.PacketToggleInfusionBoolean;
-import com.github.jowashere.blackclover.networking.packets.mana.PacketManaAddition;
-import com.github.jowashere.blackclover.networking.packets.spells.PacketKeybindCD;
 import com.github.jowashere.blackclover.networking.packets.spells.PacketSpellCaller;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.util.InputMappings;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.entity.player.ServerPlayerEntity;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.event.InputEvent;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.network.PacketDistributor;
 import org.lwjgl.glfw.GLFW;
 
 public class KeyboardHelper {
@@ -82,81 +74,81 @@ public class KeyboardHelper {
                 if (KeybindInit.KEYBIND1.isDown()) {
                     int key = 1;
                     if(playerc.returnKeybindCD(key) <= 0){
-                        if(SpellHelper.getSpellFromName(playerc.returnKeybind(key)) != null){
+                        if(SpellHelper.getSpellFromString(playerc.returnKeybind(key)) != null){
                             NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("", key, player.getId()));
-                            playerc.setKeybindCD(key, SpellHelper.getSpellFromName(playerc.returnKeybind(key)).getCooldown());
+                           //playerc.setKeybindCD(key, SpellHelper.getSpellFromName(playerc.returnKeybind(key)).getCooldown());
                         }
                     }
                 }
                 if (KeybindInit.KEYBIND2.isDown()) {
                     int key = 2;
                     if(playerc.returnKeybindCD(key) <= 0){
-                        if(SpellHelper.getSpellFromName(playerc.returnKeybind(key)) != null){
+                        if(SpellHelper.getSpellFromString(playerc.returnKeybind(key)) != null){
                             NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("", key, player.getId()));
-                            playerc.setKeybindCD(key, SpellHelper.getSpellFromName(playerc.returnKeybind(key)).getCooldown());
+                            //playerc.setKeybindCD(key, SpellHelper.getSpellFromName(playerc.returnKeybind(key)).getCooldown());
                         }
                     }
                 }
                 if (KeybindInit.KEYBIND3.isDown()) {
                     int key = 3;
                     if(playerc.returnKeybindCD(key) <= 0){
-                        if(SpellHelper.getSpellFromName(playerc.returnKeybind(key)) != null){
+                        if(SpellHelper.getSpellFromString(playerc.returnKeybind(key)) != null){
                             NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("", key, player.getId()));
-                            playerc.setKeybindCD(key, SpellHelper.getSpellFromName(playerc.returnKeybind(key)).getCooldown());
+                            //playerc.setKeybindCD(key, SpellHelper.getSpellFromName(playerc.returnKeybind(key)).getCooldown());
                         }
                     }
                 }
                 if (KeybindInit.KEYBIND4.isDown()) {
                     int key = 4;
                     if(playerc.returnKeybindCD(key) <= 0){
-                        if(SpellHelper.getSpellFromName(playerc.returnKeybind(key)) != null){
+                        if(SpellHelper.getSpellFromString(playerc.returnKeybind(key)) != null){
                             NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("", key, player.getId()));
-                            playerc.setKeybindCD(key, SpellHelper.getSpellFromName(playerc.returnKeybind(key)).getCooldown());
+                            //playerc.setKeybindCD(key, SpellHelper.getSpellFromName(playerc.returnKeybind(key)).getCooldown());
                         }
                     }
                 }
                 if (KeybindInit.KEYBIND5.isDown()) {
                     int key = 5;
                     if(playerc.returnKeybindCD(key) <= 0){
-                        if(SpellHelper.getSpellFromName(playerc.returnKeybind(key)) != null){
+                        if(SpellHelper.getSpellFromString(playerc.returnKeybind(key)) != null){
                             NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("", key, player.getId()));
-                            playerc.setKeybindCD(key, SpellHelper.getSpellFromName(playerc.returnKeybind(key)).getCooldown());
+                            //playerc.setKeybindCD(key, SpellHelper.getSpellFromName(playerc.returnKeybind(key)).getCooldown());
                         }
                     }
                 }
                 if (KeybindInit.KEYBIND6.isDown()) {
                     int key = 6;
                     if(playerc.returnKeybindCD(key) <= 0){
-                        if(SpellHelper.getSpellFromName(playerc.returnKeybind(key)) != null){
+                        if(SpellHelper.getSpellFromString(playerc.returnKeybind(key)) != null){
                             NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("", key, player.getId()));
-                            playerc.setKeybindCD(key, SpellHelper.getSpellFromName(playerc.returnKeybind(key)).getCooldown());
+                            //playerc.setKeybindCD(key, SpellHelper.getSpellFromName(playerc.returnKeybind(key)).getCooldown());
                         }
                     }
                 }
                 if (KeybindInit.KEYBIND7.isDown()) {
                     int key = 7;
                     if(playerc.returnKeybindCD(key) <= 0){
-                        if(SpellHelper.getSpellFromName(playerc.returnKeybind(key)) != null){
+                        if(SpellHelper.getSpellFromString(playerc.returnKeybind(key)) != null){
                             NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("", key, player.getId()));
-                            playerc.setKeybindCD(key, SpellHelper.getSpellFromName(playerc.returnKeybind(key)).getCooldown());
+                            //playerc.setKeybindCD(key, SpellHelper.getSpellFromName(playerc.returnKeybind(key)).getCooldown());
                         }
                     }
                 }
                 if (KeybindInit.KEYBIND8.isDown()) {
                     int key = 8;
                     if(playerc.returnKeybindCD(key) <= 0){
-                        if(SpellHelper.getSpellFromName(playerc.returnKeybind(key)) != null){
+                        if(SpellHelper.getSpellFromString(playerc.returnKeybind(key)) != null){
                             NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("", key, player.getId()));
-                            playerc.setKeybindCD(key, SpellHelper.getSpellFromName(playerc.returnKeybind(key)).getCooldown());
+                            //playerc.setKeybindCD(key, SpellHelper.getSpellFromName(playerc.returnKeybind(key)).getCooldown());
                         }
                     }
                 }
                 if (KeybindInit.KEYBIND9.isDown()) {
                     int key = 9;
                     if(playerc.returnKeybindCD(key) <= 0){
-                        if(SpellHelper.getSpellFromName(playerc.returnKeybind(key)) != null){
+                        if(SpellHelper.getSpellFromString(playerc.returnKeybind(key)) != null){
                             NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("", key, player.getId()));
-                            playerc.setKeybindCD(key, SpellHelper.getSpellFromName(playerc.returnKeybind(key)).getCooldown());
+                            //playerc.setKeybindCD(key, SpellHelper.getSpellFromName(playerc.returnKeybind(key)).getCooldown());
                         }
                     }
                 }

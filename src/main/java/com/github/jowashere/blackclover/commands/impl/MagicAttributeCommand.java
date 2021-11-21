@@ -61,8 +61,13 @@ public class MagicAttributeCommand {
 
     private static int setAttribute(CommandSource source, PlayerEntity player, /*boolean secondary,*/ String attribute) {
         IPlayerHandler playercap = player.getCapability(PlayerProvider.CAPABILITY_PLAYER).orElseThrow(() -> new RuntimeException("CAPABILITY_PLAYER NOT FOUND!"));
-        playercap.setMagicAttribute(AttributeHelper.getAttributeFromString(attribute));
 
+        if(AttributeHelper.getAttributeFromString(attribute) == (null)){
+            source.sendFailure(new TranslationTextComponent("commands." + Main.MODID + ".attribute.set.noattribute"));
+            return 0;
+        }
+
+        playercap.setMagicAttribute(AttributeHelper.getAttributeFromString(attribute));
         NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketAttributeSync(attribute, true));
 
         source.sendSuccess(new TranslationTextComponent("commands." + Main.MODID + ".attribute.set", player.getDisplayName(), attribute), true);

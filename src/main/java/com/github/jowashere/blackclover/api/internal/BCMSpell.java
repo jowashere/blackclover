@@ -15,6 +15,7 @@ import com.github.jowashere.blackclover.networking.packets.modes.PacketModeSync;
 import com.github.jowashere.blackclover.networking.packets.server.SPacketSpellNBTSync;
 import com.github.jowashere.blackclover.networking.packets.spells.PacketKeybindCD;
 import com.github.jowashere.blackclover.networking.packets.spells.PacketSpellNBTSync;
+import com.github.jowashere.blackclover.util.helpers.BCMHelper;
 import com.github.jowashere.blackclover.util.helpers.SpellHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.LivingEntity;
@@ -140,35 +141,35 @@ public class BCMSpell {
         return skillSpell;
     }
 
-    public void act(PlayerEntity playerIn, int modifier0, int modifier1) {
+    public void act(PlayerEntity playerIn, int modifier0, int modifier1, int spellKey) {
         if(!playerIn.level.isClientSide) {
             IPlayerHandler playercap = playerIn.getCapability(PlayerProvider.CAPABILITY_PLAYER).orElseThrow(() -> new RuntimeException("CAPABILITY_PLAYER NOT FOUND!"));
             if (this.extraCheck != null) {
-                if (!this.extraCheck.check(playerIn, modifier0, modifier1)) {
+                if (!this.extraCheck.check(playerIn)) {
                     return;
                 }
             }
 
             float manaCost;
-
             manaCost = this.getManaCost() +  ((float) Math.sqrt(playercap.returnMagicLevel()) * (this.getManaCost() / 5) );
 
             if(this.isSkillSpell() || playercap.returnHasGrimoire()){
                 if (playercap.returnMana() >= manaCost) {
                     playercap.addMana((-manaCost));
                     NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) playerIn), new PacketManaSync(playercap.returnMana()));
-                    playercap.addMagicExp(manaCost);
-                    NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() ->(ServerPlayerEntity) playerIn), new PacketMagicExpSync(playercap.returnMagicExp(), true));
+                    playercap.addMagicExp(this.getManaCost());
+                    NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() ->(ServerPlayerEntity) playerIn), new PacketMagicExpSync(playercap.returnMagicExp(), playerIn.getId()));
+                    BCMHelper.recaculateMagicLevel(playerIn);
 
-                    if (!playercap.returnToggleSpellMessage() && !this.isToggle() && !playerIn.level.isClientSide)
-                        playerIn.displayClientMessage(new StringTextComponent(new TranslationTextComponent("spell." + this.getCorrelatedPlugin().getPluginId() + "." + this.getName()).getString() + "! " + + ((int) -manaCost) + " Mana"), true);
+                    /*if (!playercap.returnToggleSpellMessage() && !this.isToggle() && !playerIn.level.isClientSide)
+                        playerIn.displayClientMessage(new StringTextComponent(new TranslationTextComponent("spell." + this.getCorrelatedPlugin().getPluginId() + "." + this.getName()).getString() + "! " + + ((int) -manaCost) + " Mana"), true);*/
                     this.action.action(playerIn, modifier0, modifier1, playercap);
                     if(!this.isToggle())
-                        this.applySpellCD(this, playerIn);
+                        this.applySpellCD(this, playerIn, spellKey);
                 }
                 else {
                     if (isToggle()) {
-                        throwCancelEvent(playerIn);
+                        throwCancelEvent(playerIn, spellKey);
                         String nbtName = getCorrelatedPlugin().getPluginId() + "_" + getName();
                         playerIn.getPersistentData().putBoolean(nbtName, false);
                         NetworkLoader.INSTANCE.send(PacketDistributor.ALL.noArg(), new PacketSpellNBTSync(playerIn.getId(), nbtName, false));
@@ -185,10 +186,10 @@ public class BCMSpell {
         spellButton.setHasSpell(playerCapability.hasSpellBoolean(spell));
     }
 
-    public void throwCancelEvent(PlayerEntity playerIn) {
+    public void throwCancelEvent(PlayerEntity playerIn, int key) {
         if (this.onCancelEvent != null)
             this.onCancelEvent.onCancel(playerIn);
-        this.applySpellCD(this, playerIn);
+        this.applySpellCD(this, playerIn, key);
     }
     public void throwAttackEvent(PlayerEntity attacker, LivingEntity target) {
         if (this.onAttackEvent != null)
@@ -235,7 +236,7 @@ public class BCMSpell {
     }
 
     public interface IExtraCheck {
-        boolean check(PlayerEntity playerIn, int modifier0, int modifier1);
+        boolean check(PlayerEntity playerIn);
     }
 
     public interface ICancelEventListener {
@@ -251,34 +252,11 @@ public class BCMSpell {
     }
 
     public interface IDeathEventListener {
-        boolean onDeath(PlayerEntity dieingEntity);
+        boolean onDeath(PlayerEntity dyingEntity);
     }
 
-    private void applySpellCD(BCMSpell spell, PlayerEntity player){
+    private void applySpellCD(BCMSpell spell, PlayerEntity player, int key){
 
-        IPlayerHandler playercap = player.getCapability(PlayerProvider.CAPABILITY_PLAYER).orElseThrow(() -> new RuntimeException("CAPABILITY_PLAYER NOT FOUND!"));
-        String name = "spell." + spell.getCorrelatedPlugin().getPluginId() + "." + spell.getName();
-
-        if (player.level.isClientSide) {
-            if (playercap.returnKeybind(1).equals(name)) {
-                playercap.setKeybindCD(1, spell.getCooldown());
-            } else if (playercap.returnKeybind(2).equals(name)) {
-                playercap.setKeybindCD(2, spell.getCooldown());
-            } else if (playercap.returnKeybind(3).equals(name)) {
-                playercap.setKeybindCD(3, spell.getCooldown());
-            } else if (playercap.returnKeybind(4).equals(name)) {
-                playercap.setKeybindCD(4, spell.getCooldown());
-            } else if (playercap.returnKeybind(5).equals(name)) {
-                playercap.setKeybindCD(5, spell.getCooldown());
-            } else if (playercap.returnKeybind(6).equals(name)) {
-                playercap.setKeybindCD(6, spell.getCooldown());
-            } else if (playercap.returnKeybind(7).equals(name)) {
-                playercap.setKeybindCD(7, spell.getCooldown());
-            } else if (playercap.returnKeybind(8).equals(name)) {
-                playercap.setKeybindCD(8, spell.getCooldown());
-            } else if (playercap.returnKeybind(9).equals(name)) {
-                playercap.setKeybindCD(9, spell.getCooldown());
-            }
-        }
+        NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(()-> (ServerPlayerEntity) player), new PacketKeybindCD(key, spell.getCooldown()));
     }
 }

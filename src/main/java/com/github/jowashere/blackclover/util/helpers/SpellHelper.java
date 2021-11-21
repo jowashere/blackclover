@@ -15,7 +15,7 @@ import java.util.List;
 
 public class SpellHelper {
 
-    public static BCMSpell getSpellFromString(String registryName) {
+    public static BCMSpell getSpellFromName(String registryName) {
         for (BCMSpell spell : BCMRegistry.SPELLS.getValues()) {
             if (spell.getName().equalsIgnoreCase(registryName))
                 return spell;
@@ -23,7 +23,7 @@ public class SpellHelper {
         return null;
     }
 
-    public static BCMSpell getSpellFromName(String spellName) {
+    public static BCMSpell getSpellFromString(String spellName) {
         for (BCMSpell spell : BCMRegistry.SPELLS.getValues()) {
             if (("spell." + spell.getCorrelatedPlugin().getPluginId() + "." + spell.getName()).equalsIgnoreCase(spellName))
                 return spell;
@@ -52,6 +52,21 @@ public class SpellHelper {
         IPlayerHandler player_cap = playerInCap.orElse(new PlayerCapability());
 
         return baseDamage + ((damageTier * baseDamage / 2) * player_cap.returnMagicLevel() / 10);
+    }
+
+    public static int findSpellKey(PlayerEntity player, BCMSpell spell) {
+
+        IPlayerHandler playercap = player.getCapability(PlayerProvider.CAPABILITY_PLAYER).orElseThrow(() -> new RuntimeException("CAPABILITY_PLAYER NOT FOUND!"));
+
+        String spellString = "spell." + spell.getCorrelatedPlugin().getPluginId() + "." + spell.getName();
+
+        for (int i = 0; i < 9; i++) {
+
+            if (spellString.equals( playercap.returnKeybind(i+1))) {
+                return (i+1);
+            }
+        }
+        return 0;
     }
 
 }

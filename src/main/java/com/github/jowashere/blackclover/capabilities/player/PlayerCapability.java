@@ -202,6 +202,11 @@ public class PlayerCapability implements IPlayerHandler {
         this.magicLevel = amount;
     }
     @Override
+    public void addMagicLevel(int amount)
+    {
+        this.magicLevel += amount;
+    }
+    @Override
     public int returnMagicLevel()
     {
         return this.magicLevel;
@@ -452,6 +457,7 @@ public class PlayerCapability implements IPlayerHandler {
             instance.setMaxMana(((CompoundNBT) tag).getFloat("maxMana"));
             instance.setRegenMana(((CompoundNBT) tag).getFloat("regenMana"));
             instance.setColourMana(((CompoundNBT) tag).getInt("colorMana"));
+            instance.setMagicExp(((CompoundNBT) tag).getFloat("magicExp"));
             instance.setMagicLevel(((CompoundNBT) tag).getInt("magicLevel"));
             instance.setRace(RaceHelper.getRaceFromString(((CompoundNBT) tag).getString("playerRace")));
             instance.setMagicAttribute(AttributeHelper.getAttributeFromString(((CompoundNBT) tag).getString("magicAttribute")));

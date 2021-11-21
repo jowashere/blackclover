@@ -15,7 +15,16 @@
   "race.blackclover.human": "Human",
 
   "commands.blackclover.attribute.set": "Set %s's attribute to %s.",
+  "commands.blackclover.attribute.set.noattribute": "Attribute supplied is invalid.",
+  "commands.blackclover.magiclevel.invalid": "An argument supplied was invalid.",
+  "commands.blackclover.magiclevel.toohigh": "%s is too big of a number.",
+  "commands.blackclover.magiclevel.toolow": "%s is too small of a number.",
+  "commands.blackclover.magiclevel.set": "Set %s's magic level to %s.",
+  "commands.blackclover.magiclevel.add": "Increased %s's magic level by %s.",
+  "commands.blackclover.magicexp.set": "Set %s's magic experience to %s.",
+  "commands.blackclover.magicexp.add": "Increased %s's magic experience by %s.",
 
+  "message.blackclover.levelup": "You've now reached level %s",
 
   "gui.blackclover.title.windspells": "Wind Magic Spells",
   "gui.blackclover.title.lightningspells": "Lightning Magic Spells",

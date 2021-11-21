@@ -17,7 +17,7 @@ import net.minecraftforge.fml.network.PacketDistributor;
 
 public class SpellCaller {
 
-    public static void SpellCaller(PlayerEntity playerIn, String spellName)
+    public static void SpellCaller(PlayerEntity playerIn, String spellName, int spellKey)
     {
         //System.out.println("spell called");
         if(!playerIn.level.isClientSide){
@@ -31,19 +31,21 @@ public class SpellCaller {
                                 playerIn.getPersistentData().putBoolean(nbtName, true);
                                 NetworkLoader.INSTANCE.send(PacketDistributor.ALL.noArg(), new PacketSpellNBTSync(playerIn.getId(), nbtName, true));
 
-                                if (!playercap.returnToggleSpellMessage()) playerIn.displayClientMessage(new StringTextComponent(new TranslationTextComponent("spell." + spell.getCorrelatedPlugin().getPluginId() + "." + spell.getName()).getString() + "!"), false);
+                                if (!playercap.returnToggleSpellMessage())
+                                    //playerIn.displayClientMessage(new StringTextComponent(new TranslationTextComponent("spell." + spell.getCorrelatedPlugin().getPluginId() + "." + spell.getName()).getString() + "!"), false);
                                 return;
                             } else {
-                                spell.throwCancelEvent(playerIn);
+                                spell.throwCancelEvent(playerIn, spellKey);
                                 playerIn.getPersistentData().putBoolean(nbtName, false);
                                 NetworkLoader.INSTANCE.send(PacketDistributor.ALL.noArg(), new PacketSpellNBTSync(playerIn.getId(), nbtName, false));
+
                             }
                         }
                         else {
                             int modifier0 = Math.max(0, playercap.returnMagicLevel() / 5);
                             int modifier1 = Math.max(0, playercap.returnMagicLevel() / 5) - 1;
 
-                            spell.act(playerIn, modifier0, modifier1);
+                            spell.act(playerIn, modifier0, modifier1, spellKey);
                         }
                     }
                 }

@@ -40,32 +40,34 @@ public class WindSpells {
         spellRegistry.register(new BCMSpell(pluginIn, "wind_blade", BCMSpell.Type.WIND_MAGIC, 10, 50, true, 16, 0, false, (playerIn, modifier0, modifier1, playerCapability) -> {
             if (!playerIn.level.isClientSide) {
                 WindBladeEntity entity = new WindBladeEntity(playerIn.level, playerIn, "wind_blade");
-                entity.shootFromRotation(playerIn, playerIn.xRot, playerIn.yRot, 0.0F, 1.3F, 5.0F);
+                entity.shootFromRotation(playerIn, playerIn.xRot, playerIn.yRot, 0.0F, 1.3F, 3.0F);
                 playerIn.level.addFreshEntity(entity);
-                playerIn.swing(Hand.MAIN_HAND, true);
+
             }
         }));
         spellRegistry.register(new BCMSpell(pluginIn, "wind_crescent", BCMSpell.Type.WIND_MAGIC, 25, 70, false, 16, 48, false, (playerIn, modifier0, modifier1, playerCapability) -> {
             if (!playerIn.level.isClientSide) {
                 WindCrescentEntity entity = new WindCrescentEntity(playerIn.level, playerIn);
-                entity.shootFromRotation(playerIn, playerIn.xRot, playerIn.yRot, 0.0F, 1.3F, 5.0F);
+                entity.shootFromRotation(playerIn, playerIn.xRot, playerIn.yRot, 0.0F, 1.6F, 2.5F);
                 playerIn.level.addFreshEntity(entity);
+                playerIn.swing(Hand.MAIN_HAND, true);
+
             }
         }));
         spellRegistry.register(new BCMSpell(pluginIn, "towering_tornado", BCMSpell.Type.WIND_MAGIC, 15, 80, false, 16, 32, false, (playerIn, modifier0, modifier1, playerCapability) -> {
             if (!playerIn.level.isClientSide) {
-                Entity entity = playerIn;
 
-                List<Entity> entities = BCMHelper.getEntitiesNear(playerIn.blockPosition(), playerIn.level, 6F);
-                for (Entity entityiterator : entities) {
-                    if (entityiterator != playerIn) {
-                        if (entityiterator instanceof LivingEntity) {
-                            Vector3d speed = BCMHelper.propulsion(playerIn, 0.5, 0.5, 0.5);
-                            entityiterator.setDeltaMovement(speed.x, speed.y, speed.z);
-                            entityiterator.hurt(DamageSource.playerAttack(playerIn), SpellHelper.spellDamageCalcP(playerIn, 2, 3));
-                        }
-                    }
-                }
+                List<LivingEntity> entities = BCMHelper.getEntitiesNear(playerIn.blockPosition(), playerIn.level, 6F, LivingEntity.class);
+                entities.remove(playerIn);
+
+                entities.forEach(entityi ->
+                {
+                    Vector3d speed = BCMHelper.propulsion(playerIn, 2.5, 2.5, 2.5);
+                    entityi.setDeltaMovement(speed.x, speed.y, speed.z);
+                    entityi.hurtMarked = true;
+                    entityi.hasImpulse = true;
+                    entityi.hurt(DamageSource.playerAttack(playerIn), SpellHelper.spellDamageCalcP(playerIn, 2, 3));
+                });
                 if (playerIn.level instanceof ServerWorld) {
                     ((ServerWorld) playerIn.level).sendParticles(ParticleTypes.SPIT, playerIn.getX(), playerIn.getY(), playerIn.getZ(), (int) 100, 3, 2, 3, 1);
                 }

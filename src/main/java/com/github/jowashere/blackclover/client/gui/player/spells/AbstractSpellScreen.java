@@ -17,15 +17,11 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.AbstractClientPlayerEntity;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.Widget;
-import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.util.InputMappings;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.container.ClickType;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
-import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fml.client.gui.GuiUtils;
 import org.lwjgl.opengl.GL11;
@@ -81,15 +77,19 @@ public abstract class AbstractSpellScreen extends Screen {
             intendedKey = 9;
         }
 
+
+        for (int i = 1; i < 10; i ++){
+            if(i != intendedKey && playerc.returnKeybind(i).equals(this.spellToggle)){
+                playerc.setKeybind(i, "");
+                NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(i, "", false));
+            }
+        }
         for (int i = 1; i < 10; i ++){
             if(i == intendedKey){
                 playerc.setKeybind(i, this.spellToggle);
                 NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(i, this.spellToggle, false));
-                player.sendMessage(new StringTextComponent("Keybind " + i + " Set to: " + new TranslationTextComponent(this.spellToggle).getString()), player.getUUID());
+                //player.sendMessage(new StringTextComponent("Keybind " + i + " Set to: " + new TranslationTextComponent(this.spellToggle).getString()), player.getUUID());
                 this.spellToggle = "";
-            }else if(i != intendedKey && playerc.returnKeybind(i) == this.spellToggle){
-                playerc.setKeybind(i, "");
-                NetworkLoader.INSTANCE.sendToServer(new PacketKeybindSet(i, "", false));
             }
         }
 
@@ -148,23 +148,23 @@ public abstract class AbstractSpellScreen extends Screen {
                 BCMSpell spell = null;
 
                 if(i == 0){
-                    spell = SpellHelper.getSpellFromName(playerc.returnKeybind(1));
+                    spell = SpellHelper.getSpellFromString(playerc.returnKeybind(1));
                 }else if (i == 1){
-                    spell = SpellHelper.getSpellFromName(playerc.returnKeybind(2));
+                    spell = SpellHelper.getSpellFromString(playerc.returnKeybind(2));
                 }else if (i == 2){
-                    spell = SpellHelper.getSpellFromName(playerc.returnKeybind(3));
+                    spell = SpellHelper.getSpellFromString(playerc.returnKeybind(3));
                 }else if (i == 3){
-                    spell = SpellHelper.getSpellFromName(playerc.returnKeybind(4));
+                    spell = SpellHelper.getSpellFromString(playerc.returnKeybind(4));
                 }else if (i == 4){
-                    spell = SpellHelper.getSpellFromName(playerc.returnKeybind(5));
+                    spell = SpellHelper.getSpellFromString(playerc.returnKeybind(5));
                 }else if (i == 5){
-                    spell = SpellHelper.getSpellFromName(playerc.returnKeybind(6));
+                    spell = SpellHelper.getSpellFromString(playerc.returnKeybind(6));
                 }else if (i == 6){
-                    spell = SpellHelper.getSpellFromName(playerc.returnKeybind(7));
+                    spell = SpellHelper.getSpellFromString(playerc.returnKeybind(7));
                 }else if (i == 7){
-                    spell = SpellHelper.getSpellFromName(playerc.returnKeybind(8));
+                    spell = SpellHelper.getSpellFromString(playerc.returnKeybind(8));
                 }else if (i == 8){
-                    spell = SpellHelper.getSpellFromName(playerc.returnKeybind(9));
+                    spell = SpellHelper.getSpellFromString(playerc.returnKeybind(9));
                 }
 
                 if(spell == null)

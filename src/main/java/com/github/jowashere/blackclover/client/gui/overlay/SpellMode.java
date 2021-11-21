@@ -57,31 +57,31 @@ public class SpellMode {
                         int spellcd = 0;
 
                         if(i == 0){
-                            spell = SpellHelper.getSpellFromName(player_cap.returnKeybind(1));
+                            spell = SpellHelper.getSpellFromString(player_cap.returnKeybind(1));
                             spellcd = player_cap.returnKeybindCD(1);
                         }else if (i == 1){
-                            spell = SpellHelper.getSpellFromName(player_cap.returnKeybind(2));
+                            spell = SpellHelper.getSpellFromString(player_cap.returnKeybind(2));
                             spellcd = player_cap.returnKeybindCD(2);
                         }else if (i == 2){
-                            spell = SpellHelper.getSpellFromName(player_cap.returnKeybind(3));
+                            spell = SpellHelper.getSpellFromString(player_cap.returnKeybind(3));
                             spellcd = player_cap.returnKeybindCD(3);
                         }else if (i == 3){
-                            spell = SpellHelper.getSpellFromName(player_cap.returnKeybind(4));
+                            spell = SpellHelper.getSpellFromString(player_cap.returnKeybind(4));
                             spellcd = player_cap.returnKeybindCD(4);
                         }else if (i == 4){
-                            spell = SpellHelper.getSpellFromName(player_cap.returnKeybind(5));
+                            spell = SpellHelper.getSpellFromString(player_cap.returnKeybind(5));
                             spellcd = player_cap.returnKeybindCD(5);
                         }else if (i == 5){
-                            spell = SpellHelper.getSpellFromName(player_cap.returnKeybind(6));
+                            spell = SpellHelper.getSpellFromString(player_cap.returnKeybind(6));
                             spellcd = player_cap.returnKeybindCD(6);
                         }else if (i == 6){
-                            spell = SpellHelper.getSpellFromName(player_cap.returnKeybind(7));
+                            spell = SpellHelper.getSpellFromString(player_cap.returnKeybind(7));
                             spellcd = player_cap.returnKeybindCD(7);
                         }else if (i == 7){
-                            spell = SpellHelper.getSpellFromName(player_cap.returnKeybind(8));
+                            spell = SpellHelper.getSpellFromString(player_cap.returnKeybind(8));
                             spellcd = player_cap.returnKeybindCD(8);
                         }else if (i == 8){
-                            spell = SpellHelper.getSpellFromName(player_cap.returnKeybind(9));
+                            spell = SpellHelper.getSpellFromString(player_cap.returnKeybind(9));
                             spellcd = player_cap.returnKeybindCD(9);
                         }
 

@@ -8,10 +8,7 @@ import com.github.jowashere.blackclover.networking.packets.server.SPacketSpellNB
 import com.github.jowashere.blackclover.networking.packets.server.SSyncManaPacket;
 import com.github.jowashere.blackclover.networking.packets.settings.PacketKeybindSet;
 import com.github.jowashere.blackclover.networking.packets.settings.PacketSetGrimoireTexture;
-import com.github.jowashere.blackclover.networking.packets.spells.PacketKeybindCD;
-import com.github.jowashere.blackclover.networking.packets.spells.PacketSetSpellBoolean;
-import com.github.jowashere.blackclover.networking.packets.spells.PacketSpellCaller;
-import com.github.jowashere.blackclover.networking.packets.spells.PacketSpellNBTSync;
+import com.github.jowashere.blackclover.networking.packets.spells.*;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.network.NetworkRegistry;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
@@ -38,6 +35,7 @@ public class NetworkLoader {
         INSTANCE.registerMessage(nextID(), PacketSetSpellBoolean.class, PacketSetSpellBoolean::encode, PacketSetSpellBoolean::decode, PacketSetSpellBoolean::handle);
         INSTANCE.registerMessage(nextID(), PacketSpellCaller.class, PacketSpellCaller::encode, PacketSpellCaller::decode, PacketSpellCaller::handle);
         INSTANCE.registerMessage(nextID(), PacketSpellNBTSync.class, PacketSpellNBTSync::encode, PacketSpellNBTSync::decode, PacketSpellNBTSync::handle);
+        INSTANCE.registerMessage(nextID(), PacketIntSpellNBTSync.class, PacketIntSpellNBTSync::encode, PacketIntSpellNBTSync::decode, PacketIntSpellNBTSync::handle);
         INSTANCE.registerMessage(nextID(), SPacketSpellNBTSync.class, SPacketSpellNBTSync::encode, SPacketSpellNBTSync::decode, SPacketSpellNBTSync::handle);
         INSTANCE.registerMessage(nextID(), PacketSpellModeToggle.class, PacketSpellModeToggle::encode, PacketSpellModeToggle::decode, PacketSpellModeToggle::handle);
         INSTANCE.registerMessage(nextID(), PacketKeybindCD.class, PacketKeybindCD::encode, PacketKeybindCD::decode, PacketKeybindCD::handle);

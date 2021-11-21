@@ -14,7 +14,9 @@ import com.github.jowashere.blackclover.networking.packets.PacketSpellModeToggle
 import com.github.jowashere.blackclover.networking.packets.PacketToggleInfusionBoolean;
 import com.github.jowashere.blackclover.networking.packets.modes.PacketModeSync;
 import com.github.jowashere.blackclover.networking.packets.settings.PacketSetGrimoireTexture;
+import com.github.jowashere.blackclover.networking.packets.spells.PacketKeybindCD;
 import com.github.jowashere.blackclover.networking.packets.spells.PacketSpellNBTSync;
+import com.github.jowashere.blackclover.util.helpers.SpellHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -27,6 +29,7 @@ import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerEvent;
+import net.minecraftforge.event.world.NoteBlockEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.network.PacketDistributor;
@@ -60,7 +63,8 @@ public class ForgeEventsSubscriber {
 
                         int modifier0 = Math.max(0, playercap.returnMagicLevel() / 5);
                         int modifier1 = Math.max(0, playercap.returnMagicLevel() / 5) - 1;
-                        spell.  act(player, modifier0, modifier1);
+                        spell.act(player, modifier0, modifier1, SpellHelper.findSpellKey(player, spell));
+
                     }
                 }
             }
@@ -68,6 +72,8 @@ public class ForgeEventsSubscriber {
             if (!player.level.isClientSide) {
                 PlayerEvents.regenerateMana(event);
                 PlayerEvents.setPlayerSpells(event);
+                //PlayerEvents.magicLevel(event);
+                PlayerEvents.specialSpellNbt(event);
                 if(playercap.hasManaBoolean()){
                     PlayerEvents.manaRuns(event);
                     PlayerEvents.magicBuffs(event);

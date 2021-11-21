@@ -51,8 +51,8 @@ public class CapabilityHandler {
 
             NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketSpellModeToggle(true, playercap.returnSpellModeToggle(), player.getId()));
 
-            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketMagicExpSync(playercap.returnMagicExp(), true));
-            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketMagicLevel(playercap.returnMagicLevel(), true));
+            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketMagicExpSync(playercap.returnMagicExp(), player.getId()));
+            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketMagicLevel(playercap.returnMagicLevel(), player.getId()));
             NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketModeSync(playercap.returnPlayerMode().getName(), player.getId(), true));
             NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketRaceSync(playercap.returnRace().getString(), true));
             NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketAttributeSync(playercap.returnMagicAttribute().getString(), true));

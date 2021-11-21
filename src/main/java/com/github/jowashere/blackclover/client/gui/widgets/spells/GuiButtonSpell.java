@@ -15,7 +15,6 @@ import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.util.LazyOptional;
 
 public class GuiButtonSpell extends Button {
@@ -36,7 +35,7 @@ public class GuiButtonSpell extends Button {
                 if (Minecraft.getInstance().screen instanceof AbstractSpellScreen) {
                     boolean didBuy = buttonSpell.doSpellPress((AbstractSpellScreen) Minecraft.getInstance().screen);
                     if (didBuy) {
-                        playerCapability.setSpellBoolean(SpellHelper.getSpellFromName(buttonSpell.getSpellName()), true);
+                        playerCapability.setSpellBoolean(SpellHelper.getSpellFromString(buttonSpell.getSpellName()), true);
                         buttonSpell.sendPackets(buttonSpell.getSpellName(), true);
                     }
                 }
