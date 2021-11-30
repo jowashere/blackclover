@@ -4,12 +4,12 @@ public interface IBCMPlugin {
 
     String getPluginId();
 
-    void registerNewRaces(BCMRegistry.RaceRegistry raceRegistry);
+    void RegisterNewRaces(BCMRegistry.RaceRegistry raceRegistry);
 
-    void registerNewAttributes(BCMRegistry.AttributeRegistry attributeRegistry);
+    void RegisterNewAttributes(BCMRegistry.AttributeRegistry attributeRegistry);
 
-    void registerNewModes(BCMRegistry.ModeRegistry modeRegistry);
+    void RegisterNewModes(BCMRegistry.ModeRegistry modeRegistry);
 
-    void registerNewSpells(BCMRegistry.SpellRegistry spellRegistry);
+    void RegisterNewSpells(BCMRegistry.SpellRegistry spellRegistry);
 
 }

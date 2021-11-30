@@ -220,6 +220,7 @@ public class ThunderGodGearModel<T extends LivingEntity> extends BipedModel<T> {
     @Override
     public void setupAnim(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         super.setupAnim(entityIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+
         this.crouching = entityIn.isCrouching();
 
         AbstractClientPlayerEntity clientPlayer = (AbstractClientPlayerEntity) entityIn;

@@ -42,6 +42,8 @@ public class NetworkLoader {
         INSTANCE.registerMessage(nextID(), SSyncManaPacket.class, SSyncManaPacket::encode, SSyncManaPacket::decode, SSyncManaPacket::handle);
 
         INSTANCE.registerMessage(nextID(), PacketSetGrimoireTexture.class, PacketSetGrimoireTexture::encode, PacketSetGrimoireTexture::decode, PacketSetGrimoireTexture::handle);
+        INSTANCE.registerMessage(nextID(), PacketSwordSlotSet.class, PacketSwordSlotSet::encode, PacketSwordSlotSet::decode, PacketSwordSlotSet::handle);
+        INSTANCE.registerMessage(nextID(), PacketGrimoireSword.class, PacketGrimoireSword::encode, PacketGrimoireSword::decode, PacketGrimoireSword::handle);
 
         INSTANCE.registerMessage(nextID(), PacketSetGrimoire.class, PacketSetGrimoire::encode, PacketSetGrimoire::decode, PacketSetGrimoire::handle);
         INSTANCE.registerMessage(nextID(), PacketMagicLevel.class, PacketMagicLevel::encode, PacketMagicLevel::decode, PacketMagicLevel::handle);

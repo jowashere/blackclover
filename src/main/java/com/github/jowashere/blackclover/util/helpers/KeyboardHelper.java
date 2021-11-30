@@ -1,13 +1,17 @@
 package com.github.jowashere.blackclover.util.helpers;
 
+import com.github.jowashere.blackclover.api.internal.BCMSpell;
 import com.github.jowashere.blackclover.capabilities.player.IPlayerHandler;
 import com.github.jowashere.blackclover.capabilities.player.PlayerCapability;
 import com.github.jowashere.blackclover.capabilities.player.PlayerProvider;
 import com.github.jowashere.blackclover.client.gui.player.PlayerStatsScreen;
+import com.github.jowashere.blackclover.events.PlayerEvents;
+import com.github.jowashere.blackclover.init.AttributeInit;
 import com.github.jowashere.blackclover.init.KeybindInit;
 import com.github.jowashere.blackclover.networking.NetworkLoader;
 import com.github.jowashere.blackclover.networking.packets.PacketSpellModeToggle;
 import com.github.jowashere.blackclover.networking.packets.PacketToggleInfusionBoolean;
+import com.github.jowashere.blackclover.networking.packets.spells.PacketGrimoireSword;
 import com.github.jowashere.blackclover.networking.packets.spells.PacketSpellCaller;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
@@ -40,7 +44,7 @@ public class KeyboardHelper {
     }
 
     @SubscribeEvent
-    public void onClientTickEvent(final TickEvent.ClientTickEvent event) {
+    public void OnClientTickEvent(final TickEvent.ClientTickEvent event) {
         ClientPlayerEntity player = Minecraft.getInstance().player;
         if (player != null) {
             LazyOptional<IPlayerHandler> playerCapability = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
@@ -54,7 +58,7 @@ public class KeyboardHelper {
 
     @SubscribeEvent
     @OnlyIn(Dist.CLIENT)
-    public void onKeyInput(InputEvent.KeyInputEvent event) {
+    public void OnKeyInput(InputEvent.KeyInputEvent event) {
         PlayerEntity player = Minecraft.getInstance().player;
         if (player != null) {
             LazyOptional<IPlayerHandler> player_cap = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
@@ -71,106 +75,179 @@ public class KeyboardHelper {
             }
 
             if (playerc.returnSpellModeToggle()) {
-                if (KeybindInit.KEYBIND1.isDown()) {
-                    int key = 1;
-                    if(playerc.returnKeybindCD(key) <= 0){
-                        if(SpellHelper.getSpellFromString(playerc.returnKeybind(key)) != null){
-                            NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("", key, player.getId()));
-                           //playerc.setKeybindCD(key, SpellHelper.getSpellFromName(playerc.returnKeybind(key)).getCooldown());
-                        }
-                    }
-                }
-                if (KeybindInit.KEYBIND2.isDown()) {
-                    int key = 2;
-                    if(playerc.returnKeybindCD(key) <= 0){
-                        if(SpellHelper.getSpellFromString(playerc.returnKeybind(key)) != null){
-                            NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("", key, player.getId()));
-                            //playerc.setKeybindCD(key, SpellHelper.getSpellFromName(playerc.returnKeybind(key)).getCooldown());
-                        }
-                    }
-                }
-                if (KeybindInit.KEYBIND3.isDown()) {
-                    int key = 3;
-                    if(playerc.returnKeybindCD(key) <= 0){
-                        if(SpellHelper.getSpellFromString(playerc.returnKeybind(key)) != null){
-                            NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("", key, player.getId()));
-                            //playerc.setKeybindCD(key, SpellHelper.getSpellFromName(playerc.returnKeybind(key)).getCooldown());
-                        }
-                    }
-                }
-                if (KeybindInit.KEYBIND4.isDown()) {
-                    int key = 4;
-                    if(playerc.returnKeybindCD(key) <= 0){
-                        if(SpellHelper.getSpellFromString(playerc.returnKeybind(key)) != null){
-                            NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("", key, player.getId()));
-                            //playerc.setKeybindCD(key, SpellHelper.getSpellFromName(playerc.returnKeybind(key)).getCooldown());
-                        }
-                    }
-                }
-                if (KeybindInit.KEYBIND5.isDown()) {
-                    int key = 5;
-                    if(playerc.returnKeybindCD(key) <= 0){
-                        if(SpellHelper.getSpellFromString(playerc.returnKeybind(key)) != null){
-                            NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("", key, player.getId()));
-                            //playerc.setKeybindCD(key, SpellHelper.getSpellFromName(playerc.returnKeybind(key)).getCooldown());
-                        }
-                    }
-                }
-                if (KeybindInit.KEYBIND6.isDown()) {
-                    int key = 6;
-                    if(playerc.returnKeybindCD(key) <= 0){
-                        if(SpellHelper.getSpellFromString(playerc.returnKeybind(key)) != null){
-                            NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("", key, player.getId()));
-                            //playerc.setKeybindCD(key, SpellHelper.getSpellFromName(playerc.returnKeybind(key)).getCooldown());
-                        }
-                    }
-                }
-                if (KeybindInit.KEYBIND7.isDown()) {
-                    int key = 7;
-                    if(playerc.returnKeybindCD(key) <= 0){
-                        if(SpellHelper.getSpellFromString(playerc.returnKeybind(key)) != null){
-                            NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("", key, player.getId()));
-                            //playerc.setKeybindCD(key, SpellHelper.getSpellFromName(playerc.returnKeybind(key)).getCooldown());
-                        }
-                    }
-                }
-                if (KeybindInit.KEYBIND8.isDown()) {
-                    int key = 8;
-                    if(playerc.returnKeybindCD(key) <= 0){
-                        if(SpellHelper.getSpellFromString(playerc.returnKeybind(key)) != null){
-                            NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("", key, player.getId()));
-                            //playerc.setKeybindCD(key, SpellHelper.getSpellFromName(playerc.returnKeybind(key)).getCooldown());
-                        }
-                    }
-                }
-                if (KeybindInit.KEYBIND9.isDown()) {
-                    int key = 9;
-                    if(playerc.returnKeybindCD(key) <= 0){
-                        if(SpellHelper.getSpellFromString(playerc.returnKeybind(key)) != null){
-                            NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("", key, player.getId()));
-                            //playerc.setKeybindCD(key, SpellHelper.getSpellFromName(playerc.returnKeybind(key)).getCooldown());
-                        }
-                    }
-                }
+               if(!isShiftDown()){
+                   if (KeybindInit.KEYBIND1.isDown()) {
+                       int key = 1;
+                       BCMSpell spell = SpellHelper.getSpellFromString(playerc.returnKeybind(key));
+                       if(spell == null)
+                           return;
+                       String cdName = spell.getCorrelatedPlugin().getPluginId() + "_" + spell.getName() + "_cd";
+                       if(player.getPersistentData().getInt(cdName) <= 0){
+                           if(SpellHelper.getSpellFromString(playerc.returnKeybind(key)) != null){
+                               NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("", key, player.getId()));
+                           }
+                       }
+                   }
+                   if (KeybindInit.KEYBIND2.isDown()) {
+                       int key = 2;
+                       BCMSpell spell = SpellHelper.getSpellFromString(playerc.returnKeybind(key));
+                       if(spell == null)
+                           return;
+                       String cdName = spell.getCorrelatedPlugin().getPluginId() + "_" + spell.getName() + "_cd";
+                       if(player.getPersistentData().getInt(cdName) <= 0){
+                           if(SpellHelper.getSpellFromString(playerc.returnKeybind(key)) != null){
+                               NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("", key, player.getId()));
+                           }
+                       }
+                   }
+                   if (KeybindInit.KEYBIND3.isDown()) {
+                       int key = 3;
+                       BCMSpell spell = SpellHelper.getSpellFromString(playerc.returnKeybind(key));
+                       if(spell == null)
+                           return;
+                       String cdName = spell.getCorrelatedPlugin().getPluginId() + "_" + spell.getName() + "_cd";
+                       if(player.getPersistentData().getInt(cdName) <= 0){
+                           if(SpellHelper.getSpellFromString(playerc.returnKeybind(key)) != null){
+                               NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("", key, player.getId()));
+                           }
+                       }
+                   }
+                   if (KeybindInit.KEYBIND4.isDown()) {
+                       int key = 4;
+                       BCMSpell spell = SpellHelper.getSpellFromString(playerc.returnKeybind(key));
+                       if(spell == null)
+                           return;
+                       String cdName = spell.getCorrelatedPlugin().getPluginId() + "_" + spell.getName() + "_cd";
+                       if(player.getPersistentData().getInt(cdName) <= 0){
+                           if(SpellHelper.getSpellFromString(playerc.returnKeybind(key)) != null){
+                               NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("", key, player.getId()));
+                           }
+                       }
+                   }
+                   if (KeybindInit.KEYBIND5.isDown()) {
+                       int key = 5;
+                       BCMSpell spell = SpellHelper.getSpellFromString(playerc.returnKeybind(key));
+                       if(spell == null)
+                           return;
+                       String cdName = spell.getCorrelatedPlugin().getPluginId() + "_" + spell.getName() + "_cd";
+                       if(player.getPersistentData().getInt(cdName) <= 0){
+                           if(SpellHelper.getSpellFromString(playerc.returnKeybind(key)) != null){
+                               NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("", key, player.getId()));
+                           }
+                       }
+                   }
+                   if (KeybindInit.KEYBIND6.isDown()) {
+                       int key = 6;
+                       BCMSpell spell = SpellHelper.getSpellFromString(playerc.returnKeybind(key));
+                       if(spell == null)
+                           return;
+                       String cdName = spell.getCorrelatedPlugin().getPluginId() + "_" + spell.getName() + "_cd";
+                       if(player.getPersistentData().getInt(cdName) <= 0){
+                           if(SpellHelper.getSpellFromString(playerc.returnKeybind(key)) != null){
+                               NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("", key, player.getId()));
+                           }
+                       }
+                   }
+                   if (KeybindInit.KEYBIND7.isDown()) {
+                       int key = 7;
+                       BCMSpell spell = SpellHelper.getSpellFromString(playerc.returnKeybind(key));
+                       if(spell == null)
+                           return;
+
+                       String cdName = spell.getCorrelatedPlugin().getPluginId() + "_" + spell.getName() + "_cd";
+                       if(player.getPersistentData().getInt(cdName) <= 0){
+                           if(SpellHelper.getSpellFromString(playerc.returnKeybind(key)) != null){
+                               NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("", key, player.getId()));
+                           }
+                       }
+                   }
+                   if (KeybindInit.KEYBIND8.isDown()) {
+                       int key = 8;
+                       BCMSpell spell = SpellHelper.getSpellFromString(playerc.returnKeybind(key));
+                       if(spell == null)
+                           return;
+                       String cdName = spell.getCorrelatedPlugin().getPluginId() + "_" + spell.getName() + "_cd";
+                       if(player.getPersistentData().getInt(cdName) <= 0){
+                           if(SpellHelper.getSpellFromString(playerc.returnKeybind(key)) != null){
+                               NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("", key, player.getId()));
+                           }
+                       }
+                   }
+                   if (KeybindInit.KEYBIND9.isDown()) {
+                       int key = 9;
+                       BCMSpell spell = SpellHelper.getSpellFromString(playerc.returnKeybind(key));
+                       if(spell == null)
+                           return;
+                       String cdName = spell.getCorrelatedPlugin().getPluginId() + "_" + spell.getName() + "_cd";
+                       if(player.getPersistentData().getInt(cdName) <= 0){
+                           if(SpellHelper.getSpellFromString(playerc.returnKeybind(key)) != null){
+                               NetworkLoader.INSTANCE.sendToServer(new PacketSpellCaller("", key, player.getId()));
+                           }
+                       }
+                   }
+               }else {
+                   if (KeybindInit.KEYBIND1.isDown()) {
+                       int key = 1;
+                       if (playerc.ReturnMagicAttribute().equals(AttributeInit.ANTI_MAGIC)){
+                           NetworkLoader.INSTANCE.sendToServer(new PacketGrimoireSword(key, true));
+                       }
+                   }
+                   if (KeybindInit.KEYBIND2.isDown()) {
+                       int key = 2;
+                       if (playerc.ReturnMagicAttribute().equals(AttributeInit.ANTI_MAGIC)){
+                           NetworkLoader.INSTANCE.sendToServer(new PacketGrimoireSword(key, true));
+                       }
+                   }
+                   if (KeybindInit.KEYBIND3.isDown()) {
+                       int key = 3;
+                       if (playerc.ReturnMagicAttribute().equals(AttributeInit.ANTI_MAGIC)){
+                           NetworkLoader.INSTANCE.sendToServer(new PacketGrimoireSword(key, true));
+                       }
+                   }
+                   if (KeybindInit.KEYBIND4.isDown()) {
+                       int key = 4;
+                       if (playerc.ReturnMagicAttribute().equals(AttributeInit.ANTI_MAGIC)){
+                           NetworkLoader.INSTANCE.sendToServer(new PacketGrimoireSword(key, true));
+                       }
+                   }
+                   if (KeybindInit.KEYBIND5.isDown()) {
+                       int key = 5;
+                       if (playerc.ReturnMagicAttribute().equals(AttributeInit.ANTI_MAGIC)){
+                           NetworkLoader.INSTANCE.sendToServer(new PacketGrimoireSword(key, true));
+                       }
+                   }
+                   if (KeybindInit.KEYBIND6.isDown()) {
+                       int key = 6;
+                       if (playerc.ReturnMagicAttribute().equals(AttributeInit.ANTI_MAGIC)){
+                           NetworkLoader.INSTANCE.sendToServer(new PacketGrimoireSword(key, true));
+                       }
+                   }
+                   if (KeybindInit.KEYBIND7.isDown()) {
+                       int key = 7;
+                       if (playerc.ReturnMagicAttribute().equals(AttributeInit.ANTI_MAGIC)){
+                           NetworkLoader.INSTANCE.sendToServer(new PacketGrimoireSword(key, true));
+                       }
+                   }
+                   if (KeybindInit.KEYBIND8.isDown()) {
+                       int key = 8;
+                       if (playerc.ReturnMagicAttribute().equals(AttributeInit.ANTI_MAGIC)){
+                           NetworkLoader.INSTANCE.sendToServer(new PacketGrimoireSword(key, true));
+                       }
+                   }
+                   if (KeybindInit.KEYBIND9.isDown()) {
+                       int key = 9;
+                       if (playerc.ReturnMagicAttribute().equals(AttributeInit.ANTI_MAGIC)){
+                           NetworkLoader.INSTANCE.sendToServer(new PacketGrimoireSword(key, true));
+                       }
+                   }
+               }
             }
 
             if (KeybindInit.MANA_SKIN.isDown()) {
-                if (!playerc.returnManaSkinToggled()) {
-                    playerc.setManaSkinToggled(true);
-                    NetworkLoader.INSTANCE.sendToServer(new PacketToggleInfusionBoolean(1, false, true, player.getId()));
-                } else {
-                    playerc.setManaSkinToggled(false);
-                    NetworkLoader.INSTANCE.sendToServer(new PacketToggleInfusionBoolean(1, false, false, player.getId()));
-                }
+                PlayerEvents.ToggleManaSkin(player);
             }
             if (KeybindInit.REINFORCEMENT.isDown()) {
-                if (!playerc.returnReinforcementToggled()) {
-                    playerc.setReinforcementToggled(true);
-                    NetworkLoader.INSTANCE.sendToServer(new PacketToggleInfusionBoolean(2, false, true, player.getId()));
-                } else {
-                    playerc.setReinforcementToggled(false);
-                    NetworkLoader.INSTANCE.sendToServer(new PacketToggleInfusionBoolean(2, false, false, player.getId()));
-                }
+                PlayerEvents.ToggleReinforcement(player);
             }
 
             if (KeybindInit.MAGIC_MENU.isDown()){

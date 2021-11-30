@@ -5,7 +5,7 @@ import com.github.jowashere.blackclover.api.interfaces.IBCMSpellButtonPress;
 import com.github.jowashere.blackclover.capabilities.player.IPlayerHandler;
 import com.github.jowashere.blackclover.capabilities.player.PlayerCapability;
 import com.github.jowashere.blackclover.capabilities.player.PlayerProvider;
-import com.github.jowashere.blackclover.client.gui.player.spells.AbstractSpellScreen;
+import com.github.jowashere.blackclover.client.gui.player.spells.SpellsScreen;
 import com.github.jowashere.blackclover.networking.NetworkLoader;
 import com.github.jowashere.blackclover.networking.packets.spells.PacketSetSpellBoolean;
 import com.github.jowashere.blackclover.util.helpers.SpellHelper;
@@ -32,8 +32,8 @@ public class GuiButtonSpell extends Button {
         super(widthIn, heightIn, 16, 16, new StringTextComponent(""), new IBCMSpellButtonPress() {
             @Override
             public void onPress(GuiButtonSpell buttonSpell, IPlayerHandler playerCapability) {
-                if (Minecraft.getInstance().screen instanceof AbstractSpellScreen) {
-                    boolean didBuy = buttonSpell.doSpellPress((AbstractSpellScreen) Minecraft.getInstance().screen);
+                if (Minecraft.getInstance().screen instanceof SpellsScreen) {
+                    boolean didBuy = buttonSpell.doSpellPress((SpellsScreen) Minecraft.getInstance().screen);
                     if (didBuy) {
                         playerCapability.setSpellBoolean(SpellHelper.getSpellFromString(buttonSpell.getSpellName()), true);
                         buttonSpell.sendPackets(buttonSpell.getSpellName(), true);
@@ -82,7 +82,7 @@ public class GuiButtonSpell extends Button {
         return string;
     }
 
-    public boolean doSpellPress(AbstractSpellScreen screen) {
+    public boolean doSpellPress(SpellsScreen screen) {
         PlayerEntity playerEntity = Minecraft.getInstance().player;
         LazyOptional<IPlayerHandler> player_cap = playerEntity.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
         IPlayerHandler playerc = player_cap.orElse(new PlayerCapability());

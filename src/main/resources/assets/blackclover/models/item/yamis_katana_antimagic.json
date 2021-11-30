@@ -1,0 +1,11 @@
+{
+  "parent": "blackclover:item/yamis_katana",
+  "textures": {
+    "0": "blackclover:items/dd2",
+    "1": "blackclover:items/yk1",
+    "2": "blackclover:items/yk2_antimagic",
+    "3": "blackclover:items/dd1",
+    "missing": "blackclover:items/dd2",
+    "particle": "blackclover:items/placeholder_item"
+  }
+}

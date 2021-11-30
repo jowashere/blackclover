@@ -29,9 +29,9 @@ public class ManaBar {
             LazyOptional<IPlayerHandler> mana_cap;
             mana_cap = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
             IPlayerHandler mana = mana_cap.orElse(new PlayerCapability());
-            if (mana.returnMaxMana() != 0) {
+            if (mana.returnMaxMana() > 0) {
                 Minecraft mc = Minecraft.getInstance();
-                int colour_x = ((mana.returnMagicAttribute().getAttributeColour() * 8) + 9); // CORRECT FORMULA ((chakra.returncolorChakra() * 8) + 9)
+                int colour_x = ((mana.ReturnMagicAttribute().getAttributeColour() * 8) + 9); // CORRECT FORMULA ((chakra.returncolorChakra() * 8) + 9)
                 mc.textureManager.bind(manaBar);
                 mc.gui.blit(event.getMatrixStack(), 20, 130, 0, 0, tex_width, tex_height);
                 if (mana.returnMaxMana() <= 0) {

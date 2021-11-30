@@ -14,22 +14,22 @@ public class ModeInit {
         }
 
         @Override
-        public void registerNewAttributes(BCMRegistry.AttributeRegistry attributeRegistry) {
+        public void RegisterNewAttributes(BCMRegistry.AttributeRegistry attributeRegistry) {
 
         }
 
         @Override
-        public void registerNewRaces(BCMRegistry.RaceRegistry raceRegistry) {
+        public void RegisterNewRaces(BCMRegistry.RaceRegistry raceRegistry) {
 
         }
 
         @Override
-        public void registerNewModes(BCMRegistry.ModeRegistry modeRegistry) {
+        public void RegisterNewModes(BCMRegistry.ModeRegistry modeRegistry) {
 
         }
 
         @Override
-        public void registerNewSpells(BCMRegistry.SpellRegistry spellRegistry) {
+        public void RegisterNewSpells(BCMRegistry.SpellRegistry spellRegistry) {
 
         }
     }, "null", 240, 240);

@@ -13,43 +13,40 @@ import com.github.jowashere.blackclover.init.EffectInit;
 import com.github.jowashere.blackclover.init.RaceInit;
 import com.github.jowashere.blackclover.networking.NetworkLoader;
 import com.github.jowashere.blackclover.networking.packets.*;
-import com.github.jowashere.blackclover.networking.packets.mana.*;
+import com.github.jowashere.blackclover.networking.packets.mana.PacketColourManaSync;
+import com.github.jowashere.blackclover.networking.packets.mana.PacketManaSync;
+import com.github.jowashere.blackclover.networking.packets.mana.PacketMaxManaSync;
+import com.github.jowashere.blackclover.networking.packets.mana.PacketRegenManaSync;
 import com.github.jowashere.blackclover.networking.packets.server.SSyncManaPacket;
 import com.github.jowashere.blackclover.networking.packets.settings.PacketKeybindSet;
 import com.github.jowashere.blackclover.networking.packets.settings.PacketSetGrimoireTexture;
 import com.github.jowashere.blackclover.networking.packets.spells.PacketIntSpellNBTSync;
-import com.github.jowashere.blackclover.networking.packets.spells.PacketSpellNBTSync;
-import com.github.jowashere.blackclover.util.helpers.BCMHelper;
 import com.github.jowashere.blackclover.util.helpers.SpellHelper;
-import net.minecraft.client.Minecraft;
-import net.minecraft.enchantment.EnchantmentHelper;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.potion.EffectInstance;
-import net.minecraft.stats.Stats;
-import net.minecraft.util.CombatRules;
+import net.minecraft.potion.Effects;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.Hand;
 import net.minecraft.util.text.StringTextComponent;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.event.TickEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 public class PlayerEvents {
 
-    public static void regenerateMana(TickEvent.PlayerTickEvent event) {
+    public static void RegenerateMana(TickEvent.PlayerTickEvent event) {
         PlayerEntity player = event.player;
         player.getPersistentData().putInt("regentick", player.getPersistentData().getInt("regentick") + 1);
         LazyOptional<IPlayerHandler> capabilities = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
         IPlayerHandler playercap = capabilities.orElse(new PlayerCapability());
-        if (player.isAlive() && playercap.hasManaBoolean()) {
+        if (player.isAlive() && playercap.HasManaBoolean()) {
 
             if (player.getPersistentData().getInt("regentick") >= 10 && playercap.returnMaxMana() != 0) {
                 float mana = playercap.returnMana();
@@ -61,31 +58,57 @@ public class PlayerEvents {
                 NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketMaxManaSync(maxMana, true));
                 NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new SSyncManaPacket(player.getId(), mana, maxMana, regenMana));
 
-                NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketColourManaSync(playercap.returnMagicLevel()));
+                NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketColourManaSync(playercap.ReturnMagicLevel()));
                 player.getPersistentData().putInt("regentick", 0);
             }
         }
     }
 
-    @OnlyIn(Dist.CLIENT)
-    public static void cooldowns(TickEvent.ClientTickEvent event) {
+    public static void Cooldowns(TickEvent.PlayerTickEvent event) {
 
-        PlayerEntity player = Minecraft.getInstance().player;
+        if(!event.player.level.isClientSide){
+            PlayerEntity player = event.player;
+            if (player != null) {
+                LazyOptional<IPlayerHandler> capabilities = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
+                IPlayerHandler playercap = capabilities.orElse(new PlayerCapability());
+
+                for (BCMSpell spells : BCMRegistry.SPELLS.getValues()) {
+                    if (spells.getType() == playercap.ReturnMagicAttribute().getSpellType()) {
+                        if(playercap.hasSpellBoolean(spells)){
+                            String cdName = spells.getCorrelatedPlugin().getPluginId() + "_" + spells.getName() + "_cd";
+                            int cd = player.getPersistentData().getInt(cdName);
+                            int newCD = cd - 1;
+                            if(cd > 0){
+                                player.getPersistentData().putInt(cdName, newCD);
+                                NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(()-> (ServerPlayerEntity) player), new PacketIntSpellNBTSync(player.getId(), cdName, newCD));
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    public static void ResetCooldowns(PlayerEntity player) {
 
         if (player != null) {
             LazyOptional<IPlayerHandler> capabilities = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
             IPlayerHandler playercap = capabilities.orElse(new PlayerCapability());
 
-            if (player.isAlive()) {
-                for (int i = 0; i < 9; i++) {
-                    playercap.setKeybindCD(i + 1, playercap.returnKeybindCD(i + 1) - 1);
+            for (BCMSpell spells : BCMRegistry.SPELLS.getValues()) {
+                if (spells.getType() == playercap.ReturnMagicAttribute().getSpellType()) {
+                    if(playercap.hasSpellBoolean(spells)){
+                        String cdName = spells.getCorrelatedPlugin().getPluginId() + "_" + spells.getName() + "_cd";
+                        player.getPersistentData().putInt(cdName, 0);
+                        NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(()-> (ServerPlayerEntity) player), new PacketIntSpellNBTSync(player.getId(), cdName, 0));
+                    }
                 }
-
             }
         }
+
     }
 
-    public static void setPlayerSpells(TickEvent.PlayerTickEvent event) {
+    public static void SetPlayerSpells(TickEvent.PlayerTickEvent event) {
 
         PlayerEntity player = event.player;
         if (player.isAlive()) {
@@ -93,15 +116,15 @@ public class PlayerEvents {
             LazyOptional<IPlayerHandler> capabilities = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
             IPlayerHandler playercap = capabilities.orElse(new PlayerCapability());
 
-            if (playercap.returnMagicAttribute().getSpellAdder() != null) {
-                playercap.returnMagicAttribute().getSpellAdder().add(event.player);
+            if (playercap.ReturnMagicAttribute().getSpellAdder() != null) {
+                playercap.ReturnMagicAttribute().getSpellAdder().add(event.player);
             }
 
             for (int i = 0; i < 9; i++) {
                 BCMSpell spell = null;
                 spell = SpellHelper.getSpellFromString(playercap.returnKeybind(i + 1));
 
-                if (spell != null && spell.getType() != playercap.returnMagicAttribute().getSpellType()) {
+                if (spell != null && spell.getType() != playercap.ReturnMagicAttribute().getSpellType()) {
                     playercap.setKeybind(i + 1, "");
                     NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketKeybindSet(i + 1, "", true));
                 }
@@ -122,7 +145,7 @@ public class PlayerEvents {
         NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketSetGrimoire(true, true, player.getId()));
 
 
-        if (!player_cap.joinWorld()) {
+        if (!player_cap.JoinWorld()) {
 
             for (int i = 0; i < 9; i++) {
                 player_cap.setKeybindCD(i + 1, 0);
@@ -185,10 +208,10 @@ public class PlayerEvents {
 
                 BCMAttribute randomAttribute = attributes.get(randomIndex);
 
-                if (player_cap.returnMagicAttribute() == AttributeInit.NULL) {
+                if (player_cap.ReturnMagicAttribute() == AttributeInit.NULL) {
                     player_cap.setMagicAttribute(randomAttribute);
                     NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketAttributeSync(randomAttribute.getString(), true));
-                    player.displayClientMessage(new StringTextComponent(player_cap.returnMagicAttribute().getAttributeMessage()), false);
+                    player.displayClientMessage(new StringTextComponent(player_cap.ReturnMagicAttribute().getAttributeMessage()), false);
                 }
             }
 
@@ -201,121 +224,163 @@ public class PlayerEvents {
         }
     }
 
-    public static void manaRuns(TickEvent.PlayerTickEvent event) {
+    public static void ManaRuns(TickEvent.PlayerTickEvent event) {
         LazyOptional<IPlayerHandler> playerCapability = event.player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
         IPlayerHandler player_cap = playerCapability.orElse(new PlayerCapability());
 
         if (!event.player.hasEffect(EffectInit.MAGIC_LEVEL.get()))
-            event.player.addEffect(new EffectInstance(EffectInit.MAGIC_LEVEL.get(), (int) Float.POSITIVE_INFINITY, player_cap.returnMagicLevel(), false, false, false));
+            event.player.addEffect(new EffectInstance(EffectInit.MAGIC_LEVEL.get(), (int) Float.POSITIVE_INFINITY, player_cap.ReturnMagicLevel(), false, false, false));
 
-        int magicLevel = player_cap.returnMagicLevel();
+        int magicLevel = player_cap.ReturnMagicLevel();
 
-        int maxMana = (int) (player_cap.returnRace().getStartingMana() + (((player_cap.returnRace().getStartingMana() / 10) * magicLevel) - 15));
+        if(player_cap.HasManaBoolean()){
+            int maxMana = (int) (player_cap.returnRace().getStartingMana() + (((player_cap.returnRace().getStartingMana() / 10) * magicLevel) - 15));
 
-        player_cap.setMaxMana(maxMana);
-        NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.player), new PacketMaxManaSync(maxMana, true));
+            player_cap.setMaxMana(maxMana);
+            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.player), new PacketMaxManaSync(maxMana, true));
 
-        int regenMana = maxMana / 20;
-        player_cap.setRegenMana(regenMana);
-        NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.player), new PacketRegenManaSync(regenMana, true));
+            int regenMana = maxMana / 20;
+            player_cap.setRegenMana(regenMana);
+            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.player), new PacketRegenManaSync(regenMana, true));
+        } else {
+            player_cap.setMaxMana(0);
+            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.player), new PacketMaxManaSync(0, true));
 
-        if (player_cap.returnMagicAttribute().getGrimoireTextures() != null && player_cap.returnMagicAttribute().getGrimoireTextures().size() > 0) {
-            if (Arrays.stream(player_cap.returnMagicAttribute().getGrimoireTextures().toArray(new String[0])).noneMatch(
-                    (element) -> element == player_cap.getGrimoireTexture())) {
-                String randomGrimoire = player_cap.returnMagicAttribute().getGrimoireTextures().get((int) Math.random() * player_cap.returnMagicAttribute().getGrimoireTextures().size());
-                player_cap.setGrimoireTexture(randomGrimoire);
+            player_cap.setMana(0);
+            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.player), new PacketManaSync(0));
+
+            player_cap.setRegenMana(0);
+            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.player), new PacketRegenManaSync(0, true));
+
+        }
+
+        if (player_cap.ReturnMagicAttribute().GetGrimoireTextures() != null && player_cap.ReturnMagicAttribute().GetGrimoireTextures().size() > 0) {
+
+            List<String> textures = player_cap.ReturnMagicAttribute().GetGrimoireTextures();
+
+            if (Arrays.stream(textures.toArray(new String[0])).noneMatch(
+                    (element) -> element.equals(player_cap.getGrimoireTexture()))) {
+                String randomGrimoire = player_cap.ReturnMagicAttribute().GetGrimoireTextures().get((int) Math.random() * player_cap.ReturnMagicAttribute().GetGrimoireTextures().size());
+                player_cap.SetGrimoireTexture(randomGrimoire);
                 NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.player), new PacketSetGrimoireTexture(randomGrimoire, true, event.player.getId()));
+            }
+        }
+
+        if(player_cap.HasManaBoolean()) {
+
+            ItemStack stackMain = event.player.getItemInHand(Hand.MAIN_HAND);
+            ItemStack stackOff = event.player.getItemInHand(Hand.OFF_HAND);
+
+            if(stackMain.getOrCreateTag().getBoolean("antimagic") || stackOff.getOrCreateTag().getBoolean("antimagic")){
+                player_cap.addMana(-3);
+                NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.player), new PacketManaSync(player_cap.returnMana()));
+            }
+
+            if(player_cap.returnMana() <= 0 && !event.player.isCreative()){
+                event.player.hurt(DamageSource.OUT_OF_WORLD, 3);
             }
         }
     }
 
 
-    public static void magicBuffs(TickEvent.PlayerTickEvent event) {
+    public static void MagicBuffs(TickEvent.PlayerTickEvent event) {
         LazyOptional<IPlayerHandler> playerCapability = event.player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
         IPlayerHandler player_cap = playerCapability.orElse(new PlayerCapability());
 
         NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.player), new PacketRaceSync(player_cap.returnRace().getString(), true));
 
-        int magicLevel = player_cap.returnMagicLevel();
-
-        if (player_cap.returnManaSkinToggled()) {
-            EffectSpells.ManaSkin(event.player, 3, magicLevel, (int) (magicLevel * 0.85));
-        }
-        if (player_cap.returnReinforcementToggled()) {
-            EffectSpells.Reinforcement(event.player, 4, magicLevel, (int) (magicLevel * 0.85));
+        if(!player_cap.HasManaBoolean()){
+            if (player_cap.ReturnManaSkinToggled()) {
+                player_cap.setManaSkinToggled(false);
+                NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.player), new PacketToggleInfusionBoolean(1, true, false, event.player.getId()));
+            }
+            if (player_cap.returnReinforcementToggled()) {
+                player_cap.setReinforcementToggled(false);
+                NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.player), new PacketToggleInfusionBoolean(2, true, false, event.player.getId()));
+            }
         }
     }
 
 
-    public static void specialSpellNbt(TickEvent.PlayerTickEvent event){
+    public static void SpecialSpellNbt(TickEvent.PlayerTickEvent event){
 
         LazyOptional<IPlayerHandler> playerCapability = event.player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
         IPlayerHandler player_cap = playerCapability.orElse(new PlayerCapability());
 
-        if(player_cap.returnMagicAttribute().equals(AttributeInit.LIGHTNING)){
+        if(player_cap.ReturnMagicAttribute().equals(AttributeInit.LIGHTNING)){
             if(event.player.getPersistentData().getInt("thunder_fiend_dmg") > 0){
                 EffectSpells.ThunderFiendDamage(event.player);
                 int newAmount = event.player.getPersistentData().getInt("thunder_fiend_dmg") - 1;
                 event.player.getPersistentData().putInt("thunder_fiend_dmg", newAmount);
-                NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(()-> (ServerPlayerEntity) event.player), new PacketIntSpellNBTSync(event.player.getId(), "thunder_fiend_dmg", 5));
+                NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(()-> (ServerPlayerEntity) event.player), new PacketIntSpellNBTSync(event.player.getId(), "thunder_fiend_dmg", newAmount));
             }
+        }
+
+        if(player_cap.ReturnMagicAttribute().equals(AttributeInit.ANTI_MAGIC)){
+            if(event.player.getPersistentData().getInt("bull_thrust_dmg") > 0){
+                EffectSpells.BullThrustDamage(event.player);
+                int newAmount = event.player.getPersistentData().getInt("bull_thrust_dmg") - 1;
+                event.player.getPersistentData().putInt("bull_thrust_dmg", newAmount);
+                NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(()-> (ServerPlayerEntity) event.player), new PacketIntSpellNBTSync(event.player.getId(), "bull_thrust_dmg", newAmount));
+            }
+
+            if(event.player.getPersistentData().getInt("black_meteorite_dmg") > 0){
+                EffectSpells.BlackMeteoriteDamage(event.player);
+                int newAmount = event.player.getPersistentData().getInt("black_meteorite_dmg") - 1;
+                event.player.getPersistentData().putInt("black_meteorite_dmg", newAmount);
+                NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(()-> (ServerPlayerEntity) event.player), new PacketIntSpellNBTSync(event.player.getId(), "black_meteorite_dmg", newAmount));
+                if(event.player.getPersistentData().getInt("black_meteorite_dmg") == 1){
+                    event.player.stopFallFlying();
+                }
+            }
+
+            if(event.player.getPersistentData().getInt("black_mode_fatigue") > 0){
+                event.player.addEffect(new EffectInstance(Effects.DIG_SLOWDOWN, 2, 3));
+                event.player.addEffect(new EffectInstance(Effects.MOVEMENT_SLOWDOWN, 2, 3));
+                event.player.addEffect(new EffectInstance(Effects.WEAKNESS, 2, 3));
+                event.player.addEffect(new EffectInstance(Effects.HUNGER, 2, 3));
+                int newAmount = event.player.getPersistentData().getInt("black_mode_fatigue") - 1;
+                event.player.getPersistentData().putInt("black_mode_fatigue", newAmount);
+                NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(()-> (ServerPlayerEntity) event.player), new PacketIntSpellNBTSync(event.player.getId(), "bull_thrust_dmg", newAmount));
+            }
+
         }
 
     }
 
-    public static float manaSkinReduction(LivingHurtEvent event) {
+    public static void ToggleManaSkin (PlayerEntity player){
 
-        LivingEntity entity = event.getEntityLiving();
-        DamageSource damageSrc = event.getSource();
-        float damageAmount = event.getAmount();
+        LazyOptional<IPlayerHandler> player_cap = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
+        IPlayerHandler playerc = player_cap.orElse(new PlayerCapability());
 
-        if (entity instanceof PlayerEntity) {
-            PlayerEntity player = (PlayerEntity) entity;
-
-            LazyOptional<IPlayerHandler> playerCapability = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
-            IPlayerHandler player_cap = playerCapability.orElse(new PlayerCapability());
-
-            if (damageSrc.isBypassMagic()) {
-                return damageAmount;
-            } else {
-                if (player_cap.returnManaSkinToggled() && damageSrc != DamageSource.OUT_OF_WORLD) {
-                    float i = (float) (player_cap.returnMagicLevel() * 1.05);
-                    float f = damageAmount / (float) i;
-                    float f1 = damageAmount;
-                    damageAmount = Math.max(f / 2.0F, 0.0F);
-                    float f2 = f1 - damageAmount;
-                    if (f2 > 0.0F && f2 < 3.4028235E37F) {
-                        if (entity instanceof ServerPlayerEntity) {
-                            ((ServerPlayerEntity) entity).awardStat(Stats.DAMAGE_RESISTED, Math.round(f2 * 10.0F));
-                        } else if (damageSrc.getEntity() instanceof ServerPlayerEntity) {
-                            ((ServerPlayerEntity) damageSrc.getEntity()).awardStat(Stats.DAMAGE_DEALT_RESISTED, Math.round(f2 * 10.0F));
-                        }
-                    }
-                }
-
-                if (damageAmount <= 0.0F) {
-                    return 0.0F;
+        if(player.level.isClientSide){
+            if(playerc.HasManaBoolean()){
+                if (!playerc.ReturnManaSkinToggled()) {
+                    playerc.setManaSkinToggled(true);
+                    NetworkLoader.INSTANCE.sendToServer(new PacketToggleInfusionBoolean(1, false, true, player.getId()));
                 } else {
-                    int k = EnchantmentHelper.getDamageProtection(entity.getArmorSlots(), damageSrc);
-                    if (k > 0) {
-                        damageAmount = CombatRules.getDamageAfterMagicAbsorb(damageAmount, (float) k);
-                    }
-                    return damageAmount;
+                    playerc.setManaSkinToggled(false);
+                    NetworkLoader.INSTANCE.sendToServer(new PacketToggleInfusionBoolean(1, false, false, player.getId()));
                 }
             }
         }
-        return damageAmount;
     }
 
-    /*public static void magicLevel(TickEvent.PlayerTickEvent event) {
+    public static void ToggleReinforcement (PlayerEntity player){
 
-        LazyOptional<IPlayerHandler> playerCapability = event.player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
-        IPlayerHandler player_cap = playerCapability.orElse(new PlayerCapability());
+        LazyOptional<IPlayerHandler> player_cap = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
+        IPlayerHandler playerc = player_cap.orElse(new PlayerCapability());
 
-        int magicLevel = BCMHelper.calculateLevel(player_cap.returnMagicExp());
-
-        player_cap.setMagicLevel(magicLevel);
-        NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.player), new PacketMagicLevel(magicLevel, event.player.getId()));
-
-    }*/
+        if(player.level.isClientSide){
+            if(playerc.HasManaBoolean()){
+                if (!playerc.returnReinforcementToggled()) {
+                    playerc.setReinforcementToggled(true);
+                    NetworkLoader.INSTANCE.sendToServer(new PacketToggleInfusionBoolean(2, false, true, player.getId()));
+                } else {
+                    playerc.setReinforcementToggled(false);
+                    NetworkLoader.INSTANCE.sendToServer(new PacketToggleInfusionBoolean(2, false, false, player.getId()));
+                }
+            }
+        }
+    }
 }

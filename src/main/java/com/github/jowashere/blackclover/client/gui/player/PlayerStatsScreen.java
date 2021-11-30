@@ -6,19 +6,11 @@ import com.github.jowashere.blackclover.capabilities.player.PlayerProvider;
 import com.github.jowashere.blackclover.util.helpers.BCMHelper;
 import com.github.jowashere.blackclover.util.helpers.GUIHelper;
 import com.mojang.blaze3d.matrix.MatrixStack;
-import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.button.Button;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.entity.EntityRendererManager;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.inventory.Inventory;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.math.vector.Quaternion;
-import net.minecraft.util.math.vector.Vector3f;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -26,8 +18,6 @@ import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.util.LazyOptional;
 import org.lwjgl.opengl.GL11;
-
-import java.util.Locale;
 
 @OnlyIn(Dist.CLIENT)
 public class PlayerStatsScreen extends Screen {
@@ -62,9 +52,9 @@ public class PlayerStatsScreen extends Screen {
 
 
         String race = this.playerHandler.returnRace().getString().toLowerCase();
-        String magicAttribute = this.playerHandler.returnMagicAttribute().getString().toLowerCase();
-        String magicLevel = String.valueOf(this.playerHandler.returnMagicLevel());
-        String magicExp = ((int) (this.playerHandler.returnMagicExp() - BCMHelper.calculateExp(this.playerHandler.returnMagicLevel()))) + " / " + ((int) (BCMHelper.calculateExp(this.playerHandler.returnMagicLevel()+1) - BCMHelper.calculateExp(this.playerHandler.returnMagicLevel())));
+        String magicAttribute = this.playerHandler.ReturnMagicAttribute().getString().toLowerCase();
+        String magicLevel = String.valueOf(this.playerHandler.ReturnMagicLevel());
+        String magicExp = ((int) (this.playerHandler.returnMagicExp() - BCMHelper.CalculateExp(this.playerHandler.ReturnMagicLevel()))) + " / " + ((int) (BCMHelper.CalculateExp(this.playerHandler.ReturnMagicLevel()+1) - BCMHelper.CalculateExp(this.playerHandler.ReturnMagicLevel())));
 
         String raceActual = I18n.get("race.blackclover." + race);
         String attributeActual = I18n.get("attribute.blackclover." + magicAttribute);

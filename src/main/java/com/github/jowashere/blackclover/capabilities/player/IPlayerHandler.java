@@ -25,7 +25,7 @@ public interface IPlayerHandler {
 	float returnRegenMana();
 
 	void setMagicAttribute(BCMAttribute attribute);
-	BCMAttribute returnMagicAttribute();
+	BCMAttribute ReturnMagicAttribute();
 
 	void setRace(BCMRace race);
 	BCMRace returnRace();
@@ -37,21 +37,21 @@ public interface IPlayerHandler {
 	boolean returnToggleSpellMessage();
 
 	void setJoinWorld(boolean joined);
-	boolean joinWorld();
+	boolean JoinWorld();
 
 	void setColourMana(int amount);
 	int returnColourMana();
 
 	void setMagicLevel(int level);
 	void addMagicLevel(int add);
-	int returnMagicLevel();
+	int ReturnMagicLevel();
 
 	void setMagicExp(float amount);
 	void addMagicExp(float amount);
 	float returnMagicExp();
 
 	void setManaSkinToggled(boolean handInfusion);
-	boolean returnManaSkinToggled();
+	boolean ReturnManaSkinToggled();
 	void setReinforcementToggled(boolean bodyInfusion);
 	boolean returnReinforcementToggled();
 
@@ -59,17 +59,18 @@ public interface IPlayerHandler {
 	BCMMode returnPlayerMode();
 
 	void setManaBoolean(boolean has);
-	boolean hasManaBoolean();
+	boolean HasManaBoolean();
 
-	void setGrimoireTexture(String texture);
+	void SetGrimoireTexture(String texture);
 	String getGrimoireTexture();
 
 	void setKeybind(int key, String name);
-
 	String returnKeybind(int key);
 
-	void setKeybindCD(int key, int cd);
+	void setSwordSlot(int slot, ItemStack name);
+	ItemStack returnSwordSlot(int slot);
 
+	void setKeybindCD(int key, int cd);
 	int returnKeybindCD(int key);
 
 	void setSpellBoolean(BCMSpell spell, boolean has);

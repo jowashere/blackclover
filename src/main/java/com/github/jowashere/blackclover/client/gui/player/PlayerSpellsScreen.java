@@ -5,8 +5,8 @@ import com.github.jowashere.blackclover.capabilities.player.IPlayerHandler;
 import com.github.jowashere.blackclover.capabilities.player.PlayerCapability;
 import com.github.jowashere.blackclover.capabilities.player.PlayerProvider;
 import com.github.jowashere.blackclover.client.gui.GuiButtonTab;
+import com.github.jowashere.blackclover.client.gui.player.spells.SpellsScreen;
 import com.github.jowashere.blackclover.client.gui.widgets.sybmols.GuiButtonSymbol;
-import com.github.jowashere.blackclover.util.helpers.AttributeHelper;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.AbstractClientPlayerEntity;
@@ -43,10 +43,9 @@ public class PlayerSpellsScreen extends AbstractTabbedBackground {
 
 
         //Page 1
-        addButton(primarySpellsSymbol = new GuiButtonSymbol(this.guiLeft - 5, this.guiTop - 30, playerCapability.returnMagicAttribute().getU(), playerCapability.returnMagicAttribute().getV(), $ -> {
+        addButton(primarySpellsSymbol = new GuiButtonSymbol(this.guiLeft - 5, this.guiTop - 30, playerCapability.ReturnMagicAttribute().getU(), playerCapability.ReturnMagicAttribute().getV(), $ -> {
 
-            if(AttributeHelper.getAttributeSpellScreen(playerCapability.returnMagicAttribute()) != null)
-                Minecraft.getInstance().setScreen(AttributeHelper.getAttributeSpellScreen(playerCapability.returnMagicAttribute()));
+            Minecraft.getInstance().setScreen(new SpellsScreen(playerCapability.ReturnMagicAttribute()));
 
         }));
     }

@@ -1,0 +1,7 @@
+  {
+  "parent": "blackclover:item/demon_dweller",
+  "textures": {
+    "0": "blackclover:items/demon_dweller_anti",
+    "particle": "blackclover:items/demon_dweller_anti"
+  }
+}

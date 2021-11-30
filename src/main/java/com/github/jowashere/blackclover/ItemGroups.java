@@ -6,12 +6,12 @@ import net.minecraft.item.ItemStack;
 
 public class ItemGroups {
 
-    public static final ItemGroup GRIMOIRES = new ItemGroup("bcGrimoires")
+    public static final ItemGroup WEAPONS = new ItemGroup("bcWeapons")
     {
         @Override
         public ItemStack makeIcon()
         {
-            return new ItemStack(ItemInit.GRIMOIRE_YUNO.get());
+            return new ItemStack(ItemInit.YAMIS_KATANA.get());
         }
     };
 

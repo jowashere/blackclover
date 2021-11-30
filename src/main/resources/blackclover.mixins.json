@@ -4,9 +4,14 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "blackclover.refmap.json",
   "mixins": [
+    "MinecraftMixin",
+    "MixinItem",
+    "PlayerEntityMixin",
+    "ServerPlayNetHandlerMixin"
   ],
   "minVersion": "0.8",
   "client": [
+    "GameRendererMixin",
     "MixinMinecraft"
   ]
 }

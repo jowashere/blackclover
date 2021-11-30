@@ -1,7 +1,7 @@
 package com.github.jowashere.blackclover.api.internal;
 
 import com.github.jowashere.blackclover.Main;
-import com.github.jowashere.blackclover.events.spells.AbstractAddSpells;
+import com.github.jowashere.blackclover.common.spells.adders.AbstractAddSpells;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
@@ -20,7 +20,6 @@ public class BCMAttribute {
     private BCMSpell.Type spellType;
 
     private String message = "";
-    private String owner = "";
     private int colour = 0;
     private int u;
     private int v;
@@ -61,11 +60,6 @@ public class BCMAttribute {
         return this.message;
     }
 
-    public BCMAttribute setAttributeUser(String owner) {
-        this.owner = owner;
-        return this;
-    }
-
     public BCMAttribute setSpellAdder(AbstractAddSpells spellAdder){
         this.spellAdder = spellAdder;
         return this;
@@ -82,10 +76,6 @@ public class BCMAttribute {
         return this.spellType;
     }
 
-    public String getAttributeUser(){
-        return this.owner;
-    }
-
     public int getU(){
         return this.u;
     }
@@ -99,7 +89,7 @@ public class BCMAttribute {
         return this;
     }
 
-    public ArrayList<String> getGrimoireTextures(){
+    public ArrayList<String> GetGrimoireTextures(){
         return this.grimoireTextures;
     }
 

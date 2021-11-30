@@ -35,17 +35,17 @@ public class Notifications {
             ClientPlayerEntity player = mc.player;
             LazyOptional<IPlayerHandler> playerc = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
             IPlayerHandler player_cap = playerc.orElse(new PlayerCapability());
-            if (player_cap.returnManaSkinToggled())
+            if (player_cap.ReturnManaSkinToggled())
             {
-                mc.gui.blit(event.getMatrixStack(), 5, 2, 0,0, 16, 16);
+                mc.gui.blit(event.getMatrixStack(), 25, 2, 0,0, 16, 16);
             }
             if (player_cap.returnReinforcementToggled())
             {
-                mc.gui.blit(event.getMatrixStack(), 25, 2, 0, 16, 16, 24);
+                mc.gui.blit(event.getMatrixStack(), 25, 22, 0, 16, 16, 24);
             }
 
             this.setSpellNotifications(player);
-            int i = 55;
+            int i = 2;
 
             for (BCMSpell toggledSpell : this.toggledSpell) {
                 mc.textureManager.bind(toggledSpell.getResourceLocationForGUI());

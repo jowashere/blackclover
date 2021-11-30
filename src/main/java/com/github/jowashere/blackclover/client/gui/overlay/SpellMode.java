@@ -5,11 +5,17 @@ import com.github.jowashere.blackclover.api.internal.BCMSpell;
 import com.github.jowashere.blackclover.capabilities.player.IPlayerHandler;
 import com.github.jowashere.blackclover.capabilities.player.PlayerCapability;
 import com.github.jowashere.blackclover.capabilities.player.PlayerProvider;
-import com.github.jowashere.blackclover.client.gui.player.spells.AbstractSpellScreen;
+import com.github.jowashere.blackclover.client.gui.player.spells.SpellsScreen;
+import com.github.jowashere.blackclover.init.AttributeInit;
 import com.github.jowashere.blackclover.util.helpers.SpellHelper;
 import com.mojang.blaze3d.platform.GlStateManager;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.IRenderTypeBuffer;
+import net.minecraft.client.renderer.model.IBakedModel;
+import net.minecraft.client.renderer.model.ItemCameraTransforms;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -38,7 +44,7 @@ public class SpellMode {
 
             ResourceLocation WIDGETS = new ResourceLocation(Main.MODID + ":textures/gui/widgets.png");
 
-            if(Minecraft.getInstance().screen instanceof AbstractSpellScreen){
+            if(Minecraft.getInstance().screen instanceof SpellsScreen){
                 event.setCanceled(true);
             }
 
@@ -54,35 +60,18 @@ public class SpellMode {
                     for (int i = 0; i < 9; i++)
                     {
                         BCMSpell spell = null;
+                        ItemStack storedSword = ItemStack.EMPTY;
                         int spellcd = 0;
 
-                        if(i == 0){
-                            spell = SpellHelper.getSpellFromString(player_cap.returnKeybind(1));
-                            spellcd = player_cap.returnKeybindCD(1);
-                        }else if (i == 1){
-                            spell = SpellHelper.getSpellFromString(player_cap.returnKeybind(2));
-                            spellcd = player_cap.returnKeybindCD(2);
-                        }else if (i == 2){
-                            spell = SpellHelper.getSpellFromString(player_cap.returnKeybind(3));
-                            spellcd = player_cap.returnKeybindCD(3);
-                        }else if (i == 3){
-                            spell = SpellHelper.getSpellFromString(player_cap.returnKeybind(4));
-                            spellcd = player_cap.returnKeybindCD(4);
-                        }else if (i == 4){
-                            spell = SpellHelper.getSpellFromString(player_cap.returnKeybind(5));
-                            spellcd = player_cap.returnKeybindCD(5);
-                        }else if (i == 5){
-                            spell = SpellHelper.getSpellFromString(player_cap.returnKeybind(6));
-                            spellcd = player_cap.returnKeybindCD(6);
-                        }else if (i == 6){
-                            spell = SpellHelper.getSpellFromString(player_cap.returnKeybind(7));
-                            spellcd = player_cap.returnKeybindCD(7);
-                        }else if (i == 7){
-                            spell = SpellHelper.getSpellFromString(player_cap.returnKeybind(8));
-                            spellcd = player_cap.returnKeybindCD(8);
-                        }else if (i == 8){
-                            spell = SpellHelper.getSpellFromString(player_cap.returnKeybind(9));
-                            spellcd = player_cap.returnKeybindCD(9);
+                        spell = SpellHelper.getSpellFromString(player_cap.returnKeybind(i + 1));
+                        storedSword = player_cap.returnSwordSlot(i + 1);
+
+
+                        if(spell != null){
+                            String cdName = spell.getCorrelatedPlugin().getPluginId() + "_" + spell.getName() + "_cd";
+                            spellcd = player.getPersistentData().getInt(cdName);
+                        }else {
+                            spellcd = 0;
                         }
 
                         if(spell == null)
@@ -113,35 +102,33 @@ public class SpellMode {
                         GlStateManager._color4f(1, 1, 1, 1);
 
                         // Drawing the spells
-                        mc.getTextureManager().bind(spell.getResourceLocationForGUI());
-                        GuiUtils.drawTexturedModalRect( event.getMatrixStack(), ((posX - 200 + (i * 50)) / 2) + 4, posY - 19, spell.getU(), spell.getV(), 16, 16, 0);
 
-                        /*if(spell.isToggle())
-                        {
-                            GuiUtils.drawTexturedModalRect( event.getMatrixStack(), ((posX - 200 + (i * 50)) / 2) + 4, posY - 19, spell.getU(), spell.getV(), 16, (int) threshold, 0);
-                        }
-                        else if(spell.getCooldown() > 0)
-                        {
-
+                        if(!(player_cap.ReturnMagicAttribute().equals(AttributeInit.ANTI_MAGIC) && player.isCrouching())){
                             mc.getTextureManager().bind(spell.getResourceLocationForGUI());
                             GuiUtils.drawTexturedModalRect( event.getMatrixStack(), ((posX - 200 + (i * 50)) / 2) + 4, posY - 19, spell.getU(), spell.getV(), 16, 16, 0);
+                        }else {
 
-                            if(spellcd < 10)
-                            {
-                                // Ready animation
-                                GlStateManager._pushMatrix();
-                                {
-                                    double scale = 0.8 - (spellcd / 10.0);
-                                    GlStateManager._color4f(0.2f, 0.8f, 0.4f, (float)(spellcd / 10));
-                                    GlStateManager._translated((posX - 200 + (i * 50)) / 2, posY - 16, 1);
-                                    GlStateManager._translated(12, 12, 0);
-                                    GlStateManager._scaled(scale, scale, 1);
-                                    GlStateManager._translated(-12, -12, 0);
-                                    GuiUtils.drawTexturedModalRect( event.getMatrixStack(), ((posX - 200 + (i * 50)) / 2) + 4, posY - 19, spell.getU(), spell.getV(), 16, 16, 0);
-                                }
-                                GlStateManager._popMatrix();
+                            IBakedModel model = mc.getItemRenderer().getModel(storedSword, null, null);
+
+                            if(!storedSword.isEmpty()){
+
+                                event.getMatrixStack().translate(((posX - 200 + (i * 50)) / 2) + 4, posY - 19, 100.0F);
+                                event.getMatrixStack().translate(8.0F, 8.0F, 0.0F);
+                                event.getMatrixStack().scale(1.0F, -1.0F, 1.0F);
+                                event.getMatrixStack().scale(16.0F, 16.0F, 16.0F);
+
+                                IRenderTypeBuffer.Impl renderTypeBuffer = Minecraft.getInstance().renderBuffers().bufferSource();
+
+                                mc.getItemRenderer().render(storedSword, ItemCameraTransforms.TransformType.GUI, false, event.getMatrixStack(), renderTypeBuffer, 100, OverlayTexture.NO_OVERLAY, model);
+                                renderTypeBuffer.endBatch();
+
+                                event.getMatrixStack().translate(-(((posX - 200 + (i * 50)) / 2) + 4), -(posY - 19), -100.0F);
+                                event.getMatrixStack().translate(-8.0F, -8.0F, 0.0F);
+                                event.getMatrixStack().scale(-1.0F, 1.0F, -1.0F);
+                                event.getMatrixStack().scale(-16.0F, -16.0F, -16.0F);
+
                             }
-                        }*/
+                        }
 
                         // Reverting the color back to avoid future slots being wrongly colored
                         GlStateManager._color4f(1, 1, 1, 1);

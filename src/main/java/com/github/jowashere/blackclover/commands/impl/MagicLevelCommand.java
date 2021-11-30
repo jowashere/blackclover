@@ -1,16 +1,10 @@
 package com.github.jowashere.blackclover.commands.impl;
 
 import com.github.jowashere.blackclover.Main;
-import com.github.jowashere.blackclover.api.BCMRegistry;
-import com.github.jowashere.blackclover.api.internal.BCMAttribute;
 import com.github.jowashere.blackclover.capabilities.player.IPlayerHandler;
 import com.github.jowashere.blackclover.capabilities.player.PlayerProvider;
-import com.github.jowashere.blackclover.common.spells.SpellCaller;
 import com.github.jowashere.blackclover.networking.NetworkLoader;
-import com.github.jowashere.blackclover.networking.packets.PacketAttributeSync;
 import com.github.jowashere.blackclover.networking.packets.PacketMagicExpSync;
-import com.github.jowashere.blackclover.networking.packets.settings.PacketKeybindSet;
-import com.github.jowashere.blackclover.util.helpers.AttributeHelper;
 import com.github.jowashere.blackclover.util.helpers.BCMHelper;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
@@ -86,7 +80,7 @@ public class MagicLevelCommand {
         int maxLevel = 100;
 
         if(levelOrPoints.equals(LevelOrPoints.LEVEL) && ((addOrSet.equals(AddOrSet.SET) && amount > maxLevel) ||
-                addOrSet.equals(AddOrSet.ADD) && amount + playercap.returnMagicLevel() > maxLevel)){
+                addOrSet.equals(AddOrSet.ADD) && amount + playercap.ReturnMagicLevel() > maxLevel)){
             source.sendFailure(new TranslationTextComponent("commands." + Main.MODID + ".magiclevel.toohigh", amount));
             return 0;
         } else if(levelOrPoints.equals(LevelOrPoints.LEVEL) && amount == 0){
@@ -97,7 +91,7 @@ public class MagicLevelCommand {
         if(levelOrPoints.equals(LevelOrPoints.LEVEL)){
             if(addOrSet.equals(AddOrSet.SET)){
 
-                float magicExp = BCMHelper.calculateExp(amount);
+                float magicExp = BCMHelper.CalculateExp(amount);
 
                 playercap.setMagicExp(magicExp);
                 NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketMagicExpSync(magicExp, player.getId()));
@@ -106,7 +100,7 @@ public class MagicLevelCommand {
                 source.sendSuccess(new TranslationTextComponent("commands." + Main.MODID + ".magiclevel.set", player.getDisplayName(), amount), true);
             }else if(addOrSet.equals(AddOrSet.ADD)){
 
-                float expNeeded = BCMHelper.calculateExp(amount) - playercap.returnMagicExp();
+                float expNeeded = BCMHelper.CalculateExp(amount) - playercap.returnMagicExp();
                 float newXP = expNeeded + playercap.returnMagicExp();
                 playercap.setMagicExp(newXP);
                 NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketMagicExpSync(newXP, player.getId()));
@@ -134,7 +128,7 @@ public class MagicLevelCommand {
             }
         }
 
-        BCMHelper.recaculateMagicLevel(player);
+        BCMHelper.RecaculateMagicLevel(player);
 
         return 1;
     }

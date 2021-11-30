@@ -10,9 +10,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.common.util.LazyOptional;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class SpellHelper {
 
     public static BCMSpell getSpellFromName(String registryName) {
@@ -39,6 +36,12 @@ public class SpellHelper {
         }
     }*/
 
+
+    public static Float spellDamageCalc(int magicLevel, int damageTier, float baseDamage) {
+
+        return baseDamage + ((damageTier * baseDamage / 2) * magicLevel / 10);
+    }
+
     public static Float spellDamageCalcE(LivingEntity entity, int damageTier, float baseDamage) {
 
         int magicLevel = entity.getEffect(EffectInit.MAGIC_LEVEL.get()).getAmplifier();
@@ -51,7 +54,7 @@ public class SpellHelper {
         LazyOptional<IPlayerHandler> playerInCap = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
         IPlayerHandler player_cap = playerInCap.orElse(new PlayerCapability());
 
-        return baseDamage + ((damageTier * baseDamage / 2) * player_cap.returnMagicLevel() / 10);
+        return baseDamage + ((damageTier * baseDamage / 2) * player_cap.ReturnMagicLevel() / 10);
     }
 
     public static int findSpellKey(PlayerEntity player, BCMSpell spell) {

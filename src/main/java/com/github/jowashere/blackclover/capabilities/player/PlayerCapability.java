@@ -8,20 +8,14 @@ import com.github.jowashere.blackclover.api.internal.BCMSpell;
 import com.github.jowashere.blackclover.init.AttributeInit;
 import com.github.jowashere.blackclover.init.ModeInit;
 import com.github.jowashere.blackclover.init.RaceInit;
-import com.github.jowashere.blackclover.networking.NetworkLoader;
-import com.github.jowashere.blackclover.networking.packets.spells.PacketSpellNBTSync;
 import com.github.jowashere.blackclover.util.helpers.AttributeHelper;
 import com.github.jowashere.blackclover.util.helpers.ModeHelper;
 import com.github.jowashere.blackclover.util.helpers.RaceHelper;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.nbt.INBT;
 import net.minecraft.util.Direction;
-import net.minecraft.util.text.StringTextComponent;
-import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.common.capabilities.Capability;
-import net.minecraftforge.fml.network.PacketDistributor;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
@@ -79,11 +73,19 @@ public class PlayerCapability implements IPlayerHandler {
 
     private float spellCooldown;
 
-    private boolean storedDemonSlayer;
-    private boolean storedDemonDweller;
-    private boolean storedDemonDestroyer;
+    private ItemStack swordSlot1 = ItemStack.EMPTY;
+    private ItemStack swordSlot2 = ItemStack.EMPTY;
+    private ItemStack swordSlot3 = ItemStack.EMPTY;
+    private ItemStack swordSlot4 = ItemStack.EMPTY;
+    private ItemStack swordSlot5 = ItemStack.EMPTY;
+    private ItemStack swordSlot6 = ItemStack.EMPTY;
+    private ItemStack swordSlot7 = ItemStack.EMPTY;
+    private ItemStack swordSlot8 = ItemStack.EMPTY;
+    private ItemStack swordSlot9 = ItemStack.EMPTY;
 
-	@Override
+
+
+    @Override
     public float returnMana() {
         return this.mana;
     }
@@ -110,7 +112,7 @@ public class PlayerCapability implements IPlayerHandler {
         this.joined = joined;
     }
     @Override
-    public boolean joinWorld() {
+    public boolean JoinWorld() {
         return this.joined;
     }
 
@@ -159,7 +161,7 @@ public class PlayerCapability implements IPlayerHandler {
         this.magicAttribute = attribute;
     }
     @Override
-    public BCMAttribute returnMagicAttribute() {
+    public BCMAttribute ReturnMagicAttribute() {
         return magicAttribute;
     }
 
@@ -207,7 +209,7 @@ public class PlayerCapability implements IPlayerHandler {
         this.magicLevel += amount;
     }
     @Override
-    public int returnMagicLevel()
+    public int ReturnMagicLevel()
     {
         return this.magicLevel;
     }
@@ -242,7 +244,7 @@ public class PlayerCapability implements IPlayerHandler {
         this.manaSkinToggled = handInfusion;
     }
     @Override
-    public boolean returnManaSkinToggled()
+    public boolean ReturnManaSkinToggled()
     {
         return this.manaSkinToggled;
     }
@@ -263,13 +265,13 @@ public class PlayerCapability implements IPlayerHandler {
         this.manaless = !has;
     }
     @Override
-    public boolean hasManaBoolean()
+    public boolean HasManaBoolean()
     {
         return !this.manaless;
     }
 
     @Override
-    public void setGrimoireTexture(String texture){
+    public void SetGrimoireTexture(String texture){
 	    this.grimoireTextureLoc = texture;
     }
     @Override
@@ -374,6 +376,59 @@ public class PlayerCapability implements IPlayerHandler {
     }
 
     @Override
+    public void setSwordSlot(int swordSlot, ItemStack stack)
+    {
+
+        ItemStack itemStack = new ItemStack(stack.getItem());
+        itemStack.getOrCreateTag().merge(stack.getOrCreateTag());
+
+        if(swordSlot == 1){
+
+            this.swordSlot1 = itemStack;
+        }else if(swordSlot == 2){
+            this.swordSlot2 = itemStack;
+        }else if(swordSlot == 3){
+            this.swordSlot3 = itemStack;
+        }else if(swordSlot == 4){
+            this.swordSlot4 = itemStack;
+        }else if(swordSlot == 5){
+            this.swordSlot5 = itemStack;
+        }else if(swordSlot == 6){
+            this.swordSlot6 = itemStack;
+        }else if(swordSlot == 7){
+            this.swordSlot7 = itemStack;
+        }else if(swordSlot == 8){
+            this.swordSlot8 = itemStack;
+        }else if(swordSlot == 9){
+            this.swordSlot9 = itemStack;
+        }
+    }
+    @Override
+    public ItemStack returnSwordSlot(int swordSlot)
+    {
+        if(swordSlot == 1){
+            return this.swordSlot1;
+        }else if(swordSlot == 2){
+            return this.swordSlot2;
+        }else if(swordSlot == 3){
+            return this.swordSlot3;
+        }else if(swordSlot == 4){
+            return this.swordSlot4;
+        }else if(swordSlot == 5){
+            return this.swordSlot5;
+        }else if(swordSlot == 6){
+            return this.swordSlot6;
+        }else if(swordSlot == 7){
+            return this.swordSlot7;
+        }else if(swordSlot == 8){
+            return this.swordSlot8;
+        }else if(swordSlot == 9){
+            return this.swordSlot9;
+        }
+        return null;
+    }
+
+    @Override
     public void setSpellBoolean(BCMSpell spell, boolean has) {
         if (this.spellBooleans.containsKey(spell)) {
             this.spellBooleans.replace(spell, has);
@@ -396,9 +451,9 @@ public class PlayerCapability implements IPlayerHandler {
         {
             CompoundNBT tag = new CompoundNBT();
 
-            tag.putBoolean("joined", instance.joinWorld());
+            tag.putBoolean("joined", instance.JoinWorld());
             tag.putBoolean("spellMode", instance.returnSpellModeToggle());
-            tag.putBoolean("manaskin", instance.returnManaSkinToggled());
+            tag.putBoolean("manaskin", instance.ReturnManaSkinToggled());
             tag.putBoolean("reinforcement", instance.returnReinforcementToggled());
             tag.putBoolean("spellmessage", instance.returnToggleSpellMessage());
             tag.putFloat("mana", instance.returnMana());
@@ -406,10 +461,10 @@ public class PlayerCapability implements IPlayerHandler {
             tag.putFloat("regenMana", instance.returnRegenMana());
             tag.putInt("colorMana", instance.returnColourMana());
             tag.putFloat("magicExp", instance.returnMagicExp());
-            tag.putInt("magicLevel", instance.returnMagicLevel());
+            tag.putInt("magicLevel", instance.ReturnMagicLevel());
             tag.putString("playerRace", instance.returnRace().getString());
             tag.putString("playerMode", instance.returnPlayerMode().getName());
-            tag.putString("magicAttribute", instance.returnMagicAttribute().getString());
+            tag.putString("magicAttribute", instance.ReturnMagicAttribute().getString());
             tag.putBoolean("hasGrimoire", instance.returnHasGrimoire());
 
             tag.putString("grimoireTex", instance.getGrimoireTexture());
@@ -434,9 +489,45 @@ public class PlayerCapability implements IPlayerHandler {
             tag.putInt("key8cd", instance.returnKeybindCD(8));
             tag.putInt("key9cd", instance.returnKeybindCD(9));
 
+            CompoundNBT swordSlot1 = new CompoundNBT();
+            instance.returnSwordSlot(1).save(swordSlot1);
+            tag.put("swordslot1", swordSlot1);
+
+            CompoundNBT swordSlot2 = new CompoundNBT();
+            instance.returnSwordSlot(2).save(swordSlot2);
+            tag.put("swordslot2", swordSlot2);
+
+            CompoundNBT swordSlot3 = new CompoundNBT();
+            instance.returnSwordSlot(3).save(swordSlot3);
+            tag.put("swordslot3", swordSlot3);
+
+            CompoundNBT swordSlot4 = new CompoundNBT();
+            instance.returnSwordSlot(4).save(swordSlot4);
+            tag.put("swordslot4", swordSlot4);
+
+            CompoundNBT swordSlot5 = new CompoundNBT();
+            instance.returnSwordSlot(5).save(swordSlot5);
+            tag.put("swordslot5", swordSlot5);
+
+            CompoundNBT swordSlot6 = new CompoundNBT();
+            instance.returnSwordSlot(6).save(swordSlot6);
+            tag.put("swordslot6", swordSlot6);
+
+            CompoundNBT swordSlot7 = new CompoundNBT();
+            instance.returnSwordSlot(7).save(swordSlot7);
+            tag.put("swordslot7", swordSlot7);
+
+            CompoundNBT swordSlot8 = new CompoundNBT();
+            instance.returnSwordSlot(8).save(swordSlot8);
+            tag.put("swordslot8", swordSlot8);
+
+            CompoundNBT swordSlot9 = new CompoundNBT();
+            instance.returnSwordSlot(2).save(swordSlot9);
+            tag.put("swordslot9", swordSlot9);
+
             tag.putBoolean("spellmessage", instance.returnToggleSpellMessage());
 
-            tag.putBoolean("hasMana", instance.hasManaBoolean());
+            tag.putBoolean("hasMana", instance.HasManaBoolean());
 
             for (BCMSpell spell : BCMRegistry.SPELLS.getValues()) {
                 tag.putBoolean(spell.getCorrelatedPlugin().getPluginId() + "_" + spell.getName() + "_save", instance.hasSpellBoolean(spell));
@@ -464,7 +555,18 @@ public class PlayerCapability implements IPlayerHandler {
             instance.setPlayerBodyMode(ModeHelper.getModeFromString(((CompoundNBT) tag).getString("playerMode")));
             instance.setHasGrimoire(((CompoundNBT) tag).getBoolean("hasGrimoire"));
 
-            instance.setGrimoireTexture(((CompoundNBT) tag).getString("grimoireTex"));
+            instance.SetGrimoireTexture(((CompoundNBT) tag).getString("grimoireTex"));
+
+            instance.setSwordSlot(1, ItemStack.of(((CompoundNBT) tag).getCompound("swordslot1")));
+            instance.setSwordSlot(2, ItemStack.of(((CompoundNBT) tag).getCompound("swordslot2")));
+            instance.setSwordSlot(3, ItemStack.of(((CompoundNBT) tag).getCompound("swordslot3")));
+            instance.setSwordSlot(4, ItemStack.of(((CompoundNBT) tag).getCompound("swordslot4")));
+            instance.setSwordSlot(5, ItemStack.of(((CompoundNBT) tag).getCompound("swordslot5")));
+            instance.setSwordSlot(6, ItemStack.of(((CompoundNBT) tag).getCompound("swordslot6")));
+            instance.setSwordSlot(7, ItemStack.of(((CompoundNBT) tag).getCompound("swordslot7")));
+            instance.setSwordSlot(8, ItemStack.of(((CompoundNBT) tag).getCompound("swordslot8")));
+            instance.setSwordSlot(9, ItemStack.of(((CompoundNBT) tag).getCompound("swordslot9")));
+
 
             instance.setKeybind(1, ((CompoundNBT) tag).getString("key1"));
             instance.setKeybind(2, ((CompoundNBT) tag).getString("key2"));

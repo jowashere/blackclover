@@ -3,10 +3,7 @@ package com.github.jowashere.blackclover.networking.packets.settings;
 import com.github.jowashere.blackclover.capabilities.player.IPlayerHandler;
 import com.github.jowashere.blackclover.capabilities.player.PlayerCapability;
 import com.github.jowashere.blackclover.capabilities.player.PlayerProvider;
-import com.github.jowashere.blackclover.networking.packets.PacketHasModeSync;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
-import net.minecraft.client.entity.player.RemoteClientPlayerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.common.util.LazyOptional;
@@ -50,11 +47,11 @@ public class PacketSetGrimoireTexture {
                 PlayerEntity player = (PlayerEntity) Minecraft.getInstance().level.getEntity(msg.playerID);
                 LazyOptional<IPlayerHandler> capabilities = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
                 IPlayerHandler playercap = capabilities.orElse(new PlayerCapability());
-                playercap.setGrimoireTexture(msg.texture);
+                playercap.SetGrimoireTexture(msg.texture);
             } else {
                 LazyOptional<IPlayerHandler> capabilities = ctx.get().getSender().getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
                 IPlayerHandler playercap = capabilities.orElse(new PlayerCapability());
-                playercap.setGrimoireTexture(msg.texture);
+                playercap.SetGrimoireTexture(msg.texture);
             }
 
         });
