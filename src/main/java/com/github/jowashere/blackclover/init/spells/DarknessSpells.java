@@ -86,7 +86,7 @@ public class DarknessSpells {
 
             if (!playerIn.level.isClientSide) {
                 AvidyaSlashEntity entity = new AvidyaSlashEntity(playerIn.level, playerIn, manaIn);
-                entity.shootFromRotation(playerIn, playerIn.xRot, playerIn.yRot, 0.0F, 1.6F, 2.5F);
+                entity.shootFromRotation(playerIn, playerIn.xRot, playerIn.yRot, 0.0F, 1.3F, 1F);
                 playerIn.level.addFreshEntity(entity);
                 playerIn.swing(Hand.MAIN_HAND, true);
 

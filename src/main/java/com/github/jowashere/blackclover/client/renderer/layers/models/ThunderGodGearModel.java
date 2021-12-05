@@ -47,18 +47,15 @@ public class ThunderGodGearModel<T extends LivingEntity> extends BipedModel<T> {
     private final ModelRenderer cube_r18;
     private final ModelRenderer LeftArm;
 
-    boolean showGloves;
-    boolean showBoots;
+    public boolean showGloves;
+    public boolean showBoots;
 
-    public ThunderGodGearModel(boolean gloves, boolean boots) {
+    public ThunderGodGearModel() {
 
 
         super(RenderType::entitySolid, 1, 0.0F, 64, 64);
         texWidth = 16;
         texHeight = 16;
-
-        this.showGloves = gloves;
-        this.showBoots = boots;
 
         LeftLeg = new ModelRenderer(this);
         LeftLeg.setPos(1.9F, 12.0F, 0.0F);

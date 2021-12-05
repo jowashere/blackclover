@@ -1,4 +1,4 @@
-package com.github.jowashere.blackclover.items;
+package com.github.jowashere.blackclover.items.weapons;
 
 import com.github.jowashere.blackclover.api.internal.BCMAttribute;
 import com.github.jowashere.blackclover.capabilities.player.IPlayerHandler;

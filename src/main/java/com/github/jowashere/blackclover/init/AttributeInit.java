@@ -13,7 +13,7 @@ public class AttributeInit {
 
     public static final BCMAttribute NULL = new BCMAttribute("null", 0, false,  null);
 
-    public List<Supplier<BCMAttribute>> attributeList = new ArrayList<>();
+    public static final List<Supplier<BCMAttribute>> attributeList = new ArrayList<>();
 
     public static final BCMAttribute WIND = new BCMAttribute("wind", 30, false, 0, 16,  BCMSpell.Type.WIND_MAGIC).setAttributeMessage("You have Wind Magic.").setAttributeColour(1).setSpellAdder(new AddWindSpells()).setGrimoireTextures(GrimoireTextures.WindGrimoires);
     public static final BCMAttribute LIGHTNING = new BCMAttribute("lightning", 30, false, 0, 48,  BCMSpell.Type.LIGHTNING_MAGIC).setAttributeMessage("You have Lightning Magic").setAttributeColour(3).setSpellAdder(new AddLightningSpells()).setGrimoireTextures(GrimoireTextures.LightningGrimoires);

@@ -598,6 +598,7 @@ public class PlayerCapability implements IPlayerHandler {
             instance.setManaBoolean(((CompoundNBT) tag).getBoolean("hasMana"));
 
             for (BCMSpell spell : BCMRegistry.SPELLS.getValues()) {
+                BCMSpell bcmSpell = spell;
                 instance.setSpellBoolean(spell, ((CompoundNBT) tag).getBoolean(spell.getCorrelatedPlugin().getPluginId() + "_" + spell.getName() + "_save"));
             }
         }

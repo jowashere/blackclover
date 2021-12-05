@@ -17,7 +17,8 @@ import net.minecraft.util.ResourceLocation;
 public class TGLayer <T extends LivingEntity, M extends EntityModel<T>> extends LayerRenderer<T, M> {
 
     private static final ResourceLocation resourcelocation = new ResourceLocation("blackclover:textures/entities/layers/spells/thundergodgear.png");
-    private ThunderGodGearModel model;
+
+    private ThunderGodGearModel model = new ThunderGodGearModel();
 
     public TGLayer(IEntityRenderer<T, M> entityRendererIn) {
         super(entityRendererIn);
@@ -32,8 +33,10 @@ public class TGLayer <T extends LivingEntity, M extends EntityModel<T>> extends 
             boolean gloves = player.getPersistentData().getBoolean("blackclover_tg_gloves");
             boolean boots = player.getPersistentData().getBoolean("blackclover_tg_boots");
 
+            model.showBoots = boots;
+            model.showGloves = gloves;
+
             if (gloves || boots) {
-                model = new ThunderGodGearModel(gloves, boots);
                 matrixStackIn.pushPose();
                 this.getParentModel().copyPropertiesTo(this.model);
                 this.model.setupAnim(entitylivingbaseIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
