@@ -12,7 +12,6 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 public class ThunderOrbEntity extends AbstractLightningProjectileEntity {
 
-
     public ThunderOrbEntity(EntityType<? extends ThunderOrbEntity> type, World worldIn) {
         super(type, worldIn);
     }

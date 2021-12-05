@@ -82,11 +82,12 @@ public class LightningSpells {
 
             if (!playerIn.level.isClientSide) {
                 ThunderOrbEntity entity = new ThunderOrbEntity(playerIn.level, playerIn, manaIn);
-                entity.shootFromRotation(playerIn, playerIn.xRot, playerIn.yRot, 0.0F, 3.0F, 1F);
+                entity.shootFromRotation(playerIn, playerIn.xRot, playerIn.yRot, 0.0F, 2.5F, 1F);
                 playerIn.level.addFreshEntity(entity);
                 playerIn.swing(Hand.MAIN_HAND, true);
             }
         })).setExtraSpellChecks((playerIn) -> playerIn.getPersistentData().getBoolean("blackclover_tg_gloves")).setCheckFailMsg("Thunder God Gloves need to be on."));
+
         spellRegistry.register(new BCMSpell(pluginIn, "thunder_fiend", BCMSpell.Type.LIGHTNING_MAGIC, 20F, 60, false, 32, 48, false, ((playerIn, modifier0, modifier1, playerCapability, manaIn) -> {
 
             LazyOptional<IPlayerHandler> playerInCap = playerIn.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
