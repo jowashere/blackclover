@@ -50,6 +50,7 @@ public class MainPlugin implements IBCMPlugin {
         DarknessSpells.registerSpells(spellRegistry, this);
         AntiMagicSpells.registerSpells(spellRegistry, this);
         SlashMagicSpells.registerSpells(spellRegistry, this);
+        SwordSpells.registerSpells(spellRegistry, this);
     }
 
 }
