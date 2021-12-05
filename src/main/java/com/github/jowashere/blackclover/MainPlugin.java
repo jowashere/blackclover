@@ -24,6 +24,7 @@ public class MainPlugin implements IBCMPlugin {
         attributeRegistry.register(AttributeInit.LIGHTNING);
         attributeRegistry.register(AttributeInit.DARKNESS);
         attributeRegistry.register(AttributeInit.SLASH);
+        attributeRegistry.register(AttributeInit.SWORD);
 
     }
 
@@ -48,6 +49,7 @@ public class MainPlugin implements IBCMPlugin {
         DarknessSpells.registerSpells(spellRegistry, this);
         AntiMagicSpells.registerSpells(spellRegistry, this);
         SlashMagicSpells.registerSpells(spellRegistry, this);
+        SwordSpells.registerSpells(spellRegistry, this);
     }
 
 }
