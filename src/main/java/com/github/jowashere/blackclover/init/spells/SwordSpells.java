@@ -16,7 +16,7 @@ public class SwordSpells
         {
             if (!playerIn.level.isClientSide)
             {
-                DeathScytheEntity Slash = new DeathScytheEntity(playerIn.level, playerIn, manaIn);
+                DeathScytheEntity Slash = new DeathScytheEntity(playerIn.level, playerIn, manaIn); //TODO make custom entity for this spell
                 Slash.shootFromRotation(playerIn, playerIn.xRot, playerIn.yRot, 0.0F, 1.6F, 2.5F);
                 playerIn.level.addFreshEntity(Slash);
                 playerIn.swing(Hand.MAIN_HAND, true);
