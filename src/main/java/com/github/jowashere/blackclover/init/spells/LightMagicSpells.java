@@ -33,7 +33,7 @@ public class LightMagicSpells {
 
     }).addStartEventListener((playerIn, manaIn) -> {
         BCMHelper.GiveItem(playerIn, new ItemStack(ItemInit.LIGHT_SWORD.get()));
-    });
+    }).setUnlockLevel(1);
 
     public static BCMSpell LIGHT_SWORD_OJ = new BCMSpell(plugin, "light_sword_oj", BCMSpell.Type.LIGHT_MAGIC, 30F, 50, false, 80, 16, false, (playerIn, modifier0, modifier1, playerCapability, manaIn) -> {
 
@@ -62,7 +62,7 @@ public class LightMagicSpells {
             }
         }
 
-    });
+    }).setUnlockLevel(10);
 
     public static BCMSpell LIGHT_MOVEMENT = new BCMSpell(plugin, "light_movement", BCMSpell.Type.LIGHT_MAGIC, 50F, 90, false, 80, 0, false, (playerIn, modifier0, modifier1, playerCapability, manaIn) -> {
 
@@ -81,7 +81,7 @@ public class LightMagicSpells {
             ((ServerWorld) playerIn.level).sendParticles(ParticleTypes.END_ROD, playerIn.getX(), playerIn.getY(), playerIn.getZ(), 10, 0, 1, 0, 0.1);
         }
 
-    });
+    }).setUnlockLevel(5);
 
     public static BCMSpell ARROWS_OF_JUDGEMENT = new BCMSpell(plugin, "arrows_of_judgement", BCMSpell.Type.LIGHT_MAGIC, 100F, 300, false, 80, 80, false, (playerIn, modifier0, modifier1, playerCapability, manaIn) -> {
 
@@ -108,7 +108,7 @@ public class LightMagicSpells {
             ((ServerWorld) playerIn.level).sendParticles(ParticleTypes.END_ROD, playerIn.getX(), playerIn.getY(), playerIn.getZ(), 2, 0, 1, 0, 0.1);
         }
 
-    }).setToggleTimer(40);
+    }).setToggleTimer(60).setUnlockLevel(20);
 
     public static void registerSpells(BCMRegistry.SpellRegistry spellRegistry, IBCMPlugin pluginIn) {
 

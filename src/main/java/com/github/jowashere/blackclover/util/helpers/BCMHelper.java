@@ -218,7 +218,7 @@ public class BCMHelper {
         return (int) (0.07 * Math.sqrt(exp));
     }
 
-    public static void RecaculateMagicLevel(PlayerEntity player){
+    public static void recaculateMagicLevel(PlayerEntity player){
 
         LazyOptional<IPlayerHandler> playerCapability = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
         IPlayerHandler player_cap = playerCapability.orElse(new PlayerCapability());
