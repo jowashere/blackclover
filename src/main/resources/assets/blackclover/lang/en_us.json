@@ -10,6 +10,10 @@
   "attribute.blackclover.wind": "Wind",
   "attribute.blackclover.antimagic": "Anti-Magic",
   "attribute.blackclover.lightning": "Lightning",
+  "attribute.blackclover.darkness": "Darkness",
+  "attribute.blackclover.slash": "Slash",
+  "attribute.blackclover.light": "Light",
+
 
   "race.blackclover.elf": "Elf",
   "race.blackclover.human": "Human",
@@ -26,7 +30,11 @@
 
   "message.blackclover.levelup": "You've now reached level %s",
 
+  "gui.blackclover.title.antimagicspells": "Anti-Magic Spells",
   "gui.blackclover.title.windspells": "Wind Magic Spells",
+  "gui.blackclover.title.darknessspells": "Darkness Magic Spells",
+  "gui.blackclover.title.lightspells": "Light Magic Spells",
+  "gui.blackclover.title.slashspells": "Slash Magic Spells",
   "gui.blackclover.title.lightningspells": "Lightning Magic Spells",
 
   "gui.blackclover.race.name": "Race",

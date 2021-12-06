@@ -55,13 +55,13 @@ public class AntiMagicSpells {
             ItemStack mainItem = playerIn.getItemInHand(Hand.MAIN_HAND);
 
             return (mainItem.getItem().equals(ItemInit.DEMON_SLAYER.get()) || mainItem.getItem().equals(ItemInit.DEMON_DWELLER.get())) && mainItem.getOrCreateTag().getBoolean("antimagic");
-        })).setCheckFailMsg("Demon Dweller/Slayer Sword needs to be in hand."));
+        })).setCheckFailMsg("Demon Dweller/Slayer Sword needs to be in hand.").setUnlockLevel(1));
 
         spellRegistry.register(new BCMSpell(pluginIn, "black_slash", BCMSpell.Type.ANTI_MAGIC, 25F, 50, false, 0, 16, false, (playerIn, modifier0, modifier1, playerCapability, manaIn) -> {
 
             if (!playerIn.level.isClientSide) {
                 BlackSlashEntity entity = new BlackSlashEntity(playerIn.level, playerIn, manaIn);
-                entity.shootFromRotation(playerIn, playerIn.xRot, playerIn.yRot, 0.0F, 1.6F, 2.5F);
+                entity.shootFromRotation(playerIn, playerIn.xRot, playerIn.yRot, 0.0F, 1.8F, 1.0F);
                 playerIn.level.addFreshEntity(entity);
                 playerIn.swing(Hand.MAIN_HAND, true);
 
@@ -70,7 +70,8 @@ public class AntiMagicSpells {
             ItemStack mainItem = playerIn.getItemInHand(Hand.MAIN_HAND);
 
             return (mainItem.getItem().equals(ItemInit.DEMON_DWELLER.get()) && mainItem.getOrCreateTag().getBoolean("antimagic"));
-        })).setCheckFailMsg("Demon Dweller Sword needs to be in hand."));
+        })).setCheckFailMsg("Demon Dweller Sword needs to be in hand.").setUnlockLevel(15));
+
         spellRegistry.register(new BCMSpell(pluginIn, "black_divider", BCMSpell.Type.ANTI_MAGIC, 0.25F, 200, false, 0, 80, true, (playerIn, modifier0, modifier1, playerCapability, manaIn) -> {
 
             LazyOptional<IPlayerHandler> playerInCap = playerIn.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
@@ -95,7 +96,8 @@ public class AntiMagicSpells {
 
             playerIn.getAttribute(ModAttributes.ATTACK_RANGE.get()).removeModifier(REACH_MODIFIER);
 
-        })).checkOnlyToToggle(false).setCheckFailMsg("Demon Slayer Sword needs to be in hand."));
+        })).checkOnlyToToggle(false).setCheckFailMsg("Demon Slayer Sword needs to be in hand.").setUnlockLevel(20));
+
         spellRegistry.register(new BCMSpell(pluginIn, "causality_break", BCMSpell.Type.ANTI_MAGIC, 20F, 200, false, 0, 32, false, (playerIn, modifier0, modifier1, playerCapability, manaIn) -> {
 
             LazyOptional<IPlayerHandler> playerInCap = playerIn.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
@@ -115,7 +117,8 @@ public class AntiMagicSpells {
             ItemStack mainItem = playerIn.getItemInHand(Hand.MAIN_HAND);
 
             return (mainItem.getItem().equals(ItemInit.DEMON_DESTROYER.get()) && mainItem.getOrCreateTag().getBoolean("antimagic"));
-        })).setCheckFailMsg("Demon Destroyer Sword needs to be in hand."));
+        })).setCheckFailMsg("Demon Destroyer Sword needs to be in hand.").setUnlockLevel(16));
+
         spellRegistry.register(new BCMSpell(pluginIn, "causality_break_self", BCMSpell.Type.ANTI_MAGIC, 20F, 200, false, 0, 48, false, (playerIn, modifier0, modifier1, playerCapability, manaIn) -> {
 
             LazyOptional<IPlayerHandler> playerInCap = playerIn.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
@@ -132,7 +135,7 @@ public class AntiMagicSpells {
             boolean antiHasTag = mainItem.getOrCreateTag().getBoolean("antimagic");
             boolean able = (holdingAnti && antiHasTag);
             return able;
-        })).setCheckFailMsg("Demon Destroyer Sword needs to be in hand."));
+        })).setCheckFailMsg("Demon Destroyer Sword needs to be in hand.").setUnlockLevel(16));
 
         spellRegistry.register(new BCMSpell(pluginIn, "black_mode", BCMSpell.Type.ANTI_MAGIC, 0.75F, 12400, false, 0, 112, true, (playerIn, modifier0, modifier1, playerCapability, manaIn) -> {
 
@@ -182,7 +185,7 @@ public class AntiMagicSpells {
             if(playerIn.getAttribute(ModAttributes.DAMAGE_REDUCTION.get()).hasModifier(getBlackModeDamageResModifier(playerIn)))
                 playerIn.getAttribute(ModAttributes.DAMAGE_REDUCTION.get()).removeModifier(getBlackModeDamageResModifier(playerIn));
 
-        })).setToggleTimer(2800).setCheckFailMsg("An Anti-Magic Sword needs to be in hand."));
+        })).setToggleTimer(2800).setCheckFailMsg("An Anti-Magic Sword needs to be in hand.").setUnlockLevel(30));
 
         spellRegistry.register(new BCMSpell(pluginIn, "black_meteorite", BCMSpell.Type.ANTI_MAGIC, 35F, 800, false, 0, 64, false, (playerIn, modifier0, modifier1, playerCapability, manaIn) -> {
 
@@ -202,7 +205,7 @@ public class AntiMagicSpells {
             ItemStack mainItem = playerIn.getItemInHand(Hand.MAIN_HAND);
 
             return (mainItem.getItem().equals(ItemInit.DEMON_SLAYER.get()) || mainItem.getItem().equals(ItemInit.DEMON_DWELLER.get())) && mainItem.getOrCreateTag().getBoolean("antimagic") && playerIn.getPersistentData().getBoolean("blackclover_black_mode");
-        })).setCheckFailMsg("Need to be in Black Mode and holding Demon Dweller/Slayer Sword."));
+        })).setCheckFailMsg("Need to be in Black Mode and holding Demon Dweller/Slayer Sword.").setUnlockLevel(35));
     }
 
     private static AttributeModifier getBlackModeModifier(PlayerEntity playerEntity) {

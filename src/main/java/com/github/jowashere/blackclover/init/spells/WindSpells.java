@@ -35,20 +35,20 @@ public class WindSpells {
         spellRegistry.register(new BCMSpell(pluginIn, "wind_blade", BCMSpell.Type.WIND_MAGIC, 10, 50, true, 16, 0, false, (playerIn, modifier0, modifier1, playerCapability, manaIn) -> {
             if (!playerIn.level.isClientSide) {
                 WindBladeEntity entity = new WindBladeEntity(playerIn.level, playerIn, "wind_blade", manaIn);
-                entity.shootFromRotation(playerIn, playerIn.xRot, playerIn.yRot, 0.0F, 1.3F, 3.0F);
+                entity.shootFromRotation(playerIn, playerIn.xRot, playerIn.yRot, 0.0F, 1.3F, 1.5F);
                 playerIn.level.addFreshEntity(entity);
 
             }
-        }));
+        }).setUnlockLevel(1));
         spellRegistry.register(new BCMSpell(pluginIn, "wind_crescent", BCMSpell.Type.WIND_MAGIC, 25, 70, false, 16, 48, false, (playerIn, modifier0, modifier1, playerCapability, manaIn) -> {
             if (!playerIn.level.isClientSide) {
                 WindCrescentEntity entity = new WindCrescentEntity(playerIn.level, playerIn, manaIn);
-                entity.shootFromRotation(playerIn, playerIn.xRot, playerIn.yRot, 0.0F, 1.6F, 2.5F);
+                entity.shootFromRotation(playerIn, playerIn.xRot, playerIn.yRot, 0.0F, 1.8F, 1.0F);
                 playerIn.level.addFreshEntity(entity);
                 playerIn.swing(Hand.MAIN_HAND, true);
 
             }
-        }));
+        }).setUnlockLevel(25));
         spellRegistry.register(new BCMSpell(pluginIn, "towering_tornado", BCMSpell.Type.WIND_MAGIC, 15, 80, false, 16, 32, false, (playerIn, modifier0, modifier1, playerCapability, manaIn) -> {
             if (!playerIn.level.isClientSide) {
 
@@ -67,16 +67,16 @@ public class WindSpells {
                     ((ServerWorld) playerIn.level).sendParticles(ParticleTypes.SPIT, playerIn.getX(), playerIn.getY(), playerIn.getZ(), (int) 100, 3, 2, 3, 1);
                 }
             }
-        }));
-        spellRegistry.register(new BCMSpell(pluginIn, "wind_blade_shower", BCMSpell.Type.WIND_MAGIC, 50, 120, false, 16, 16, false, (playerIn, modifier0, modifier1, playerCapability, manaIn) -> {
+        }).setUnlockLevel(15));
+        spellRegistry.register(new BCMSpell(pluginIn, "wind_blade_shower", BCMSpell.Type.WIND_MAGIC, 70, 120, false, 16, 16, false, (playerIn, modifier0, modifier1, playerCapability, manaIn) -> {
             if (!playerIn.level.isClientSide) {
                 for(int i = 0; i < 15; i++) {
                     WindBladeEntity entity = new WindBladeEntity(playerIn.level, playerIn, "wind_blade_shower", manaIn);
-                    entity.shoot((float) (playerIn.getLookAngle().x + (Math.random() * 0.45) - 0.275), (float) (playerIn.getLookAngle().y + (Math.random() * 0.4) - 0.25), (float) (playerIn.getLookAngle().z + (Math.random() * 0.45) - 0.275), 1.3F, 0);
+                    entity.shoot((float) (playerIn.getLookAngle().x + (Math.random() * 0.45) - 0.275), (float) (playerIn.getLookAngle().y + (Math.random() * 0.4) - 0.25), (float) (playerIn.getLookAngle().z + (Math.random() * 0.45) - 0.275), 1.6F, 0);
                     playerIn.level.addFreshEntity(entity);
                 }
             }
-        }));
+        }).setUnlockLevel(15));
         spellRegistry.register(new BCMSpell(pluginIn, "wind_hawk", BCMSpell.Type.WIND_MAGIC, 50, 120, false, 16, 16, false, (playerIn, modifier0, modifier1, playerCapability, manaIn) -> {
 
             LazyOptional<IPlayerHandler> playerInCap = playerIn.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
@@ -95,11 +95,11 @@ public class WindSpells {
                     entity.addEffect(new EffectInstance(Effects.DAMAGE_BOOST, (int) Float.POSITIVE_INFINITY, player_cap.ReturnMagicLevel(), false,false, false));
                 }
             }
-        }));
+        }).setUnlockLevel(30));
         spellRegistry.register(new BCMSpell(pluginIn, "wind_flight", BCMSpell.Type.WIND_MAGIC, 0.7F, 100, false, 16, 16, true, (playerIn, modifier0, modifier1, playerCapability, manaIn) -> {
             ((ServerWorld) playerIn.level).sendParticles(ParticleTypes.SPIT, playerIn.getX(), playerIn.getY() + 1, playerIn.getZ(), (int) 2, 0, 0, 0, 0.05);
             playerIn.fallDistance = 0;
-        }));
+        }).setUnlockLevel(10));
     }
 
 }

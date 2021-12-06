@@ -43,6 +43,7 @@ public class BCMSpell {
     private String checkFailMsg;
     private boolean checkToStart = true;
     private int timer = -1;
+    private int unlockLevel = 0;
 
     public BCMSpell(IBCMPlugin plugin, String registryName, Type type, float manaCost, int cooldown, boolean skillSpell, int u, int v, boolean toggle, IAction action) {
         this.name = registryName;
@@ -65,6 +66,11 @@ public class BCMSpell {
 
     public BCMSpell setPlugin(IBCMPlugin pluginIn) {
         this.correlatedPlugin = pluginIn;
+        return this;
+    }
+
+    public BCMSpell setUnlockLevel(int level) {
+        this.unlockLevel = level;
         return this;
     }
 
@@ -140,6 +146,13 @@ public class BCMSpell {
 
     public String getName() {
         return name;
+    }
+
+    public int getUnlockLevel(){
+        if(this.unlockLevel > 0){
+            return unlockLevel;
+        }
+        return 0;
     }
 
     public int getCooldown(){

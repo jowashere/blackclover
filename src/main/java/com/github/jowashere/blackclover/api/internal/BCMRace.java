@@ -1,8 +1,6 @@
 package com.github.jowashere.blackclover.api.internal;
 
 import com.github.jowashere.blackclover.Main;
-import com.github.jowashere.blackclover.capabilities.player.IPlayerHandler;
-import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.util.ResourceLocation;
 
 public class BCMRace {
@@ -19,6 +17,8 @@ public class BCMRace {
     private ResourceLocation resourceLocation;
     private boolean hasSymbol;
     private boolean hasNPC;
+
+    private float manaMultiplier = 1;
 
     private boolean hasDedicatedTab;
 
@@ -90,6 +90,15 @@ public class BCMRace {
 
     public boolean hasNPC() {
         return hasNPC;
+    }
+
+    public BCMRace setManaMultiplier(float multiplier) {
+        this.manaMultiplier = multiplier;
+        return this;
+    }
+
+    public float getManaMultiplier() {
+        return this.manaMultiplier;
     }
 
 }

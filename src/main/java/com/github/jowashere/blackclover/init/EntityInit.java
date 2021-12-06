@@ -5,6 +5,7 @@ import com.github.jowashere.blackclover.entities.mobs.questers.GrimoireMagicianE
 import com.github.jowashere.blackclover.entities.spells.antimagic.BlackSlashEntity;
 import com.github.jowashere.blackclover.entities.spells.darkness.AvidyaSlashEntity;
 import com.github.jowashere.blackclover.entities.spells.darkness.BlackHoleEntity;
+import com.github.jowashere.blackclover.entities.spells.light.LightSwordOJEntity;
 import com.github.jowashere.blackclover.entities.spells.lightning.ThunderOrbEntity;
 import com.github.jowashere.blackclover.entities.spells.slash.DeathScytheEntity;
 import com.github.jowashere.blackclover.entities.spells.wind.WindBladeEntity;
@@ -27,6 +28,8 @@ public class EntityInit {
     public static final RegistryObject<EntityType<WindHawkEntity>> WIND_HAWK = ENTITIES.register("wind_hawk", () -> EntityType.Builder.<WindHawkEntity>of(WindHawkEntity::new, EntityClassification.MISC).setShouldReceiveVelocityUpdates(true).setUpdateInterval(1).setTrackingRange(128).sized(1.0F,1.0F).build(Main.MODID + ":wind_hawk"));
 
     public static final RegistryObject<EntityType<ThunderOrbEntity>> THUNDER_ORB = ENTITIES.register("thunder_orb", () -> EntityType.Builder.<ThunderOrbEntity>of(ThunderOrbEntity::new, EntityClassification.MISC).setShouldReceiveVelocityUpdates(true).setUpdateInterval(1).setTrackingRange(128).sized(0.6F,0.6F).build(Main.MODID + ":thunder_orb"));
+
+    public static final RegistryObject<EntityType<LightSwordOJEntity>> LIGHT_SWORD_OJ = ENTITIES.register("light_sword_oj", () -> EntityType.Builder.<LightSwordOJEntity>of(LightSwordOJEntity::new, EntityClassification.MISC).setShouldReceiveVelocityUpdates(true).setUpdateInterval(1).setTrackingRange(128).sized(0.6F,0.6F).build(Main.MODID + ":light_sword_oj"));
 
     public static final RegistryObject<EntityType<AvidyaSlashEntity>> AVIDYA_SLASH = ENTITIES.register("avidya_slash", () -> EntityType.Builder.<AvidyaSlashEntity>of(AvidyaSlashEntity::new, EntityClassification.MISC).setShouldReceiveVelocityUpdates(true).setUpdateInterval(1).setTrackingRange(128).sized(3F,0.2F).build(Main.MODID + ":avidya_slash"));
     public static final RegistryObject<EntityType<BlackHoleEntity>> BLACK_HOLE = ENTITIES.register("black_hole", () -> EntityType.Builder.<BlackHoleEntity>of(BlackHoleEntity::new, EntityClassification.MISC).setShouldReceiveVelocityUpdates(true).setUpdateInterval(1).setTrackingRange(128).sized(1F,1F).build(Main.MODID + ":black_hole"));
