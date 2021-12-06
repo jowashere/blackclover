@@ -68,7 +68,7 @@ public class ForgeEventsSubscriber {
     public static void entityJoinWorld(EntityJoinWorldEvent event) {
         if (!event.getWorld().isClientSide) {
             if (event.getEntity() instanceof PlayerEntity) {
-                PlayerEvents.PlayerJoinedWorld(event);
+                PlayerEvents.playerJoinedWorld(event);
 
                 ServerPlayerEntity serverPlayerEntity = (ServerPlayerEntity) event.getEntity();
             }
@@ -103,12 +103,12 @@ public class ForgeEventsSubscriber {
                     NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketManaBoolean(true, true));
                 }
 
-                PlayerEvents.RegenerateMana(event);
-                PlayerEvents.SetPlayerSpells(event);
-                PlayerEvents.SpecialSpellNbt(event);
-                PlayerEvents.Cooldowns(event);
-                PlayerEvents.ManaRuns(event);
-                PlayerEvents.MagicBuffs(event);
+                PlayerEvents.regenerateMana(event);
+                PlayerEvents.setPlayerSpells(event);
+                PlayerEvents.specialSpellNbt(event);
+                PlayerEvents.cooldowns(event);
+                PlayerEvents.manaRuns(event);
+                PlayerEvents.magicBuffs(event);
             }
         }
 

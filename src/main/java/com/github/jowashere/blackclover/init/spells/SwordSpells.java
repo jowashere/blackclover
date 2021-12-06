@@ -35,7 +35,7 @@ public class SwordSpells
         {
             ItemStack hand = playerIn.getItemInHand(Hand.MAIN_HAND);
             return (hand.getItem().equals(ItemInit.DEMON_DWELLER.get()));
-        }).setCheckFailMsg("You need the Demon Dweller Sword for this!"));
+        }).setCheckFailMsg("You need the Demon Dweller Sword for this!").setUnlockLevel(1));
 
         spellRegistry.register(new BCMSpell(plugin, "sword_absorption",
                 BCMSpell.Type.SWORD_MAGIC, 0F, 10, false, 0, 0, false, ((playerIn, modifier0, modifier1, playerCapability, manaIn) ->
@@ -88,6 +88,6 @@ public class SwordSpells
         {
             ItemStack hand = playerIn.getItemInHand(Hand.MAIN_HAND);
             return (hand.getItem().equals(ItemInit.DEMON_DWELLER.get()));
-        }).setCheckFailMsg("you need the demon dweller sword for this!"));
+        }).setCheckFailMsg("You need the Demon Dweller Sword for this!").setUnlockLevel(20));
     }
 }

@@ -40,7 +40,7 @@ public class SlashMagicSpells {
     }).setExtraSpellChecks((playerIn -> {
         boolean slashBlades = playerIn.getPersistentData().getBoolean("blackclover_slash_blades");
         return slashBlades;
-    })).setCheckFailMsg("Slash Blades need to be on.");
+    })).setCheckFailMsg("Slash Blades need to be on.").setUnlockLevel(15);
     public static BCMSpell LUNATIC_SLASH = new BCMSpell(null, "lunatic_slash", BCMSpell.Type.SLASH_MAGIC, 70F, 500, false, 64, 32, false, (playerIn, modifier0, modifier1, playerCapability, manaIn) -> {
 
         LazyOptional<IPlayerHandler> playerInCap = playerIn.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
@@ -71,13 +71,12 @@ public class SlashMagicSpells {
                         entity.getZ(), (int) 10, 3, 3, 3, 0.1);
                 (playerIn.level).playSound((PlayerEntity) null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.PLAYER_ATTACK_SWEEP, playerIn.getSoundSource(), (float) 1, (float) 1);
             });
-
         });
 
     }).setExtraSpellChecks((playerIn -> {
         boolean slashBlades = playerIn.getPersistentData().getBoolean("blackclover_slash_blades");
         return slashBlades;
-    })).setCheckFailMsg("Slash Blades need to be on.");
+    })).setCheckFailMsg("Slash Blades need to be on.").setUnlockLevel(30);
     public static BCMSpell SLASH_BLADES = new BCMSpell(null, "slash_blades", BCMSpell.Type.SLASH_MAGIC, 0.6F, 50, true, 64, 0, true, (playerIn, modifier0, modifier1, playerCapability, manaIn) -> {
 
         LazyOptional<IPlayerHandler> playerInCap = playerIn.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
@@ -119,7 +118,7 @@ public class SlashMagicSpells {
                 attacker.getPersistentData().putBoolean("slash_damage", true);
             }
         }
-    }));
+    })).setUnlockLevel(1);
 
     public static void registerSpells(BCMRegistry.SpellRegistry spellRegistry, IBCMPlugin pluginIn) {
 

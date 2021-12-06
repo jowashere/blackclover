@@ -10,7 +10,6 @@ import com.github.jowashere.blackclover.init.AttributeInit;
 import com.github.jowashere.blackclover.init.KeybindInit;
 import com.github.jowashere.blackclover.networking.NetworkLoader;
 import com.github.jowashere.blackclover.networking.packets.PacketSpellModeToggle;
-import com.github.jowashere.blackclover.networking.packets.PacketToggleInfusionBoolean;
 import com.github.jowashere.blackclover.networking.packets.spells.PacketGrimoireSword;
 import com.github.jowashere.blackclover.networking.packets.spells.PacketSpellCaller;
 import net.minecraft.client.Minecraft;
@@ -244,10 +243,10 @@ public class KeyboardHelper {
             }
 
             if (KeybindInit.MANA_SKIN.isDown()) {
-                PlayerEvents.ToggleManaSkin(player);
+                PlayerEvents.toggleManaSkin(player);
             }
             if (KeybindInit.REINFORCEMENT.isDown()) {
-                PlayerEvents.ToggleReinforcement(player);
+                PlayerEvents.toggleReinforcement(player);
             }
 
             if (KeybindInit.MAGIC_MENU.isDown()){
