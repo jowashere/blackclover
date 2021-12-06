@@ -77,7 +77,7 @@ public class DarknessSpells {
             if(stack.getOrCreateTag().getInt("dark_cloak") > 0){
                 stack.getOrCreateTag().putInt("dark_cloak", 0);
             }
-        }).checkOnlyToToggle(false).setCheckFailMsg("A Sword needs to be in hand."));
+        }).checkOnlyToToggle(false).setCheckFailMsg("A Sword needs to be in hand.").setUnlockLevel(1));
 
         spellRegistry.register(new BCMSpell(pluginIn, "avidya_slash", BCMSpell.Type.DARKNESS_MAGIC, 25F, 50, false, 48, 16, false, (playerIn, modifier0, modifier1, playerCapability, manaIn) -> {
 
@@ -95,7 +95,7 @@ public class DarknessSpells {
             ItemStack mainItem = playerIn.getItemInHand(Hand.MAIN_HAND);
 
             return mainItem.getOrCreateTag().getBoolean("dark_cloak");
-        })).setCheckFailMsg("Dark Cloaked Sword needs to be held."));
+        })).setCheckFailMsg("Dark Cloaked Sword needs to be held.").setUnlockLevel(5));
 
         spellRegistry.register(new BCMSpell(pluginIn, "black_blade", BCMSpell.Type.DARKNESS_MAGIC, 30F, 60, false, 48, 32, false, (playerIn, modifier0, modifier1, playerCapability, manaIn) -> {
 
@@ -127,7 +127,7 @@ public class DarknessSpells {
             ItemStack mainItem = playerIn.getItemInHand(Hand.MAIN_HAND);
 
             return mainItem.getOrCreateTag().getBoolean("dark_cloak");
-        })).setCheckFailMsg("Dark Cloaked Sword needs to be held."));
+        })).setCheckFailMsg("Dark Cloaked Sword needs to be held.").setUnlockLevel(5));
 
         spellRegistry.register(new BCMSpell(pluginIn, "black_cocoon", BCMSpell.Type.DARKNESS_MAGIC, 0.6F, 300, false, 48, 48, true, (playerIn, modifier0, modifier1, playerCapability, manaIn) -> {
 
@@ -183,7 +183,7 @@ public class DarknessSpells {
                 }
             }
             return false;
-        })).setToggleTimer(200));
+        })).setToggleTimer(200).setUnlockLevel(15));
 
         spellRegistry.register(new BCMSpell(pluginIn, "black_hole", BCMSpell.Type.DARKNESS_MAGIC, 1F, 1000, false, 48, 64, true, (playerIn, modifier0, modifier1, playerCapability, manaIn) -> {
 
@@ -215,7 +215,7 @@ public class DarknessSpells {
                 blackHoleEntity.remove();
             }
 
-        }).setToggleTimer(400));
+        }).setToggleTimer(400).setUnlockLevel(30));
 
     }
 

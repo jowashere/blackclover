@@ -128,7 +128,7 @@ public class MagicLevelCommand {
             }
         }
 
-        BCMHelper.RecaculateMagicLevel(player);
+        BCMHelper.recaculateMagicLevel(player);
 
         return 1;
     }
