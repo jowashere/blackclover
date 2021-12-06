@@ -26,7 +26,7 @@ public class SwordSpells
         {
             if (!playerIn.level.isClientSide)
             {
-                DeathScytheEntity Slash = new DeathScytheEntity(playerIn.level, playerIn, manaIn);
+                DeathScytheEntity Slash = new DeathScytheEntity(playerIn.level, playerIn, manaIn); //TODO make custom entity for this spell
                 Slash.shootFromRotation(playerIn, playerIn.xRot, playerIn.yRot, 0.0F, 1.6F, 2.5F);
                 playerIn.level.addFreshEntity(Slash);
                 playerIn.swing(Hand.MAIN_HAND, true);
@@ -35,7 +35,7 @@ public class SwordSpells
         {
             ItemStack hand = playerIn.getItemInHand(Hand.MAIN_HAND);
             return (hand.getItem().equals(ItemInit.DEMON_DWELLER.get()));
-        }).setCheckFailMsg("You need the Demon Dweller Sword for this!").setUnlockLevel(1));
+        }).setCheckFailMsg("You need the Demon Dweller Sword for this!"));
 
         spellRegistry.register(new BCMSpell(plugin, "sword_absorption",
                 BCMSpell.Type.SWORD_MAGIC, 0F, 10, false, 0, 0, false, ((playerIn, modifier0, modifier1, playerCapability, manaIn) ->
@@ -88,6 +88,6 @@ public class SwordSpells
         {
             ItemStack hand = playerIn.getItemInHand(Hand.MAIN_HAND);
             return (hand.getItem().equals(ItemInit.DEMON_DWELLER.get()));
-        }).setCheckFailMsg("You need the Demon Dweller Sword for this!").setUnlockLevel(20));
+        }).setCheckFailMsg("you need the demon dweller sword for this!"));
     }
 }
