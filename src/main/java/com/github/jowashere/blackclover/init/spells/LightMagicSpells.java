@@ -59,7 +59,6 @@ public class LightMagicSpells {
                 LightSwordOJEntity entity = new LightSwordOJEntity(playerIn.level, playerIn, manaIn);
                 entity.shoot((float) (playerIn.getLookAngle().x + (Math.random() * 0.45) - 0.275), (float) (playerIn.getLookAngle().y + (Math.random() * 0.4) - 0.25), (float) (playerIn.getLookAngle().z + (Math.random() * 0.45) - 0.275), 3.0F, 0);
                 playerIn.level.addFreshEntity(entity);
-                entity.remove(true);
             }
         }
 
