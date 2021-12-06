@@ -76,18 +76,17 @@ public class GrimoireMagicianEntity extends CreatureEntity //TODO make it so it 
             {
                 player.displayClientMessage(new StringTextComponent("You already got your grimoire go away!"), false);
 
-            }
+            }else {
+                if (magicLevel >= 5)
+                {
+                    player.displayClientMessage(new StringTextComponent("Here is your Grimoire! You seem mature enough"), false);
+                    playerStats.setHasGrimoire(true);
+                    NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketSetGrimoire(true, true, player.getId()));
 
-            if (magicLevel >= 5)
-            {
-                player.displayClientMessage(new StringTextComponent("Here is your Grimoire! You seem mature enough"), false);
-                playerStats.setHasGrimoire(true);
-                NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketSetGrimoire(true, true, player.getId()));
-
-            }
-            else
-            {
-                player.displayClientMessage(new StringTextComponent("Come back when you're mature enough for a grimoire!"), false);
+                } else
+                {
+                    player.displayClientMessage(new StringTextComponent("Come back when you're mature enough for a grimoire!"), false);
+                }
             }
 
         }
