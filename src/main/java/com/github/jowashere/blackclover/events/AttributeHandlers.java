@@ -1,6 +1,7 @@
 package com.github.jowashere.blackclover.events;
 
 import com.github.jowashere.blackclover.Main;
+import com.github.jowashere.blackclover.init.EntityInit;
 import com.github.jowashere.blackclover.init.ModAttributes;
 import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraftforge.event.TickEvent;

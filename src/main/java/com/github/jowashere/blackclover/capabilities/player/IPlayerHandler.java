@@ -44,6 +44,7 @@ public interface IPlayerHandler {
 
 	void setMagicLevel(int level);
 	void addMagicLevel(int add);
+	int getMagicLevel();
 	int ReturnMagicLevel();
 
 	void setMagicExp(float amount);
