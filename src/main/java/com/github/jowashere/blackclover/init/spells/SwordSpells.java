@@ -4,18 +4,19 @@ import com.github.jowashere.blackclover.api.BCMRegistry;
 import com.github.jowashere.blackclover.api.Beapi;
 import com.github.jowashere.blackclover.api.IBCMPlugin;
 import com.github.jowashere.blackclover.api.internal.BCMSpell;
-import com.github.jowashere.blackclover.api.internal.entities.spells.AbstractAntiMagicProjectileEntity;
-import com.github.jowashere.blackclover.api.internal.entities.spells.AbstractSpellProjectileEntity;
+import com.github.jowashere.blackclover.entities.spells.darkness.AvidyaSlashEntity;
 import com.github.jowashere.blackclover.entities.spells.slash.DeathScytheEntity;
+import com.github.jowashere.blackclover.init.EntityInit;
 import com.github.jowashere.blackclover.init.ItemInit;
+import net.minecraft.client.Minecraft;
+import net.minecraft.command.arguments.NBTCompoundTagArgument;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.util.Hand;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.EntityRayTraceResult;
-import net.minecraftforge.registries.ForgeRegistries;
+import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.world.World;
 
 public class SwordSpells
 {
@@ -40,7 +41,6 @@ public class SwordSpells
         spellRegistry.register(new BCMSpell(plugin, "sword_absorption",
                 BCMSpell.Type.SWORD_MAGIC, 0F, 10, false, 0, 0, false, ((playerIn, modifier0, modifier1, playerCapability, manaIn) ->
         {
-
             ItemStack hand = playerIn.getItemInHand(Hand.MAIN_HAND);
             CompoundNBT nbt;
             if (hand.hasTag())
@@ -49,26 +49,18 @@ public class SwordSpells
                 if (nbt.getInt("Absorbtion") == 1)
                 {
                     if (!playerIn.level.isClientSide) {
-
-                        EntityType type = ForgeRegistries.ENTITIES.getValue(ResourceLocation.tryParse(nbt.getString("StoredSpell")));
-                        AbstractSpellProjectileEntity spell = (AbstractSpellProjectileEntity) type.create(playerIn.level);
-                        spell.moveTo(playerIn.getX(), playerIn.getEyeY() - (double)0.1F, playerIn.getZ());
-                        spell.shootFromRotation(playerIn, playerIn.xRot, playerIn.yRot, 0.0F, 1.6F, 2.5F);
-                        playerIn.level.addFreshEntity(spell);
+                        AvidyaSlashEntity entity = new AvidyaSlashEntity(playerIn.level, playerIn, manaIn);
+                        entity.shootFromRotation(playerIn, playerIn.xRot, playerIn.yRot, 0.0F, 1.6F, 2.5F);
+                        playerIn.level.addFreshEntity(entity);
                         playerIn.swing(Hand.MAIN_HAND, true);
                     }
-                    nbt.putInt("Absorbtion", 0);
                 }
                 else
                 {
                     EntityRayTraceResult trace = (EntityRayTraceResult) Beapi.rayTraceBlocksAndEntities(playerIn.getEntity(), 24, 0.2F);
                     Entity traceEntity = trace.getEntity();
-                    if (traceEntity instanceof AbstractSpellProjectileEntity && !(traceEntity instanceof AbstractAntiMagicProjectileEntity))
-                    {
-                        nbt.putInt("Absorbtion", 1);
-                        nbt.putString("StoredSpell", traceEntity.getType().getRegistryName().toString());
-                        traceEntity.remove();
-                    }
+                    traceEntity.remove();
+                    nbt.putInt("Absorbtion", 1);
                 }
             }
             else
@@ -76,10 +68,9 @@ public class SwordSpells
                 nbt = new CompoundNBT();
                 EntityRayTraceResult trace = (EntityRayTraceResult) Beapi.rayTraceBlocksAndEntities(playerIn.getEntity(), 24, 0.2F);
                 Entity traceEntity = trace.getEntity();
-                if (traceEntity instanceof AbstractSpellProjectileEntity && !(traceEntity instanceof AbstractAntiMagicProjectileEntity))
+                if (traceEntity.equals(EntityInit.ENTITIES))
                 {
                     nbt.putInt("Absorbtion", 1);
-                    nbt.putString("StoredSpell", traceEntity.getType().getRegistryName().toString());
                     traceEntity.remove();
                 }
             }
@@ -87,7 +78,7 @@ public class SwordSpells
         )).setExtraSpellChecks(playerIn ->
         {
             ItemStack hand = playerIn.getItemInHand(Hand.MAIN_HAND);
-            return (hand.getItem().equals(ItemInit.DEMON_DWELLER.get()));
-        }).setCheckFailMsg("you need the demon dweller sword for this!"));
+            return (hand.getItem().equals(ItemInit.DEMON_SLAYER.get()));
+        }).setCheckFailMsg("you need the demon slayer sword for this!"));
     }
 }
