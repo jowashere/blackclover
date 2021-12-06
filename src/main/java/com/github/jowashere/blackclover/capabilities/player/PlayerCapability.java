@@ -209,6 +209,11 @@ public class PlayerCapability implements IPlayerHandler {
         this.magicLevel += amount;
     }
     @Override
+    public int getMagicLevel()
+    {
+        return this.magicLevel;
+    }
+    @Override
     public int ReturnMagicLevel()
     {
         return this.magicLevel;
