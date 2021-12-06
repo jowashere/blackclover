@@ -35,7 +35,7 @@ public class WindSpells {
         spellRegistry.register(new BCMSpell(pluginIn, "wind_blade", BCMSpell.Type.WIND_MAGIC, 10, 50, true, 16, 0, false, (playerIn, modifier0, modifier1, playerCapability, manaIn) -> {
             if (!playerIn.level.isClientSide) {
                 WindBladeEntity entity = new WindBladeEntity(playerIn.level, playerIn, "wind_blade", manaIn);
-                entity.shootFromRotation(playerIn, playerIn.xRot, playerIn.yRot, 0.0F, 1.3F, 3.0F);
+                entity.shootFromRotation(playerIn, playerIn.xRot, playerIn.yRot, 0.0F, 1.3F, 1.5F);
                 playerIn.level.addFreshEntity(entity);
 
             }
@@ -43,7 +43,7 @@ public class WindSpells {
         spellRegistry.register(new BCMSpell(pluginIn, "wind_crescent", BCMSpell.Type.WIND_MAGIC, 25, 70, false, 16, 48, false, (playerIn, modifier0, modifier1, playerCapability, manaIn) -> {
             if (!playerIn.level.isClientSide) {
                 WindCrescentEntity entity = new WindCrescentEntity(playerIn.level, playerIn, manaIn);
-                entity.shootFromRotation(playerIn, playerIn.xRot, playerIn.yRot, 0.0F, 1.6F, 2.5F);
+                entity.shootFromRotation(playerIn, playerIn.xRot, playerIn.yRot, 0.0F, 1.8F, 1.0F);
                 playerIn.level.addFreshEntity(entity);
                 playerIn.swing(Hand.MAIN_HAND, true);
 
@@ -68,11 +68,11 @@ public class WindSpells {
                 }
             }
         }));
-        spellRegistry.register(new BCMSpell(pluginIn, "wind_blade_shower", BCMSpell.Type.WIND_MAGIC, 50, 120, false, 16, 16, false, (playerIn, modifier0, modifier1, playerCapability, manaIn) -> {
+        spellRegistry.register(new BCMSpell(pluginIn, "wind_blade_shower", BCMSpell.Type.WIND_MAGIC, 70, 120, false, 16, 16, false, (playerIn, modifier0, modifier1, playerCapability, manaIn) -> {
             if (!playerIn.level.isClientSide) {
                 for(int i = 0; i < 15; i++) {
                     WindBladeEntity entity = new WindBladeEntity(playerIn.level, playerIn, "wind_blade_shower", manaIn);
-                    entity.shoot((float) (playerIn.getLookAngle().x + (Math.random() * 0.45) - 0.275), (float) (playerIn.getLookAngle().y + (Math.random() * 0.4) - 0.25), (float) (playerIn.getLookAngle().z + (Math.random() * 0.45) - 0.275), 1.3F, 0);
+                    entity.shoot((float) (playerIn.getLookAngle().x + (Math.random() * 0.45) - 0.275), (float) (playerIn.getLookAngle().y + (Math.random() * 0.4) - 0.25), (float) (playerIn.getLookAngle().z + (Math.random() * 0.45) - 0.275), 1.6F, 0);
                     playerIn.level.addFreshEntity(entity);
                 }
             }

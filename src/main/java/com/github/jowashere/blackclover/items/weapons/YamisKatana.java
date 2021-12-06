@@ -1,9 +1,10 @@
-package com.github.jowashere.blackclover.items;
+package com.github.jowashere.blackclover.items.weapons;
 
 import com.github.jowashere.blackclover.init.GenericItemTier;
-import net.minecraft.entity.passive.PandaEntity;
-import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.*;
+import net.minecraft.item.IItemPropertyGetter;
+import net.minecraft.item.ItemModelsProperties;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.SwordItem;
 import net.minecraft.util.ResourceLocation;
 
 public class YamisKatana extends SwordItem {

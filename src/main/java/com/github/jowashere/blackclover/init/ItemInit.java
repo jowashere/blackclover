@@ -2,8 +2,10 @@ package com.github.jowashere.blackclover.init;
 
 import com.github.jowashere.blackclover.ItemGroups;
 import com.github.jowashere.blackclover.Main;
-import com.github.jowashere.blackclover.items.SwordMagicSwords;
-import com.github.jowashere.blackclover.items.YamisKatana;
+import com.github.jowashere.blackclover.init.spells.LightMagicSpells;
+import com.github.jowashere.blackclover.items.weapons.MagicSwordItem;
+import com.github.jowashere.blackclover.items.weapons.SwordMagicSwords;
+import com.github.jowashere.blackclover.items.weapons.YamisKatana;
 import net.minecraft.item.Item;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
@@ -25,5 +27,5 @@ public class ItemInit {
     public static final RegistryObject<Item> DEMON_DESTROYER = ITEMS.register("demon_destroyer", () -> new SwordMagicSwords(new Item.Properties().tab(ItemGroups.WEAPONS).stacksTo(1).setNoRepair(), 6, -2.4f));
     public static final RegistryObject<Item> DEMON_DWELLER = ITEMS.register("demon_dweller", () -> new SwordMagicSwords(new Item.Properties().tab(ItemGroups.WEAPONS).stacksTo(1).setNoRepair(), 6, -2.4f));
 
-
+    public static final RegistryObject<Item> LIGHT_SWORD = ITEMS.register("light_sword", () -> new MagicSwordItem(LightMagicSpells.LIGHT_SWORD, 5, -2.4f, new Item.Properties().tab(ItemGroups.WEAPONS).stacksTo(1)));
 }

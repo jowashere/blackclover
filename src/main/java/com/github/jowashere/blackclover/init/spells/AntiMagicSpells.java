@@ -61,7 +61,7 @@ public class AntiMagicSpells {
 
             if (!playerIn.level.isClientSide) {
                 BlackSlashEntity entity = new BlackSlashEntity(playerIn.level, playerIn, manaIn);
-                entity.shootFromRotation(playerIn, playerIn.xRot, playerIn.yRot, 0.0F, 1.6F, 2.5F);
+                entity.shootFromRotation(playerIn, playerIn.xRot, playerIn.yRot, 0.0F, 1.8F, 1.0F);
                 playerIn.level.addFreshEntity(entity);
                 playerIn.swing(Hand.MAIN_HAND, true);
 
