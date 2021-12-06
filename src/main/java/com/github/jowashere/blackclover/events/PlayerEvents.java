@@ -141,8 +141,8 @@ public class PlayerEvents {
         player_cap.setSpellModeToggle(false);
         NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketSpellModeToggle(true, false, player.getId()));
 
-        player_cap.setHasGrimoire(true);
-        NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketSetGrimoire(true, true, player.getId()));
+        player_cap.setHasGrimoire(false);
+        NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketSetGrimoire(false, true, player.getId()));
 
 
         if (!player_cap.JoinWorld()) {

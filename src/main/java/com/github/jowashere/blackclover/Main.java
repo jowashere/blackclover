@@ -9,14 +9,17 @@ import com.github.jowashere.blackclover.client.gui.overlay.ManaBar;
 import com.github.jowashere.blackclover.client.gui.overlay.Notifications;
 import com.github.jowashere.blackclover.client.gui.overlay.SpellMode;
 import com.github.jowashere.blackclover.client.handler.ClientHandler;
+import com.github.jowashere.blackclover.entities.mobs.questers.GrimoireMagicianEntity;
 import com.github.jowashere.blackclover.events.GrimoireTextures;
 import com.github.jowashere.blackclover.init.*;
 import com.github.jowashere.blackclover.networking.NetworkLoader;
 import com.github.jowashere.blackclover.util.helpers.KeyboardHelper;
 import com.github.jowashere.blackclover.util.helpers.RaceHelper;
+import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -52,7 +55,8 @@ public class Main
         modEventBus.addListener(this::onClientSetup);
     }
 
-    private void onCommonSetup(final FMLCommonSetupEvent event) {
+    private void onCommonSetup(final FMLCommonSetupEvent event)
+    {
         CapabilityManager.INSTANCE.register(IPlayerHandler.class, new PlayerCapability.Storage(), PlayerCapability::new);
 
         for (IBCMPlugin plugin : BCMRegistry.PLUGINS) {
@@ -64,6 +68,11 @@ public class Main
         }
 
         RaceHelper.create();
+
+        DeferredWorkQueue.runLater(() ->
+        {
+            GlobalEntityTypeAttributes.put(EntityInit.GRIMOIRE_MAGICIAN.get(), GrimoireMagicianEntity.setCustomAttributes().build());
+        });
 
     }
 

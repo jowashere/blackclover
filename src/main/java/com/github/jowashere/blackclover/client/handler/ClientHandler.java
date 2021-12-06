@@ -2,6 +2,7 @@ package com.github.jowashere.blackclover.client.handler;
 
 import com.github.jowashere.blackclover.Main;
 import com.github.jowashere.blackclover.client.renderer.item.FullBrightItem;
+import com.github.jowashere.blackclover.client.renderer.handler.GrimoireMagicianRenderer;
 import com.github.jowashere.blackclover.client.renderer.layers.*;
 import com.github.jowashere.blackclover.client.renderer.spells.others.BlackHoleRenderer;
 import com.github.jowashere.blackclover.client.renderer.spells.projectiles.antimagic.BlackSlashRenderer;
@@ -58,6 +59,8 @@ public class ClientHandler {
         RenderingRegistry.registerEntityRenderingHandler(EntityInit.DEATH_SCYTHE.get(), new DeathScytheRenderer.Factory());
 
         RenderingRegistry.registerEntityRenderingHandler(EntityInit.LIGHT_SWORD_OJ.get(), new LightSwordOJRenderer.Factory());
+
+        RenderingRegistry.registerEntityRenderingHandler(EntityInit.GRIMOIRE_MAGICIAN.get(), GrimoireMagicianRenderer::new);
 
         Map<String, PlayerRenderer> playerSkinMap = Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap();
         ClientHandler.addPlayerLayers(playerSkinMap.get("default"));
