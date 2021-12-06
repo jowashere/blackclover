@@ -21,8 +21,6 @@ import com.github.jowashere.blackclover.networking.packets.server.SSyncManaPacke
 import com.github.jowashere.blackclover.networking.packets.settings.PacketKeybindSet;
 import com.github.jowashere.blackclover.networking.packets.settings.PacketSetGrimoireTexture;
 import com.github.jowashere.blackclover.networking.packets.spells.PacketIntSpellNBTSync;
-import com.github.jowashere.blackclover.networking.packets.spells.PacketSetSpellBoolean;
-import com.github.jowashere.blackclover.util.helpers.BCMHelper;
 import com.github.jowashere.blackclover.util.helpers.SpellHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -43,7 +41,7 @@ import java.util.List;
 
 public class PlayerEvents {
 
-    public static void regenerateMana(TickEvent.PlayerTickEvent event) {
+    public static void RegenerateMana(TickEvent.PlayerTickEvent event) {
         PlayerEntity player = event.player;
         player.getPersistentData().putInt("regentick", player.getPersistentData().getInt("regentick") + 1);
         LazyOptional<IPlayerHandler> capabilities = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
@@ -66,7 +64,7 @@ public class PlayerEvents {
         }
     }
 
-    public static void cooldowns(TickEvent.PlayerTickEvent event) {
+    public static void Cooldowns(TickEvent.PlayerTickEvent event) {
 
         if(!event.player.level.isClientSide){
             PlayerEntity player = event.player;
@@ -91,7 +89,7 @@ public class PlayerEvents {
         }
     }
 
-    public static void resetCooldowns(PlayerEntity player) {
+    public static void ResetCooldowns(PlayerEntity player) {
 
         if (player != null) {
             LazyOptional<IPlayerHandler> capabilities = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
@@ -110,7 +108,7 @@ public class PlayerEvents {
 
     }
 
-    public static void setPlayerSpells(TickEvent.PlayerTickEvent event) {
+    public static void SetPlayerSpells(TickEvent.PlayerTickEvent event) {
 
         PlayerEntity player = event.player;
         if (player.isAlive()) {
@@ -118,31 +116,11 @@ public class PlayerEvents {
             LazyOptional<IPlayerHandler> capabilities = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
             IPlayerHandler playercap = capabilities.orElse(new PlayerCapability());
 
-            /*if (playercap.ReturnMagicAttribute().getSpellAdder() != null) {
+            if (playercap.ReturnMagicAttribute().getSpellAdder() != null) {
                 playercap.ReturnMagicAttribute().getSpellAdder().add(event.player);
-            }*/
-
-            for (BCMSpell spell : BCMRegistry.SPELLS.getValues()) {
-                if(spell.getType().equals(playercap.ReturnMagicAttribute().getSpellType())){
-                    if(!(spell.getUnlockLevel() <= 0)){
-                        if(spell.getUnlockLevel() <= playercap.getMagicLevel()){
-                            if(!playercap.hasSpellBoolean(spell)){
-                                playercap.setSpellBoolean(spell, true);
-                                NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketSetSpellBoolean(spell.getName(), true,true));
-                            }
-                        }
-
-                        if(spell.getUnlockLevel() > playercap.getMagicLevel()){
-                            if(playercap.hasSpellBoolean(spell)){
-                                playercap.setSpellBoolean(spell, false);
-                                NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketSetSpellBoolean(spell.getName(), false,true));
-                            }
-                        }
-                    }
-                }
             }
 
-                for (int i = 0; i < 9; i++) {
+            for (int i = 0; i < 9; i++) {
                 BCMSpell spell = null;
                 spell = SpellHelper.getSpellFromString(playercap.returnKeybind(i + 1));
 
@@ -155,7 +133,7 @@ public class PlayerEvents {
     }
 
 
-    public static void playerJoinedWorld(EntityJoinWorldEvent event) {
+    public static void PlayerJoinedWorld(EntityJoinWorldEvent event) {
         PlayerEntity player = (PlayerEntity) event.getEntity();
         LazyOptional<IPlayerHandler> playerc = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
         IPlayerHandler player_cap = playerc.orElse(new PlayerCapability());
@@ -163,10 +141,15 @@ public class PlayerEvents {
         player_cap.setSpellModeToggle(false);
         NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketSpellModeToggle(true, false, player.getId()));
 
+        player_cap.setHasGrimoire(false);
+        NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketSetGrimoire(false, true, player.getId()));
+
+
         if (!player_cap.JoinWorld()) {
 
-            player_cap.setHasGrimoire(false);
-            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketSetGrimoire(false, true, player.getId()));
+            for (int i = 0; i < 9; i++) {
+                player_cap.setKeybindCD(i + 1, 0);
+            }
 
             player_cap.setJoinWorld(true);
             {
@@ -232,26 +215,16 @@ public class PlayerEvents {
                 }
             }
 
-            float xpNeeded = BCMHelper.CalculateExp(1);
-
-            player_cap.setMagicExp(xpNeeded);
-            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketMagicExpSync(xpNeeded, player.getId()));
-            BCMHelper.recaculateMagicLevel(player);
-
-            if(player_cap.ReturnMagicAttribute() != AttributeInit.ANTI_MAGIC){
-                player_cap.setManaBoolean(true);
-                player_cap.setMana(player_cap.returnRace().getStartingMana());
-                NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketManaSync(player_cap.returnMana()));
-            }else {
-                player_cap.setManaBoolean(false);
-                player_cap.setMana(0);
-                NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketManaSync(0));
-            }
+            player_cap.setMana(player_cap.returnRace().getStartingMana());
+            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketManaSync(player_cap.returnMana()));
+            player_cap.setMagicLevel(1);
+            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketMagicLevel(1, player.getId()));
+            player_cap.setManaBoolean(true);
 
         }
     }
 
-    public static void manaRuns(TickEvent.PlayerTickEvent event) {
+    public static void ManaRuns(TickEvent.PlayerTickEvent event) {
         LazyOptional<IPlayerHandler> playerCapability = event.player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
         IPlayerHandler player_cap = playerCapability.orElse(new PlayerCapability());
 
@@ -259,10 +232,9 @@ public class PlayerEvents {
             event.player.addEffect(new EffectInstance(EffectInit.MAGIC_LEVEL.get(), (int) Float.POSITIVE_INFINITY, player_cap.ReturnMagicLevel(), false, false, false));
 
         int magicLevel = player_cap.ReturnMagicLevel();
-        float manaMultiplier = player_cap.returnRace().getManaMultiplier();
 
         if(player_cap.HasManaBoolean()){
-            int maxMana = (int) (player_cap.returnRace().getStartingMana() + ((((player_cap.returnRace().getStartingMana() / 10) * magicLevel) - 15)) * manaMultiplier);
+            int maxMana = (int) (player_cap.returnRace().getStartingMana() + (((player_cap.returnRace().getStartingMana() / 10) * magicLevel) - 15));
 
             player_cap.setMaxMana(maxMana);
             NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.player), new PacketMaxManaSync(maxMana, true));
@@ -282,13 +254,13 @@ public class PlayerEvents {
 
         }
 
-        if (player_cap.ReturnMagicAttribute().getGrimoireTextures() != null && player_cap.ReturnMagicAttribute().getGrimoireTextures().size() > 0) {
+        if (player_cap.ReturnMagicAttribute().GetGrimoireTextures() != null && player_cap.ReturnMagicAttribute().GetGrimoireTextures().size() > 0) {
 
-            List<String> textures = player_cap.ReturnMagicAttribute().getGrimoireTextures();
+            List<String> textures = player_cap.ReturnMagicAttribute().GetGrimoireTextures();
 
             if (Arrays.stream(textures.toArray(new String[0])).noneMatch(
                     (element) -> element.equals(player_cap.getGrimoireTexture()))) {
-                String randomGrimoire = player_cap.ReturnMagicAttribute().getGrimoireTextures().get((int) Math.random() * player_cap.ReturnMagicAttribute().getGrimoireTextures().size());
+                String randomGrimoire = player_cap.ReturnMagicAttribute().GetGrimoireTextures().get((int) Math.random() * player_cap.ReturnMagicAttribute().GetGrimoireTextures().size());
                 player_cap.SetGrimoireTexture(randomGrimoire);
                 NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.player), new PacketSetGrimoireTexture(randomGrimoire, true, event.player.getId()));
             }
@@ -311,7 +283,7 @@ public class PlayerEvents {
     }
 
 
-    public static void magicBuffs(TickEvent.PlayerTickEvent event) {
+    public static void MagicBuffs(TickEvent.PlayerTickEvent event) {
         LazyOptional<IPlayerHandler> playerCapability = event.player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
         IPlayerHandler player_cap = playerCapability.orElse(new PlayerCapability());
 
@@ -330,7 +302,7 @@ public class PlayerEvents {
     }
 
 
-    public static void specialSpellNbt(TickEvent.PlayerTickEvent event){
+    public static void SpecialSpellNbt(TickEvent.PlayerTickEvent event){
 
         LazyOptional<IPlayerHandler> playerCapability = event.player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
         IPlayerHandler player_cap = playerCapability.orElse(new PlayerCapability());
@@ -376,7 +348,7 @@ public class PlayerEvents {
 
     }
 
-    public static void toggleManaSkin(PlayerEntity player){
+    public static void ToggleManaSkin (PlayerEntity player){
 
         LazyOptional<IPlayerHandler> player_cap = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
         IPlayerHandler playerc = player_cap.orElse(new PlayerCapability());
@@ -394,7 +366,7 @@ public class PlayerEvents {
         }
     }
 
-    public static void toggleReinforcement(PlayerEntity player){
+    public static void ToggleReinforcement (PlayerEntity player){
 
         LazyOptional<IPlayerHandler> player_cap = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
         IPlayerHandler playerc = player_cap.orElse(new PlayerCapability());

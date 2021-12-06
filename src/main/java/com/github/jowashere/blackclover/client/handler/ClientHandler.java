@@ -1,8 +1,8 @@
 package com.github.jowashere.blackclover.client.handler;
 
 import com.github.jowashere.blackclover.Main;
-import com.github.jowashere.blackclover.client.renderer.handler.GrimoireMagicianRenderer;
 import com.github.jowashere.blackclover.client.renderer.item.FullBrightItem;
+import com.github.jowashere.blackclover.client.renderer.handler.GrimoireMagicianRenderer;
 import com.github.jowashere.blackclover.client.renderer.layers.*;
 import com.github.jowashere.blackclover.client.renderer.spells.others.BlackHoleRenderer;
 import com.github.jowashere.blackclover.client.renderer.spells.projectiles.antimagic.BlackSlashRenderer;
@@ -46,7 +46,6 @@ public class ClientHandler {
         //Spells
         RenderingRegistry.registerEntityRenderingHandler(EntityInit.WIND_BLADE.get(), new WindBladeRenderer.Factory());
         RenderingRegistry.registerEntityRenderingHandler(EntityInit.WIND_CRESCENT.get(), new WindCrescentRenderer.Factory());
-        RenderingRegistry.registerEntityRenderingHandler(EntityInit.WIND_HAWK.get(), WindHawkRenderer::new);
 
         RenderingRegistry.registerEntityRenderingHandler(EntityInit.THUNDER_ORB.get(), new ThunderOrbRenderer.Factory());
 
@@ -55,13 +54,12 @@ public class ClientHandler {
 
         RenderingRegistry.registerEntityRenderingHandler(EntityInit.BLACK_SLASH.get(), new BlackSlashRenderer.Factory());
 
+        RenderingRegistry.registerEntityRenderingHandler(EntityInit.WIND_HAWK.get(), WindHawkRenderer::new);
+
         RenderingRegistry.registerEntityRenderingHandler(EntityInit.DEATH_SCYTHE.get(), new DeathScytheRenderer.Factory());
 
         RenderingRegistry.registerEntityRenderingHandler(EntityInit.LIGHT_SWORD_OJ.get(), new LightSwordOJRenderer.Factory());
 
-        RenderingRegistry.registerEntityRenderingHandler(EntityInit.GRIMOIRE_MAGICIAN.get(), GrimoireMagicianRenderer::new);
-
-        //Mobs
         RenderingRegistry.registerEntityRenderingHandler(EntityInit.GRIMOIRE_MAGICIAN.get(), GrimoireMagicianRenderer::new);
 
         Map<String, PlayerRenderer> playerSkinMap = Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap();

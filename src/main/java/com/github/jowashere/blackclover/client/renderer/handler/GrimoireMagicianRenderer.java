@@ -8,6 +8,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
+import javax.annotation.Resource;
+
 @OnlyIn(Dist.CLIENT)
 public class GrimoireMagicianRenderer extends MobRenderer<GrimoireMagicianEntity, GrimoireMagicianModel<GrimoireMagicianEntity>>
 {
@@ -15,7 +17,7 @@ public class GrimoireMagicianRenderer extends MobRenderer<GrimoireMagicianEntity
 
     public GrimoireMagicianRenderer(EntityRendererManager rendererManager)
     {
-        super(rendererManager, new GrimoireMagicianModel(), 1F);
+        super(rendererManager, new GrimoireMagicianModel(), 2F);
     }
 
     @Override

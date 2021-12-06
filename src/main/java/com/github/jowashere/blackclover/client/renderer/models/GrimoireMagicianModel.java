@@ -8,9 +8,12 @@ import net.minecraft.entity.CreatureEntity;
 
 public class GrimoireMagicianModel<T extends CreatureEntity> extends BipedModel<T>
 {
+	private final ModelRenderer bone;
 	public GrimoireMagicianModel()
 	{
 		super(0, 0, 64, 64);
+
+		bone = new ModelRenderer(this);
 	}
 
 	@Override
@@ -21,7 +24,7 @@ public class GrimoireMagicianModel<T extends CreatureEntity> extends BipedModel<
 	@Override
 	public void renderToBuffer(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue,
 							   float alpha) {
-		super.renderToBuffer(matrixStack, buffer, packedLight, packedOverlay, red, green, blue, alpha);
+		bone.render(matrixStack, buffer, packedLight, packedOverlay);
 	}
 
 	public void setRotationAngle(ModelRenderer modelRenderer, float x, float y, float z) {
