@@ -35,6 +35,8 @@ println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getPro
 
 minecraft
         {
+            accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+
             // https://ldtteam.jfrog.io/ui/native/parchmentmc-public/org/parchmentmc/data
             mappings channel: "${mappings_channel}", version: "${mappings_version}"
 
