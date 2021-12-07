@@ -111,6 +111,14 @@ public abstract class AbstractSpellProjectileEntity extends ProjectileItemEntity
         this.baseDamage = baseDamage;
     }
 
+    public int getDamageTier(){
+        return this.damageTier;
+    }
+
+    public float getBaseDamage(){
+        return this.baseDamage;
+    }
+
     protected void onHitEffect(){
 
     }

@@ -21,8 +21,8 @@ public class SwordSpells
 {
     public static void registerSpells(BCMRegistry.SpellRegistry spellRegistry, IBCMPlugin plugin)
     {
-        spellRegistry.register(new BCMSpell(plugin, "sword_slash",
-                BCMSpell.Type.SWORD_MAGIC, 30F, 10, false, 48, 16, false, ((playerIn, modifier0, modifier1, playerCapability, manaIn) ->
+        spellRegistry.register(new BCMSpell(plugin, "origin_flash",
+                BCMSpell.Type.SWORD_MAGIC, 30F, 30, false, 48, 16, false, ((playerIn, modifier0, modifier1, playerCapability, manaIn) ->
         {
             if (!playerIn.level.isClientSide)
             {
@@ -38,7 +38,7 @@ public class SwordSpells
         }).setCheckFailMsg("You need the Demon Dweller Sword for this!").setUnlockLevel(1));
 
         spellRegistry.register(new BCMSpell(plugin, "sword_absorption",
-                BCMSpell.Type.SWORD_MAGIC, 0F, 10, false, 0, 0, false, ((playerIn, modifier0, modifier1, playerCapability, manaIn) ->
+                BCMSpell.Type.SWORD_MAGIC, 0F, 60, false, 0, 0, false, ((playerIn, modifier0, modifier1, playerCapability, manaIn) ->
         {
 
             ItemStack hand = playerIn.getItemInHand(Hand.MAIN_HAND);
@@ -46,18 +46,20 @@ public class SwordSpells
             if (hand.hasTag())
             {
                 nbt = hand.getTag();
-                if (nbt.getInt("Absorbtion") == 1)
+                if (nbt.getInt("absorption") == 1)
                 {
                     if (!playerIn.level.isClientSide) {
 
-                        EntityType type = ForgeRegistries.ENTITIES.getValue(ResourceLocation.tryParse(nbt.getString("StoredSpell")));
+                        EntityType type = ForgeRegistries.ENTITIES.getValue(ResourceLocation.tryParse(nbt.getString("stored_spell")));
                         AbstractSpellProjectileEntity spell = (AbstractSpellProjectileEntity) type.create(playerIn.level);
+                        spell.setDamageTier(nbt.getInt("stored_damage_tier"));
+                        spell.setBaseDamage(nbt.getFloat("stored_base_damage"));
                         spell.moveTo(playerIn.getX(), playerIn.getEyeY() - (double)0.1F, playerIn.getZ());
                         spell.shootFromRotation(playerIn, playerIn.xRot, playerIn.yRot, 0.0F, 1.6F, 2.5F);
                         playerIn.level.addFreshEntity(spell);
                         playerIn.swing(Hand.MAIN_HAND, true);
                     }
-                    nbt.putInt("Absorbtion", 0);
+                    nbt.putInt("absorption", 0);
                 }
                 else
                 {
@@ -65,8 +67,10 @@ public class SwordSpells
                     Entity traceEntity = trace.getEntity();
                     if (traceEntity instanceof AbstractSpellProjectileEntity && !(traceEntity instanceof AbstractAntiMagicProjectileEntity))
                     {
-                        nbt.putInt("Absorbtion", 1);
-                        nbt.putString("StoredSpell", traceEntity.getType().getRegistryName().toString());
+                        nbt.putInt("absorption", 1);
+                        nbt.putString("stored_spell", traceEntity.getType().getRegistryName().toString());
+                        nbt.putInt("stored_damage_tier", ((AbstractSpellProjectileEntity) traceEntity).getDamageTier());
+                        nbt.putFloat("stored_base_damage", ((AbstractSpellProjectileEntity) traceEntity).getBaseDamage());
                         traceEntity.remove();
                     }
                 }
@@ -78,8 +82,10 @@ public class SwordSpells
                 Entity traceEntity = trace.getEntity();
                 if (traceEntity instanceof AbstractSpellProjectileEntity && !(traceEntity instanceof AbstractAntiMagicProjectileEntity))
                 {
-                    nbt.putInt("Absorbtion", 1);
-                    nbt.putString("StoredSpell", traceEntity.getType().getRegistryName().toString());
+                    nbt.putInt("absorption", 1);
+                    nbt.putString("stored_spell", traceEntity.getType().getRegistryName().toString());
+                    nbt.putInt("stored_damage_tier", ((AbstractSpellProjectileEntity) traceEntity).getDamageTier());
+                    nbt.putFloat("stored_base_damage", ((AbstractSpellProjectileEntity) traceEntity).getBaseDamage());
                     traceEntity.remove();
                 }
             }
