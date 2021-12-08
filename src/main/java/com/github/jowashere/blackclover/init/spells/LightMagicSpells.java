@@ -21,6 +21,8 @@ import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.util.LazyOptional;
 
 import java.util.Collections;
+import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class LightMagicSpells {
 
@@ -57,6 +59,7 @@ public class LightMagicSpells {
         if (!playerIn.level.isClientSide) {
             for(int i = 0; i < 15; i++) {
                 LightSwordOJEntity entity = new LightSwordOJEntity(playerIn.level, playerIn, manaIn);
+
                 entity.shoot((float) (playerIn.getLookAngle().x + (Math.random() * 0.45) - 0.275), (float) (playerIn.getLookAngle().y + (Math.random() * 0.4) - 0.25), (float) (playerIn.getLookAngle().z + (Math.random() * 0.45) - 0.275), 3.0F, 0);
                 playerIn.level.addFreshEntity(entity);
             }
@@ -92,11 +95,23 @@ public class LightMagicSpells {
 
         if (!playerIn.level.isClientSide) {
 
-            BCMHelper.GetEntitiesNear(playerIn.blockPosition(), playerIn.level, 15, LivingEntity.class);
+            List<LivingEntity> entities = BCMHelper.GetEntitiesNear(playerIn.blockPosition(), playerIn.level, 15, LivingEntity.class);
+            entities.remove(playerIn);
 
+            AtomicInteger arrowCount = new AtomicInteger();
+
+            entities.forEach(entity -> {
+                if(arrowCount.get() < maxArrowCount){
+                    LightSwordOJEntity lightSword = new LightSwordOJEntity(playerIn.level, playerIn, manaIn);
+                    lightSword.setPos(entity.getX(), entity.getY() + 5, entity.getZ());
+                    lightSword.shoot(0, -180, 0, 2F, 0);
+                    playerIn.level.addFreshEntity(lightSword);
+                    arrowCount.getAndIncrement();
+                }
+            });
         }
 
-    });
+    }).setUnlockLevel(40);
 
     public static BCMSpell LIGHT_HEALING = new BCMSpell(plugin, "light_healing", BCMSpell.Type.LIGHT_MAGIC, 0.95F, 120, false, 80, 64, true, (playerIn, modifier0, modifier1, playerCapability, manaIn) -> {
 
@@ -117,6 +132,7 @@ public class LightMagicSpells {
         spellRegistry.register(LIGHT_SWORD_OJ.setPlugin(pluginIn));
         spellRegistry.register(LIGHT_SWORDS_OJ.setPlugin(pluginIn));
         spellRegistry.register(LIGHT_HEALING.setPlugin(pluginIn));
+        spellRegistry.register(ARROWS_OF_JUDGEMENT.setPlugin(pluginIn));
 
     }
 }

@@ -1,6 +1,6 @@
-package com.github.jowashere.blackclover.entities.spells.slash;
+package com.github.jowashere.blackclover.entities.spells.sword;
 
-import com.github.jowashere.blackclover.api.internal.entities.spells.AbstractSlashProjectileEntity;
+import com.github.jowashere.blackclover.api.internal.entities.spells.AbstractSwordProjectileEntity;
 import com.github.jowashere.blackclover.init.EntityInit;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -9,14 +9,14 @@ import net.minecraft.network.IPacket;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class DeathScytheEntity extends AbstractSlashProjectileEntity {
+public class OriginFlashEntity extends AbstractSwordProjectileEntity {
 
-    public DeathScytheEntity(EntityType<? extends DeathScytheEntity> type, World worldIn) {
+    public OriginFlashEntity(EntityType<? extends OriginFlashEntity> type, World worldIn) {
         super(type, worldIn);
     }
 
-    public DeathScytheEntity(World worldIn, LivingEntity throwerIn, float manaIn) {
-        super(EntityInit.DEATH_SCYTHE.get(), throwerIn, worldIn, manaIn);
+    public OriginFlashEntity(World worldIn, LivingEntity throwerIn, float manaIn) {
+        super(EntityInit.ORIGIN_FLASH.get(), throwerIn, worldIn, manaIn);
         this.setDamageTier(2);
         this.setBaseDamage(3.5F);
     }
@@ -28,7 +28,7 @@ public class DeathScytheEntity extends AbstractSlashProjectileEntity {
 
     @Override
     public String getAffiliatedSpellName() {
-        return "death_scythe";
+        return "origin_flash";
     }
 
     @Override
