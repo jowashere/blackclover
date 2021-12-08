@@ -10,6 +10,7 @@ import com.github.jowashere.blackclover.client.renderer.spells.projectiles.darkn
 import com.github.jowashere.blackclover.client.renderer.spells.projectiles.light.LightSwordOJRenderer;
 import com.github.jowashere.blackclover.client.renderer.spells.projectiles.lightning.ThunderOrbRenderer;
 import com.github.jowashere.blackclover.client.renderer.spells.projectiles.slash.DeathScytheRenderer;
+import com.github.jowashere.blackclover.client.renderer.spells.projectiles.sword.OriginFlashRenderer;
 import com.github.jowashere.blackclover.client.renderer.spells.projectiles.wind.WindBladeRenderer;
 import com.github.jowashere.blackclover.client.renderer.spells.projectiles.wind.WindCrescentRenderer;
 import com.github.jowashere.blackclover.client.renderer.spells.summons.WindHawkRenderer;
@@ -59,7 +60,7 @@ public class ClientHandler {
 
         RenderingRegistry.registerEntityRenderingHandler(EntityInit.LIGHT_SWORD_OJ.get(), new LightSwordOJRenderer.Factory());
 
-        RenderingRegistry.registerEntityRenderingHandler(EntityInit.GRIMOIRE_MAGICIAN.get(), GrimoireMagicianRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(EntityInit.ORIGIN_FLASH.get(), new OriginFlashRenderer.Factory());
 
         //Mobs
         RenderingRegistry.registerEntityRenderingHandler(EntityInit.GRIMOIRE_MAGICIAN.get(), GrimoireMagicianRenderer::new);

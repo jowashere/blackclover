@@ -8,12 +8,12 @@ import com.github.jowashere.blackclover.entities.spells.darkness.BlackHoleEntity
 import com.github.jowashere.blackclover.entities.spells.light.LightSwordOJEntity;
 import com.github.jowashere.blackclover.entities.spells.lightning.ThunderOrbEntity;
 import com.github.jowashere.blackclover.entities.spells.slash.DeathScytheEntity;
+import com.github.jowashere.blackclover.entities.spells.sword.OriginFlashEntity;
 import com.github.jowashere.blackclover.entities.spells.wind.WindBladeEntity;
 import com.github.jowashere.blackclover.entities.spells.wind.WindCrescentEntity;
 import com.github.jowashere.blackclover.entities.spells.wind.WindHawkEntity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -36,8 +36,9 @@ public class EntityInit {
 
     public static final RegistryObject<EntityType<DeathScytheEntity>> DEATH_SCYTHE = ENTITIES.register("death_scythe", () -> EntityType.Builder.<DeathScytheEntity>of(DeathScytheEntity::new, EntityClassification.MISC).setShouldReceiveVelocityUpdates(true).setUpdateInterval(1).setTrackingRange(128).sized(0.2F,1F).build(Main.MODID + ":death_scythe"));
 
-    public static final RegistryObject<EntityType<BlackSlashEntity>> BLACK_SLASH = ENTITIES.register("black_slash", () -> EntityType.Builder.<BlackSlashEntity>of(BlackSlashEntity::new, EntityClassification.MISC).setShouldReceiveVelocityUpdates(true).setUpdateInterval(1).setTrackingRange(128).sized(3F,0.2F)
-            .build(Main.MODID + ":black_slash"));
+    public static final RegistryObject<EntityType<OriginFlashEntity>> ORIGIN_FLASH = ENTITIES.register("origin_flash", () -> EntityType.Builder.<OriginFlashEntity>of(OriginFlashEntity::new, EntityClassification.MISC).setShouldReceiveVelocityUpdates(true).setUpdateInterval(1).setTrackingRange(128).sized(3F,0.2F).build(Main.MODID + ":origin_flash"));
+
+    public static final RegistryObject<EntityType<BlackSlashEntity>> BLACK_SLASH = ENTITIES.register("black_slash", () -> EntityType.Builder.<BlackSlashEntity>of(BlackSlashEntity::new, EntityClassification.MISC).setShouldReceiveVelocityUpdates(true).setUpdateInterval(1).setTrackingRange(128).sized(3F,0.2F).build(Main.MODID + ":black_slash"));
 
     public static final RegistryObject<EntityType<GrimoireMagicianEntity>> GRIMOIRE_MAGICIAN = ENTITIES
             .register("grimoire_magician",
