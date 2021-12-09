@@ -142,7 +142,7 @@ public class SwordSpells
 
             EntityRayTraceResult rayTraceResult = BCMHelper.RayTraceEntities(playerIn, 6);
 
-            if(!(rayTraceResult.getEntity() instanceof LivingEntity))
+            if((rayTraceResult.getEntity() instanceof LivingEntity))
             {
                 LivingEntity entity = (LivingEntity) rayTraceResult.getEntity();
                 entity.removeAllEffects();
