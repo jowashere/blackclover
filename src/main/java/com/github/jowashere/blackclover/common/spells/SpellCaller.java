@@ -1,5 +1,6 @@
 package com.github.jowashere.blackclover.common.spells;
 
+import com.github.jowashere.blackclover.Main;
 import com.github.jowashere.blackclover.api.BCMRegistry;
 import com.github.jowashere.blackclover.api.internal.BCMSpell;
 import com.github.jowashere.blackclover.capabilities.player.IPlayerHandler;
@@ -10,6 +11,7 @@ import com.github.jowashere.blackclover.networking.packets.spells.PacketSpellNBT
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.fml.network.PacketDistributor;
 
 public class SpellCaller {
@@ -24,6 +26,12 @@ public class SpellCaller {
                     if (("spell." + spell.getCorrelatedPlugin().getPluginId() + "." + spell.getName()).equalsIgnoreCase(spellName)) {
                         if (spell.isToggle()) {
                             String nbtName = spell.getCorrelatedPlugin().getPluginId() + "_" + spell.getName();
+
+                            if(!spell.isSkillSpell() && !playercap.returnHasGrimoire()){
+                                playerIn.displayClientMessage(new TranslationTextComponent("spell." + Main.MODID + ".message.nogrimoire"), true);
+                                return;
+                            }
+
                             if (!playerIn.getPersistentData().getBoolean(nbtName)) {
                                 if (spell.getExtraCheck() != null) {
                                     if (!spell.getExtraCheck().check(playerIn)) {

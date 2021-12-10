@@ -125,14 +125,14 @@ public class PlayerEvents {
             for (BCMSpell spell : BCMRegistry.SPELLS.getValues()) {
                 if(spell.getType().equals(playercap.ReturnMagicAttribute().getSpellType())){
                     if(!(spell.getUnlockLevel() <= 0)){
-                        if(spell.getUnlockLevel() <= playercap.getMagicLevel()){
+                        if(spell.getUnlockLevel() <= playercap.getMagicLevel() && (spell.isSkillSpell() || playercap.returnHasGrimoire())){
                             if(!playercap.hasSpellBoolean(spell)){
                                 playercap.setSpellBoolean(spell, true);
                                 NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketSetSpellBoolean(spell.getName(), true,true));
                             }
                         }
 
-                        if(spell.getUnlockLevel() > playercap.getMagicLevel()){
+                        if(spell.getUnlockLevel() > playercap.getMagicLevel() || (!spell.isSkillSpell() && !playercap.returnHasGrimoire())){
                             if(playercap.hasSpellBoolean(spell)){
                                 playercap.setSpellBoolean(spell, false);
                                 NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketSetSpellBoolean(spell.getName(), false,true));

@@ -45,9 +45,9 @@ public class LightningSpells {
             if(playerIn.getAttribute(Attributes.ATTACK_SPEED).hasModifier(getThunderHandSpeedModifier(playerIn)))
                 playerIn.getAttribute(Attributes.ATTACK_SPEED).removeModifier(getThunderHandSpeedModifier(playerIn));
 
-        }).setUnlockLevel(1));
+        }).setUnlockLevel(5));
 
-        spellRegistry.register(new BCMSpell(pluginIn, "tg_boots", BCMSpell.Type.LIGHTNING_MAGIC, 0.25F, 40, false, 32, 16, true, (playerIn, modifier0, modifier1, playerCapability, manaIn) -> {
+        spellRegistry.register(new BCMSpell(pluginIn, "tg_boots", BCMSpell.Type.LIGHTNING_MAGIC, 0.25F, 40, true, 32, 16, true, (playerIn, modifier0, modifier1, playerCapability, manaIn) -> {
 
             LazyOptional<IPlayerHandler> playerInCap = playerIn.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
             IPlayerHandler player_cap = playerInCap.orElse(new PlayerCapability());
@@ -75,6 +75,7 @@ public class LightningSpells {
                 playerIn.getAttribute(ModAttributes.STEP_HEIGHT.get()).removeModifier(STEP_HEIGHT);
 
         }).setUnlockLevel(1));
+
         spellRegistry.register(new BCMSpell(pluginIn, "thunder_orb", BCMSpell.Type.LIGHTNING_MAGIC, 20F, 60, false, 32, 32, false, ((playerIn, modifier0, modifier1, playerCapability, manaIn) -> {
 
             LazyOptional<IPlayerHandler> playerInCap = playerIn.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
