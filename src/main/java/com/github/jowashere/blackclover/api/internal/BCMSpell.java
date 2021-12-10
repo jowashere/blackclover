@@ -7,9 +7,11 @@ import com.github.jowashere.blackclover.capabilities.player.PlayerProvider;
 import com.github.jowashere.blackclover.client.gui.widgets.spells.GuiButtonSpell;
 import com.github.jowashere.blackclover.init.AttributeInit;
 import com.github.jowashere.blackclover.networking.NetworkLoader;
+import com.github.jowashere.blackclover.networking.packets.PacketMagicExpSync;
 import com.github.jowashere.blackclover.networking.packets.mana.PacketManaSync;
 import com.github.jowashere.blackclover.networking.packets.spells.PacketIntSpellNBTSync;
 import com.github.jowashere.blackclover.networking.packets.spells.PacketSpellNBTSync;
+import com.github.jowashere.blackclover.util.helpers.BCMHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -209,7 +211,6 @@ public class BCMSpell {
             float manaCost;
             manaCost = this.getManaCost() +  ((float) Math.sqrt(playercap.ReturnMagicLevel()) * (this.getManaCost() / 5) );
 
-
             if(this.isSkillSpell() || playercap.returnHasGrimoire()){
                 if (!(playercap.returnMana() >= manaCost || playercap.ReturnMagicAttribute().equals(AttributeInit.ANTI_MAGIC))) {
                     if (isToggle()) {
@@ -224,9 +225,12 @@ public class BCMSpell {
 
                 if(!this.isToggle()){
                     playercap.addMagicExp(this.getManaCost());
+                    NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) playerIn), new PacketMagicExpSync(playercap.returnMagicExp(), playerIn.getId()));
                 }else {
                     playercap.addMagicExp(this.getManaCost()/2);
+                    NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) playerIn), new PacketMagicExpSync(playercap.returnMagicExp(), playerIn.getId()));
                 }
+                BCMHelper.recaculateMagicLevel(playerIn);
 
                 this.action.action(playerIn, modifier0, modifier1, playercap, manaCost);
                 if(!this.isToggle())

@@ -49,7 +49,7 @@ public class LightMagicSpells {
             playerIn.swing(Hand.MAIN_HAND, true);
         }
 
-    });
+    }).setUnlockLevel(5);
 
     public static BCMSpell LIGHT_SWORDS_OJ = new BCMSpell(plugin, "light_swords_oj", BCMSpell.Type.LIGHT_MAGIC, 80F, 100, false, 80, 16, false, (playerIn, modifier0, modifier1, playerCapability, manaIn) -> {
 

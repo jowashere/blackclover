@@ -37,7 +37,7 @@ public class DarknessSpells {
 
     public static void registerSpells(BCMRegistry.SpellRegistry spellRegistry, IBCMPlugin pluginIn) {
 
-        spellRegistry.register(new BCMSpell(pluginIn, "dark_cloaked_blade", BCMSpell.Type.DARKNESS_MAGIC, 0.17F, 40, false, 48, 0, true, (playerIn, modifier0, modifier1, playerCapability, manaIn) -> {
+        spellRegistry.register(new BCMSpell(pluginIn, "dark_cloaked_blade", BCMSpell.Type.DARKNESS_MAGIC, 0.5F, 40, true, 48, 0, true, (playerIn, modifier0, modifier1, playerCapability, manaIn) -> {
 
             LazyOptional<IPlayerHandler> playerInCap = playerIn.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
             IPlayerHandler player_cap = playerInCap.orElse(new PlayerCapability());

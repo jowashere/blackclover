@@ -34,7 +34,7 @@ public class AntiMagicSpells {
     private static final AttributeModifier REACH_MODIFIER = new AttributeModifier(UUID.fromString("ff5c8feb-6598-4d30-81de-e1ca1084f51b"), "Reach Modifier", 4.5, AttributeModifier.Operation.ADDITION);
 
     public static void registerSpells(BCMRegistry.SpellRegistry spellRegistry, IBCMPlugin pluginIn) {
-        spellRegistry.register(new BCMSpell(pluginIn, "bull_thrust", BCMSpell.Type.ANTI_MAGIC, 15F, 100, false, 0, 0, false, (playerIn, modifier0, modifier1, playerCapability, manaIn) -> {
+        spellRegistry.register(new BCMSpell(pluginIn, "bull_thrust", BCMSpell.Type.ANTI_MAGIC, 15F, 100, true, 0, 0, false, (playerIn, modifier0, modifier1, playerCapability, manaIn) -> {
 
             LazyOptional<IPlayerHandler> playerInCap = playerIn.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
             IPlayerHandler player_cap = playerInCap.orElse(new PlayerCapability());

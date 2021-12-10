@@ -1,7 +1,6 @@
 package com.github.jowashere.blackclover.init.spells;
 
 import com.github.jowashere.blackclover.api.BCMRegistry;
-import com.github.jowashere.blackclover.api.Beapi;
 import com.github.jowashere.blackclover.api.IBCMPlugin;
 import com.github.jowashere.blackclover.api.internal.BCMSpell;
 import com.github.jowashere.blackclover.api.internal.entities.spells.AbstractAntiMagicProjectileEntity;
@@ -24,8 +23,6 @@ import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.registries.ForgeRegistries;
-
-import java.util.List;
 
 public class SwordSpells
 {
@@ -99,7 +96,7 @@ public class SwordSpells
                 }
                 else
                 {
-                    EntityRayTraceResult trace = (EntityRayTraceResult) Beapi.rayTraceBlocksAndEntities(playerIn.getEntity(), 24, 0.2F);
+                    EntityRayTraceResult trace = (EntityRayTraceResult) BCMHelper.RayTraceEntities(playerIn.getEntity(), 4);
                     Entity traceEntity = trace.getEntity();
                     if (traceEntity instanceof AbstractSpellProjectileEntity && !(traceEntity instanceof AbstractAntiMagicProjectileEntity))
                     {
@@ -114,8 +111,9 @@ public class SwordSpells
             else
             {
                 nbt = new CompoundNBT();
-                EntityRayTraceResult trace = (EntityRayTraceResult) Beapi.rayTraceBlocksAndEntities(playerIn.getEntity(), 24, 0.2F);
+                EntityRayTraceResult trace = (EntityRayTraceResult) BCMHelper.RayTraceEntities(playerIn.getEntity(), 4);
                 Entity traceEntity = trace.getEntity();
+
                 if (traceEntity instanceof AbstractSpellProjectileEntity && !(traceEntity instanceof AbstractAntiMagicProjectileEntity))
                 {
                     nbt.putInt("absorption", 1);
@@ -129,17 +127,15 @@ public class SwordSpells
         )).setExtraSpellChecks(playerIn ->
         {
             ItemStack hand = playerIn.getItemInHand(Hand.MAIN_HAND);
-            return (hand.getItem().equals(ItemInit.DEMON_DWELLER.get()));
+
+            boolean inHand = (hand.getItem().equals(ItemInit.DEMON_DWELLER.get()));
+            return inHand;
         }).setCheckFailMsg("You need the Demon Dweller Sword for this!").setUnlockLevel(20));
 
         spellRegistry.register(new BCMSpell(plugin, "causality_break_sword", BCMSpell.Type.SWORD_MAGIC, 30F, 200, false, 0, 32, false, (playerIn, modifier0, modifier1, playerCapability, manaIn) -> {
 
             LazyOptional<IPlayerHandler> playerInCap = playerIn.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
             IPlayerHandler player_cap = playerInCap.orElse(new PlayerCapability());
-
-            List<LivingEntity> entities= BCMHelper.GetEntitiesNear(playerIn.blockPosition(), playerIn.level, (int) (5 + (player_cap.ReturnMagicLevel() / 10)), LivingEntity.class);
-            entities.remove(playerIn);
-
             EntityRayTraceResult rayTraceResult = BCMHelper.RayTraceEntities(playerIn, 6);
 
             if((rayTraceResult.getEntity() instanceof LivingEntity))
@@ -148,6 +144,8 @@ public class SwordSpells
                 entity.removeAllEffects();
                 ((ServerWorld) playerIn.level).sendParticles(ParticleTypes.SPIT, entity.getX(), entity.getY(), entity.getZ(), (int) 25, 0, 0, 0, 0.25);
             }
+
+            playerIn.swing(Hand.MAIN_HAND, true);
 
         }).setExtraSpellChecks((playerIn -> {
             ItemStack mainItem = playerIn.getItemInHand(Hand.MAIN_HAND);
