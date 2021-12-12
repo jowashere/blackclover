@@ -26,11 +26,11 @@ public abstract class MixinItem {
         }
     }
 
-    @Inject(at = @At("HEAD"), method = "onEntitySwing", cancellable = true)
+    /*@Inject(at = @At("HEAD"), method = "onEntitySwing", cancellable = true)
     public void onEntitySwing(ItemStack pStack, CallbackInfoReturnable<Boolean> cir) {
         cir.setReturnValue((pStack.getOrCreateTag().getInt("dark_cloak") > 0) || pStack.isEnchanted());
         return;
-    }
+    }*/
 
     @Inject(at = @At("HEAD"), method = "isFoil", cancellable = true)
     public void isFoil(ItemStack pStack, CallbackInfoReturnable<Boolean> cir) {

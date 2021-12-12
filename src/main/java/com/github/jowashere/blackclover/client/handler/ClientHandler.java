@@ -1,9 +1,10 @@
 package com.github.jowashere.blackclover.client.handler;
 
 import com.github.jowashere.blackclover.Main;
-import com.github.jowashere.blackclover.client.renderer.handler.GrimoireMagicianRenderer;
+import com.github.jowashere.blackclover.client.renderer.handler.HumanoidRenderer;
 import com.github.jowashere.blackclover.client.renderer.item.FullBrightItem;
 import com.github.jowashere.blackclover.client.renderer.layers.*;
+import com.github.jowashere.blackclover.client.renderer.models.HumanoidModel;
 import com.github.jowashere.blackclover.client.renderer.spells.others.BlackHoleRenderer;
 import com.github.jowashere.blackclover.client.renderer.spells.projectiles.antimagic.BlackSlashRenderer;
 import com.github.jowashere.blackclover.client.renderer.spells.projectiles.darkness.AvidyaSlashRenderer;
@@ -16,6 +17,7 @@ import com.github.jowashere.blackclover.client.renderer.spells.projectiles.wind.
 import com.github.jowashere.blackclover.client.renderer.spells.summons.WindHawkRenderer;
 import com.github.jowashere.blackclover.init.EntityInit;
 import com.github.jowashere.blackclover.init.ItemInit;
+import com.github.jowashere.blackclover.items.weapons.WeaponProperties;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.AbstractClientPlayerEntity;
 import net.minecraft.client.renderer.entity.LivingRenderer;
@@ -24,6 +26,7 @@ import net.minecraft.client.renderer.entity.layers.LayerRenderer;
 import net.minecraft.client.renderer.entity.model.PlayerModel;
 import net.minecraft.client.renderer.model.ModelResourceLocation;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -63,11 +66,13 @@ public class ClientHandler {
         RenderingRegistry.registerEntityRenderingHandler(EntityInit.ORIGIN_FLASH.get(), new OriginFlashRenderer.Factory());
 
         //Mobs
-        RenderingRegistry.registerEntityRenderingHandler(EntityInit.GRIMOIRE_MAGICIAN.get(), GrimoireMagicianRenderer::new);
+        RenderingRegistry.registerEntityRenderingHandler(EntityInit.GRIMOIRE_MAGICIAN.get(), new HumanoidRenderer.Factory(new HumanoidModel(), 1F));
 
         Map<String, PlayerRenderer> playerSkinMap = Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap();
         ClientHandler.addPlayerLayers(playerSkinMap.get("default"));
         ClientHandler.addPlayerLayers(playerSkinMap.get("slim"));
+
+        ClientHandler.addItemModelProperties();
 
     }
 
@@ -79,6 +84,21 @@ public class ClientHandler {
 
             fullbrightItem(event, ItemInit.LIGHT_SWORD);
         }
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    private static void addItemModelProperties(){
+        ItemModelsProperties.register(ItemInit.YAMIS_KATANA.get(), new ResourceLocation("antimagic"), WeaponProperties.antiMagicProperty);
+        ItemModelsProperties.register(ItemInit.YAMIS_KATANA.get(), new ResourceLocation("blackmode"), WeaponProperties.blackMode);
+
+        ItemModelsProperties.register(ItemInit.DEMON_DWELLER.get(), new ResourceLocation("antimagic"), WeaponProperties.antiMagicProperty);
+        ItemModelsProperties.register(ItemInit.DEMON_DWELLER.get(), new ResourceLocation("blackmode"), WeaponProperties.blackMode);
+
+        ItemModelsProperties.register(ItemInit.DEMON_DESTROYER.get(), new ResourceLocation("antimagic"), WeaponProperties.antiMagicProperty);
+        ItemModelsProperties.register(ItemInit.DEMON_DESTROYER.get(), new ResourceLocation("blackmode"), WeaponProperties.blackMode);
+
+        ItemModelsProperties.register(ItemInit.DEMON_SLAYER.get(), new ResourceLocation("antimagic"), WeaponProperties.antiMagicProperty);
+        ItemModelsProperties.register(ItemInit.DEMON_SLAYER.get(), new ResourceLocation("blackmode"), WeaponProperties.blackMode);
     }
 
     @OnlyIn(Dist.CLIENT)

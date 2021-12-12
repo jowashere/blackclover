@@ -28,7 +28,7 @@ public class LightMagicSpells {
 
     private static IBCMPlugin plugin;
 
-    public static BCMSpell LIGHT_SWORD = new BCMSpell(plugin, "light_sword", BCMSpell.Type.LIGHT_MAGIC, 0.4F, 30, true, 80, 32, true, (playerIn, modifier0, modifier1, playerCapability, manaIn) -> {
+    public static BCMSpell LIGHT_SWORD = new BCMSpell(plugin, "light_sword", BCMSpell.Type.LIGHT_MAGIC, 0.2F, 30, true, 80, 32, true, (playerIn, modifier0, modifier1, playerCapability, manaIn) -> {
 
         LazyOptional<IPlayerHandler> playerInCap = playerIn.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
         IPlayerHandler player_cap = playerInCap.orElse(new PlayerCapability());
@@ -37,7 +37,7 @@ public class LightMagicSpells {
         BCMHelper.GiveItem(playerIn, new ItemStack(ItemInit.LIGHT_SWORD.get()));
     }).setUnlockLevel(1);
 
-    public static BCMSpell LIGHT_SWORD_OJ = new BCMSpell(plugin, "light_sword_oj", BCMSpell.Type.LIGHT_MAGIC, 30F, 50, false, 80, 16, false, (playerIn, modifier0, modifier1, playerCapability, manaIn) -> {
+    public static BCMSpell LIGHT_SWORD_OJ = new BCMSpell(plugin, "light_sword_oj", BCMSpell.Type.LIGHT_MAGIC, 25F, 50, false, 80, 16, false, (playerIn, modifier0, modifier1, playerCapability, manaIn) -> {
 
         LazyOptional<IPlayerHandler> playerInCap = playerIn.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
         IPlayerHandler player_cap = playerInCap.orElse(new PlayerCapability());
@@ -51,7 +51,7 @@ public class LightMagicSpells {
 
     }).setUnlockLevel(5);
 
-    public static BCMSpell LIGHT_SWORDS_OJ = new BCMSpell(plugin, "light_swords_oj", BCMSpell.Type.LIGHT_MAGIC, 80F, 100, false, 80, 16, false, (playerIn, modifier0, modifier1, playerCapability, manaIn) -> {
+    public static BCMSpell LIGHT_SWORDS_OJ = new BCMSpell(plugin, "light_swords_oj", BCMSpell.Type.LIGHT_MAGIC, 75F, 100, false, 80, 80, false, (playerIn, modifier0, modifier1, playerCapability, manaIn) -> {
 
         LazyOptional<IPlayerHandler> playerInCap = playerIn.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
         IPlayerHandler player_cap = playerInCap.orElse(new PlayerCapability());
@@ -67,7 +67,7 @@ public class LightMagicSpells {
 
     }).setUnlockLevel(10);
 
-    public static BCMSpell LIGHT_MOVEMENT = new BCMSpell(plugin, "light_movement", BCMSpell.Type.LIGHT_MAGIC, 50F, 90, false, 80, 0, false, (playerIn, modifier0, modifier1, playerCapability, manaIn) -> {
+    public static BCMSpell LIGHT_MOVEMENT = new BCMSpell(plugin, "light_movement", BCMSpell.Type.LIGHT_MAGIC, 30F, 90, false, 80, 0, false, (playerIn, modifier0, modifier1, playerCapability, manaIn) -> {
 
         LazyOptional<IPlayerHandler> playerInCap = playerIn.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
         IPlayerHandler player_cap = playerInCap.orElse(new PlayerCapability());
@@ -86,7 +86,7 @@ public class LightMagicSpells {
 
     }).setUnlockLevel(5);
 
-    public static BCMSpell ARROWS_OF_JUDGEMENT = new BCMSpell(plugin, "arrows_of_judgement", BCMSpell.Type.LIGHT_MAGIC, 100F, 300, false, 80, 80, false, (playerIn, modifier0, modifier1, playerCapability, manaIn) -> {
+    public static BCMSpell ARROWS_OF_JUDGEMENT = new BCMSpell(plugin, "arrows_of_judgement", BCMSpell.Type.LIGHT_MAGIC, 100F, 500, false, 80, 48, false, (playerIn, modifier0, modifier1, playerCapability, manaIn) -> {
 
         LazyOptional<IPlayerHandler> playerInCap = playerIn.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
         IPlayerHandler player_cap = playerInCap.orElse(new PlayerCapability());

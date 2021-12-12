@@ -79,7 +79,7 @@ public class SlashMagicSpells {
         return slashBlades;
     })).setCheckFailMsg("Slash Blades need to be on.").setUnlockLevel(20);
 
-    public static BCMSpell SLASH_BLADES = new BCMSpell(null, "slash_blades", BCMSpell.Type.SLASH_MAGIC, 0.6F, 50, true, 64, 0, true, (playerIn, modifier0, modifier1, playerCapability, manaIn) -> {
+    public static BCMSpell SLASH_BLADES = new BCMSpell(null, "slash_blades", BCMSpell.Type.SLASH_MAGIC, 0.4F, 50, true, 64, 0, true, (playerIn, modifier0, modifier1, playerCapability, manaIn) -> {
 
         LazyOptional<IPlayerHandler> playerInCap = playerIn.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
         IPlayerHandler player_cap = playerInCap.orElse(new PlayerCapability());

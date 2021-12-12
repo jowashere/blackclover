@@ -240,7 +240,7 @@ public class BCMSpell {
                     return;
 
                 playercap.addMana((-manaCost));
-                    NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) playerIn), new PacketManaSync(playercap.returnMana()));
+                NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) playerIn), new PacketManaSync(playercap.returnMana()));
 
                     /*if (!playercap.returnToggleSpellMessage() && !this.isToggle() && !playerIn.level.isClientSide)
                         playerIn.displayClientMessage(new StringTextComponent(new TranslationTextComponent("spell." + this.getCorrelatedPlugin().getPluginId() + "." + this.getName()).getString() + "! " + + ((int) -manaCost) + " Mana"), true);*/

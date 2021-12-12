@@ -37,6 +37,13 @@ import java.util.stream.Collectors;
 
 public class BCMHelper {
 
+    public static boolean isNullOrEmpty(String str)
+    {
+        if (str != null && !str.isEmpty() && !str.equalsIgnoreCase("n/a"))
+            return false;
+        return true;
+    }
+
     public static Vector3d Propulsion(LivingEntity entity, double extraVelX, double extraVelZ)
     {
         return Propulsion(entity, extraVelX, 0, extraVelZ);
@@ -195,7 +202,7 @@ public class BCMHelper {
 
                 if (distFromSource < distance)
                 {
-                    List<Entity> targets = BCMHelper.GetEntitiesNear(new BlockPos(targetVec), source.level, 1.25);
+                    List<Entity> targets = BCMHelper.GetEntitiesNear(new BlockPos(targetVec), source.level, 1.25, Entity.class);
                     targets.remove(source);
                     Optional<Entity> target = targets.stream().findFirst();
 
@@ -211,11 +218,11 @@ public class BCMHelper {
     }
 
     public static float CalculateExp(int level) {
-        return (float) ((level / 0.07) * (level / 0.07));
+        return (float) (((level - 1) / 0.07) * ((level - 1) / 0.07));
     }
 
     public static int CalculateLevel(float exp){
-        return (int) (0.07 * Math.sqrt(exp));
+        return 1 + (int) (0.07 * Math.sqrt(exp));
     }
 
     public static void recaculateMagicLevel(PlayerEntity player){

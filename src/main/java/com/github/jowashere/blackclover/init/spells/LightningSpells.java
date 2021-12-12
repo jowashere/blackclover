@@ -23,7 +23,7 @@ import java.util.UUID;
 
 public class LightningSpells {
 
-    private static final AttributeModifier STEP_HEIGHT = new AttributeModifier(UUID.fromString("83728ce8-2a30-4e22-9eb4-89d9bf51f153"), "Step Height Multiplier", 1, AttributeModifier.Operation.ADDITION);
+    private static final AttributeModifier STEP_HEIGHT = new AttributeModifier(UUID.fromString("ad388521-c053-4a67-a0d9-ff57379a2c68"), "Step Height Multiplier", 1, AttributeModifier.Operation.ADDITION);
 
     public static void registerSpells(BCMRegistry.SpellRegistry spellRegistry, IBCMPlugin pluginIn) {
         spellRegistry.register(new BCMSpell(pluginIn, "tg_gloves", BCMSpell.Type.LIGHTNING_MAGIC, 0.25F, 40, false, 32, 0, true, (playerIn, modifier0, modifier1, playerCapability, manaIn) -> {

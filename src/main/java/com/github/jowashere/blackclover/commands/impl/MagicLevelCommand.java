@@ -78,12 +78,22 @@ public class MagicLevelCommand {
         }
 
         int maxLevel = 100;
+        float maxExp = BCMHelper.CalculateExp(maxLevel);
 
         if(levelOrPoints.equals(LevelOrPoints.LEVEL) && ((addOrSet.equals(AddOrSet.SET) && amount > maxLevel) ||
                 addOrSet.equals(AddOrSet.ADD) && amount + playercap.ReturnMagicLevel() > maxLevel)){
             source.sendFailure(new TranslationTextComponent("commands." + Main.MODID + ".magiclevel.toohigh", amount));
             return 0;
-        } else if(levelOrPoints.equals(LevelOrPoints.LEVEL) && amount == 0){
+        } else if(levelOrPoints.equals(LevelOrPoints.LEVEL) && amount <= 0){
+            source.sendFailure(new TranslationTextComponent("commands." + Main.MODID + ".magiclevel.toolow", amount));
+            return 0;
+        }
+
+        if(levelOrPoints.equals(LevelOrPoints.POINTS) && ((addOrSet.equals(AddOrSet.SET) && amount > maxExp) ||
+                addOrSet.equals(AddOrSet.ADD) && amount + playercap.returnMagicExp() > maxExp)){
+            source.sendFailure(new TranslationTextComponent("commands." + Main.MODID + ".magiclevel.toohigh", amount));
+            return 0;
+        } else if(levelOrPoints.equals(LevelOrPoints.POINTS) && (addOrSet.equals(AddOrSet.SET) && amount < 0) || addOrSet.equals(AddOrSet.ADD) && amount <= 0){
             source.sendFailure(new TranslationTextComponent("commands." + Main.MODID + ".magiclevel.toolow", amount));
             return 0;
         }
@@ -95,16 +105,16 @@ public class MagicLevelCommand {
 
                 playercap.setMagicExp(magicExp);
                 NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketMagicExpSync(magicExp, player.getId()));
-                NetworkLoader.INSTANCE.sendToServer(new PacketMagicExpSync(magicExp, player.getId()));
+                //NetworkLoader.INSTANCE.sendToServer(new PacketMagicExpSync(magicExp, player.getId()));
 
                 source.sendSuccess(new TranslationTextComponent("commands." + Main.MODID + ".magiclevel.set", player.getDisplayName(), amount), true);
             }else if(addOrSet.equals(AddOrSet.ADD)){
 
-                float expNeeded = BCMHelper.CalculateExp(amount) - playercap.returnMagicExp();
+                float expNeeded = BCMHelper.CalculateExp(playercap.ReturnMagicLevel() + amount) - playercap.returnMagicExp();
                 float newXP = expNeeded + playercap.returnMagicExp();
                 playercap.setMagicExp(newXP);
                 NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketMagicExpSync(newXP, player.getId()));
-                NetworkLoader.INSTANCE.sendToServer(new PacketMagicExpSync(newXP, player.getId()));
+                //NetworkLoader.INSTANCE.sendToServer(new PacketMagicExpSync(newXP, player.getId()));
 
                 source.sendSuccess(new TranslationTextComponent("commands." + Main.MODID + ".magiclevel.add", player.getDisplayName(), amount), true);
             }
@@ -112,7 +122,7 @@ public class MagicLevelCommand {
             if(addOrSet.equals(AddOrSet.SET)){
                 playercap.setMagicExp(amount);
                 NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketMagicExpSync(amount, player.getId()));
-                NetworkLoader.INSTANCE.sendToServer(new PacketMagicExpSync(amount, player.getId()));
+                //NetworkLoader.INSTANCE.sendToServer(new PacketMagicExpSync(amount, player.getId()));
 
                 source.sendSuccess(new TranslationTextComponent("commands." + Main.MODID + ".magicexp.set", player.getDisplayName(), amount), true);
             }else if(addOrSet.equals(AddOrSet.ADD)){
@@ -121,8 +131,7 @@ public class MagicLevelCommand {
 
                 playercap.addMagicExp(amount);
                 NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketMagicExpSync(newXP, player.getId()));
-                NetworkLoader.INSTANCE.sendToServer(new PacketMagicExpSync(newXP, player.getId()));
-
+                //NetworkLoader.INSTANCE.sendToServer(new PacketMagicExpSync(newXP, player.getId()));
 
                 source.sendSuccess(new TranslationTextComponent("commands." + Main.MODID + ".magicexp.add", player.getDisplayName(), amount), true);
             }

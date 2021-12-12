@@ -28,7 +28,7 @@ public class MagicPassives {
     @Mod.EventBusSubscriber(modid = Main.MODID)
     public static class CommonEvents
     {
-        private static final AttributeModifier STEP_HEIGHT = new AttributeModifier(UUID.fromString("59406dcb-fd62-4e58-b6ca-87a071344b91"), "Step Height Multiplier", 1, AttributeModifier.Operation.ADDITION);
+        private static final AttributeModifier STEP_HEIGHT = new AttributeModifier(UUID.fromString("ad388521-c053-4a67-a0d9-ff57379a2c68"), "Step Height Multiplier", 1, AttributeModifier.Operation.ADDITION);
         private static final AttributeModifier FALL_RESISTANCE = new AttributeModifier(UUID.fromString("e81580bf-c648-4363-9d80-038b84af2364"), "Fall Resistance", 7, AttributeModifier.Operation.ADDITION);
 
         @SubscribeEvent
@@ -64,14 +64,11 @@ public class MagicPassives {
                     if(playercap.ReturnMagicLevel() >= 55)
                         player.fallDistance = 0;
 
-                    if (playercap.returnMana() > 3) {
-                        player.getPersistentData().putInt("manaskintick", player.getPersistentData().getInt("manaskintick") + 1);
-                        if (player.getPersistentData().getInt("manaskintick") >= 20) {
+                    float manaNeeded = (float) (0.2 + (0.2 * Math.sqrt(playercap.getMagicLevel() / 2)));
 
-                            playercap.addMana((float) -3);
-                            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketManaSync(playercap.returnMana()));
-                            player.getPersistentData().putInt("manaskintick", 0);
-                        }
+                    if (playercap.returnMana() > manaNeeded) {
+                        playercap.addMana(-manaNeeded);
+                        NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketManaSync(playercap.returnMana()));
                     } else {
                         playercap.setManaSkinToggled(false);
                         NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketToggleInfusionBoolean(1, true,false, player.getId()));
@@ -106,14 +103,11 @@ public class MagicPassives {
                             player.getAttribute(ModAttributes.JUMP_HEIGHT.get()).removeModifier(getJumpModifier(player));
                     }
 
-                    if (playercap.returnMana() > 4) {
-                        player.getPersistentData().putInt("reinforcementtick", player.getPersistentData().getInt("reinforcementtick") + 1);
-                        if (player.getPersistentData().getInt("reinforcementtick") >= 20) {
+                    float manaNeeded = (float) (0.2 + (0.2 * Math.sqrt(playercap.getMagicLevel() / 2)));
 
-                            playercap.addMana((float) -4);
-                            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketManaSync(playercap.returnMana()));
-                            player.getPersistentData().putInt("reinforcementtick", 0);
-                        }
+                    if (playercap.returnMana() > manaNeeded) {
+                        playercap.addMana(-manaNeeded);
+                        NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketManaSync(playercap.returnMana()));
                     } else {
                         playercap.setReinforcementToggled(false);
                         NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketToggleInfusionBoolean(2, true,false, player.getId()));
