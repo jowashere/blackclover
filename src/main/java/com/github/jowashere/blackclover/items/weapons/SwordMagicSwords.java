@@ -9,48 +9,14 @@ import com.github.jowashere.blackclover.init.GenericItemTier;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.item.IItemPropertyGetter;
-import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundCategory;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.world.World;
 import net.minecraftforge.common.util.LazyOptional;
 
 public class SwordMagicSwords extends SwordItem {
-
-    private IItemPropertyGetter antiMagicProperty = (itemStack, world, livingEntity) ->
-    {
-        float antiMagic = 0;
-
-        antiMagic = itemStack.getOrCreateTag().getBoolean("antimagic") ? 1 : 0;
-
-        return antiMagic;
-    };
-
-    private IItemPropertyGetter blackMode = (itemStack, world, livingEntity) ->
-    {
-        if(livingEntity == null)
-            return 0;
-
-        float blackmode = 0;
-
-        boolean isBlackModeActive = livingEntity.getPersistentData().getBoolean("blackclover_black_mode");
-
-        boolean isAntiMagic = itemStack.getOrCreateTag().getBoolean("antimagic");
-
-        boolean holdingItem;
-
-        boolean mainHandFlag = livingEntity.getMainHandItem() == itemStack;
-        boolean offHandFlag = livingEntity.getOffhandItem() == itemStack;
-        holdingItem = mainHandFlag || offHandFlag;
-
-        blackmode =  isBlackModeActive && holdingItem && isAntiMagic? 1 : 0;
-
-        return blackmode;
-    };
 
     /*private IItemPropertyGetter devilUnion = (itemStack, world, livingEntity) ->
     {
@@ -63,8 +29,7 @@ public class SwordMagicSwords extends SwordItem {
 
     public SwordMagicSwords(Properties properties, int damage, float speed) {
         super(GenericItemTier.WEAPON, damage, speed, properties);
-        ItemModelsProperties.register(this, new ResourceLocation("antimagic"), this.antiMagicProperty);
-        ItemModelsProperties.register(this, new ResourceLocation("blackmode"), this.blackMode);
+
     }
 
     @Override

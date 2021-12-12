@@ -45,7 +45,7 @@ public class ThunderOrbEntity extends AbstractLightningProjectileEntity {
     @Override
     protected void onHitEffect(){
         if(!this.level.isClientSide){
-            this.level.explode(this, this.getX(), this.getY(), this.getZ(), 1, Explosion.Mode.NONE);
+            this.level.explode(this.getOwner(), this.getX(), this.getY(), this.getZ(), 1, Explosion.Mode.NONE);
         }
     }
 }

@@ -1,12 +1,11 @@
-package com.github.jowashere.blackclover;
+package com.github.jowashere.blackclover.init;
 
-import com.github.jowashere.blackclover.init.ItemInit;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 
 public class ItemGroups {
 
-    public static final ItemGroup WEAPONS = new ItemGroup("bcWeapons")
+    public static final ItemGroup EQUIPMENT = new ItemGroup("BCEquipment")
     {
         @Override
         public ItemStack makeIcon()

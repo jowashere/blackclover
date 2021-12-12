@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "blackclover:items/armors/golden_dawn_feet"
+  }
+}

@@ -77,7 +77,7 @@ public class WindSpells {
                 }
             }
         }).setUnlockLevel(15));
-        spellRegistry.register(new BCMSpell(pluginIn, "wind_hawk", BCMSpell.Type.WIND_MAGIC, 50, 120, false, 16, 16, false, (playerIn, modifier0, modifier1, playerCapability, manaIn) -> {
+        spellRegistry.register(new BCMSpell(pluginIn, "wind_hawk", BCMSpell.Type.WIND_MAGIC, 50, 120, false, 16, 64, false, (playerIn, modifier0, modifier1, playerCapability, manaIn) -> {
 
             LazyOptional<IPlayerHandler> playerInCap = playerIn.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
             IPlayerHandler player_cap = playerInCap.orElse(new PlayerCapability());
@@ -96,7 +96,7 @@ public class WindSpells {
                 }
             }
         }).setUnlockLevel(20));
-        spellRegistry.register(new BCMSpell(pluginIn, "wind_flight", BCMSpell.Type.WIND_MAGIC, 0.7F, 100, false, 16, 16, true, (playerIn, modifier0, modifier1, playerCapability, manaIn) -> {
+        spellRegistry.register(new BCMSpell(pluginIn, "wind_flight", BCMSpell.Type.WIND_MAGIC, 0.3F, 100, false, 16, 80, true, (playerIn, modifier0, modifier1, playerCapability, manaIn) -> {
             ((ServerWorld) playerIn.level).sendParticles(ParticleTypes.SPIT, playerIn.getX(), playerIn.getY() + 1, playerIn.getZ(), (int) 2, 0, 0, 0, 0.05);
             playerIn.fallDistance = 0;
         }).setUnlockLevel(7));

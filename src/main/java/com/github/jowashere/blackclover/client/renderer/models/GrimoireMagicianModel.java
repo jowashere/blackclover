@@ -10,7 +10,7 @@ public class GrimoireMagicianModel<T extends CreatureEntity> extends BipedModel<
 {
 	public GrimoireMagicianModel()
 	{
-		super(0, 0, 64, 64);
+		super(0, 0, 64, 32);
 	}
 
 	@Override

@@ -1,6 +1,7 @@
 package com.github.jowashere.blackclover.init.spells;
 
 import com.github.jowashere.blackclover.api.BCMRegistry;
+import com.github.jowashere.blackclover.api.Beapi;
 import com.github.jowashere.blackclover.api.IBCMPlugin;
 import com.github.jowashere.blackclover.api.internal.BCMSpell;
 import com.github.jowashere.blackclover.api.internal.entities.spells.AbstractAntiMagicProjectileEntity;
@@ -11,7 +12,6 @@ import com.github.jowashere.blackclover.capabilities.player.PlayerProvider;
 import com.github.jowashere.blackclover.entities.spells.sword.OriginFlashEntity;
 import com.github.jowashere.blackclover.init.ItemInit;
 import com.github.jowashere.blackclover.util.helpers.BCMHelper;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.ItemStack;
@@ -29,7 +29,7 @@ public class SwordSpells
     public static void registerSpells(BCMRegistry.SpellRegistry spellRegistry, IBCMPlugin plugin)
     {
         spellRegistry.register(new BCMSpell(plugin, "origin_flash",
-                BCMSpell.Type.SWORD_MAGIC, 20F, 35, true, 48, 16, false, ((playerIn, modifier0, modifier1, playerCapability, manaIn) ->
+                BCMSpell.Type.SWORD_MAGIC, 20F, 35, true, 96, 0, false, ((playerIn, modifier0, modifier1, playerCapability, manaIn) ->
         {
             if (!playerIn.level.isClientSide)
             {
@@ -45,7 +45,7 @@ public class SwordSpells
         }).setCheckFailMsg("You need the Demon Dweller Sword for this!").setUnlockLevel(1));
 
         spellRegistry.register(new BCMSpell(plugin, "origin_flash_barrage",
-                BCMSpell.Type.SWORD_MAGIC, 120F, 600, false, 48, 16, false, ((playerIn, modifier0, modifier1, playerCapability, manaIn) ->
+                BCMSpell.Type.SWORD_MAGIC, 120F, 600, false, 96, 32, false, ((playerIn, modifier0, modifier1, playerCapability, manaIn) ->
         {
             if (!playerIn.level.isClientSide)
             {
@@ -70,7 +70,7 @@ public class SwordSpells
         }).setCheckFailMsg("You need the Demon Dweller Sword for this!").setUnlockLevel(30));
 
         spellRegistry.register(new BCMSpell(plugin, "sword_absorption",
-                BCMSpell.Type.SWORD_MAGIC, 0F, 60, false, 0, 0, false, ((playerIn, modifier0, modifier1, playerCapability, manaIn) ->
+                BCMSpell.Type.SWORD_MAGIC, 0F, 60, false, 96, 48, false, ((playerIn, modifier0, modifier1, playerCapability, manaIn) ->
         {
 
             ItemStack hand = playerIn.getItemInHand(Hand.MAIN_HAND);
@@ -96,31 +96,30 @@ public class SwordSpells
                 }
                 else
                 {
-                    EntityRayTraceResult trace = (EntityRayTraceResult) BCMHelper.RayTraceEntities(playerIn.getEntity(), 4);
-                    Entity traceEntity = trace.getEntity();
-                    if (traceEntity instanceof AbstractSpellProjectileEntity && !(traceEntity instanceof AbstractAntiMagicProjectileEntity))
+                    EntityRayTraceResult rayTraceResult = Beapi.rayTraceEntities(playerIn.getEntity(), 6, 0.2F);
+                    //Entity traceEntity = trace.getEntity();
+                    if (rayTraceResult.getEntity() instanceof AbstractSpellProjectileEntity && !(rayTraceResult.getEntity() instanceof AbstractAntiMagicProjectileEntity))
                     {
                         nbt.putInt("absorption", 1);
-                        nbt.putString("stored_spell", traceEntity.getType().getRegistryName().toString());
-                        nbt.putInt("stored_damage_tier", ((AbstractSpellProjectileEntity) traceEntity).getDamageTier());
-                        nbt.putFloat("stored_base_damage", ((AbstractSpellProjectileEntity) traceEntity).getBaseDamage());
-                        traceEntity.remove();
+                        nbt.putString("stored_spell", rayTraceResult.getEntity().getType().getRegistryName().toString());
+                        nbt.putInt("stored_damage_tier", ((AbstractSpellProjectileEntity) rayTraceResult.getEntity()).getDamageTier());
+                        nbt.putFloat("stored_base_damage", ((AbstractSpellProjectileEntity) rayTraceResult.getEntity()).getBaseDamage());
+                        rayTraceResult.getEntity().remove();
                     }
                 }
             }
             else
             {
                 nbt = new CompoundNBT();
-                EntityRayTraceResult trace = (EntityRayTraceResult) BCMHelper.RayTraceEntities(playerIn.getEntity(), 4);
-                Entity traceEntity = trace.getEntity();
-
-                if (traceEntity instanceof AbstractSpellProjectileEntity && !(traceEntity instanceof AbstractAntiMagicProjectileEntity))
+                EntityRayTraceResult rayTraceResult = Beapi.rayTraceEntities(playerIn.getEntity(), 6, 0.2F);
+                //Entity traceEntity = trace.getEntity();
+                if (rayTraceResult.getEntity() instanceof AbstractSpellProjectileEntity && !(rayTraceResult.getEntity() instanceof AbstractAntiMagicProjectileEntity))
                 {
                     nbt.putInt("absorption", 1);
-                    nbt.putString("stored_spell", traceEntity.getType().getRegistryName().toString());
-                    nbt.putInt("stored_damage_tier", ((AbstractSpellProjectileEntity) traceEntity).getDamageTier());
-                    nbt.putFloat("stored_base_damage", ((AbstractSpellProjectileEntity) traceEntity).getBaseDamage());
-                    traceEntity.remove();
+                    nbt.putString("stored_spell", rayTraceResult.getEntity().getType().getRegistryName().toString());
+                    nbt.putInt("stored_damage_tier", ((AbstractSpellProjectileEntity) rayTraceResult.getEntity()).getDamageTier());
+                    nbt.putFloat("stored_base_damage", ((AbstractSpellProjectileEntity) rayTraceResult.getEntity()).getBaseDamage());
+                    rayTraceResult.getEntity().remove();
                 }
             }
         }
@@ -132,7 +131,7 @@ public class SwordSpells
             return inHand;
         }).setCheckFailMsg("You need the Demon Dweller Sword for this!").setUnlockLevel(20));
 
-        spellRegistry.register(new BCMSpell(plugin, "causality_break_sword", BCMSpell.Type.SWORD_MAGIC, 30F, 200, false, 0, 32, false, (playerIn, modifier0, modifier1, playerCapability, manaIn) -> {
+        spellRegistry.register(new BCMSpell(plugin, "causality_break_sword", BCMSpell.Type.SWORD_MAGIC, 30F, 200, false, 96, 16, false, (playerIn, modifier0, modifier1, playerCapability, manaIn) -> {
 
             LazyOptional<IPlayerHandler> playerInCap = playerIn.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
             IPlayerHandler player_cap = playerInCap.orElse(new PlayerCapability());

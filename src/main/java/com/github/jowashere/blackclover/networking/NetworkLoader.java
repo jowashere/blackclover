@@ -38,7 +38,6 @@ public class NetworkLoader {
         INSTANCE.registerMessage(nextID(), PacketIntSpellNBTSync.class, PacketIntSpellNBTSync::encode, PacketIntSpellNBTSync::decode, PacketIntSpellNBTSync::handle);
         INSTANCE.registerMessage(nextID(), SPacketSpellNBTSync.class, SPacketSpellNBTSync::encode, SPacketSpellNBTSync::decode, SPacketSpellNBTSync::handle);
         INSTANCE.registerMessage(nextID(), PacketSpellModeToggle.class, PacketSpellModeToggle::encode, PacketSpellModeToggle::decode, PacketSpellModeToggle::handle);
-        INSTANCE.registerMessage(nextID(), PacketKeybindCD.class, PacketKeybindCD::encode, PacketKeybindCD::decode, PacketKeybindCD::handle);
         INSTANCE.registerMessage(nextID(), SSyncManaPacket.class, SSyncManaPacket::encode, SSyncManaPacket::decode, SSyncManaPacket::handle);
 
         INSTANCE.registerMessage(nextID(), PacketSetGrimoireTexture.class, PacketSetGrimoireTexture::encode, PacketSetGrimoireTexture::decode, PacketSetGrimoireTexture::handle);
