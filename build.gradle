@@ -1,30 +1,22 @@
-buildscript
-        {
-            repositories
-                    {
-                        maven { url = 'https://maven.minecraftforge.net' }
-                        maven { url = 'https://repo.spongepowered.org/maven' }
-                        maven { url = 'https://maven.parchmentmc.org' }
-                        mavenCentral()
-                    }
-            dependencies
-                    {
-                        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
-                        classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
-                        classpath group: 'org.parchmentmc', name: 'librarian', version: '1.+'
-                    }
-        }
+buildscript {
+    repositories {
+        maven { url = 'https://maven.minecraftforge.net' }
+        maven { url = 'https://repo.spongepowered.org/maven' }
+        mavenCentral()
+    }
+    dependencies {
+        classpath group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true
+        classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
+    }
+}
 
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'org.spongepowered.mixin'
-apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: 'eclipse'
 apply plugin: 'idea'
 apply plugin: 'maven-publish'
 
-def commits = 'git rev-list --count HEAD'.execute().in.text.trim()
-def shortHash = 'git rev-parse --short HEAD'.execute().in.text.trim()
-version = "${mc_version}-${mod_version}-${version_type}.${shortHash}.${commits}"
+version = "${mc_version}-${mod_version}-${version_type}"
 group= "${package_group}"
 archivesBaseName = "${mod_id}"
 
@@ -34,77 +26,59 @@ java.toolchain.languageVersion = JavaLanguageVersion.of(8)
 println('Java: ' + System.getProperty('java.version') + ' JVM: ' + System.getProperty('java.vm.version') + '(' + System.getProperty('java.vendor') + ') Arch: ' + System.getProperty('os.arch'))
 
 minecraft
-        {
-            accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
+{
+    accessTransformer = file('src/main/resources/META-INF/accesstransformer.cfg')
 
-            // https://ldtteam.jfrog.io/ui/native/parchmentmc-public/org/parchmentmc/data
-            mappings channel: "${mappings_channel}", version: "${mappings_version}"
+    // https://ldtteam.jfrog.io/ui/native/parchmentmc-public/org/parchmentmc/data
+    mappings channel: "${mappings_channel}", version: "${mappings_version}"
 
-            runs
-                    {
-                        client
-                                {
-                                    arg "-mixin.config=${mod_id}.mixins.json"
+    runs {
+        client {
+            workingDirectory project.file('run')
+            arg "-mixin.config=${mod_id}.mixins.json"
 
-                                    workingDirectory project.file('run')
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            property 'forge.logging.console.level', 'debug'
 
-                                    // Recommended logging data for a userdev environment
-                                    property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-
-                                    // Recommended logging level for the console
-                                    property 'forge.logging.console.level', 'debug'
-
-                                    mods
-                                            {
-                                                blackclover
-                                                        {
-                                                            source sourceSets.main
-                                                        }
-                                            }
-                                }
-
-                        server
-                                {
-                                    arg "-mixin.config=${mod_id}.mixins.json"
-
-                                    workingDirectory project.file('run')
-
-                                    // Recommended logging data for a userdev environment
-                                    property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-
-                                    // Recommended logging level for the console
-                                    property 'forge.logging.console.level', 'debug'
-
-                                    mods
-                                            {
-                                                blackclover
-                                                        {
-                                                            source sourceSets.main
-                                                        }
-                                            }
-                                }
-
-                        data
-                                {
-                                    workingDirectory project.file('run')
-
-                                    property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
-                                    property 'forge.logging.console.level', 'debug'
-                                    property 'fml.earlyprogresswindow', 'false'
-
-                                    args '--mod', 'blackclover', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
-
-                                    environment 'target', 'fmluserdevdata'
-                                    mods
-                                            {
-                                                blackclover
-                                                        {
-                                                            source sourceSets.main
-                                                        }
-                                            }
-                                }
-                    }
+            mods {
+                blackclover {
+                    source sourceSets.main
+                }
+            }
         }
+
+        server {
+            workingDirectory project.file('run')
+            arg "-mixin.config=${mod_id}.mixins.json"
+
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            property 'forge.logging.console.level', 'debug'
+
+            mods {
+                blackclover {
+                    source sourceSets.main
+                    }
+                }
+            }
+
+        data {
+            workingDirectory project.file('run')
+
+            property 'forge.logging.markers', 'SCAN,REGISTRIES,REGISTRYDUMP'
+            property 'forge.logging.console.level', 'debug'
+            property 'fml.earlyprogresswindow', 'false'
+
+            args '--mod', 'blackclover', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+
+            environment 'target', 'fmluserdevdata'
+            mods {
+                blackclover {
+                    source sourceSets.main
+                }
+            }
+        }
+    }
+}
 
 // Include resources generated by data generators.
 // sourceSets.main.resources { srcDir 'src/generated/resources' }
@@ -115,19 +89,16 @@ gradle.projectsEvaluated {
     }
 }
 
-repositories
-        {
-            flatDir { dirs 'libs' }
-        }
+repositories {
+    flatDir { dirs 'libs' }
+}
 
-dependencies
-        {
-            minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
+dependencies {
+    minecraft "net.minecraftforge:forge:${mc_version}-${forge_version}"
+    annotationProcessor "org.spongepowered:mixin:0.8.3:processor"
+}
 
-            // compileOnly fg.deobf(name: 'imsama-1.14.4-1.0.0')
-        }
-
-task sourceJar(type: Jar) {
+/*task sourceJar(type: Jar) {
     from sourceSets.main.allSource
     classifier = 'source'
 }
@@ -137,7 +108,7 @@ task deobfJar(type: Jar) {
     classifier = 'deobf'
 }
 
-build.dependsOn sourceJar, deobfJar
+build.dependsOn sourceJar, deobfJar*/
 
 mixin {
     add sourceSets.main, "${mod_id}.refmap.json"
