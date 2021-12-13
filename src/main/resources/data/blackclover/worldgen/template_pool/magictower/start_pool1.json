@@ -5,7 +5,7 @@
     {
       "weight": 1,
       "element": {
-        "location": "blackclover:magictower",
+        "location": "blackclover:magictower1",
         "processors": "minecraft:empty",
         "projection": "rigid",
         "element_type": "minecraft:single_pool_element"
