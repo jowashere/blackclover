@@ -22,6 +22,7 @@ import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
 import net.minecraft.world.gen.feature.jigsaw.JigsawManager;
+import net.minecraft.world.gen.feature.jigsaw.JigsawPiece;
 import net.minecraft.world.gen.feature.structure.*;
 import net.minecraft.world.gen.feature.template.TemplateManager;
 import net.minecraft.world.gen.settings.StructureSeparationSettings;
@@ -72,17 +73,24 @@ public class MagicTowerStructure extends Structure<NoFeatureConfig>
         @Override
         public void generatePieces(DynamicRegistries dynamicRegistryManager, ChunkGenerator chunkGenerator, TemplateManager templateManagerIn, int chunkX, int chunkZ, Biome biomeIn, NoFeatureConfig config)
         {
+            //TODO make this shit work
             int x = (chunkX << 4) + 7;
             int z = (chunkZ << 4) + 7;
             BlockPos blockpos = new BlockPos(x, 0, z);
 
             JigsawManager.addPieces(dynamicRegistryManager,
                     new VillageConfig(() -> dynamicRegistryManager.registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY)
-                            .get(new ResourceLocation(Main.MODID, "magictower/start_pool")),
+                            .get(new ResourceLocation(Main.MODID, "magictower/start_pool1")),
                             10), AbstractVillagePiece::new, chunkGenerator, templateManagerIn,
                     blockpos, this.pieces, this.random,false,true);
 
-            this.pieces.forEach(piece -> piece.move(0, 1, 0));
+            JigsawManager.addPieces(dynamicRegistryManager,
+                    new VillageConfig(() -> dynamicRegistryManager.registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY)
+                            .get(new ResourceLocation(Main.MODID, "magictower/start_pool2")),
+                            10), AbstractVillagePiece::new, chunkGenerator, templateManagerIn,
+                    blockpos, this.pieces, this.random,false,true);
+
+            this.pieces.forEach(piece -> piece.move(0, 0, 0));
             this.pieces.forEach(piece -> piece.getBoundingBox().y0 -= 1);
 
             this.calculateBoundingBox();
