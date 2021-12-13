@@ -1,7 +1,7 @@
 package com.github.jowashere.blackclover.util.helpers;
 
 import com.github.jowashere.blackclover.api.BCMRegistry;
-import com.github.jowashere.blackclover.api.internal.BCMSpell;
+import com.github.jowashere.blackclover.api.internal.AbstractSpell;
 import com.github.jowashere.blackclover.capabilities.player.IPlayerHandler;
 import com.github.jowashere.blackclover.capabilities.player.PlayerCapability;
 import com.github.jowashere.blackclover.capabilities.player.PlayerProvider;
@@ -12,16 +12,16 @@ import net.minecraftforge.common.util.LazyOptional;
 
 public class SpellHelper {
 
-    public static BCMSpell getSpellFromName(String registryName) {
-        for (BCMSpell spell : BCMRegistry.SPELLS.getValues()) {
+    public static AbstractSpell getSpellFromName(String registryName) {
+        for (AbstractSpell spell : BCMRegistry.SPELLS.getValues()) {
             if (spell.getName().equalsIgnoreCase(registryName))
                 return spell;
         }
         return null;
     }
 
-    public static BCMSpell getSpellFromString(String spellName) {
-        for (BCMSpell spell : BCMRegistry.SPELLS.getValues()) {
+    public static AbstractSpell getSpellFromString(String spellName) {
+        for (AbstractSpell spell : BCMRegistry.SPELLS.getValues()) {
             if (("spell." + spell.getCorrelatedPlugin().getPluginId() + "." + spell.getName()).equalsIgnoreCase(spellName))
                 return spell;
         }
@@ -57,7 +57,7 @@ public class SpellHelper {
         return baseDamage + ((damageTier * baseDamage / 2) * player_cap.ReturnMagicLevel() / 10);
     }
 
-    public static int findSpellKey(PlayerEntity player, BCMSpell spell) {
+    public static int findSpellKey(PlayerEntity player, AbstractSpell spell) {
 
         IPlayerHandler playercap = player.getCapability(PlayerProvider.CAPABILITY_PLAYER).orElseThrow(() -> new RuntimeException("CAPABILITY_PLAYER NOT FOUND!"));
 

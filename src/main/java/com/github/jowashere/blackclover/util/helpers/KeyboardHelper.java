@@ -1,6 +1,6 @@
 package com.github.jowashere.blackclover.util.helpers;
 
-import com.github.jowashere.blackclover.api.internal.BCMSpell;
+import com.github.jowashere.blackclover.api.internal.AbstractSpell;
 import com.github.jowashere.blackclover.capabilities.player.IPlayerHandler;
 import com.github.jowashere.blackclover.capabilities.player.PlayerCapability;
 import com.github.jowashere.blackclover.capabilities.player.PlayerProvider;
@@ -77,7 +77,7 @@ public class KeyboardHelper {
                if(!isShiftDown()){
                    if (KeybindInit.KEYBIND1.isDown()) {
                        int key = 1;
-                       BCMSpell spell = SpellHelper.getSpellFromString(playerc.returnKeybind(key));
+                       AbstractSpell spell = SpellHelper.getSpellFromString(playerc.returnKeybind(key));
                        if(spell == null)
                            return;
                        String cdName = spell.getCorrelatedPlugin().getPluginId() + "_" + spell.getName() + "_cd";
@@ -89,7 +89,7 @@ public class KeyboardHelper {
                    }
                    if (KeybindInit.KEYBIND2.isDown()) {
                        int key = 2;
-                       BCMSpell spell = SpellHelper.getSpellFromString(playerc.returnKeybind(key));
+                       AbstractSpell spell = SpellHelper.getSpellFromString(playerc.returnKeybind(key));
                        if(spell == null)
                            return;
                        String cdName = spell.getCorrelatedPlugin().getPluginId() + "_" + spell.getName() + "_cd";
@@ -101,7 +101,7 @@ public class KeyboardHelper {
                    }
                    if (KeybindInit.KEYBIND3.isDown()) {
                        int key = 3;
-                       BCMSpell spell = SpellHelper.getSpellFromString(playerc.returnKeybind(key));
+                       AbstractSpell spell = SpellHelper.getSpellFromString(playerc.returnKeybind(key));
                        if(spell == null)
                            return;
                        String cdName = spell.getCorrelatedPlugin().getPluginId() + "_" + spell.getName() + "_cd";
@@ -113,7 +113,7 @@ public class KeyboardHelper {
                    }
                    if (KeybindInit.KEYBIND4.isDown()) {
                        int key = 4;
-                       BCMSpell spell = SpellHelper.getSpellFromString(playerc.returnKeybind(key));
+                       AbstractSpell spell = SpellHelper.getSpellFromString(playerc.returnKeybind(key));
                        if(spell == null)
                            return;
                        String cdName = spell.getCorrelatedPlugin().getPluginId() + "_" + spell.getName() + "_cd";
@@ -125,7 +125,7 @@ public class KeyboardHelper {
                    }
                    if (KeybindInit.KEYBIND5.isDown()) {
                        int key = 5;
-                       BCMSpell spell = SpellHelper.getSpellFromString(playerc.returnKeybind(key));
+                       AbstractSpell spell = SpellHelper.getSpellFromString(playerc.returnKeybind(key));
                        if(spell == null)
                            return;
                        String cdName = spell.getCorrelatedPlugin().getPluginId() + "_" + spell.getName() + "_cd";
@@ -137,7 +137,7 @@ public class KeyboardHelper {
                    }
                    if (KeybindInit.KEYBIND6.isDown()) {
                        int key = 6;
-                       BCMSpell spell = SpellHelper.getSpellFromString(playerc.returnKeybind(key));
+                       AbstractSpell spell = SpellHelper.getSpellFromString(playerc.returnKeybind(key));
                        if(spell == null)
                            return;
                        String cdName = spell.getCorrelatedPlugin().getPluginId() + "_" + spell.getName() + "_cd";
@@ -149,7 +149,7 @@ public class KeyboardHelper {
                    }
                    if (KeybindInit.KEYBIND7.isDown()) {
                        int key = 7;
-                       BCMSpell spell = SpellHelper.getSpellFromString(playerc.returnKeybind(key));
+                       AbstractSpell spell = SpellHelper.getSpellFromString(playerc.returnKeybind(key));
                        if(spell == null)
                            return;
 
@@ -162,7 +162,7 @@ public class KeyboardHelper {
                    }
                    if (KeybindInit.KEYBIND8.isDown()) {
                        int key = 8;
-                       BCMSpell spell = SpellHelper.getSpellFromString(playerc.returnKeybind(key));
+                       AbstractSpell spell = SpellHelper.getSpellFromString(playerc.returnKeybind(key));
                        if(spell == null)
                            return;
                        String cdName = spell.getCorrelatedPlugin().getPluginId() + "_" + spell.getName() + "_cd";
@@ -174,7 +174,7 @@ public class KeyboardHelper {
                    }
                    if (KeybindInit.KEYBIND9.isDown()) {
                        int key = 9;
-                       BCMSpell spell = SpellHelper.getSpellFromString(playerc.returnKeybind(key));
+                       AbstractSpell spell = SpellHelper.getSpellFromString(playerc.returnKeybind(key));
                        if(spell == null)
                            return;
                        String cdName = spell.getCorrelatedPlugin().getPluginId() + "_" + spell.getName() + "_cd";

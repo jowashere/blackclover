@@ -1,7 +1,7 @@
 package com.github.jowashere.blackclover.items.weapons;
 
 import com.github.jowashere.blackclover.api.BCMRegistry;
-import com.github.jowashere.blackclover.api.internal.BCMSpell;
+import com.github.jowashere.blackclover.api.internal.AbstractSpell;
 import com.github.jowashere.blackclover.init.GenericItemTier;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.item.ItemEntity;
@@ -12,9 +12,9 @@ import net.minecraft.world.World;
 
 public class MagicSwordItem extends SwordItem {
 
-    private BCMSpell spell = null;
+    private AbstractSpell spell = null;
 
-    public MagicSwordItem(BCMSpell spell, int damage, float speed, Properties properties)
+    public MagicSwordItem(AbstractSpell spell, int damage, float speed, Properties properties)
     {
         super(GenericItemTier.WEAPON, damage, speed, properties);
         this.spell = spell;
@@ -30,7 +30,7 @@ public class MagicSwordItem extends SwordItem {
 
             boolean deleteSword = true;
 
-            for (BCMSpell spell : BCMRegistry.SPELLS.getValues()) {
+            for (AbstractSpell spell : BCMRegistry.SPELLS.getValues()) {
                 if (spell.isToggle()) {
                     String nbtName = spell.getCorrelatedPlugin().getPluginId() + "_" + spell.getName();
 

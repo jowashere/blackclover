@@ -1,10 +1,10 @@
 package com.github.jowashere.blackclover.capabilities.player;
 
 import com.github.jowashere.blackclover.api.BCMRegistry;
+import com.github.jowashere.blackclover.api.internal.AbstractSpell;
 import com.github.jowashere.blackclover.api.internal.BCMAttribute;
 import com.github.jowashere.blackclover.api.internal.BCMMode;
 import com.github.jowashere.blackclover.api.internal.BCMRace;
-import com.github.jowashere.blackclover.api.internal.BCMSpell;
 import com.github.jowashere.blackclover.init.AttributeInit;
 import com.github.jowashere.blackclover.init.ModeInit;
 import com.github.jowashere.blackclover.init.RaceInit;
@@ -69,7 +69,7 @@ public class PlayerCapability implements IPlayerHandler {
     private BCMMode mode = ModeInit.NULL;
 
     private boolean toggleMessageSpell;
-    private Map<BCMSpell, Boolean> spellBooleans = new HashMap<>();
+    private Map<AbstractSpell, Boolean> spellBooleans = new HashMap<>();
 
     private float spellCooldown;
 
@@ -434,7 +434,7 @@ public class PlayerCapability implements IPlayerHandler {
     }
 
     @Override
-    public void setSpellBoolean(BCMSpell spell, boolean has) {
+    public void setSpellBoolean(AbstractSpell spell, boolean has) {
         if (this.spellBooleans.containsKey(spell)) {
             this.spellBooleans.replace(spell, has);
             return;
@@ -443,7 +443,7 @@ public class PlayerCapability implements IPlayerHandler {
     }
 
     @Override
-    public boolean hasSpellBoolean(BCMSpell spell) {
+    public boolean hasSpellBoolean(AbstractSpell spell) {
         return this.spellBooleans.getOrDefault(spell, false);
     }
 
@@ -534,7 +534,7 @@ public class PlayerCapability implements IPlayerHandler {
 
             tag.putBoolean("hasMana", instance.HasManaBoolean());
 
-            for (BCMSpell spell : BCMRegistry.SPELLS.getValues()) {
+            for (AbstractSpell spell : BCMRegistry.SPELLS.getValues()) {
                 tag.putBoolean(spell.getCorrelatedPlugin().getPluginId() + "_" + spell.getName() + "_save", instance.hasSpellBoolean(spell));
             }
 
@@ -597,8 +597,8 @@ public class PlayerCapability implements IPlayerHandler {
 
             instance.setManaBoolean(((CompoundNBT) tag).getBoolean("hasMana"));
 
-            for (BCMSpell spell : BCMRegistry.SPELLS.getValues()) {
-                BCMSpell bcmSpell = spell;
+            for (AbstractSpell spell : BCMRegistry.SPELLS.getValues()) {
+                AbstractSpell abstractSpell = spell;
                 instance.setSpellBoolean(spell, ((CompoundNBT) tag).getBoolean(spell.getCorrelatedPlugin().getPluginId() + "_" + spell.getName() + "_save"));
             }
         }

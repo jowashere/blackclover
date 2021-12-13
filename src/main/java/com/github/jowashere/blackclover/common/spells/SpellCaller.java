@@ -2,7 +2,8 @@ package com.github.jowashere.blackclover.common.spells;
 
 import com.github.jowashere.blackclover.Main;
 import com.github.jowashere.blackclover.api.BCMRegistry;
-import com.github.jowashere.blackclover.api.internal.BCMSpell;
+import com.github.jowashere.blackclover.api.internal.AbstractSpell;
+import com.github.jowashere.blackclover.api.internal.AbstractToggleSpell;
 import com.github.jowashere.blackclover.capabilities.player.IPlayerHandler;
 import com.github.jowashere.blackclover.capabilities.player.PlayerProvider;
 import com.github.jowashere.blackclover.networking.NetworkLoader;
@@ -22,9 +23,9 @@ public class SpellCaller {
         if(!playerIn.level.isClientSide){
             if (spellName != null) {
                 IPlayerHandler playercap = playerIn.getCapability(PlayerProvider.CAPABILITY_PLAYER).orElseThrow(() -> new RuntimeException("CAPABILITY_PLAYER NOT FOUND!"));
-                for (BCMSpell spell : BCMRegistry.SPELLS.getValues()) {
+                for (AbstractSpell spell : BCMRegistry.SPELLS.getValues()) {
                     if (("spell." + spell.getCorrelatedPlugin().getPluginId() + "." + spell.getName()).equalsIgnoreCase(spellName)) {
-                        if (spell.isToggle()) {
+                        if (spell instanceof AbstractToggleSpell) {
                             String nbtName = spell.getCorrelatedPlugin().getPluginId() + "_" + spell.getName();
 
                             if(!spell.isSkillSpell() && !playercap.returnHasGrimoire()){
@@ -41,14 +42,14 @@ public class SpellCaller {
                                         return;
                                     }
                                 }
-                                if(spell.getToggleTimer() > -1){
-                                    playerIn.getPersistentData().putInt(nbtName + "_timer", spell.getToggleTimer());
+                                if(((AbstractToggleSpell)spell).getToggleTimer() > -1){
+                                    playerIn.getPersistentData().putInt(nbtName + "_timer", ((AbstractToggleSpell)spell).getToggleTimer());
                                     NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(()-> (ServerPlayerEntity) playerIn), new PacketIntSpellNBTSync(playerIn.getId(), "black_mode_fatigue", 900));
                                 }
 
                                 float manaCost = spell.getManaCost() + ((float) Math.sqrt(playercap.ReturnMagicLevel()) * (spell.getManaCost() / 5) );
 
-                                spell.throwStartEvent(playerIn, manaCost);
+                                ((AbstractToggleSpell)spell).throwStartEvent(playerIn, manaCost);
                                 playerIn.getPersistentData().putBoolean(nbtName, true);
                                 NetworkLoader.INSTANCE.send(PacketDistributor.ALL.noArg(), new PacketSpellNBTSync(playerIn.getId(), nbtName, true));
 
@@ -56,17 +57,14 @@ public class SpellCaller {
                                     //playerIn.displayClientMessage(new StringTextComponent(new TranslationTextComponent("spell." + spell.getCorrelatedPlugin().getPluginId() + "." + spell.getName()).getString() + "!"), false);
                                     return;
                             } else {
-                                spell.throwCancelEvent(playerIn, spellKey);
+                                ((AbstractToggleSpell)spell).throwCancelEvent(playerIn);
                                 playerIn.getPersistentData().putBoolean(nbtName, false);
                                 NetworkLoader.INSTANCE.send(PacketDistributor.ALL.noArg(), new PacketSpellNBTSync(playerIn.getId(), nbtName, false));
 
                             }
                         }
                         else {
-                            int modifier0 = Math.max(0, playercap.ReturnMagicLevel() / 5);
-                            int modifier1 = Math.max(0, playercap.ReturnMagicLevel() / 5) - 1;
-
-                            spell.act(playerIn, modifier0, modifier1, spellKey);
+                            spell.act(playerIn);
                         }
                     }
                 }

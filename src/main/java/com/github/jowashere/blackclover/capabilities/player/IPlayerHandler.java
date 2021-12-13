@@ -3,8 +3,7 @@ package com.github.jowashere.blackclover.capabilities.player;
 import com.github.jowashere.blackclover.api.internal.BCMAttribute;
 import com.github.jowashere.blackclover.api.internal.BCMMode;
 import com.github.jowashere.blackclover.api.internal.BCMRace;
-import com.github.jowashere.blackclover.api.internal.BCMSpell;
-import net.minecraft.entity.player.PlayerEntity;
+import com.github.jowashere.blackclover.api.internal.AbstractSpell;
 import net.minecraft.item.ItemStack;
 
 public interface IPlayerHandler {
@@ -74,6 +73,6 @@ public interface IPlayerHandler {
 	void setKeybindCD(int key, int cd);
 	int returnKeybindCD(int key);
 
-	void setSpellBoolean(BCMSpell spell, boolean has);
-	boolean hasSpellBoolean(BCMSpell spell);
+	void setSpellBoolean(AbstractSpell spell, boolean has);
+	boolean hasSpellBoolean(AbstractSpell spell);
 }
