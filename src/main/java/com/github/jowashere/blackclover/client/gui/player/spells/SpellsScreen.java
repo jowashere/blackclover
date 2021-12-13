@@ -2,8 +2,8 @@ package com.github.jowashere.blackclover.client.gui.player.spells;
 
 import com.github.jowashere.blackclover.Main;
 import com.github.jowashere.blackclover.api.BCMRegistry;
+import com.github.jowashere.blackclover.api.internal.AbstractSpell;
 import com.github.jowashere.blackclover.api.internal.BCMAttribute;
-import com.github.jowashere.blackclover.api.internal.BCMSpell;
 import com.github.jowashere.blackclover.capabilities.player.IPlayerHandler;
 import com.github.jowashere.blackclover.capabilities.player.PlayerCapability;
 import com.github.jowashere.blackclover.capabilities.player.PlayerProvider;
@@ -37,9 +37,9 @@ public class SpellsScreen extends Screen {
     public int guiLeft;
     public int guiTop;
 
-    private ArrayList<BCMSpell> spells = new ArrayList<>();
+    private ArrayList<AbstractSpell> spells = new ArrayList<>();
     private BCMAttribute attribute;
-    private BCMSpell.Type spellType;
+    private AbstractSpell.Type spellAttribute;
 
     AbstractClientPlayerEntity player;
     IPlayerHandler playerc;
@@ -47,14 +47,13 @@ public class SpellsScreen extends Screen {
     public SpellsScreen(BCMAttribute attribute) {
         super(new TranslationTextComponent("gui." + Main.MODID + ".title." + attribute.getString() + "spells"));
         this.attribute = attribute;
-        this.spellType = attribute.getSpellType();
         this.guiTitle = new TranslationTextComponent("gui." + Main.MODID + ".title." + attribute.getString() + "spells");
     }
 
     public void registerSpells(IPlayerHandler playerCapability) {
 
-        for (BCMSpell spells : BCMRegistry.SPELLS.getValues()) {
-            if (spells.getType() == this.spellType) {
+        for (AbstractSpell spells : BCMRegistry.SPELLS.getValues()) {
+            if (spells.getAttribute() == this.attribute) {
                 if(playerCapability.hasSpellBoolean(spells)){
                     if(!this.spells.contains(spells)){
                         this.spells.add(spells);
@@ -65,7 +64,7 @@ public class SpellsScreen extends Screen {
 
         int x = -90;
         int y = -90;
-        for (BCMSpell spell : this.spells) {
+        for (AbstractSpell spell : this.spells) {
             addButton(new GuiButtonSpell(this.guiLeft + x, this.guiTop + y, spell.getU(), spell.getV(), spell.getCorrelatedPlugin().getPluginId() + "." + spell.getName(), false, spell.getResourceLocationForGUI()));
             if (x == 90) {
                 x = -90;
@@ -78,7 +77,7 @@ public class SpellsScreen extends Screen {
     }
 
     public void setSpellsBooleans(IPlayerHandler playerCapability) {
-        for (BCMSpell spell : this.spells) {
+        for (AbstractSpell spell : this.spells) {
             for (Widget button : this.buttons) {
                 if (button instanceof GuiButtonSpell) {
                     GuiButtonSpell buttonSpell = (GuiButtonSpell) button;
@@ -191,7 +190,7 @@ public class SpellsScreen extends Screen {
 
             for (int i = 0; i < 9; i++)
             {
-                BCMSpell spell = null;
+                AbstractSpell spell = null;
 
                 if(i == 0){
                     spell = SpellHelper.getSpellFromString(playerc.returnKeybind(1));

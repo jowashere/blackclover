@@ -1,6 +1,6 @@
 package com.github.jowashere.blackclover.init.spells;
 
-import com.github.jowashere.blackclover.api.BCMRegistry;
+/*import com.github.jowashere.blackclover.api.BCMRegistry;
 import com.github.jowashere.blackclover.api.IBCMPlugin;
 import com.github.jowashere.blackclover.api.internal.BCMSpell;
 import com.github.jowashere.blackclover.capabilities.player.IPlayerHandler;
@@ -239,3 +239,4 @@ public class AntiMagicSpells {
     }
 
 }
+*/

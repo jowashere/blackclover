@@ -1,13 +1,10 @@
 package com.github.jowashere.blackclover.networking.packets.spells;
 
-import com.github.jowashere.blackclover.api.internal.BCMSpell;
 import com.github.jowashere.blackclover.capabilities.player.IPlayerHandler;
 import com.github.jowashere.blackclover.capabilities.player.PlayerProvider;
-import com.github.jowashere.blackclover.common.spells.SpellCaller;
 import com.github.jowashere.blackclover.networking.NetworkLoader;
 import com.github.jowashere.blackclover.networking.packets.PacketSwordSlotSet;
 import com.github.jowashere.blackclover.util.helpers.BCMHelper;
-import com.github.jowashere.blackclover.util.helpers.SpellHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -16,7 +13,6 @@ import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.Hand;
 import net.minecraftforge.fml.network.NetworkEvent;
 import net.minecraftforge.fml.network.PacketDistributor;
-import net.minecraftforge.items.ItemHandlerHelper;
 
 import java.util.function.Supplier;
 

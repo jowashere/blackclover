@@ -1,7 +1,7 @@
 package com.github.jowashere.blackclover.init;
 
 import com.github.jowashere.blackclover.Main;
-import com.github.jowashere.blackclover.init.spells.LightMagicSpells;
+import com.github.jowashere.blackclover.init.spells.light.LightSword;
 import com.github.jowashere.blackclover.items.armors.GoldenDawnUniArmorItem;
 import com.github.jowashere.blackclover.items.armors.MageArmorItem;
 import com.github.jowashere.blackclover.items.weapons.MagicSwordItem;
@@ -39,5 +39,5 @@ public class ItemInit {
     public static final RegistryObject<Item> DEMON_DESTROYER = ITEMS.register("demon_destroyer", () -> new SwordMagicSwords(new Item.Properties().tab(ItemGroups.EQUIPMENT).stacksTo(1).setNoRepair().durability(0), 6, -2.4f));
     public static final RegistryObject<Item> DEMON_DWELLER = ITEMS.register("demon_dweller", () -> new SwordMagicSwords(new Item.Properties().tab(ItemGroups.EQUIPMENT).stacksTo(1).setNoRepair().durability(0), 6, -2.4f));
 
-    public static final RegistryObject<Item> LIGHT_SWORD = ITEMS.register("light_sword", () -> new MagicSwordItem(LightMagicSpells.LIGHT_SWORD, 5, -2.4f, new Item.Properties().tab(ItemGroups.EQUIPMENT).stacksTo(1)));
+    public static final RegistryObject<Item> LIGHT_SWORD = ITEMS.register("light_sword", () -> new MagicSwordItem(LightSword.INSTANCE, 5, -2.4f, new Item.Properties().tab(ItemGroups.EQUIPMENT).stacksTo(1)));
 }
