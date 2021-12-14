@@ -44,7 +44,7 @@ public class PacketSpellCaller {
         ctx.get().enqueueWork(() -> {
             IPlayerHandler playercap = ctx.get().getSender().getCapability(PlayerProvider.CAPABILITY_PLAYER).orElseThrow(() -> new RuntimeException("CAPABILITY_PLAYER NOT FOUND!"));
             if (msg.selectedSpell <= 0) {
-                SpellCaller.SpellCaller(ctx.get().getSender(), msg.spellType, msg.selectedSpell);
+                SpellCaller.SpellCaller(ctx.get().getSender(), msg.spellType);
                 return;
             }
 
@@ -52,7 +52,7 @@ public class PacketSpellCaller {
             AbstractSpell spell = SpellHelper.getSpellFromString(spellString);
             int cd = spell.getCooldown();
 
-            SpellCaller.SpellCaller((PlayerEntity) ctx.get().getSender().level.getEntity(msg.playerID), spellString, msg.selectedSpell);
+            SpellCaller.SpellCaller((PlayerEntity) ctx.get().getSender().level.getEntity(msg.playerID), spellString);
         });
         ctx.get().setPacketHandled(true);
     }
