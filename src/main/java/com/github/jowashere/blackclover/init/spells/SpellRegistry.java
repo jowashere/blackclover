@@ -2,6 +2,7 @@ package com.github.jowashere.blackclover.init.spells;
 
 import com.github.jowashere.blackclover.api.BCMRegistry;
 import com.github.jowashere.blackclover.api.IBCMPlugin;
+import com.github.jowashere.blackclover.init.spells.antimagic.*;
 import com.github.jowashere.blackclover.init.spells.darkness.*;
 import com.github.jowashere.blackclover.init.spells.light.*;
 import com.github.jowashere.blackclover.init.spells.lightning.ThunderCrumblingOrb;
@@ -20,6 +21,15 @@ import com.github.jowashere.blackclover.init.spells.wind.*;
 public class SpellRegistry {
 
     public static void registerSpells(BCMRegistry.SpellRegistry spellRegistry, IBCMPlugin plugin) {
+
+        // Anti-Magic
+        spellRegistry.register(new BullThrust(plugin));
+        spellRegistry.register(new BlackSlash(plugin));
+        spellRegistry.register(new CausalityBreakAnti(plugin));
+        spellRegistry.register(new CausalityBreakAntiSelf(plugin));
+        spellRegistry.register(new BlackDivider(plugin));
+        spellRegistry.register(new BlackMode(plugin));
+        spellRegistry.register(new BlackMeteorite(plugin));
 
         // Darkness Magic
         spellRegistry.register(new DarkCloakedBlade(plugin));
