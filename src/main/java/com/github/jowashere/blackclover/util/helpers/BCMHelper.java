@@ -13,6 +13,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
 import net.minecraft.util.EntityPredicates;
 import net.minecraft.util.Hand;
@@ -259,6 +260,14 @@ public class BCMHelper {
         }
 
         return 1;
+    }
+
+    public static void doSpellDamage(LivingEntity attacker, LivingEntity target, float amount){
+        if(attacker instanceof PlayerEntity)
+            target.hurt(DamageSource.playerAttack((PlayerEntity) attacker), amount);
+        else
+            target.hurt(DamageSource.mobAttack((attacker)), amount);
+
     }
 
     public static void GiveItem(LivingEntity entity, ItemStack stack){

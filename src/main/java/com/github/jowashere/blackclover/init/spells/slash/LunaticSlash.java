@@ -8,7 +8,6 @@ import com.github.jowashere.blackclover.util.helpers.SpellHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
@@ -44,10 +43,7 @@ public class LunaticSlash extends AbstractSpell {
 
                 int magicLevel = BCMHelper.getMagicLevel(caster);
 
-                if(caster instanceof PlayerEntity)
-                    entity.hurt(DamageSource.playerAttack((PlayerEntity) caster), SpellHelper.spellDamageCalc(magicLevel, 2, 3));
-                else
-                    entity.hurt(DamageSource.mobAttack((caster)), SpellHelper.spellDamageCalc(magicLevel, 2, 3));
+                BCMHelper.doSpellDamage(caster, entity, SpellHelper.spellDamageCalc(magicLevel, 2, 3));
 
                 ((ServerWorld) caster.level).sendParticles(ParticleTypes.SWEEP_ATTACK, entity.getX(), entity.getY(),
                         entity.getZ(), (int) 10, 3, 3, 3, 0.1);
@@ -55,13 +51,7 @@ public class LunaticSlash extends AbstractSpell {
 
                 BCMHelper.waitThen(caster.level, 11, () -> {
 
-                    int magicLevel1 = BCMHelper.getMagicLevel(caster);
-
-
-                    if(caster instanceof PlayerEntity)
-                        entity.hurt(DamageSource.playerAttack((PlayerEntity) caster), SpellHelper.spellDamageCalc(magicLevel1, 2, 3));
-                    else
-                        entity.hurt(DamageSource.mobAttack((caster)), SpellHelper.spellDamageCalc(magicLevel1, 2, 3));
+                    BCMHelper.doSpellDamage(caster, entity, SpellHelper.spellDamageCalc(magicLevel, 2, 3));
 
                     ((ServerWorld) caster.level).sendParticles(ParticleTypes.SWEEP_ATTACK, entity.getX(), entity.getY(),
                             entity.getZ(), (int) 10, 3, 3, 3, 0.1);
@@ -70,12 +60,7 @@ public class LunaticSlash extends AbstractSpell {
 
                 BCMHelper.waitThen(caster.level, 22, () -> {
 
-                    int magicLevel1 = BCMHelper.getMagicLevel(caster);
-
-                    if(caster instanceof PlayerEntity)
-                        entity.hurt(DamageSource.playerAttack((PlayerEntity) caster), SpellHelper.spellDamageCalc(magicLevel1, 2, 3));
-                    else
-                        entity.hurt(DamageSource.mobAttack((caster)), SpellHelper.spellDamageCalc(magicLevel1, 2, 3));
+                    BCMHelper.doSpellDamage(caster, entity, SpellHelper.spellDamageCalc(magicLevel, 2, 3));
 
                     ((ServerWorld) caster.level).sendParticles(ParticleTypes.SWEEP_ATTACK, entity.getX(), entity.getY(),
                             entity.getZ(), (int) 10, 3, 3, 3, 0.1);
