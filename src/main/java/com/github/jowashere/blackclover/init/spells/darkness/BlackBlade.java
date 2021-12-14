@@ -9,7 +9,6 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.Hand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
@@ -52,10 +51,8 @@ public class BlackBlade extends AbstractSpell {
 
                 int magicLevel = BCMHelper.getMagicLevel(caster);
 
-                if(caster instanceof PlayerEntity)
-                    entity.hurt(DamageSource.playerAttack((PlayerEntity) caster), SpellHelper.spellDamageCalc(magicLevel, 2, 3));
-                else
-                    entity.hurt(DamageSource.mobAttack((caster)), SpellHelper.spellDamageCalc(magicLevel, 2, 3));
+                BCMHelper.doSpellDamage(caster, entity, SpellHelper.spellDamageCalc(magicLevel, 2, 3));
+
                 if(!caster.level.isClientSide)
                     ((ServerWorld) caster.level).sendParticles(ParticleTypes.SQUID_INK, entity.getX(), entity.getY(), entity.getZ(), 10, 2, 2, 2, 0.4F);
             });

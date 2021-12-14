@@ -2,20 +2,13 @@ package com.github.jowashere.blackclover.init.spells.wind;
 
 import com.github.jowashere.blackclover.api.IBCMPlugin;
 import com.github.jowashere.blackclover.api.internal.AbstractSpell;
-import com.github.jowashere.blackclover.capabilities.player.IPlayerHandler;
-import com.github.jowashere.blackclover.capabilities.player.PlayerCapability;
-import com.github.jowashere.blackclover.capabilities.player.PlayerProvider;
-import com.github.jowashere.blackclover.entities.mobs.BCEntity;
 import com.github.jowashere.blackclover.init.AttributeInit;
 import com.github.jowashere.blackclover.util.helpers.BCMHelper;
 import com.github.jowashere.blackclover.util.helpers.SpellHelper;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraftforge.common.util.LazyOptional;
 
 import java.util.List;
 
@@ -45,21 +38,9 @@ public class ToweringTornado extends AbstractSpell {
                 entityi.hurtMarked = true;
                 entityi.hasImpulse = true;
 
-                int magicLevel = 1;
+                int magicLevel = BCMHelper.getMagicLevel(caster);
 
-                if(caster instanceof PlayerEntity) {
-                    LazyOptional<IPlayerHandler> casterCap = caster.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
-                    IPlayerHandler player_cap = casterCap.orElse(new PlayerCapability());
-
-                    magicLevel = player_cap.ReturnMagicLevel();
-                } else if (caster instanceof BCEntity) {
-                    magicLevel = ((BCEntity) caster).getMagicLevel();
-                }
-
-                if(caster instanceof PlayerEntity)
-                    entityi.hurt(DamageSource.playerAttack((PlayerEntity) caster), SpellHelper.spellDamageCalc(magicLevel, 2, 3));
-                else
-                    entityi.hurt(DamageSource.mobAttack((caster)), SpellHelper.spellDamageCalc(magicLevel, 2, 3));
+                BCMHelper.doSpellDamage(caster, entityi, SpellHelper.spellDamageCalc(magicLevel, 2, 3));
 
             });
             if (caster.level instanceof ServerWorld) {
