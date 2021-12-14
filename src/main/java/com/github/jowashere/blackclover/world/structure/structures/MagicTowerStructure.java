@@ -3,7 +3,9 @@ package com.github.jowashere.blackclover.world.structure.structures;
 import com.github.jowashere.blackclover.Main;
 import com.google.common.collect.ImmutableList;
 import com.mojang.serialization.Codec;
+import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
+import net.minecraft.block.JigsawBlock;
 import net.minecraft.data.BiomeProvider;
 import net.minecraft.entity.EntityType;
 import net.minecraft.util.ResourceLocation;
@@ -74,21 +76,16 @@ public class MagicTowerStructure extends Structure<NoFeatureConfig>
         public void generatePieces(DynamicRegistries dynamicRegistryManager, ChunkGenerator chunkGenerator, TemplateManager templateManagerIn, int chunkX, int chunkZ, Biome biomeIn, NoFeatureConfig config)
         {
             //TODO make this shit work
-            int x = (chunkX << 4) + 7;
-            int z = (chunkZ << 4) + 7;
-            BlockPos blockpos = new BlockPos(x, 0, z);
+            int x = chunkX * 16;
+            int z = chunkZ * 16;
+            BlockPos blockposBaseTower = new BlockPos(x, 0, z);
 
             JigsawManager.addPieces(dynamicRegistryManager,
                     new VillageConfig(() -> dynamicRegistryManager.registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY)
                             .get(new ResourceLocation(Main.MODID, "magictower/start_pool1")),
                             10), AbstractVillagePiece::new, chunkGenerator, templateManagerIn,
-                    blockpos, this.pieces, this.random,false,true);
+                    blockposBaseTower, this.pieces, this.random,false,true);
 
-            JigsawManager.addPieces(dynamicRegistryManager,
-                    new VillageConfig(() -> dynamicRegistryManager.registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY)
-                            .get(new ResourceLocation(Main.MODID, "magictower/start_pool2")),
-                            10), AbstractVillagePiece::new, chunkGenerator, templateManagerIn,
-                    blockpos, this.pieces, this.random,false,true);
 
             this.pieces.forEach(piece -> piece.move(0, 0, 0));
             this.pieces.forEach(piece -> piece.getBoundingBox().y0 -= 1);
