@@ -17,8 +17,8 @@ import javax.annotation.Nullable;
 
 public class BasicArmorItem extends DyeableArmorItem {
 
-    private String name;
-    private boolean hasOverlay;
+    protected String name;
+    protected boolean hasOverlay;
 
     public BasicArmorItem(String name, EquipmentSlotType type)
     {
