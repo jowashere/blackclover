@@ -5,6 +5,7 @@ import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -33,18 +34,12 @@ public class MageRobesModel<T extends LivingEntity> extends BipedModel<T>{
     private final ModelRenderer bone9;
     private final ModelRenderer bone2;
 
-    boolean showHead;
-    boolean showChest;
-    boolean showLegs;
-    boolean showFeet;
+    EquipmentSlotType equipmentSlotType;
 
-    public MageRobesModel(boolean showHead, boolean showChest, boolean showLegs, boolean showFeet) {
+    public MageRobesModel(EquipmentSlotType slotType) {
         super(1);
 
-        this.showHead = showHead;
-        this.showChest = showChest;
-        this.showLegs = showLegs;
-        this.showFeet = showFeet;
+        this.equipmentSlotType = slotType;
 
         texWidth = 112;
         texHeight = 112;
@@ -180,20 +175,15 @@ public class MageRobesModel<T extends LivingEntity> extends BipedModel<T>{
         this.LeftLeg.copyFrom(this.leftLeg);
         this.Head.copyFrom(this.head);
 
-        if(this.showHead)
+        if(this.equipmentSlotType.equals(EquipmentSlotType.HEAD))
             this.Head.render(matrixStack, buffer, packedLight, packedOverlay);
 
-        if(this.showFeet) {
+        if(this.equipmentSlotType.equals(EquipmentSlotType.LEGS) || this.equipmentSlotType.equals(EquipmentSlotType.FEET)) {
             this.LeftLeg.render(matrixStack, buffer, packedLight, packedOverlay);
             this.RightLeg.render(matrixStack, buffer, packedLight, packedOverlay);
         }
 
-        if(this.showLegs){
-            this.LeftLeg.render(matrixStack, buffer, packedLight, packedOverlay);
-            this.RightLeg.render(matrixStack, buffer, packedLight, packedOverlay);
-        }
-
-        if(this.showChest){
+        if(this.equipmentSlotType.equals(EquipmentSlotType.CHEST)){
             this.LeftArm.render(matrixStack, buffer, packedLight, packedOverlay);
             this.RightArm.render(matrixStack, buffer, packedLight, packedOverlay);
             this.Body.render(matrixStack, buffer, packedLight, packedOverlay);
