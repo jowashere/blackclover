@@ -75,7 +75,6 @@ public class MagicTowerStructure extends Structure<NoFeatureConfig>
         @Override
         public void generatePieces(DynamicRegistries dynamicRegistryManager, ChunkGenerator chunkGenerator, TemplateManager templateManagerIn, int chunkX, int chunkZ, Biome biomeIn, NoFeatureConfig config)
         {
-            //TODO make this shit work
             int x = chunkX * 16;
             int z = chunkZ * 16;
             BlockPos blockposBaseTower = new BlockPos(x, 0, z);
