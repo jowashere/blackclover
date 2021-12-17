@@ -1,7 +1,7 @@
 package com.github.jowashere.blackclover.init;
 
 import com.github.jowashere.blackclover.Main;
-import com.github.jowashere.blackclover.entities.mobs.GrimoireMagicianEntity;
+import com.github.jowashere.blackclover.entities.mobs.quester.GrimoireMagicianEntity;
 import com.github.jowashere.blackclover.entities.mobs.hostile.BanditEntity;
 import com.github.jowashere.blackclover.entities.spells.antimagic.BlackSlashEntity;
 import com.github.jowashere.blackclover.entities.spells.darkness.AvidyaSlashEntity;

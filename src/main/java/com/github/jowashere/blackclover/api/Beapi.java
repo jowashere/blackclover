@@ -228,4 +228,8 @@ public class Beapi
             //((TemplateMixin)template).getEntities().clear();
         }
     }
+    public static double randomWithRange(int min, int max)
+    {
+        return new Random().nextInt(max + 1 - min) + min;
+    }
 }
