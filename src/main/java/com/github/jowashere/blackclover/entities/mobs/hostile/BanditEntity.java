@@ -1,6 +1,7 @@
 package com.github.jowashere.blackclover.entities.mobs.hostile;
 
 import com.github.jowashere.blackclover.entities.mobs.BCEntity;
+import com.github.jowashere.blackclover.entities.mobs.ISpellUser;
 import net.minecraft.entity.CreatureEntity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.MobEntity;
@@ -10,7 +11,7 @@ import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.world.World;
 
-public class BanditEntity extends BCEntity
+public class BanditEntity extends BCEntity implements ISpellUser
 {
     private static final String[] DEFAULT_TEXTURES = new String[]
             {
@@ -30,6 +31,7 @@ public class BanditEntity extends BCEntity
         this.goalSelector.addGoal(2, new LookAtGoal(this, PlayerEntity.class, 4));
         this.goalSelector.addGoal(3, new LookRandomlyGoal(this));
         this.targetSelector.addGoal(6, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
+        this.addSpells(this, 5);
 
         this.targetSelector.addGoal(3, new HurtByTargetGoal(this));
     }

@@ -6,7 +6,7 @@ import com.github.jowashere.blackclover.api.internal.BCMMode;
 import com.github.jowashere.blackclover.init.AttributeInit;
 import com.github.jowashere.blackclover.init.ModeInit;
 import com.github.jowashere.blackclover.init.RaceInit;
-import com.github.jowashere.blackclover.init.spells.SpellRegistry;
+import com.github.jowashere.blackclover.spells.SpellRegistry;
 import net.minecraft.potion.Effects;
 
 public class MainPlugin implements IBCMPlugin {

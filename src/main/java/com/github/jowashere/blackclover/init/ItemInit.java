@@ -1,7 +1,7 @@
 package com.github.jowashere.blackclover.init;
 
 import com.github.jowashere.blackclover.Main;
-import com.github.jowashere.blackclover.init.spells.light.LightSword;
+import com.github.jowashere.blackclover.spells.light.LightSword;
 import com.github.jowashere.blackclover.items.armors.*;
 import com.github.jowashere.blackclover.items.weapons.MagicSwordItem;
 import com.github.jowashere.blackclover.items.weapons.SwordMagicSwords;

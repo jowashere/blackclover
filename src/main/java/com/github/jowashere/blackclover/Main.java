@@ -9,7 +9,7 @@ import com.github.jowashere.blackclover.client.gui.overlay.ManaBar;
 import com.github.jowashere.blackclover.client.gui.overlay.Notifications;
 import com.github.jowashere.blackclover.client.gui.overlay.SpellMode;
 import com.github.jowashere.blackclover.client.handler.ClientHandler;
-import com.github.jowashere.blackclover.entities.mobs.GrimoireMagicianEntity;
+import com.github.jowashere.blackclover.entities.mobs.quester.GrimoireMagicianEntity;
 import com.github.jowashere.blackclover.entities.mobs.hostile.BanditEntity;
 import com.github.jowashere.blackclover.events.GrimoireTextures;
 import com.github.jowashere.blackclover.init.*;
