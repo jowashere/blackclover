@@ -68,6 +68,9 @@ public class ClientHandler {
         //Mobs
         RenderingRegistry.registerEntityRenderingHandler(EntityInit.GRIMOIRE_MAGICIAN.get(), new HumanoidRenderer.Factory(new HumanoidModel(), 1F));
 
+        //Hostile mobs
+        RenderingRegistry.registerEntityRenderingHandler(EntityInit.BANDIT.get(), new HumanoidRenderer.Factory(new HumanoidModel(), 1F));
+
         Map<String, PlayerRenderer> playerSkinMap = Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap();
         ClientHandler.addPlayerLayers(playerSkinMap.get("default"));
         ClientHandler.addPlayerLayers(playerSkinMap.get("slim"));

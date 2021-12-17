@@ -2,6 +2,7 @@ package com.github.jowashere.blackclover.init;
 
 import com.github.jowashere.blackclover.Main;
 import com.github.jowashere.blackclover.entities.mobs.GrimoireMagicianEntity;
+import com.github.jowashere.blackclover.entities.mobs.hostile.BanditEntity;
 import com.github.jowashere.blackclover.entities.spells.antimagic.BlackSlashEntity;
 import com.github.jowashere.blackclover.entities.spells.darkness.AvidyaSlashEntity;
 import com.github.jowashere.blackclover.entities.spells.darkness.BlackHoleEntity;
@@ -45,6 +46,12 @@ public class EntityInit {
                     () -> EntityType.Builder.of(GrimoireMagicianEntity::new, EntityClassification.AMBIENT)
             .sized(1f, 2f)
             .build(Main.MODID + ":grimoire_magician"));
+
+    public static final RegistryObject<EntityType<BanditEntity>> BANDIT = ENTITIES
+            .register("bandit",
+                    () -> EntityType.Builder.of(BanditEntity::new, EntityClassification.MISC)
+            .sized(1f, 2f)
+            .build(Main.MODID + ":bandit"));
 
 
 
