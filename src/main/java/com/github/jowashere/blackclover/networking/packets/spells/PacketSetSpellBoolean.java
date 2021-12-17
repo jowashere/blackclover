@@ -1,7 +1,7 @@
 package com.github.jowashere.blackclover.networking.packets.spells;
 
 import com.github.jowashere.blackclover.api.BCMRegistry;
-import com.github.jowashere.blackclover.api.internal.BCMSpell;
+import com.github.jowashere.blackclover.api.internal.AbstractSpell;
 import com.github.jowashere.blackclover.capabilities.player.IPlayerHandler;
 import com.github.jowashere.blackclover.capabilities.player.PlayerProvider;
 import net.minecraft.client.Minecraft;
@@ -44,7 +44,7 @@ public class PacketSetSpellBoolean {
     {
         ctx.get().enqueueWork(() -> {
 
-            for (BCMSpell spell : BCMRegistry.SPELLS.getValues()) {
+            for (AbstractSpell spell : BCMRegistry.SPELLS.getValues()) {
                 if (spell.getName().equalsIgnoreCase(msg.spellName)) {
                     if (msg.toClient) {
                         ClientPlayerEntity player = Minecraft.getInstance().player;

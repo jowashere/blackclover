@@ -85,7 +85,7 @@ public class ClientHandler {
         @SubscribeEvent
         public static void modelBake(ModelBakeEvent event) {
 
-            fullbrightItem(event, ItemInit.LIGHT_SWORD);
+            //fullbrightItem(event, ItemInit.LIGHT_SWORD);
         }
     }
 

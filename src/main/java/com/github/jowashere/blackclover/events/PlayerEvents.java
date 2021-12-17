@@ -1,9 +1,9 @@
 package com.github.jowashere.blackclover.events;
 
 import com.github.jowashere.blackclover.api.BCMRegistry;
+import com.github.jowashere.blackclover.api.internal.AbstractSpell;
 import com.github.jowashere.blackclover.api.internal.BCMAttribute;
 import com.github.jowashere.blackclover.api.internal.BCMRace;
-import com.github.jowashere.blackclover.api.internal.BCMSpell;
 import com.github.jowashere.blackclover.capabilities.player.IPlayerHandler;
 import com.github.jowashere.blackclover.capabilities.player.PlayerCapability;
 import com.github.jowashere.blackclover.capabilities.player.PlayerProvider;
@@ -74,8 +74,8 @@ public class PlayerEvents {
                 LazyOptional<IPlayerHandler> capabilities = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
                 IPlayerHandler playercap = capabilities.orElse(new PlayerCapability());
 
-                for (BCMSpell spells : BCMRegistry.SPELLS.getValues()) {
-                    if (spells.getType() == playercap.ReturnMagicAttribute().getSpellType()) {
+                for (AbstractSpell spells : BCMRegistry.SPELLS.getValues()) {
+                    if (spells.getAttribute() == playercap.ReturnMagicAttribute()) {
                         if(playercap.hasSpellBoolean(spells)){
                             String cdName = spells.getCorrelatedPlugin().getPluginId() + "_" + spells.getName() + "_cd";
                             int cd = player.getPersistentData().getInt(cdName);
@@ -97,8 +97,8 @@ public class PlayerEvents {
             LazyOptional<IPlayerHandler> capabilities = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
             IPlayerHandler playercap = capabilities.orElse(new PlayerCapability());
 
-            for (BCMSpell spells : BCMRegistry.SPELLS.getValues()) {
-                if (spells.getType() == playercap.ReturnMagicAttribute().getSpellType()) {
+            for (AbstractSpell spells : BCMRegistry.SPELLS.getValues()) {
+                if (spells.getAttribute() == playercap.ReturnMagicAttribute()) {
                     if(playercap.hasSpellBoolean(spells)){
                         String cdName = spells.getCorrelatedPlugin().getPluginId() + "_" + spells.getName() + "_cd";
                         player.getPersistentData().putInt(cdName, 0);
@@ -122,8 +122,8 @@ public class PlayerEvents {
                 playercap.ReturnMagicAttribute().getSpellAdder().add(event.player);
             }*/
 
-            for (BCMSpell spell : BCMRegistry.SPELLS.getValues()) {
-                if(spell.getType().equals(playercap.ReturnMagicAttribute().getSpellType())){
+            for (AbstractSpell spell : BCMRegistry.SPELLS.getValues()) {
+                if(spell.getAttribute().equals(playercap.ReturnMagicAttribute())){
                     if(!(spell.getUnlockLevel() <= 0)){
                         if(spell.getUnlockLevel() <= playercap.getMagicLevel() && (spell.isSkillSpell() || playercap.returnHasGrimoire())){
                             if(!playercap.hasSpellBoolean(spell)){
@@ -143,10 +143,10 @@ public class PlayerEvents {
             }
 
                 for (int i = 0; i < 9; i++) {
-                BCMSpell spell = null;
+                AbstractSpell spell = null;
                 spell = SpellHelper.getSpellFromString(playercap.returnKeybind(i + 1));
 
-                if (spell != null && spell.getType() != playercap.ReturnMagicAttribute().getSpellType()) {
+                if (spell != null && spell.getAttribute() != playercap.ReturnMagicAttribute()) {
                     playercap.setKeybind(i + 1, "");
                     NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketKeybindSet(i + 1, "", true));
                 }

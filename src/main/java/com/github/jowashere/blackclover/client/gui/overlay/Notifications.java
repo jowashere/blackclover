@@ -2,7 +2,7 @@ package com.github.jowashere.blackclover.client.gui.overlay;
 
 import com.github.jowashere.blackclover.Main;
 import com.github.jowashere.blackclover.api.BCMRegistry;
-import com.github.jowashere.blackclover.api.internal.BCMSpell;
+import com.github.jowashere.blackclover.api.internal.AbstractSpell;
 import com.github.jowashere.blackclover.capabilities.player.IPlayerHandler;
 import com.github.jowashere.blackclover.capabilities.player.PlayerCapability;
 import com.github.jowashere.blackclover.capabilities.player.PlayerProvider;
@@ -24,7 +24,7 @@ public class Notifications {
 
     private static final ResourceLocation NOTIFS = new ResourceLocation(Main.MODID + ":textures/gui/notifs.png");
 
-    private List<BCMSpell> toggledSpell = new ArrayList<>();
+    private List<AbstractSpell> toggledSpell = new ArrayList<>();
 
     @SubscribeEvent
     public void renderOverlay(RenderGameOverlayEvent.Post event) {
@@ -47,7 +47,7 @@ public class Notifications {
             this.setSpellNotifications(player);
             int i = 2;
 
-            for (BCMSpell toggledSpell : this.toggledSpell) {
+            for (AbstractSpell toggledSpell : this.toggledSpell) {
                 mc.textureManager.bind(toggledSpell.getResourceLocationForGUI());
                 mc.gui.blit(event.getMatrixStack(), 5, i, toggledSpell.getU(), toggledSpell.getV(), 16, 16, 256, 256);
                 i += 20;
@@ -57,7 +57,7 @@ public class Notifications {
     }
 
     private void setSpellNotifications(PlayerEntity playerIn) {
-        for (BCMSpell spell : BCMRegistry.SPELLS.getValues()) {
+        for (AbstractSpell spell : BCMRegistry.SPELLS.getValues()) {
             if (spell.isToggle()) {
                 String nbtName = spell.getCorrelatedPlugin().getPluginId() + "_" + spell.getName();
                 if (playerIn.getPersistentData().getBoolean(nbtName)) {

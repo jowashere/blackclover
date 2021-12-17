@@ -6,7 +6,7 @@ import com.github.jowashere.blackclover.api.internal.BCMMode;
 import com.github.jowashere.blackclover.init.AttributeInit;
 import com.github.jowashere.blackclover.init.ModeInit;
 import com.github.jowashere.blackclover.init.RaceInit;
-import com.github.jowashere.blackclover.init.spells.*;
+import com.github.jowashere.blackclover.init.spells.SpellRegistry;
 import net.minecraft.potion.Effects;
 
 public class MainPlugin implements IBCMPlugin {
@@ -45,13 +45,15 @@ public class MainPlugin implements IBCMPlugin {
 
     @Override
     public void RegisterNewSpells(BCMRegistry.SpellRegistry spellRegistry) {
-        WindSpells.registerSpells(spellRegistry, this);
+        /*WindSpells.registerSpells(spellRegistry, this);
         LightningSpells.registerSpells(spellRegistry, this);
         DarknessSpells.registerSpells(spellRegistry, this);
         AntiMagicSpells.registerSpells(spellRegistry, this);
         SlashMagicSpells.registerSpells(spellRegistry, this);
         SwordSpells.registerSpells(spellRegistry, this);
-        LightMagicSpells.registerSpells(spellRegistry, this);
+        LightMagicSpells.registerSpells(spellRegistry, this);*/
+
+        SpellRegistry.registerSpells(spellRegistry, this);
 
     }
 

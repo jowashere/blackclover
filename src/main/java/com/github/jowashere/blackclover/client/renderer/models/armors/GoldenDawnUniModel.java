@@ -5,6 +5,7 @@ import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
@@ -23,16 +24,12 @@ public class GoldenDawnUniModel<T extends LivingEntity> extends BipedModel<T>{
     private final ModelRenderer cube_r3;
     private final ModelRenderer cube_r4;
 
-    boolean showChest;
-    boolean showLegs;
-    boolean showFeet;
+    EquipmentSlotType slotType;
 
-    public GoldenDawnUniModel(boolean showChest, boolean showLegs, boolean showFeet) {
+    public GoldenDawnUniModel(EquipmentSlotType slotType) {
         super(1);
 
-        this.showChest = showChest;
-        this.showLegs = showLegs;
-        this.showFeet = showFeet;
+        this.slotType = slotType;
 
         texWidth = 128;
         texHeight = 128;
@@ -120,17 +117,12 @@ public class GoldenDawnUniModel<T extends LivingEntity> extends BipedModel<T>{
         this.RightLeg.copyFrom(this.rightLeg);
         this.LeftLeg.copyFrom(this.leftLeg);
 
-        if(this.showFeet) {
+        if(this.slotType.equals(EquipmentSlotType.LEGS) || this.slotType.equals(EquipmentSlotType.FEET)) {
             this.LeftLeg.render(matrixStack, buffer, packedLight, packedOverlay);
             this.RightLeg.render(matrixStack, buffer, packedLight, packedOverlay);
         }
 
-        if(this.showLegs){
-            this.LeftLeg.render(matrixStack, buffer, packedLight, packedOverlay);
-            this.RightLeg.render(matrixStack, buffer, packedLight, packedOverlay);
-        }
-
-        if(this.showChest){
+        if(this.slotType.equals(EquipmentSlotType.CHEST)){
             this.LeftArm.render(matrixStack, buffer, packedLight, packedOverlay);
             this.RightArm.render(matrixStack, buffer, packedLight, packedOverlay);
             this.Body.render(matrixStack, buffer, packedLight, packedOverlay);
