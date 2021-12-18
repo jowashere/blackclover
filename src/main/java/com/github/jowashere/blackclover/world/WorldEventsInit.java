@@ -2,6 +2,7 @@ package com.github.jowashere.blackclover.world;
 
 import com.github.jowashere.blackclover.Main;
 import com.github.jowashere.blackclover.init.StructuresInit;
+import com.github.jowashere.blackclover.world.gen.ModEntityGeneration;
 import com.github.jowashere.blackclover.world.gen.ModStructureGeneration;
 import com.mojang.serialization.Codec;
 import net.minecraft.util.ResourceLocation;
@@ -31,6 +32,7 @@ public class WorldEventsInit
     public static void biomeLoadingEvent(final BiomeLoadingEvent event)
     {
         ModStructureGeneration.generateStructures(event);
+        ModEntityGeneration.onEntitySpawn(event);
     }
 
     @SubscribeEvent

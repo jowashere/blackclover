@@ -49,7 +49,7 @@ public class EntityInit {
 
     public static final RegistryObject<EntityType<BanditEntity>> BANDIT = ENTITIES
             .register("bandit",
-                    () -> EntityType.Builder.of(BanditEntity::new, EntityClassification.MISC)
+                    () -> EntityType.Builder.of(BanditEntity::new, EntityClassification.CREATURE)
             .sized(1f, 2f)
             .build(Main.MODID + ":bandit"));
 
