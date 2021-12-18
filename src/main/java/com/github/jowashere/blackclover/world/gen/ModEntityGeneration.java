@@ -28,7 +28,7 @@ public class ModEntityGeneration
 
         if (types.contains(BiomeDictionary.Type.PLAINS))
         {
-            event.getSpawns().addSpawn(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(EntityInit.BANDIT.get(),400,  4, 6));
+            event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(EntityInit.BANDIT.get(), 40, 2, 4));
         }
     }
 }
