@@ -6,7 +6,10 @@ import com.github.jowashere.blackclover.entities.spells.wind.WindBladeEntity;
 import com.github.jowashere.blackclover.init.AttributeInit;
 import net.minecraft.entity.LivingEntity;
 
-public class WindBladeShower extends AbstractSpell {
+public class WindBladeShower extends AbstractSpell
+{
+
+    public static final AbstractSpell INSTANCE = new WindBladeShower(null);
 
     public WindBladeShower(IBCMPlugin plugin) {
         super(plugin, "wind_blade_shower", AttributeInit.WIND);

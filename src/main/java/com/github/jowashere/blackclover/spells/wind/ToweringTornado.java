@@ -14,6 +14,8 @@ import java.util.List;
 
 public class ToweringTornado extends AbstractSpell {
 
+    public static final AbstractSpell INSTANCE = new ToweringTornado(null);
+
     public ToweringTornado(IBCMPlugin plugin) {
         super(plugin, "wind_crescent", AttributeInit.WIND);
 
