@@ -3,6 +3,7 @@ package com.github.jowashere.blackclover.events;
 import com.github.jowashere.blackclover.Main;
 import com.github.jowashere.blackclover.commands.impl.MagicAttributeCommand;
 import com.github.jowashere.blackclover.commands.impl.MagicLevelCommand;
+import com.github.jowashere.blackclover.commands.impl.RaceCommand;
 import com.github.jowashere.blackclover.entities.spells.wind.WindHawkEntity;
 import com.github.jowashere.blackclover.init.EntityInit;
 import com.github.jowashere.blackclover.init.ModAttributes;
@@ -43,6 +44,7 @@ public class ModEventsSubscriber {
         public static void serverStarting(final FMLServerStartingEvent event) {
             MagicAttributeCommand.register(event.getServer().getCommands().getDispatcher());
             MagicLevelCommand.register(event.getServer().getCommands().getDispatcher());
+            RaceCommand.register(event.getServer().getCommands().getDispatcher());
         }
     }
 }
