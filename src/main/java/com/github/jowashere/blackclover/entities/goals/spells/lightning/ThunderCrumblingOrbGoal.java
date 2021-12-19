@@ -1,18 +1,19 @@
-package com.github.jowashere.blackclover.entities.goals.spells.wind;
+package com.github.jowashere.blackclover.entities.goals.spells.lightning;
 
 import com.github.jowashere.blackclover.entities.goals.other.CooldownGoal;
 import com.github.jowashere.blackclover.entities.mobs.BCEntity;
+import com.github.jowashere.blackclover.entities.spells.lightning.ThunderOrbEntity;
 import com.github.jowashere.blackclover.entities.spells.wind.WindBladeEntity;
 
-public class WindBladeGoal extends CooldownGoal
+public class ThunderCrumblingOrbGoal extends CooldownGoal
 {
     private BCEntity entity;
 
-    public WindBladeGoal(BCEntity entity)
+    public ThunderCrumblingOrbGoal(BCEntity entity)
     {
-        super(entity, 7, entity.getRandom().nextInt(5));
+        super(entity, 5, entity.getRandom().nextInt(5));
         this.entity = entity;
-        this.entity.addThreat(11);
+        this.entity.addThreat(12);
     }
 
     @Override
@@ -33,7 +34,6 @@ public class WindBladeGoal extends CooldownGoal
         this.execute();
         return true;
     }
-
     @Override
     public void endCooldown()
     {
@@ -48,7 +48,7 @@ public class WindBladeGoal extends CooldownGoal
         double d2 = entity.getTarget().getBoundingBox().minY + entity.getTarget().getBbHeight() / 2.0F - (entity.getY() + entity.getBbHeight() / 2.0F);
         double d3 = entity.getTarget().getZ() - entity.getZ();
 
-        WindBladeEntity projectile = new WindBladeEntity(this.entity.level, this.entity, "wind_blade", 0);
+        ThunderOrbEntity projectile = new ThunderOrbEntity(this.entity.level, this.entity, 0);
         projectile.setPos(projectile.getX(), entity.getY() + entity.getBbHeight() / 2.0F + 0.5D, projectile.getZ());
         projectile.shoot(d1 + entity.getRandom().nextGaussian(), d2, d3 + entity.getRandom().nextGaussian(), 1.5F, 0);
         this.entity.level.addFreshEntity(projectile);

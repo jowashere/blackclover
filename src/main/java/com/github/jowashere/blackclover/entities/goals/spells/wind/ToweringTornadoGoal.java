@@ -19,9 +19,9 @@ public class ToweringTornadoGoal extends CooldownGoal
 
     public ToweringTornadoGoal(BCEntity entity)
     {
-        super(entity, 100, entity.getRandom().nextInt(5));
+        super(entity, 6, entity.getRandom().nextInt(5));
         this.entity = entity;
-        this.entity.addThreat(12);
+        this.entity.addThreat(10);
     }
 
     @Override

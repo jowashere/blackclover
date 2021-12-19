@@ -27,8 +27,8 @@ public class BanditEntity extends BCEntity implements ISpellUser
     protected void registerGoals()
     {
         super.registerGoals();
-        this.goalSelector.addGoal(5, new MeleeAttackGoal(this, 1, true));
-        this.goalSelector.addGoal(2, new LookAtGoal(this, PlayerEntity.class, 4));
+        this.goalSelector.addGoal(7, new MeleeAttackGoal(this, 1, true));
+        this.goalSelector.addGoal(5, new LookAtGoal(this, PlayerEntity.class, 4));
         this.goalSelector.addGoal(3, new LookRandomlyGoal(this));
         this.targetSelector.addGoal(6, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, true));
         this.addSpells(this, 3);
