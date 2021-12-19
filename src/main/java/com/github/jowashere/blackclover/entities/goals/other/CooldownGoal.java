@@ -66,4 +66,5 @@ public abstract class CooldownGoal extends Goal
 
         return false;
     }
+
 }

@@ -10,7 +10,7 @@ public class WindBladeShowerGoal extends CooldownGoal
 
     public WindBladeShowerGoal(BCEntity entity)
     {
-        super(entity, 400, entity.getRandom().nextInt(5));
+        super(entity, 8, entity.getRandom().nextInt(5));
         this.entity = entity;
         this.entity.addThreat(12);
     }

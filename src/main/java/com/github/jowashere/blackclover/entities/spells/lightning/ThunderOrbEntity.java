@@ -1,6 +1,7 @@
 package com.github.jowashere.blackclover.entities.spells.lightning;
 
 import com.github.jowashere.blackclover.api.internal.entities.spells.AbstractLightningProjectileEntity;
+import com.github.jowashere.blackclover.entities.mobs.BCEntity;
 import com.github.jowashere.blackclover.init.EntityInit;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -21,6 +22,7 @@ public class ThunderOrbEntity extends AbstractLightningProjectileEntity {
         this.setDamageTier(2);
         this.setBaseDamage(3);
     }
+
 
     @Override
     protected float getGravity() {

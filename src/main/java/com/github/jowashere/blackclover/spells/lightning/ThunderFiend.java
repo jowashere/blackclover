@@ -5,6 +5,7 @@ import com.github.jowashere.blackclover.api.internal.AbstractSpell;
 import com.github.jowashere.blackclover.init.AttributeInit;
 import com.github.jowashere.blackclover.networking.NetworkLoader;
 import com.github.jowashere.blackclover.networking.packets.spells.PacketIntSpellNBTSync;
+import com.github.jowashere.blackclover.spells.wind.ToweringTornado;
 import com.github.jowashere.blackclover.util.helpers.BCMHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -14,7 +15,11 @@ import net.minecraftforge.fml.network.PacketDistributor;
 
 public class ThunderFiend extends AbstractSpell {
 
+    public static final AbstractSpell INSTANCE = new ThunderFiend(null);
+
     public ThunderFiend(IBCMPlugin plugin) {
+
+
         super(plugin, "thunder_fiend", AttributeInit.LIGHTNING);
 
         this.setManaCost(20F);

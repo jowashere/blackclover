@@ -232,4 +232,12 @@ public class Beapi
     {
         return new Random().nextInt(max + 1 - min) + min;
     }
+
+    public static int RNG(int cap)
+    {
+        Random rand = new Random();
+        int int_random = rand.nextInt(cap);
+
+        return int_random;
+    }
 }
