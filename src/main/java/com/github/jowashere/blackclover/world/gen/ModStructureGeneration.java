@@ -3,6 +3,7 @@ package com.github.jowashere.blackclover.world.gen;
 import com.github.jowashere.blackclover.world.structure.configured.ConfiguredStructures;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.registry.Registry;
+import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 
@@ -19,6 +20,10 @@ public class ModStructureGeneration
         if (types.contains(BiomeDictionary.Type.PLAINS))
         {
             event.getGeneration().getStructures().add(() -> ConfiguredStructures.CONFIGURED_MAGICTOWER);
+        }
+        if (!types.contains(BiomeDictionary.Type.OCEAN) || !types.contains(BiomeDictionary.Type.DEAD))
+        {
+            event.getGeneration().getStructures().add(() -> ConfiguredStructures.CONFIGURED_BANDIT_CAMP);
         }
     }
 }

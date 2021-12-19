@@ -10,7 +10,7 @@ public class ThunderCrumblingOrbGoal extends CooldownGoal
 
     public ThunderCrumblingOrbGoal(BCEntity entity)
     {
-        super(entity, 5, entity.getRandom().nextInt(5));
+        super(entity, 1, entity.getRandom().nextInt(5));
         this.entity = entity;
         this.entity.addThreat(12);
     }
