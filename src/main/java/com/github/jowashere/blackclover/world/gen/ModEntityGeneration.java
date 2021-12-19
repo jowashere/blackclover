@@ -2,6 +2,7 @@ package com.github.jowashere.blackclover.world.gen;
 
 import com.github.jowashere.blackclover.init.EntityInit;
 import com.github.jowashere.blackclover.world.structure.configured.ConfiguredStructures;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.util.RegistryKey;
@@ -28,7 +29,7 @@ public class ModEntityGeneration
 
         if (types.contains(BiomeDictionary.Type.PLAINS))
         {
-            event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(EntityInit.BANDIT.get(), 40, 2, 4));
+            event.getSpawns().addSpawn(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(EntityInit.BANDIT.get(), 100, 4, 6)).build();
         }
     }
 }

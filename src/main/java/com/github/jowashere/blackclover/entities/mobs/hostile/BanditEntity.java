@@ -42,7 +42,7 @@ public class BanditEntity extends BCEntity implements ISpellUser
                 .add(Attributes.ATTACK_DAMAGE, 5)
                 .add(Attributes.ARMOR, 5)
                 .add(Attributes.MAX_HEALTH, 15)
-                .add(Attributes.FOLLOW_RANGE, 20)
+                .add(Attributes.FOLLOW_RANGE, 40)
                 .add(Attributes.MOVEMENT_SPEED, 0.24);
 
     }

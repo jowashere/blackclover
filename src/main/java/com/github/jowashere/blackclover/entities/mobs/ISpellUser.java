@@ -35,7 +35,7 @@ public interface ISpellUser
         {
             for(AiSpellEntry entry : SPELL_POOL)
             {
-                if(!goals.contains(entry.getId()) && Beapi.randomWithRange(1, 15) <= entry.getChance())
+                if(!goals.contains(entry.getId()) && Beapi.randomWithRange(1, 10) <= entry.getChance())
                 {
                     entity.goalSelector.addGoal(1, entry.getGoal());
                     spellCount++;
