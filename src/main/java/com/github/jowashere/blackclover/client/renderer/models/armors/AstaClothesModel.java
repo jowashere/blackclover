@@ -137,11 +137,14 @@ public class AstaClothesModel<T extends LivingEntity> extends BipedModel<T>{
     public void renderToBuffer(MatrixStack matrixStack, IVertexBuilder buffer, int packedLight, int packedOverlay, float red, float green, float blue,
                        float alpha) {
 
+        this.Head.copyFrom(this.head);
         this.Body.copyFrom(this.body);
         this.RightArm.copyFrom(this.rightArm);
         this.LeftArm.copyFrom(this.leftArm);
         this.RightLeg.copyFrom(this.rightLeg);
         this.LeftLeg.copyFrom(this.leftLeg);
+        this.RightBoot.copyFrom(this.rightLeg);
+        this.LeftBoot.copyFrom(this.leftLeg);
 
         if(this.slotType.equals(EquipmentSlotType.HEAD))
             this.Head.render(matrixStack, buffer, packedLight, packedOverlay);
