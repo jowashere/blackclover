@@ -3,6 +3,7 @@ package com.github.jowashere.blackclover.entities.goals.other;
 import com.github.jowashere.blackclover.entities.mobs.BCEntity;
 import net.minecraft.entity.ai.goal.Goal;
 
+//Specific goal for simple spells with a cooldown
 public abstract class CooldownGoal extends Goal
 {
     private BCEntity entity;
@@ -23,6 +24,7 @@ public abstract class CooldownGoal extends Goal
         return this;
     }
 
+    //When can the mob use
     @Override
     public boolean canUse()
     {
@@ -37,6 +39,7 @@ public abstract class CooldownGoal extends Goal
         return true;
     }
 
+    //What happens when the cooldown ends
     public void endCooldown()
     {
         this.isOnCooldown = false;

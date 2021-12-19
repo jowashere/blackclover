@@ -3,7 +3,6 @@ package com.github.jowashere.blackclover.entities.goals.spells.lightning;
 import com.github.jowashere.blackclover.entities.goals.other.CooldownGoal;
 import com.github.jowashere.blackclover.entities.mobs.BCEntity;
 import com.github.jowashere.blackclover.entities.spells.lightning.ThunderOrbEntity;
-import com.github.jowashere.blackclover.entities.spells.wind.WindBladeEntity;
 
 public class ThunderCrumblingOrbGoal extends CooldownGoal
 {

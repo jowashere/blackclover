@@ -16,7 +16,7 @@ import com.github.jowashere.blackclover.spells.wind.WindBladeShower;
 import java.util.ArrayList;
 import java.util.List;
 
-public interface ISpellUser
+public interface ISpellUser // Basically gives the entities spells of an attribute on a random chance
 {
     List<AiSpellEntry> SPELL_POOL = new ArrayList<AiSpellEntry>();
 
