@@ -91,6 +91,8 @@ public class YunoClothesModel<T extends LivingEntity> extends BipedModel<T>{
         this.LeftArm.copyFrom(this.leftArm);
         this.RightLeg.copyFrom(this.rightLeg);
         this.LeftLeg.copyFrom(this.leftLeg);
+        this.RightBoot.copyFrom(this.rightLeg);
+        this.LeftBoot.copyFrom(this.leftLeg);
 
         if(this.slotType.equals(EquipmentSlotType.HEAD))
             this.Head.render(matrixStack, buffer, packedLight, packedOverlay);
