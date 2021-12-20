@@ -77,7 +77,7 @@ public class BanditCampStructure extends Structure<NoFeatureConfig>
                     blockpos, this.pieces, this.random,false,true);
 
 
-            this.pieces.forEach(piece -> piece.move(0, 0, 0));
+            this.pieces.forEach(piece -> piece.move(0, -1, 0));
             this.pieces.forEach(piece -> piece.getBoundingBox().y0 -= 1);
 
             this.calculateBoundingBox();

@@ -21,7 +21,7 @@ public class ModStructureGeneration
         {
             event.getGeneration().getStructures().add(() -> ConfiguredStructures.CONFIGURED_MAGICTOWER);
         }
-        if (!types.contains(BiomeDictionary.Type.OCEAN) || !types.contains(BiomeDictionary.Type.DEAD))
+        if (!types.contains(BiomeDictionary.Type.OCEAN) || !types.contains(BiomeDictionary.Type.DEAD) || types.contains(BiomeDictionary.Type.COLD) || types.contains(BiomeDictionary.Type.HOT))
         {
             event.getGeneration().getStructures().add(() -> ConfiguredStructures.CONFIGURED_BANDIT_CAMP);
         }
