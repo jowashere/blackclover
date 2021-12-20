@@ -1,7 +1,6 @@
 package com.github.jowashere.blackclover.api.internal;
 
 import com.github.jowashere.blackclover.Main;
-import com.github.jowashere.blackclover.common.spells.adders.AbstractAddSpells;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.ArrayList;
@@ -12,31 +11,28 @@ public class BCMAttribute {
 
     private final String attributeName;
     private final int weight;
-
-    private AbstractAddSpells spellAdder;
-
     private ArrayList<String> grimoireTextures;
 
-    private BCMSpell.Type spellType;
+    private AbstractSpell.Type spellType;
 
     private String message = "";
     private int colour = 0;
     private int u;
     private int v;
 
-    public BCMAttribute(String attributeName, int weight, boolean hasNPC, BCMSpell.Type spellType) {
+    public BCMAttribute(String attributeName, int weight, boolean hasNPC, AbstractSpell.Type spellType) {
         this.attributeName = attributeName;
         this.weight = weight;
     }
 
-    public BCMAttribute(String attributeName, int weight, boolean hasNPC, int u, int v, BCMSpell.Type spellType) {
+    public BCMAttribute(String attributeName, int weight, boolean hasNPC, int u, int v, AbstractSpell.Type spellType) {
         this(attributeName, weight, hasNPC, spellType);
         this.u = u;
         this.v = v;
         this.spellType = spellType;
     }
 
-    public BCMAttribute(String attributeName, int weight, boolean hasNPC, int u, int v, BCMSpell.Type spellType, ResourceLocation resourceLocation) {
+    public BCMAttribute(String attributeName, int weight, boolean hasNPC, int u, int v, AbstractSpell.Type spellType, ResourceLocation resourceLocation) {
         this(attributeName, weight, hasNPC, spellType);
         this.u = u;
         this.v = v;
@@ -60,19 +56,7 @@ public class BCMAttribute {
         return this.message;
     }
 
-    public BCMAttribute setSpellAdder(AbstractAddSpells spellAdder){
-        this.spellAdder = spellAdder;
-        return this;
-    }
-
-    public AbstractAddSpells getSpellAdder(){
-        if(spellAdder instanceof AbstractAddSpells){
-            return this.spellAdder;
-        }
-        return null;
-    }
-
-    public BCMSpell.Type getSpellType(){
+    public AbstractSpell.Type getSpellType(){
         return this.spellType;
     }
 
@@ -89,7 +73,7 @@ public class BCMAttribute {
         return this;
     }
 
-    public ArrayList<String> GetGrimoireTextures(){
+    public ArrayList<String> getGrimoireTextures(){
         return this.grimoireTextures;
     }
 
@@ -101,4 +85,5 @@ public class BCMAttribute {
     public int getAttributeColour() {
         return this.colour;
     }
+
 }

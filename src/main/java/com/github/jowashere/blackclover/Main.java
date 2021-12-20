@@ -9,14 +9,18 @@ import com.github.jowashere.blackclover.client.gui.overlay.ManaBar;
 import com.github.jowashere.blackclover.client.gui.overlay.Notifications;
 import com.github.jowashere.blackclover.client.gui.overlay.SpellMode;
 import com.github.jowashere.blackclover.client.handler.ClientHandler;
+import com.github.jowashere.blackclover.entities.mobs.GrimoireMagicianEntity;
 import com.github.jowashere.blackclover.events.GrimoireTextures;
 import com.github.jowashere.blackclover.init.*;
 import com.github.jowashere.blackclover.networking.NetworkLoader;
 import com.github.jowashere.blackclover.util.helpers.KeyboardHelper;
 import com.github.jowashere.blackclover.util.helpers.RaceHelper;
+import com.github.jowashere.blackclover.world.structure.configured.ConfiguredStructures;
+import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.fml.DeferredWorkQueue;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
@@ -47,13 +51,21 @@ public class Main
         ModAttributes.ATTRIBUTES.register(modEventBus);
         EffectInit.EFFECT.register(modEventBus);
         EntityInit.ENTITIES.register(modEventBus);
+        StructuresInit.DEFERRED_REGISTRY_STRUCTURE.register(modEventBus);
 
         modEventBus.addListener(this::onCommonSetup);
         modEventBus.addListener(this::onClientSetup);
     }
 
-    private void onCommonSetup(final FMLCommonSetupEvent event) {
+    private void onCommonSetup(final FMLCommonSetupEvent event)
+    {
         CapabilityManager.INSTANCE.register(IPlayerHandler.class, new PlayerCapability.Storage(), PlayerCapability::new);
+
+        event.enqueueWork(() ->
+        {
+            StructuresInit.setupStructures();
+            ConfiguredStructures.registerConfiguredStructures();
+        });
 
         for (IBCMPlugin plugin : BCMRegistry.PLUGINS) {
             System.out.println("Black Clover Mod Plugin, id: " + plugin.getPluginId() + ". Has been registered.");
@@ -64,6 +76,11 @@ public class Main
         }
 
         RaceHelper.create();
+
+        DeferredWorkQueue.runLater(() ->
+        {
+            GlobalEntityTypeAttributes.put(EntityInit.GRIMOIRE_MAGICIAN.get(), GrimoireMagicianEntity.setCustomAttributes().build());
+        });
 
     }
 

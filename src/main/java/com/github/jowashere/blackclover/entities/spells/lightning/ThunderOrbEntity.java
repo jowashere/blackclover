@@ -12,7 +12,6 @@ import net.minecraftforge.fml.network.NetworkHooks;
 
 public class ThunderOrbEntity extends AbstractLightningProjectileEntity {
 
-
     public ThunderOrbEntity(EntityType<? extends ThunderOrbEntity> type, World worldIn) {
         super(type, worldIn);
     }
@@ -46,7 +45,7 @@ public class ThunderOrbEntity extends AbstractLightningProjectileEntity {
     @Override
     protected void onHitEffect(){
         if(!this.level.isClientSide){
-            this.level.explode(this, this.getX(), this.getY(), this.getZ(), 1, Explosion.Mode.NONE);
+            this.level.explode(this.getOwner(), this.getX(), this.getY(), this.getZ(), 1, Explosion.Mode.NONE);
         }
     }
 }

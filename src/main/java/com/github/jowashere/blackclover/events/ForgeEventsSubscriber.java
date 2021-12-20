@@ -2,7 +2,8 @@ package com.github.jowashere.blackclover.events;
 
 import com.github.jowashere.blackclover.Main;
 import com.github.jowashere.blackclover.api.BCMRegistry;
-import com.github.jowashere.blackclover.api.internal.BCMSpell;
+import com.github.jowashere.blackclover.api.internal.AbstractSpell;
+import com.github.jowashere.blackclover.api.internal.AbstractToggleSpell;
 import com.github.jowashere.blackclover.capabilities.player.IPlayerHandler;
 import com.github.jowashere.blackclover.capabilities.player.PlayerCapability;
 import com.github.jowashere.blackclover.capabilities.player.PlayerProvider;
@@ -16,7 +17,6 @@ import com.github.jowashere.blackclover.networking.packets.mana.PacketManaBoolea
 import com.github.jowashere.blackclover.networking.packets.modes.PacketModeSync;
 import com.github.jowashere.blackclover.networking.packets.settings.PacketSetGrimoireTexture;
 import com.github.jowashere.blackclover.networking.packets.spells.PacketSpellNBTSync;
-import com.github.jowashere.blackclover.util.helpers.SpellHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
@@ -68,7 +68,7 @@ public class ForgeEventsSubscriber {
     public static void entityJoinWorld(EntityJoinWorldEvent event) {
         if (!event.getWorld().isClientSide) {
             if (event.getEntity() instanceof PlayerEntity) {
-                PlayerEvents.PlayerJoinedWorld(event);
+                PlayerEvents.playerJoinedWorld(event);
 
                 ServerPlayerEntity serverPlayerEntity = (ServerPlayerEntity) event.getEntity();
             }
@@ -81,15 +81,12 @@ public class ForgeEventsSubscriber {
 
         if (player.isAlive()) {
             IPlayerHandler playercap = player.getCapability(PlayerProvider.CAPABILITY_PLAYER).orElseThrow(() -> new RuntimeException("CAPABILITY_PLAYER NOT FOUND!"));
-            for (BCMSpell spell : BCMRegistry.SPELLS.getValues()) {
+            for (AbstractSpell spell : BCMRegistry.SPELLS.getValues()) {
                 if (spell.isToggle()) {
                     String nbtName = spell.getCorrelatedPlugin().getPluginId() + "_" + spell.getName();
                     if (player.getPersistentData().getBoolean(nbtName)) {
 
-                        int modifier0 = Math.max(0, playercap.ReturnMagicLevel() / 5);
-                        int modifier1 = Math.max(0, playercap.ReturnMagicLevel() / 5) - 1;
-                        spell.act(player, modifier0, modifier1, SpellHelper.findSpellKey(player, spell));
-
+                        spell.act(player);
                     }
                 }
             }
@@ -103,12 +100,12 @@ public class ForgeEventsSubscriber {
                     NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketManaBoolean(true, true));
                 }
 
-                PlayerEvents.RegenerateMana(event);
-                PlayerEvents.SetPlayerSpells(event);
-                PlayerEvents.SpecialSpellNbt(event);
-                PlayerEvents.Cooldowns(event);
-                PlayerEvents.ManaRuns(event);
-                PlayerEvents.MagicBuffs(event);
+                PlayerEvents.regenerateMana(event);
+                PlayerEvents.setPlayerSpells(event);
+                PlayerEvents.specialSpellNbt(event);
+                PlayerEvents.cooldowns(event);
+                PlayerEvents.manaRuns(event);
+                PlayerEvents.magicBuffs(event);
             }
         }
 
@@ -139,7 +136,7 @@ public class ForgeEventsSubscriber {
                 NetworkLoader.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> (ServerPlayerEntity) event.getPlayer()), new PacketToggleInfusionBoolean(2, true, targetcap.returnReinforcementToggled(), targetID));
                 NetworkLoader.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> (ServerPlayerEntity) event.getPlayer()), new PacketSetGrimoire(targetcap.returnHasGrimoire(), true, targetID));
                 NetworkLoader.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> (ServerPlayerEntity) event.getPlayer()), new PacketSetGrimoireTexture(targetcap.getGrimoireTexture(), true, targetID));
-                for (BCMSpell spell : BCMRegistry.SPELLS.getValues()) {
+                for (AbstractSpell spell : BCMRegistry.SPELLS.getValues()) {
                     NetworkLoader.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> (ServerPlayerEntity) event.getPlayer()), new PacketSpellNBTSync(targetID, spell.getCorrelatedPlugin().getPluginId() + "_" + spell.getName(), target.getPersistentData().getBoolean(spell.getCorrelatedPlugin().getPluginId() + "_" + spell.getName())));
                 }
             }
@@ -149,16 +146,18 @@ public class ForgeEventsSubscriber {
     @SubscribeEvent
     public static void livingAttack(LivingAttackEvent event) {
         DamageSource source = event.getSource();
-        for (BCMSpell spell : BCMRegistry.SPELLS.getValues()) {
-            if (source.getDirectEntity() instanceof PlayerEntity) {
-                PlayerEntity attacker = (PlayerEntity) source.getDirectEntity();
-                LivingEntity target = event.getEntityLiving();
-                if (attacker.getPersistentData().getBoolean(spell.getCorrelatedPlugin().getPluginId() + "_" + spell.getName())) {
-                    spell.throwAttackEvent(attacker, target);
-                }
-                if (target instanceof PlayerEntity && target.getPersistentData().getBoolean(spell.getCorrelatedPlugin().getPluginId() + "_" + spell.getName())) {
-                    if (spell.throwDamageEvent(event.getAmount(), event.getSource(), (PlayerEntity) target)) {
-                        event.setCanceled(true);
+        for (AbstractSpell spell : BCMRegistry.SPELLS.getValues()) {
+            if(spell instanceof AbstractToggleSpell) {
+                if (source.getDirectEntity() instanceof LivingEntity) {
+                    LivingEntity attacker = (LivingEntity) source.getDirectEntity();
+                    LivingEntity target = event.getEntityLiving();
+                    if (attacker.getPersistentData().getBoolean(spell.getCorrelatedPlugin().getPluginId() + "_" + spell.getName())) {
+                        ((AbstractToggleSpell) spell).throwAttackEvent(attacker, target);
+                    }
+                    if (target.getPersistentData().getBoolean(spell.getCorrelatedPlugin().getPluginId() + "_" + spell.getName())) {
+                        if (((AbstractToggleSpell) spell).throwDamageEvent(event.getAmount(), event.getSource(), target)) {
+                            event.setCanceled(true);
+                        }
                     }
                 }
             }
@@ -168,10 +167,12 @@ public class ForgeEventsSubscriber {
     @SubscribeEvent
     public static void livingDeath(LivingDeathEvent event) {
         if (event.getEntity() instanceof PlayerEntity) {
-            for (BCMSpell spell : BCMRegistry.SPELLS.getValues()) {
-                if (event.getEntity().getPersistentData().getBoolean(spell.getCorrelatedPlugin().getPluginId() + "_" + spell.getName())) {
-                    if (spell.throwDeathEvent((PlayerEntity) event.getEntity())) {
-                        event.setCanceled(true);
+            for (AbstractSpell spell : BCMRegistry.SPELLS.getValues()) {
+                if(spell instanceof AbstractToggleSpell) {
+                    if (event.getEntity().getPersistentData().getBoolean(spell.getCorrelatedPlugin().getPluginId() + "_" + spell.getName())) {
+                        if (((AbstractToggleSpell) spell).throwDeathEvent((PlayerEntity) event.getEntity())) {
+                            event.setCanceled(true);
+                        }
                     }
                 }
             }

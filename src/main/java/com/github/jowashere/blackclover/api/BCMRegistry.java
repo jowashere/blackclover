@@ -1,9 +1,6 @@
 package com.github.jowashere.blackclover.api;
 
-import com.github.jowashere.blackclover.api.internal.BCMAttribute;
-import com.github.jowashere.blackclover.api.internal.BCMMode;
-import com.github.jowashere.blackclover.api.internal.BCMRace;
-import com.github.jowashere.blackclover.api.internal.BCMSpell;
+import com.github.jowashere.blackclover.api.internal.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,19 +21,20 @@ public abstract class BCMRegistry<T> {
         PLUGINS.add(plugin);
     }
 
-    public static class SpellRegistry extends BCMRegistry<BCMSpell> {
+    public static class SpellRegistry extends BCMRegistry<AbstractSpell> {
 
-        private ArrayList<BCMSpell> SPELLS = new ArrayList<>();
+        private ArrayList<AbstractSpell> SPELLS = new ArrayList<>();
 
         @Override
-        public ArrayList<BCMSpell> getValues() {
+        public ArrayList<AbstractSpell> getValues() {
             return SPELLS;
         }
 
         @Override
-        public void register(BCMSpell registryObject) {
+        public void register(AbstractSpell registryObject) {
             SPELLS.add(registryObject);
         }
+
     }
 
     public static class RaceRegistry extends BCMRegistry<BCMRace> {

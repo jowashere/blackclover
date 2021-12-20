@@ -1,6 +1,5 @@
 package com.github.jowashere.blackclover.entities.spells.wind;
 
-import com.sun.istack.internal.NotNull;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
@@ -102,7 +101,6 @@ public class WindHawkEntity extends TameableEntity implements IFlyingAnimal {
         super.setNoGravity(true);
     }
 
-    @NotNull
     public static AttributeModifierMap.MutableAttribute createAttributes() {
         return MobEntity.createMobAttributes().add(Attributes.FOLLOW_RANGE, 16.0D).add(Attributes.ATTACK_KNOCKBACK, 2).add(Attributes.MOVEMENT_SPEED, 2).add(Attributes.MAX_HEALTH, 30).add(Attributes.FLYING_SPEED, 2).add(Attributes.ATTACK_DAMAGE, 5);
     }

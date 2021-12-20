@@ -1,7 +1,7 @@
 package com.github.jowashere.blackclover.client.gui.overlay;
 
 import com.github.jowashere.blackclover.Main;
-import com.github.jowashere.blackclover.api.internal.BCMSpell;
+import com.github.jowashere.blackclover.api.internal.AbstractSpell;
 import com.github.jowashere.blackclover.capabilities.player.IPlayerHandler;
 import com.github.jowashere.blackclover.capabilities.player.PlayerCapability;
 import com.github.jowashere.blackclover.capabilities.player.PlayerProvider;
@@ -59,7 +59,7 @@ public class SpellMode {
 
                     for (int i = 0; i < 9; i++)
                     {
-                        BCMSpell spell = null;
+                        AbstractSpell spell = null;
                         ItemStack storedSword = ItemStack.EMPTY;
                         int spellcd = 0;
 

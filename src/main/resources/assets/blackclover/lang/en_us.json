@@ -1,15 +1,76 @@
 {
+  "itemGroup.BCEquipment": "Black Clover Equipment",
+
+  "item.blackclover.yamis_katana": "Yami's Katana",
+
+  "item.blackclover.demon_slayer": "Demon Slayer Sword",
+  "item.blackclover.demon_dweller": "Demon Dweller Sword",
+  "item.blackclover.demon_destroyer": "Demon Destroyer Sword",
+
+  "item.blackclover.light_sword": "Light Sword",
+
+  "item.blackclover.mage_hat": "Mage Cap",
+  "item.blackclover.mage_chest": "Mage Tunic",
+  "item.blackclover.mage_legs": "Mage Pants",
+  "item.blackclover.mage_feet": "Mage Boots",
+
+  "item.blackclover.golden_dawn_chest": "Golden Dawn Tunic",
+  "item.blackclover.golden_dawn_legs": "Golden Dawn Pants",
+  "item.blackclover.golden_dawn_feet": "Golden Dawn Boots",
+
+  "entity.blackclover.grimoire_magician": "Grimoire Magician",
+
   "spell.blackclover.message.notenoughmana": "Not enough mana.",
   "spell.blackclover.message.nogrimoire": "A grimoire is required to cast this spell.",
+
+  "spell.blackclover.bull_thrust": "Bull Thrust",
+  "spell.blackclover.black_slash": "Black Slash",
+  "spell.blackclover.causality_break": "Causality Break",
+  "spell.blackclover.causality_break_self": "Causality Break (Self)",
+  "spell.blackclover.black_mode": "Black Mode",
+  "spell.blackclover.black_meteorite": "Black Meteorite",
 
   "spell.blackclover.wind_blade": "Wind Blade",
   "spell.blackclover.towering_tornado": "Towering Tornado",
   "spell.blackclover.wind_crescent": "Wind Crescent",
   "spell.blackclover.wind_blade_shower": "Wind Blade Shower",
+  "spell.blackclover.wind_hawk": "Swift White Hawk",
+  "spell.blackclover.wind_flight": "Wind Flight",
+
+  "spell.blackclover.tg_gloves": "Thunder God Gloves",
+  "spell.blackclover.tg_boots": "Thunder God Boots",
+  "spell.blackclover.thunder_orb": "Thunder Crumbling Orb",
+  "spell.blackclover.thunder_fiend": "Thunder Fiend",
+
+  "spell.blackclover.dark_cloaked_blade": "Dark Cloaked Blade",
+  "spell.blackclover.avidya_slash": "Avidya Slash",
+  "spell.blackclover.black_blade": "Black Blade",
+  "spell.blackclover.black_cocoon": "Black Cocoon",
+  "spell.blackclover.black_hole": "Black Hole",
+
+  "spell.blackclover.light_sword": "Light Sword",
+  "spell.blackclover.light_movement": "Flash Step",
+  "spell.blackclover.light_sword_oj": "Light Sword of Justice",
+  "spell.blackclover.light_swords_oj": "Light Sword of Justice Multi",
+  "spell.blackclover.light_healing": "Healing Ray of Light",
+  "spell.blackclover.arrows_of_judgement": "Arrows of Judgement",
+
+  "spell.blackclover.slash_blades": "Slash Blades",
+  "spell.blackclover.death_scythe": "Death Scythe",
+  "spell.blackclover.lunatic_slash": "Lunatic Slash",
+
+  "spell.blackclover.origin_flash": "Origin Flash",
+  "spell.blackclover.origin_flash_barrage": "Origin Flash Barrage",
+  "spell.blackclover.causality_break_sword": "Causality Break",
+  "spell.blackclover.sword_absorption": "Spell Absorption",
 
   "attribute.blackclover.wind": "Wind",
   "attribute.blackclover.antimagic": "Anti-Magic",
   "attribute.blackclover.lightning": "Lightning",
+  "attribute.blackclover.darkness": "Darkness",
+  "attribute.blackclover.slash": "Slash",
+  "attribute.blackclover.light": "Light",
+  "attribute.blackclover.sword": "Sword",
 
   "race.blackclover.elf": "Elf",
   "race.blackclover.human": "Human",
@@ -26,8 +87,13 @@
 
   "message.blackclover.levelup": "You've now reached level %s",
 
+  "gui.blackclover.title.antimagicspells": "Anti-Magic Spells",
   "gui.blackclover.title.windspells": "Wind Magic Spells",
+  "gui.blackclover.title.darknessspells": "Darkness Magic Spells",
+  "gui.blackclover.title.lightspells": "Light Magic Spells",
+  "gui.blackclover.title.slashspells": "Slash Magic Spells",
   "gui.blackclover.title.lightningspells": "Lightning Magic Spells",
+  "gui.blackclover.title.swordspells": "Sword Magic Spells",
 
   "gui.blackclover.race.name": "Race",
   "gui.blackclover.magiclevel": "Magic Level",

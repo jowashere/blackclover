@@ -21,6 +21,9 @@ public abstract class AbstractSpellProjectileEntity extends ProjectileItemEntity
     private Random random = new Random();
     private float manaIn;
 
+    protected boolean removeOnGround = true;
+    protected boolean removeOnEntity = true;
+
     private int damageTier;
     private float baseDamage;
 
@@ -69,7 +72,13 @@ public abstract class AbstractSpellProjectileEntity extends ProjectileItemEntity
 
         if (!this.level.isClientSide) {
             this.level.broadcastEntityEvent(this, (byte)3);
-            this.remove();
+
+            if(removeOnGround)
+                this.remove();
+
+            if (result.getType() == RayTraceResult.Type.ENTITY && this.removeOnEntity) {
+                this.remove();
+            }
         }
     }
 
@@ -100,6 +109,14 @@ public abstract class AbstractSpellProjectileEntity extends ProjectileItemEntity
 
     public void setBaseDamage(float baseDamage){
         this.baseDamage = baseDamage;
+    }
+
+    public int getDamageTier(){
+        return this.damageTier;
+    }
+
+    public float getBaseDamage(){
+        return this.baseDamage;
     }
 
     protected void onHitEffect(){

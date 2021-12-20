@@ -1,17 +1,8 @@
 package com.github.jowashere.blackclover.util.helpers;
 
-import com.github.jowashere.blackclover.api.internal.BCMSpell;
 import com.github.jowashere.blackclover.capabilities.player.IPlayerHandler;
 import com.github.jowashere.blackclover.capabilities.player.PlayerCapability;
 import com.github.jowashere.blackclover.capabilities.player.PlayerProvider;
-import com.github.jowashere.blackclover.client.gui.player.PlayerStatsScreen;
-import com.github.jowashere.blackclover.init.AttributeInit;
-import com.github.jowashere.blackclover.init.KeybindInit;
-import com.github.jowashere.blackclover.networking.NetworkLoader;
-import com.github.jowashere.blackclover.networking.packets.PacketSpellModeToggle;
-import com.github.jowashere.blackclover.networking.packets.PacketToggleInfusionBoolean;
-import com.github.jowashere.blackclover.networking.packets.spells.PacketGrimoireSword;
-import com.github.jowashere.blackclover.networking.packets.spells.PacketSpellCaller;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.util.InputMappings;

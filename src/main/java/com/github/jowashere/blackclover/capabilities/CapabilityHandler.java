@@ -2,7 +2,7 @@ package com.github.jowashere.blackclover.capabilities;
 
 import com.github.jowashere.blackclover.Main;
 import com.github.jowashere.blackclover.api.BCMRegistry;
-import com.github.jowashere.blackclover.api.internal.BCMSpell;
+import com.github.jowashere.blackclover.api.internal.AbstractSpell;
 import com.github.jowashere.blackclover.capabilities.player.IPlayerHandler;
 import com.github.jowashere.blackclover.capabilities.player.PlayerCapability;
 import com.github.jowashere.blackclover.capabilities.player.PlayerProvider;
@@ -81,7 +81,7 @@ public class CapabilityHandler {
             NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketSwordSlotSet(player.getId(),8,  playercap.returnSwordSlot(8), true));
             NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketSwordSlotSet(player.getId(), 9, playercap.returnSwordSlot(9), true));
 
-            for (BCMSpell spell : BCMRegistry.SPELLS.getValues()) {
+            for (AbstractSpell spell : BCMRegistry.SPELLS.getValues()) {
                 NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketSetSpellBoolean(spell.getName(), spell.hasSpell(spell, playercap), true));
                 String nbtName = spell.getCorrelatedPlugin().getPluginId() + "_" + spell.getName();
                 player.getPersistentData().putBoolean(nbtName, false);
@@ -137,7 +137,7 @@ public class CapabilityHandler {
 
         mana.setToggleSpellMessage(oldMana.returnToggleSpellMessage());
 
-        for (BCMSpell spell : BCMRegistry.SPELLS.getValues()) {
+        for (AbstractSpell spell : BCMRegistry.SPELLS.getValues()) {
             mana.setSpellBoolean(spell, oldMana.hasSpellBoolean(spell));
         }
 

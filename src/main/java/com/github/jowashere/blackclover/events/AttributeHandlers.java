@@ -19,6 +19,10 @@ public class AttributeHandlers {
     {
         if (!e.player.level.isClientSide)
             return;
+
+        if(e.player.getAttribute(ModAttributes.DAMAGE_REDUCTION.get()) == null)
+            return;
+
         ModifiableAttributeInstance attributeInstance = e.player.getAttribute(ModAttributes.STEP_HEIGHT.get());
         e.player.maxUpStep = (float) attributeInstance.getValue();
 
@@ -27,6 +31,9 @@ public class AttributeHandlers {
     @SubscribeEvent
     public static void onFall(LivingFallEvent e)
     {
+        if(e.getEntityLiving().getAttribute(ModAttributes.FALL_RESISTANCE.get()) == null)
+            return;
+
         ModifiableAttributeInstance attributeInstance = e.getEntityLiving().getAttribute(ModAttributes.FALL_RESISTANCE.get());
         e.setDistance((float) (e.getDistance() - attributeInstance.getValue()));
     }
@@ -34,6 +41,9 @@ public class AttributeHandlers {
     @SubscribeEvent
     public static void onJump(LivingEvent.LivingJumpEvent e)
     {
+        if(e.getEntityLiving().getAttribute(ModAttributes.JUMP_HEIGHT.get()) == null)
+            return;
+
         double value = e.getEntityLiving().getAttribute(ModAttributes.JUMP_HEIGHT.get()).getValue();
         e.getEntityLiving().push(0, 0.1F * (value - 1), 0);
         if (value <= 0)
@@ -46,11 +56,19 @@ public class AttributeHandlers {
         if (e.getEntityLiving().level.isClientSide)
             return;
 
+        if(e.getEntityLiving().getAttribute(ModAttributes.DAMAGE_REDUCTION.get()) == null)
+            return;
+
+        if(e.getEntityLiving().getAttribute(ModAttributes.SPECIAL_DAMAGE_REDUCTION.get()) == null)
+            return;
+
         double reduction = Math.min(e.getEntityLiving().getAttribute(ModAttributes.DAMAGE_REDUCTION.get()).getValue(), 0.99f);
-        double specialReduction = Math.min(e.getEntityLiving().getAttribute(ModAttributes.SPECIAL_DAMAGE_REDUCTION.get()).getValue(), 0.99f);
 
         if(e.getSource().isBypassInvul())
             return;
+
+        double specialReduction = Math.min(e.getEntityLiving().getAttribute(ModAttributes.SPECIAL_DAMAGE_REDUCTION.get()).getValue(), 0.99f);
+
         e.setAmount((float) (e.getAmount() * (1.5 - (specialReduction/3))));
 
         if(e.getSource().isBypassArmor())
@@ -61,6 +79,9 @@ public class AttributeHandlers {
     @SubscribeEvent
     public static void onHeal(LivingHealEvent event)
     {
+        if(event.getEntityLiving().getAttribute(ModAttributes.REGEN_RATE.get()) == null)
+            return;
+
         float value = (float) event.getEntityLiving().getAttribute(ModAttributes.REGEN_RATE.get()).getValue();
         if (value != 1)
             event.setAmount(event.getAmount() * value);

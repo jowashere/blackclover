@@ -13,6 +13,7 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 @Mixin(GameRenderer.class)
 public class GameRendererMixin {
+
     @Shadow
     @Final
     private Minecraft minecraft;

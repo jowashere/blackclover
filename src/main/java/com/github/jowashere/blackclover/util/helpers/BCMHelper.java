@@ -4,8 +4,8 @@ import com.github.jowashere.blackclover.Main;
 import com.github.jowashere.blackclover.capabilities.player.IPlayerHandler;
 import com.github.jowashere.blackclover.capabilities.player.PlayerCapability;
 import com.github.jowashere.blackclover.capabilities.player.PlayerProvider;
+import com.github.jowashere.blackclover.entities.mobs.BCEntity;
 import com.github.jowashere.blackclover.events.bcevents.MagicLevelChangeEvent;
-import com.github.jowashere.blackclover.init.EffectInit;
 import com.github.jowashere.blackclover.networking.NetworkLoader;
 import com.github.jowashere.blackclover.networking.packets.PacketMagicLevel;
 import net.minecraft.entity.Entity;
@@ -13,8 +13,10 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.Direction;
 import net.minecraft.util.EntityPredicates;
+import net.minecraft.util.Hand;
 import net.minecraft.util.math.*;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.text.TranslationTextComponent;
@@ -36,6 +38,13 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public class BCMHelper {
+
+    public static boolean isNullOrEmpty(String str)
+    {
+        if (str != null && !str.isEmpty() && !str.equalsIgnoreCase("n/a"))
+            return false;
+        return true;
+    }
 
     public static Vector3d Propulsion(LivingEntity entity, double extraVelX, double extraVelZ)
     {
@@ -124,12 +133,12 @@ public class BCMHelper {
 
     }
 
-    public static BlockPos RayTraceBlockSafe(PlayerEntity player, float range)
+    public static BlockPos RayTraceBlockSafe(LivingEntity entity, float range)
     {
-        World world = player.level;
-        Vector3d startVec = player.position().add(0.0, player.getEyeHeight(), 0.0);
-        Vector3d endVec = startVec.add(player.getLookAngle().scale(range));
-        BlockRayTraceResult result = world.clip(new RayTraceContext(startVec, endVec,  RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.ANY, player));
+        World world = entity.level;
+        Vector3d startVec = entity.position().add(0.0, entity.getEyeHeight(), 0.0);
+        Vector3d endVec = startVec.add(entity.getLookAngle().scale(range));
+        BlockRayTraceResult result = world.clip(new RayTraceContext(startVec, endVec,  RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.ANY, entity));
         BlockPos dashPos = result.getDirection().equals(Direction.DOWN) ? result.getBlockPos().below(2) : result.getBlockPos().offset(result.getDirection().getNormal());
 
         boolean posIsFree = BCMHelper.IsPosClearForPlayer(world, dashPos);
@@ -143,7 +152,7 @@ public class BCMHelper {
                 BlockPos bpb = dashPos.below();
                 Vector3d v3d = new Vector3d(bpb.getX(), bpb.getY(), bpb.getZ());
                 posIsFree = BCMHelper.IsPosClearForPlayer(world, dashPos) && world.clip(new RayTraceContext(startVec, v3d,
-                        RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.ANY, player)).getType().equals(RayTraceResult.Type.MISS);
+                        RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.ANY, entity)).getType().equals(RayTraceResult.Type.MISS);
                 if(world.getMaxBuildHeight() >= dashPos.getY())
                     tryUp = false;
             } else
@@ -152,7 +161,7 @@ public class BCMHelper {
                 BlockPos bpa = dashPos.above();
                 Vector3d v3d = new Vector3d(bpa.getX(), bpa.getY(), bpa.getZ());
                 posIsFree = BCMHelper.IsPosClearForPlayer(world, dashPos) && world.clip(new RayTraceContext(startVec, v3d,
-                        RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.ANY, player)).getType().equals(RayTraceResult.Type.MISS);
+                        RayTraceContext.BlockMode.COLLIDER, RayTraceContext.FluidMode.ANY, entity)).getType().equals(RayTraceResult.Type.MISS);
                 if(dashPos.getY() <= 0)
                     break;
             }
@@ -195,7 +204,7 @@ public class BCMHelper {
 
                 if (distFromSource < distance)
                 {
-                    List<Entity> targets = BCMHelper.GetEntitiesNear(new BlockPos(targetVec), source.level, 1.25);
+                    List<Entity> targets = BCMHelper.GetEntitiesNear(new BlockPos(targetVec), source.level, 1.25, Entity.class);
                     targets.remove(source);
                     Optional<Entity> target = targets.stream().findFirst();
 
@@ -211,14 +220,14 @@ public class BCMHelper {
     }
 
     public static float CalculateExp(int level) {
-        return (float) ((level / 0.07) * (level / 0.07));
+        return (float) (((level - 1) / 0.07) * ((level - 1) / 0.07));
     }
 
     public static int CalculateLevel(float exp){
-        return (int) (0.07 * Math.sqrt(exp));
+        return 1 + (int) (0.07 * Math.sqrt(exp));
     }
 
-    public static void RecaculateMagicLevel(PlayerEntity player){
+    public static void recaculateMagicLevel(PlayerEntity player){
 
         LazyOptional<IPlayerHandler> playerCapability = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
         IPlayerHandler player_cap = playerCapability.orElse(new PlayerCapability());
@@ -235,7 +244,7 @@ public class BCMHelper {
         }
     }
 
-    public static int GetMagicLevel(LivingEntity entity){
+    public static int getMagicLevel(LivingEntity entity){
 
         if(entity instanceof PlayerEntity){
             PlayerEntity player = (PlayerEntity) entity;
@@ -245,25 +254,34 @@ public class BCMHelper {
 
             return player_cap.ReturnMagicLevel();
 
-        }else {
+        }else if (entity instanceof BCEntity){
 
-            if(entity.hasEffect(EffectInit.MAGIC_LEVEL.get())){
-                return entity.getEffect(EffectInit.MAGIC_LEVEL.get()).getAmplifier();
-            }
+            return ((BCEntity)entity).getMagicLevel();
         }
 
-        return 0;
+        return 1;
     }
 
-    public static void GiveItem(PlayerEntity player, ItemStack stack){
-        if (player.getItemInHand(player.getUsedItemHand()).isEmpty() && !stack.isEmpty())
-        {
-            player.inventory.setItem(player.inventory.selected, stack);
-        }else
-        {
-            if(!stack.isEmpty()){
-                ItemHandlerHelper.giveItemToPlayer(player, stack);
+    public static void doSpellDamage(LivingEntity attacker, LivingEntity target, float amount){
+        if(attacker instanceof PlayerEntity)
+            target.hurt(DamageSource.playerAttack((PlayerEntity) attacker), amount);
+        else
+            target.hurt(DamageSource.mobAttack((attacker)), amount);
+
+    }
+
+    public static void GiveItem(LivingEntity entity, ItemStack stack){
+        if (entity instanceof PlayerEntity){
+            PlayerEntity player = (PlayerEntity) entity;
+            if (player.getItemInHand(player.getUsedItemHand()).isEmpty() && !stack.isEmpty()) {
+                player.inventory.setItem(player.inventory.selected, stack);
+            } else {
+                if (!stack.isEmpty()) {
+                    ItemHandlerHelper.giveItemToPlayer(player, stack);
+                }
             }
+        } else {
+            entity.setItemInHand(Hand.MAIN_HAND, stack);
         }
     }
 
