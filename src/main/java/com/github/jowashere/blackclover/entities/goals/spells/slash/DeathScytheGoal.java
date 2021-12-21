@@ -1,22 +1,21 @@
-package com.github.jowashere.blackclover.entities.goals.spells.lightning;
+package com.github.jowashere.blackclover.entities.goals.spells.slash;
 
 import com.github.jowashere.blackclover.api.Beapi;
 import com.github.jowashere.blackclover.api.internal.AbstractSpell;
 import com.github.jowashere.blackclover.entities.goals.other.CooldownGoal;
 import com.github.jowashere.blackclover.entities.mobs.BCEntity;
-import com.github.jowashere.blackclover.entities.spells.lightning.ThunderOrbEntity;
-import com.github.jowashere.blackclover.init.AttributeInit;
-import com.github.jowashere.blackclover.spells.lightning.ThunderCrumblingOrb;
+import com.github.jowashere.blackclover.entities.spells.slash.DeathScytheEntity;
+import com.github.jowashere.blackclover.spells.slash.DeathScythe;
 import net.minecraft.util.Hand;
 
-public class ThunderCrumblingOrbGoal extends CooldownGoal
+public class DeathScytheGoal extends CooldownGoal
 {
     private BCEntity entity;
-    private final AbstractSpell spell = ThunderCrumblingOrb.INSTANCE;
+    private final AbstractSpell spell = DeathScythe.INSTANCE;
 
-    public ThunderCrumblingOrbGoal(BCEntity entity)
+    public DeathScytheGoal(BCEntity entity)
     {
-        super(entity, ThunderCrumblingOrb.INSTANCE);
+        super(entity, DeathScythe.INSTANCE);
         this.entity = entity;
         this.entity.addThreat(12);
     }
@@ -28,9 +27,6 @@ public class ThunderCrumblingOrbGoal extends CooldownGoal
             return false;
 
         if (this.entity.getTarget() == null)
-            return false;
-
-        if (!this.entity.getAttribute().equals(AttributeInit.LIGHTNING))
             return false;
 
         if(!this.entity.canSee(this.entity.getTarget()))
@@ -65,7 +61,7 @@ public class ThunderCrumblingOrbGoal extends CooldownGoal
         double d2 = entity.getTarget().getBoundingBox().minY + entity.getTarget().getBbHeight() / 2.0F - (entity.getY() + entity.getBbHeight() / 2.0F);
         double d3 = entity.getTarget().getZ() - entity.getZ();
 
-        ThunderOrbEntity projectile = new ThunderOrbEntity(this.entity.level, this.entity, 0);
+        DeathScytheEntity projectile = new DeathScytheEntity(this.entity.level, this.entity, 0);
         projectile.setPos(entity.getX(), entity.getY() + entity.getBbHeight() / 2.0F + 0.5D, entity.getZ());
         projectile.shoot(d1 + entity.getRandom().nextGaussian(), d2, d3 + entity.getRandom().nextGaussian(), 1.5F, 0);
         projectile.setOwner(entity);

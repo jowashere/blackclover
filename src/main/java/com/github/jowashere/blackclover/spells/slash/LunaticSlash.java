@@ -7,6 +7,7 @@ import com.github.jowashere.blackclover.util.helpers.SpellHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.util.Hand;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
@@ -15,6 +16,8 @@ import net.minecraft.world.server.ServerWorld;
 import java.util.List;
 
 public class LunaticSlash extends AbstractSpell {
+
+    public static final AbstractSpell INSTANCE = new LunaticSlash();
 
     public LunaticSlash() {
         super("lunatic_slash", AttributeInit.SLASH);
@@ -47,6 +50,7 @@ public class LunaticSlash extends AbstractSpell {
                 ((ServerWorld) caster.level).sendParticles(ParticleTypes.SWEEP_ATTACK, entity.getX(), entity.getY(),
                         entity.getZ(), (int) 10, 3, 3, 3, 0.1);
                 (caster.level).playSound((PlayerEntity) null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.PLAYER_ATTACK_SWEEP, caster.getSoundSource(), (float) 1, (float) 1);
+                caster.swing(Hand.MAIN_HAND, true);
 
                 BCMHelper.waitThen(caster.level, 11, () -> {
 
@@ -55,6 +59,7 @@ public class LunaticSlash extends AbstractSpell {
                     ((ServerWorld) caster.level).sendParticles(ParticleTypes.SWEEP_ATTACK, entity.getX(), entity.getY(),
                             entity.getZ(), (int) 10, 3, 3, 3, 0.1);
                     (caster.level).playSound((PlayerEntity) null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.PLAYER_ATTACK_SWEEP, caster.getSoundSource(), (float) 1, (float) 1);
+                    caster.swing(Hand.MAIN_HAND, true);
                 });
 
                 BCMHelper.waitThen(caster.level, 22, () -> {
@@ -64,6 +69,7 @@ public class LunaticSlash extends AbstractSpell {
                     ((ServerWorld) caster.level).sendParticles(ParticleTypes.SWEEP_ATTACK, entity.getX(), entity.getY(),
                             entity.getZ(), (int) 10, 3, 3, 3, 0.1);
                     (caster.level).playSound((PlayerEntity) null, entity.getX(), entity.getY(), entity.getZ(), SoundEvents.PLAYER_ATTACK_SWEEP, caster.getSoundSource(), (float) 1, (float) 1);
+                    caster.swing(Hand.MAIN_HAND, true);
                 });
             });
         }

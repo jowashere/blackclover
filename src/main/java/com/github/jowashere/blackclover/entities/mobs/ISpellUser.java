@@ -6,6 +6,9 @@ import com.github.jowashere.blackclover.entities.goals.spells.lightning.ThunderC
 import com.github.jowashere.blackclover.entities.goals.spells.lightning.ThunderFiendGoal;
 import com.github.jowashere.blackclover.entities.goals.spells.lightning.ThunderGodBootsGoal;
 import com.github.jowashere.blackclover.entities.goals.spells.lightning.ThunderGodGlovesGoal;
+import com.github.jowashere.blackclover.entities.goals.spells.slash.DeathScytheGoal;
+import com.github.jowashere.blackclover.entities.goals.spells.slash.LunaticSlashGoal;
+import com.github.jowashere.blackclover.entities.goals.spells.slash.SlashBladesGoal;
 import com.github.jowashere.blackclover.entities.goals.spells.wind.ToweringTornadoGoal;
 import com.github.jowashere.blackclover.entities.goals.spells.wind.WindBladeGoal;
 import com.github.jowashere.blackclover.entities.goals.spells.wind.WindBladeShowerGoal;
@@ -15,6 +18,9 @@ import com.github.jowashere.blackclover.spells.lightning.ThunderCrumblingOrb;
 import com.github.jowashere.blackclover.spells.lightning.ThunderFiend;
 import com.github.jowashere.blackclover.spells.lightning.ThunderGodBoots;
 import com.github.jowashere.blackclover.spells.lightning.ThunderGodGloves;
+import com.github.jowashere.blackclover.spells.slash.DeathScythe;
+import com.github.jowashere.blackclover.spells.slash.LunaticSlash;
+import com.github.jowashere.blackclover.spells.slash.SlashBlades;
 import com.github.jowashere.blackclover.spells.wind.ToweringTornado;
 import com.github.jowashere.blackclover.spells.wind.WindBlade;
 import com.github.jowashere.blackclover.spells.wind.WindBladeShower;
@@ -46,6 +52,10 @@ public interface ISpellUser // Basically gives the entities spells of an attribu
                 entity.SPELL_POOL.add(new AiSpellEntry(WindBlade.INSTANCE.getName().toLowerCase(), 8, new WindBladeGoal(entity)));
                 entity.SPELL_POOL.add(new AiSpellEntry(WindCrescent.INSTANCE.getName().toLowerCase(), 7, new WindCrescentGoal(entity)));
                 entity.SPELL_POOL.add(new AiSpellEntry(WindBladeShower.INSTANCE.getName().toLowerCase(), 5, new WindBladeShowerGoal(entity)));
+            } else if(entity.getAttribute().equals(AttributeInit.SLASH)) {
+                entity.SPELL_POOL.add(new AiSpellEntry(SlashBlades.INSTANCE.getName().toLowerCase(), 10, new SlashBladesGoal(entity)));
+                entity.SPELL_POOL.add(new AiSpellEntry(DeathScythe.INSTANCE.getName().toLowerCase(), 8, new DeathScytheGoal(entity)));
+                entity.SPELL_POOL.add(new AiSpellEntry(LunaticSlash.INSTANCE.getName().toLowerCase(), 5, new LunaticSlashGoal(entity)));
             }
         }
 
