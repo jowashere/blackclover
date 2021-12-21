@@ -288,7 +288,10 @@ public class PlayerEvents {
 
             if (Arrays.stream(textures.toArray(new String[0])).noneMatch(
                     (element) -> element.equals(player_cap.getGrimoireTexture()))) {
-                String randomGrimoire = player_cap.ReturnMagicAttribute().getGrimoireTextures().get((int) Math.random() * player_cap.ReturnMagicAttribute().getGrimoireTextures().size());
+
+                int id = event.player.getRandom().nextInt(textures.size());
+
+                String randomGrimoire = player_cap.ReturnMagicAttribute().getGrimoireTextures().get(id);
                 player_cap.SetGrimoireTexture(randomGrimoire);
                 NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.player), new PacketSetGrimoireTexture(randomGrimoire, true, event.player.getId()));
             }

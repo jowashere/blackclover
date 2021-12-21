@@ -1,6 +1,5 @@
 package com.github.jowashere.blackclover.spells.sword;
 
-import com.github.jowashere.blackclover.api.IBCMPlugin;
 import com.github.jowashere.blackclover.api.internal.AbstractSpell;
 import com.github.jowashere.blackclover.entities.spells.sword.OriginFlashEntity;
 import com.github.jowashere.blackclover.init.AttributeInit;
@@ -13,8 +12,8 @@ import net.minecraft.util.Hand;
 
 public class OriginFlashBarrage extends AbstractSpell {
 
-    public OriginFlashBarrage(IBCMPlugin plugin) {
-        super(plugin, "origin_flash", AttributeInit.SWORD);
+    public OriginFlashBarrage() {
+        super("origin_flash_barrage", AttributeInit.SWORD);
 
         this.setManaCost(120F);
         this.setCooldown(600);

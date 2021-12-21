@@ -1,6 +1,5 @@
 package com.github.jowashere.blackclover.spells.light;
 
-import com.github.jowashere.blackclover.api.IBCMPlugin;
 import com.github.jowashere.blackclover.api.internal.AbstractToggleSpell;
 import com.github.jowashere.blackclover.init.AttributeInit;
 import com.github.jowashere.blackclover.init.ItemInit;
@@ -10,10 +9,10 @@ import net.minecraft.item.ItemStack;
 
 public class LightSword extends AbstractToggleSpell {
 
-    public static final LightSword INSTANCE = new LightSword(null);
+    public static final LightSword INSTANCE = new LightSword();
 
-    public LightSword(IBCMPlugin plugin) {
-        super(plugin, "light_sword", AttributeInit.LIGHT);
+    public LightSword() {
+        super("light_sword", AttributeInit.LIGHT);
 
         this.setSkillSpell(true);
         this.setManaCost(0.2F);

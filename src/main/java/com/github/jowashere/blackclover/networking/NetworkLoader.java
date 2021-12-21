@@ -55,5 +55,7 @@ public class NetworkLoader {
 
         INSTANCE.registerMessage(nextID(), PacketToggleInfusionBoolean.class, PacketToggleInfusionBoolean::encode, PacketToggleInfusionBoolean::decode, PacketToggleInfusionBoolean::handle);
 
+        INSTANCE.registerMessage(nextID(), PacketSyncBCEntityData.class, PacketSyncBCEntityData::encode, PacketSyncBCEntityData::decode, PacketSyncBCEntityData::handle);
+
     }
 }

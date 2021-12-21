@@ -1,6 +1,5 @@
 package com.github.jowashere.blackclover.spells.darkness;
 
-import com.github.jowashere.blackclover.api.IBCMPlugin;
 import com.github.jowashere.blackclover.api.internal.AbstractToggleSpell;
 import com.github.jowashere.blackclover.init.AttributeInit;
 import com.github.jowashere.blackclover.util.helpers.BCMHelper;
@@ -17,8 +16,8 @@ public class DarkCloakedBlade extends AbstractToggleSpell {
 
     private static final AttributeModifier COCOON_DE = new AttributeModifier(UUID.fromString("ad388521-c053-4a67-a0d9-ff57379a2c68"), "Cocoon Speed", -2000, AttributeModifier.Operation.ADDITION);
 
-    public DarkCloakedBlade(IBCMPlugin plugin) {
-        super(plugin, "dark_cloaked_blade", AttributeInit.DARKNESS);
+    public DarkCloakedBlade() {
+        super("dark_cloaked_blade", AttributeInit.DARKNESS);
 
         this.setSkillSpell(true);
         this.setManaCost(0.4F);

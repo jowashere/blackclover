@@ -1,6 +1,5 @@
 package com.github.jowashere.blackclover.spells.slash;
 
-import com.github.jowashere.blackclover.api.IBCMPlugin;
 import com.github.jowashere.blackclover.api.internal.AbstractSpell;
 import com.github.jowashere.blackclover.init.AttributeInit;
 import com.github.jowashere.blackclover.util.helpers.BCMHelper;
@@ -17,8 +16,8 @@ import java.util.List;
 
 public class LunaticSlash extends AbstractSpell {
 
-    public LunaticSlash(IBCMPlugin plugin) {
-        super(plugin, "lunatic_slash", AttributeInit.SLASH);
+    public LunaticSlash() {
+        super("lunatic_slash", AttributeInit.SLASH);
 
         this.setManaCost(90F);
         this.setCooldown(100);

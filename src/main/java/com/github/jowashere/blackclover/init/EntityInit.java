@@ -1,8 +1,8 @@
 package com.github.jowashere.blackclover.init;
 
 import com.github.jowashere.blackclover.Main;
-import com.github.jowashere.blackclover.entities.mobs.quester.GrimoireMagicianEntity;
 import com.github.jowashere.blackclover.entities.mobs.hostile.BanditEntity;
+import com.github.jowashere.blackclover.entities.mobs.quester.GrimoireMagicianEntity;
 import com.github.jowashere.blackclover.entities.spells.antimagic.BlackSlashEntity;
 import com.github.jowashere.blackclover.entities.spells.darkness.AvidyaSlashEntity;
 import com.github.jowashere.blackclover.entities.spells.darkness.BlackHoleEntity;
@@ -15,11 +15,14 @@ import com.github.jowashere.blackclover.entities.spells.wind.WindCrescentEntity;
 import com.github.jowashere.blackclover.entities.spells.wind.WindHawkEntity;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
+import net.minecraft.item.Item;
 import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class EntityInit {
+
+    public static final DeferredRegister<Item> SPAWN_EGGS = DeferredRegister.create(ForgeRegistries.ITEMS, Main.MODID);
 
     public static final DeferredRegister<EntityType<?>> ENTITIES = DeferredRegister.create(ForgeRegistries.ENTITIES, Main.MODID);
 
@@ -52,7 +55,5 @@ public class EntityInit {
                     () -> EntityType.Builder.of(BanditEntity::new, EntityClassification.CREATURE)
             .sized(1f, 2f)
             .build(Main.MODID + ":bandit"));
-
-
 
 }

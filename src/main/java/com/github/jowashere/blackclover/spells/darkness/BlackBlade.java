@@ -1,6 +1,5 @@
 package com.github.jowashere.blackclover.spells.darkness;
 
-import com.github.jowashere.blackclover.api.IBCMPlugin;
 import com.github.jowashere.blackclover.api.internal.AbstractSpell;
 import com.github.jowashere.blackclover.init.AttributeInit;
 import com.github.jowashere.blackclover.util.helpers.BCMHelper;
@@ -18,8 +17,8 @@ import java.util.List;
 
 public class BlackBlade extends AbstractSpell {
 
-    public BlackBlade(IBCMPlugin plugin) {
-        super(plugin, "black_blade", AttributeInit.DARKNESS);
+    public BlackBlade() {
+        super("black_blade", AttributeInit.DARKNESS);
 
         this.setManaCost(30F);
         this.setCooldown(60);

@@ -1,6 +1,5 @@
 package com.github.jowashere.blackclover.spells.wind;
 
-import com.github.jowashere.blackclover.api.IBCMPlugin;
 import com.github.jowashere.blackclover.api.internal.AbstractSpell;
 import com.github.jowashere.blackclover.entities.spells.wind.WindBladeEntity;
 import com.github.jowashere.blackclover.init.AttributeInit;
@@ -9,10 +8,10 @@ import net.minecraft.entity.LivingEntity;
 public class WindBladeShower extends AbstractSpell
 {
 
-    public static final AbstractSpell INSTANCE = new WindBladeShower(null);
+    public static final AbstractSpell INSTANCE = new WindBladeShower();
 
-    public WindBladeShower(IBCMPlugin plugin) {
-        super(plugin, "wind_blade_shower", AttributeInit.WIND);
+    public WindBladeShower() {
+        super("wind_blade_shower", AttributeInit.WIND);
 
         this.setManaCost(70F);
         this.setCooldown(120);

@@ -1,6 +1,5 @@
 package com.github.jowashere.blackclover.spells.antimagic;
 
-import com.github.jowashere.blackclover.api.IBCMPlugin;
 import com.github.jowashere.blackclover.api.internal.AbstractSpell;
 import com.github.jowashere.blackclover.init.AttributeInit;
 import com.github.jowashere.blackclover.init.ItemInit;
@@ -16,8 +15,8 @@ import java.util.List;
 
 public class CausalityBreakAnti extends AbstractSpell {
 
-    public CausalityBreakAnti(IBCMPlugin plugin) {
-        super(plugin, "causality_break", AttributeInit.ANTI_MAGIC);
+    public CausalityBreakAnti() {
+        super("causality_break", AttributeInit.ANTI_MAGIC);
 
         this.setManaCost(20F);
         this.setCooldown(200);

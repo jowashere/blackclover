@@ -5,6 +5,7 @@ import com.github.jowashere.blackclover.capabilities.player.IPlayerHandler;
 import com.github.jowashere.blackclover.capabilities.player.PlayerCapability;
 import com.github.jowashere.blackclover.capabilities.player.PlayerProvider;
 import com.github.jowashere.blackclover.client.renderer.layers.models.ModelGrimoire;
+import com.github.jowashere.blackclover.entities.mobs.BCEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.entity.player.AbstractClientPlayerEntity;
@@ -16,11 +17,8 @@ import net.minecraft.client.renderer.entity.model.EntityModel;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.potion.EffectInstance;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.common.util.LazyOptional;
-
-import java.util.Collection;
 
 public class GrimoireLayer <T extends LivingEntity, M extends EntityModel<T>> extends LayerRenderer<T, M> {
 
@@ -33,22 +31,41 @@ public class GrimoireLayer <T extends LivingEntity, M extends EntityModel<T>> ex
 
     @Override
     public void render(MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn, T entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
-        if (!entitylivingbaseIn.isInvisible() && entitylivingbaseIn instanceof PlayerEntity) {
-            AbstractClientPlayerEntity player = (AbstractClientPlayerEntity) entitylivingbaseIn;
 
-            LazyOptional<IPlayerHandler> playerc = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
-            IPlayerHandler player_cap = playerc.orElse(new PlayerCapability());
+        boolean playerOrBC = entitylivingbaseIn instanceof PlayerEntity || entitylivingbaseIn instanceof BCEntity;
 
+        if (!entitylivingbaseIn.isInvisible() && playerOrBC) {
 
-            if (player_cap.returnHasGrimoire() && player_cap.returnSpellModeToggle()) {
-                matrixStackIn.pushPose();
-                this.getParentModel().copyPropertiesTo(this.grimoireModel);
-                this.grimoireModel.setupAnim(entitylivingbaseIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
-                IVertexBuilder ivertexbuilder = ItemRenderer.getFoilBuffer(bufferIn, this.grimoireModel.renderType(new ResourceLocation(Main.MODID, player_cap.getGrimoireTexture())), false, false);
-                this.grimoireModel.renderToBuffer(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
-                matrixStackIn.popPose();
+            boolean shouldShow;
+            String textLoc;
+
+            if (entitylivingbaseIn instanceof PlayerEntity) {
+                AbstractClientPlayerEntity player = (AbstractClientPlayerEntity) entitylivingbaseIn;
+
+                LazyOptional<IPlayerHandler> playerc = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
+                IPlayerHandler player_cap = playerc.orElse(new PlayerCapability());
+
+                shouldShow = player_cap.returnHasGrimoire() && player_cap.returnSpellModeToggle();
+                textLoc = player_cap.getGrimoireTexture();
+
+            } else {
+                BCEntity entity = (BCEntity) entitylivingbaseIn;
+
+                shouldShow = entity.getTarget() != null && entity.getMagicLevel() > 5;
+                textLoc = entity.getGrimoireTexLoc();
 
             }
+
+
+            if (!shouldShow)
+                return;
+
+            matrixStackIn.pushPose();
+            this.getParentModel().copyPropertiesTo(this.grimoireModel);
+            this.grimoireModel.setupAnim(entitylivingbaseIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+            IVertexBuilder ivertexbuilder = ItemRenderer.getFoilBuffer(bufferIn, this.grimoireModel.renderType(new ResourceLocation(Main.MODID, textLoc)), false, false);
+            this.grimoireModel.renderToBuffer(matrixStackIn, ivertexbuilder, packedLightIn, OverlayTexture.NO_OVERLAY, 1.0F, 1.0F, 1.0F, 1.0F);
+            matrixStackIn.popPose();
         }
     }
 

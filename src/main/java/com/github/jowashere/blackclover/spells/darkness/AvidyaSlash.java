@@ -1,6 +1,5 @@
 package com.github.jowashere.blackclover.spells.darkness;
 
-import com.github.jowashere.blackclover.api.IBCMPlugin;
 import com.github.jowashere.blackclover.api.internal.AbstractSpell;
 import com.github.jowashere.blackclover.entities.spells.darkness.AvidyaSlashEntity;
 import com.github.jowashere.blackclover.init.AttributeInit;
@@ -11,11 +10,11 @@ import net.minecraft.util.Hand;
 
 public class AvidyaSlash extends AbstractSpell
 {
-    public static final AbstractSpell INSTANCE = new AvidyaSlash(null);
+    public static final AbstractSpell INSTANCE = new AvidyaSlash();
 
-    public AvidyaSlash(IBCMPlugin plugin)
+    public AvidyaSlash()
     {
-        super(plugin, "avidya_slash", AttributeInit.DARKNESS);
+        super("avidya_slash", AttributeInit.DARKNESS);
 
         this.setManaCost(25F);
         this.setCooldown(50);

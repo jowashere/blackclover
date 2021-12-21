@@ -1,9 +1,9 @@
 package com.github.jowashere.blackclover.client.renderer.layers;
 
 import com.github.jowashere.blackclover.client.renderer.layers.models.ThunderGodGearModel;
+import com.github.jowashere.blackclover.entities.mobs.BCEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
-import net.minecraft.client.entity.player.AbstractClientPlayerEntity;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.IEntityRenderer;
@@ -26,12 +26,13 @@ public class TGLayer <T extends LivingEntity, M extends EntityModel<T>> extends 
 
     @Override
     public void render(MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn, T entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
-        if (!entitylivingbaseIn.isInvisible() && entitylivingbaseIn instanceof PlayerEntity) {
 
-            AbstractClientPlayerEntity player = (AbstractClientPlayerEntity) entitylivingbaseIn;
+        boolean playerOrBC = entitylivingbaseIn instanceof PlayerEntity || entitylivingbaseIn instanceof BCEntity;
 
-            boolean gloves = player.getPersistentData().getBoolean("blackclover_tg_gloves");
-            boolean boots = player.getPersistentData().getBoolean("blackclover_tg_boots");
+        if (!entitylivingbaseIn.isInvisible() && playerOrBC) {
+
+            boolean gloves = entitylivingbaseIn.getPersistentData().getBoolean("blackclover_tg_gloves");
+            boolean boots = entitylivingbaseIn.getPersistentData().getBoolean("blackclover_tg_boots");
 
             model.showBoots = boots;
             model.showGloves = gloves;

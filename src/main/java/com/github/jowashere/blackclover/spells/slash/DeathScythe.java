@@ -1,6 +1,5 @@
 package com.github.jowashere.blackclover.spells.slash;
 
-import com.github.jowashere.blackclover.api.IBCMPlugin;
 import com.github.jowashere.blackclover.api.internal.AbstractSpell;
 import com.github.jowashere.blackclover.entities.spells.slash.DeathScytheEntity;
 import com.github.jowashere.blackclover.init.AttributeInit;
@@ -10,8 +9,8 @@ import net.minecraft.util.Hand;
 
 public class DeathScythe extends AbstractSpell {
 
-    public DeathScythe(IBCMPlugin plugin) {
-        super(plugin, "death_scythe", AttributeInit.SLASH);
+    public DeathScythe() {
+        super("death_scythe", AttributeInit.SLASH);
 
         this.setManaCost(30F);
         this.setCooldown(60);

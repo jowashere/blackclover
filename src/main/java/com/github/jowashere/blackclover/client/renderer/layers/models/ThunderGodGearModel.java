@@ -3,7 +3,6 @@ package com.github.jowashere.blackclover.client.renderer.layers.models;
 import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
-import net.minecraft.client.entity.player.AbstractClientPlayerEntity;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
@@ -220,14 +219,12 @@ public class ThunderGodGearModel<T extends LivingEntity> extends BipedModel<T> {
 
         this.crouching = entityIn.isCrouching();
 
-        AbstractClientPlayerEntity clientPlayer = (AbstractClientPlayerEntity) entityIn;
+        BipedModel.ArmPose mainHandPos = armPose(entityIn, Hand.MAIN_HAND);
+        BipedModel.ArmPose offHandPos = armPose(entityIn, Hand.OFF_HAND);
 
-        BipedModel.ArmPose mainHandPos = armPose(clientPlayer, Hand.MAIN_HAND);
-        BipedModel.ArmPose offHandPos = armPose(clientPlayer, Hand.OFF_HAND);
+        this.swimAmount = entityIn.getSwimAmount(ageInTicks);
 
-        this.swimAmount = clientPlayer.getSwimAmount(ageInTicks);
-
-        if (clientPlayer.getMainArm() == HandSide.RIGHT) {
+        if (entityIn.getMainArm() == HandSide.RIGHT) {
             this.rightArmPose = mainHandPos;
             this.leftArmPose = offHandPos;
         } else {
@@ -241,12 +238,12 @@ public class ThunderGodGearModel<T extends LivingEntity> extends BipedModel<T> {
         this.LeftLeg.copyFrom(this.leftLeg);
     }
 
-    private static BipedModel.ArmPose armPose(AbstractClientPlayerEntity playerEntity, Hand hand) {
-        ItemStack itemstack = playerEntity.getItemInHand(hand);
+    private static BipedModel.ArmPose armPose(LivingEntity livingEntity, Hand hand) {
+        ItemStack itemstack = livingEntity.getItemInHand(hand);
         if (itemstack.isEmpty()) {
             return BipedModel.ArmPose.EMPTY;
         } else {
-            if (playerEntity.getUsedItemHand() == hand && playerEntity.getUseItemRemainingTicks() > 0) {
+            if (livingEntity.getUsedItemHand() == hand && livingEntity.getUseItemRemainingTicks() > 0) {
                 UseAction useaction = itemstack.getUseAnimation();
                 if (useaction == UseAction.BLOCK) {
                     return BipedModel.ArmPose.BLOCK;
@@ -260,10 +257,10 @@ public class ThunderGodGearModel<T extends LivingEntity> extends BipedModel<T> {
                     return BipedModel.ArmPose.THROW_SPEAR;
                 }
 
-                if (useaction == UseAction.CROSSBOW && hand == playerEntity.getUsedItemHand()) {
+                if (useaction == UseAction.CROSSBOW && hand == livingEntity.getUsedItemHand()) {
                     return BipedModel.ArmPose.CROSSBOW_CHARGE;
                 }
-            } else if (!playerEntity.swinging && itemstack.getItem() == Items.CROSSBOW && CrossbowItem.isCharged(itemstack)) {
+            } else if (!livingEntity.swinging && itemstack.getItem() == Items.CROSSBOW && CrossbowItem.isCharged(itemstack)) {
                 return BipedModel.ArmPose.CROSSBOW_HOLD;
             }
 

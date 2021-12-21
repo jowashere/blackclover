@@ -1,16 +1,21 @@
 package com.github.jowashere.blackclover.entities.goals.spells.wind;
 
+import com.github.jowashere.blackclover.api.Beapi;
+import com.github.jowashere.blackclover.api.internal.AbstractSpell;
 import com.github.jowashere.blackclover.entities.goals.other.CooldownGoal;
 import com.github.jowashere.blackclover.entities.mobs.BCEntity;
 import com.github.jowashere.blackclover.entities.spells.wind.WindBladeEntity;
+import com.github.jowashere.blackclover.init.AttributeInit;
+import com.github.jowashere.blackclover.spells.wind.WindBladeShower;
 
 public class WindBladeShowerGoal extends CooldownGoal
 {
     private BCEntity entity;
+    private final AbstractSpell spell = WindBladeShower.INSTANCE;
 
     public WindBladeShowerGoal(BCEntity entity)
     {
-        super(entity, 8, entity.getRandom().nextInt(5));
+        super(entity, WindBladeShower.INSTANCE);
         this.entity = entity;
         this.entity.addThreat(12);
     }
@@ -24,10 +29,19 @@ public class WindBladeShowerGoal extends CooldownGoal
         if (this.entity.getTarget() == null)
             return false;
 
+        if (!this.entity.getAttribute().equals(AttributeInit.WIND))
+            return false;
+
         if(!this.entity.canSee(this.entity.getTarget()))
             return false;
 
-        if (this.entity.distanceTo(this.entity.getTarget()) < 5)
+        if (this.entity.distanceTo(this.entity.getTarget()) < 6)
+            return false;
+
+        if(this.entity.getCurrentGoal() != null)
+            return false;
+
+        if (Beapi.randomWithRange(1, 10) <= 7)
             return false;
 
         this.execute();
@@ -35,15 +49,17 @@ public class WindBladeShowerGoal extends CooldownGoal
     }
 
     @Override
-    public void endCooldown()
+    public void onGoalEnd()
     {
-        super.endCooldown();
+        super.onGoalEnd();
         this.entity.setCurrentGoal(null);
         this.entity.setPreviousGoal(this);
     }
 
     public void execute()
     {
+        super.execute();
+
         for(int i = 0; i < 15; i++)
         {
             double d1 = entity.getTarget().getX() - entity.getX();
@@ -56,7 +72,7 @@ public class WindBladeShowerGoal extends CooldownGoal
             this.entity.level.addFreshEntity(projectile);
 
             this.entity.setCurrentGoal(this);
-            this.setOnCooldown(true);
+            entity.applySpellCD(spell);
         }
     }
 }

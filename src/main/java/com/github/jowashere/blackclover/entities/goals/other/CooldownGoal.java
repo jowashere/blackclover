@@ -1,73 +1,58 @@
 package com.github.jowashere.blackclover.entities.goals.other;
 
+import com.github.jowashere.blackclover.api.internal.AbstractSpell;
 import com.github.jowashere.blackclover.entities.mobs.BCEntity;
+import com.github.jowashere.blackclover.util.helpers.BCMHelper;
+import com.github.jowashere.blackclover.util.helpers.SpellHelper;
 import net.minecraft.entity.ai.goal.Goal;
 
 //Specific goal for simple spells with a cooldown
 public abstract class CooldownGoal extends Goal
 {
     private BCEntity entity;
-    private boolean isOnCooldown = false;
-    protected int maxCooldown, cooldown = 0, randomizer;
+    private AbstractSpell spell;
 
-    public CooldownGoal(BCEntity entity, int timer, int random)
+    public CooldownGoal(BCEntity entity, AbstractSpell associatedSpell)
     {
         this.entity = entity;
-        this.maxCooldown = timer;
-        this.cooldown = this.maxCooldown;
-        this.randomizer = random + 1;
-    }
-
-    public CooldownGoal setCooldown (int cooldown)
-    {
-        this.maxCooldown = cooldown;
-        return this;
+        this.spell = associatedSpell;
     }
 
     //When can the mob use
     @Override
     public boolean canUse()
     {
-        if (this.isOnCooldown && this.cooldown <= 0)
-            return false;
+        boolean isOnCooldown = SpellHelper.hasSpellCooldown(this.entity, this.spell);
 
-        if (this.isOnCooldown())
+        if (isOnCooldown)
         {
-            this.cooldownTick();
-            return false;
+            return this.cooldownTick();
         }
+
         return true;
     }
 
-    //What happens when the cooldown ends
-    public void endCooldown()
+    public void execute()
     {
-        this.isOnCooldown = false;
-        this.cooldown = this.maxCooldown + this.entity.getRandom().nextInt(this.randomizer);
+        BCMHelper.waitThen(this.entity.level, 10, this::onGoalEnd);
     }
 
-    public boolean isOnCooldown()
+    public void onGoalEnd()
     {
-        return this.isOnCooldown;
-    }
 
-    public void setOnCooldown(boolean value)
-    {
-        this.isOnCooldown = value;
     }
 
     public boolean cooldownTick()
     {
-        if (this.isOnCooldown)
+        if (SpellHelper.hasSpellCooldown(this.entity, this.spell))
         {
-            this.cooldown--;
-            if (this.cooldown <= 0)
-                this.endCooldown();
+            int cooldown = SpellHelper.getSpellCooldown(this.entity, this.spell);
+            cooldown--;
+            SpellHelper.setSpellCooldown(this.entity, this.spell, cooldown);
 
-            return true;
+            return false;
         }
-
-        return false;
+        return true;
     }
 
 }

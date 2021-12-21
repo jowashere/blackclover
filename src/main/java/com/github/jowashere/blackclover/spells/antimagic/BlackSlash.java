@@ -1,6 +1,5 @@
 package com.github.jowashere.blackclover.spells.antimagic;
 
-import com.github.jowashere.blackclover.api.IBCMPlugin;
 import com.github.jowashere.blackclover.api.internal.AbstractSpell;
 import com.github.jowashere.blackclover.entities.spells.sword.OriginFlashEntity;
 import com.github.jowashere.blackclover.init.AttributeInit;
@@ -12,8 +11,8 @@ import net.minecraft.util.Hand;
 
 public class BlackSlash extends AbstractSpell {
 
-    public BlackSlash(IBCMPlugin plugin) {
-        super(plugin, "black_slash", AttributeInit.ANTI_MAGIC);
+    public BlackSlash() {
+        super("black_slash", AttributeInit.ANTI_MAGIC);
 
         this.setManaCost(25F);
         this.setCooldown(50);

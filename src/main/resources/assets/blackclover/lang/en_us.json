@@ -18,7 +18,24 @@
   "item.blackclover.golden_dawn_legs": "Golden Dawn Pants",
   "item.blackclover.golden_dawn_feet": "Golden Dawn Boots",
 
+  "item.blackclover.asta_hat": "Asta's Headband",
+  "item.blackclover.asta_chest": "Asta's Shirt",
+  "item.blackclover.asta_legs": "Asta's Pants",
+  "item.blackclover.asta_feet": "Asta's Shoes",
+
+  "item.blackclover.asta_2_hat": "Asta's Headband",
+  "item.blackclover.asta_2_chest": "Asta's Shirt",
+  "item.blackclover.asta_2_legs": "Asta's Pants",
+  "item.blackclover.asta_2_feet": "Asta's Boots",
+
+  "item.blackclover.yuno_chest": "Yuno's Shirt",
+  "item.blackclover.yuno_legs": "Yuno's Pants",
+  "item.blackclover.yuno_feet": "Yuno's Boots",
+
+  "item.blackclover.bandit_spawn_egg": "Bandit Spawn Egg",
+
   "entity.blackclover.grimoire_magician": "Grimoire Magician",
+  "entity.blackclover.bandit": "Bandit",
 
   "spell.blackclover.message.notenoughmana": "Not enough mana.",
   "spell.blackclover.message.nogrimoire": "A grimoire is required to cast this spell.",

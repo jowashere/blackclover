@@ -1,6 +1,5 @@
 package com.github.jowashere.blackclover.spells.lightning;
 
-import com.github.jowashere.blackclover.api.IBCMPlugin;
 import com.github.jowashere.blackclover.api.internal.AbstractToggleSpell;
 import com.github.jowashere.blackclover.capabilities.player.IPlayerHandler;
 import com.github.jowashere.blackclover.capabilities.player.PlayerCapability;
@@ -17,10 +16,12 @@ import java.util.UUID;
 
 public class ThunderGodBoots extends AbstractToggleSpell {
 
+    public static final ThunderGodBoots INSTANCE = new ThunderGodBoots();
+
     private static final AttributeModifier STEP_HEIGHT = new AttributeModifier(UUID.fromString("ad388521-c053-4a67-a0d9-ff57379a2c68"), "Step Height Multiplier", 1, AttributeModifier.Operation.ADDITION);
 
-    public ThunderGodBoots(IBCMPlugin plugin) {
-        super(plugin, "tg_boots", AttributeInit.LIGHTNING);
+    public ThunderGodBoots() {
+        super("tg_boots", AttributeInit.LIGHTNING);
 
         this.setSkillSpell(true);
         this.setManaCost(0.25F);
@@ -28,9 +29,14 @@ public class ThunderGodBoots extends AbstractToggleSpell {
         this.setUnlockLevel(1);
         this.setUV(32, 16);
 
+        this.action = this::action;
         this.onStartEvent = this::onStart;
         this.onCancelEvent = this::onEnd;
 
+    }
+
+    public void action(LivingEntity caster, float main) {
+        caster.fallDistance = 0;
     }
 
     public void onStart(LivingEntity caster, float manaIn) {

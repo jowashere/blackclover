@@ -1,6 +1,5 @@
 package com.github.jowashere.blackclover.spells.slash;
 
-import com.github.jowashere.blackclover.api.IBCMPlugin;
 import com.github.jowashere.blackclover.api.internal.AbstractToggleSpell;
 import com.github.jowashere.blackclover.init.AttributeInit;
 import com.github.jowashere.blackclover.util.helpers.BCMHelper;
@@ -22,8 +21,8 @@ public class SlashBlades extends AbstractToggleSpell {
 
     private static final AttributeModifier STEP_HEIGHT = new AttributeModifier(UUID.fromString("ad388521-c053-4a67-a0d9-ff57379a2c68"), "Step Height Multiplier", 1, AttributeModifier.Operation.ADDITION);
 
-    public SlashBlades(IBCMPlugin plugin) {
-        super(plugin, "slash_blades", AttributeInit.SLASH);
+    public SlashBlades() {
+        super("slash_blades", AttributeInit.SLASH);
 
         this.setSkillSpell(true);
         this.setManaCost(0.4F);

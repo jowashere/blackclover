@@ -1,6 +1,5 @@
 package com.github.jowashere.blackclover.api.internal;
 
-import com.github.jowashere.blackclover.api.IBCMPlugin;
 import com.github.jowashere.blackclover.networking.NetworkLoader;
 import com.github.jowashere.blackclover.networking.packets.spells.PacketIntSpellNBTSync;
 import com.github.jowashere.blackclover.networking.packets.spells.PacketSpellNBTSync;
@@ -21,8 +20,8 @@ public abstract class AbstractToggleSpell extends AbstractSpell {
     protected IDamageEventListener onDamageEvent;
     protected IDeathEventListener onDeathEvent;
 
-    public AbstractToggleSpell(IBCMPlugin plugin, String registryName, BCMAttribute attribute) {
-        super(plugin, registryName, attribute);
+    public AbstractToggleSpell(String registryName, BCMAttribute attribute) {
+        super(registryName, attribute);
 
         this.setToggle(true);
     }

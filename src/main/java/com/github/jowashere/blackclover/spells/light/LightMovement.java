@@ -1,6 +1,5 @@
 package com.github.jowashere.blackclover.spells.light;
 
-import com.github.jowashere.blackclover.api.IBCMPlugin;
 import com.github.jowashere.blackclover.api.internal.AbstractSpell;
 import com.github.jowashere.blackclover.init.AttributeInit;
 import com.github.jowashere.blackclover.util.helpers.BCMHelper;
@@ -14,8 +13,8 @@ import java.util.Collections;
 
 public class LightMovement extends AbstractSpell {
 
-    public LightMovement(IBCMPlugin plugin) {
-        super(plugin, "light_movement", AttributeInit.LIGHT);
+    public LightMovement() {
+        super("light_movement", AttributeInit.LIGHT);
 
         this.setSkillSpell(true);
         this.setManaCost(30F);

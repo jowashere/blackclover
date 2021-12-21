@@ -1,6 +1,5 @@
 package com.github.jowashere.blackclover.spells.wind;
 
-import com.github.jowashere.blackclover.api.IBCMPlugin;
 import com.github.jowashere.blackclover.api.internal.AbstractSpell;
 import com.github.jowashere.blackclover.init.AttributeInit;
 import com.github.jowashere.blackclover.util.helpers.BCMHelper;
@@ -14,10 +13,10 @@ import java.util.List;
 
 public class ToweringTornado extends AbstractSpell {
 
-    public static final AbstractSpell INSTANCE = new ToweringTornado(null);
+    public static final AbstractSpell INSTANCE = new ToweringTornado();
 
-    public ToweringTornado(IBCMPlugin plugin) {
-        super(plugin, "wind_crescent", AttributeInit.WIND);
+    public ToweringTornado() {
+        super("towering_tornado", AttributeInit.WIND);
 
         this.setManaCost(15F);
         this.setCooldown(80);

@@ -1,6 +1,5 @@
 package com.github.jowashere.blackclover.spells.antimagic;
 
-import com.github.jowashere.blackclover.api.IBCMPlugin;
 import com.github.jowashere.blackclover.api.internal.AbstractSpell;
 import com.github.jowashere.blackclover.init.AttributeInit;
 import com.github.jowashere.blackclover.init.ItemInit;
@@ -16,8 +15,8 @@ import net.minecraftforge.fml.network.PacketDistributor;
 
 public class BlackMeteorite extends AbstractSpell {
 
-    public BlackMeteorite(IBCMPlugin plugin) {
-        super(plugin, "black_meteorite", AttributeInit.ANTI_MAGIC);
+    public BlackMeteorite() {
+        super("black_meteorite", AttributeInit.ANTI_MAGIC);
 
         this.setSkillSpell(true);
         this.setManaCost(85F);

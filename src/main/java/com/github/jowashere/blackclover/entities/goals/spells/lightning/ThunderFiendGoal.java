@@ -1,9 +1,10 @@
 package com.github.jowashere.blackclover.entities.goals.spells.lightning;
 
+import com.github.jowashere.blackclover.api.Beapi;
+import com.github.jowashere.blackclover.api.internal.AbstractSpell;
 import com.github.jowashere.blackclover.entities.goals.other.CooldownGoal;
-import com.github.jowashere.blackclover.entities.goals.spells.wind.WindBladeGoal;
 import com.github.jowashere.blackclover.entities.mobs.BCEntity;
-import com.github.jowashere.blackclover.entities.spells.wind.WindBladeEntity;
+import com.github.jowashere.blackclover.init.AttributeInit;
 import com.github.jowashere.blackclover.networking.NetworkLoader;
 import com.github.jowashere.blackclover.networking.packets.spells.PacketIntSpellNBTSync;
 import com.github.jowashere.blackclover.spells.lightning.ThunderFiend;
@@ -16,10 +17,11 @@ import net.minecraftforge.fml.network.PacketDistributor;
 public class ThunderFiendGoal extends CooldownGoal
 {
     private BCEntity entity;
+    private final AbstractSpell spell = ThunderFiend.INSTANCE;
 
     public ThunderFiendGoal(BCEntity entity)
     {
-        super(entity, 6, entity.getRandom().nextInt(5));
+        super(entity, ThunderFiend.INSTANCE);
         this.entity = entity;
         this.entity.addThreat(12);
     }
@@ -33,10 +35,16 @@ public class ThunderFiendGoal extends CooldownGoal
         if (this.entity.getTarget() == null)
             return false;
 
+        if (!this.entity.getAttribute().equals(AttributeInit.LIGHTNING))
+            return false;
+
         if(!this.entity.canSee(this.entity.getTarget()))
             return false;
 
-        if (this.entity.distanceTo(this.entity.getTarget()) < 5)
+        if(this.entity.getCurrentGoal() != null)
+            return false;
+
+        if (Beapi.randomWithRange(1, 10) <= 5)
             return false;
 
         this.execute(entity);
@@ -44,15 +52,17 @@ public class ThunderFiendGoal extends CooldownGoal
     }
 
     @Override
-    public void endCooldown()
+    public void onGoalEnd()
     {
-        super.endCooldown();
+        super.onGoalEnd();
         this.entity.setCurrentGoal(null);
         this.entity.setPreviousGoal(this);
     }
 
     public void execute(LivingEntity caster)
     {
+        super.execute();
+
         Vector3d speed = BCMHelper.Propulsion(caster, 3, 3);
         caster.setDeltaMovement(speed.x, 0.3, speed.z);
         caster.hurtMarked = true;
@@ -62,5 +72,8 @@ public class ThunderFiendGoal extends CooldownGoal
         String nbtName = "thunder_fiend_dmg";
         caster.getPersistentData().putInt(nbtName, 8);
         NetworkLoader.INSTANCE.send(PacketDistributor.ALL.noArg(), new PacketIntSpellNBTSync(caster.getId(), nbtName, 6));
+
+        this.entity.setCurrentGoal(this);
+        entity.applySpellCD(spell);
     }
 }

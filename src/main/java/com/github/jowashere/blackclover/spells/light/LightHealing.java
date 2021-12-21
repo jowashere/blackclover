@@ -1,6 +1,5 @@
 package com.github.jowashere.blackclover.spells.light;
 
-import com.github.jowashere.blackclover.api.IBCMPlugin;
 import com.github.jowashere.blackclover.api.internal.AbstractToggleSpell;
 import com.github.jowashere.blackclover.init.AttributeInit;
 import com.github.jowashere.blackclover.util.helpers.BCMHelper;
@@ -12,10 +11,10 @@ import net.minecraft.world.server.ServerWorld;
 
 public class LightHealing extends AbstractToggleSpell {
 
-    public static final LightHealing INSTANCE = new LightHealing(null);
+    public static final LightHealing INSTANCE = new LightHealing();
 
-    public LightHealing(IBCMPlugin plugin) {
-        super(plugin, "light_healing", AttributeInit.LIGHT);
+    public LightHealing() {
+        super("light_healing", AttributeInit.LIGHT);
 
         this.setManaCost(0.95F);
         this.setCooldown(120);

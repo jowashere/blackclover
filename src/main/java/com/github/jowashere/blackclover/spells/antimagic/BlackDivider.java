@@ -1,6 +1,5 @@
 package com.github.jowashere.blackclover.spells.antimagic;
 
-import com.github.jowashere.blackclover.api.IBCMPlugin;
 import com.github.jowashere.blackclover.api.internal.AbstractToggleSpell;
 import com.github.jowashere.blackclover.init.AttributeInit;
 import com.github.jowashere.blackclover.init.ItemInit;
@@ -17,8 +16,8 @@ public class BlackDivider extends AbstractToggleSpell {
 
     private static final AttributeModifier REACH_MODIFIER = new AttributeModifier(UUID.fromString("ff5c8feb-6598-4d30-81de-e1ca1084f51b"), "Reach Modifier", 4.5, AttributeModifier.Operation.ADDITION);
 
-    public BlackDivider(IBCMPlugin plugin) {
-        super(plugin, "black_divider", AttributeInit.ANTI_MAGIC);
+    public BlackDivider() {
+        super("black_divider", AttributeInit.ANTI_MAGIC);
 
         this.setManaCost(0.25F);
         this.setCooldown(200);

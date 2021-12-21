@@ -7,6 +7,8 @@ import com.github.jowashere.blackclover.commands.impl.RaceCommand;
 import com.github.jowashere.blackclover.entities.spells.wind.WindHawkEntity;
 import com.github.jowashere.blackclover.init.EntityInit;
 import com.github.jowashere.blackclover.init.ModAttributes;
+import net.minecraft.entity.EntityType;
+import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.event.entity.EntityAttributeCreationEvent;
 import net.minecraftforge.event.entity.EntityAttributeModificationEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -28,7 +30,6 @@ public class ModEventsSubscriber {
             event.add(entityType, ModAttributes.DAMAGE_REDUCTION.get());
             event.add(entityType, ModAttributes.SPECIAL_DAMAGE_REDUCTION.get());
             event.add(entityType, ModAttributes.ATTACK_RANGE.get());
-
         });
     }
 
@@ -46,5 +47,9 @@ public class ModEventsSubscriber {
             MagicLevelCommand.register(event.getServer().getCommands().getDispatcher());
             RaceCommand.register(event.getServer().getCommands().getDispatcher());
         }
+    }
+
+    public static void onRegisterEntities(final RegistryEvent.Register<EntityType<?>> event) {
+
     }
 }

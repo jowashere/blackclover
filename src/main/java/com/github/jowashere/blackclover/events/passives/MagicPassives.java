@@ -4,11 +4,14 @@ import com.github.jowashere.blackclover.Main;
 import com.github.jowashere.blackclover.capabilities.player.IPlayerHandler;
 import com.github.jowashere.blackclover.capabilities.player.PlayerCapability;
 import com.github.jowashere.blackclover.capabilities.player.PlayerProvider;
+import com.github.jowashere.blackclover.entities.mobs.BCEntity;
 import com.github.jowashere.blackclover.events.bcevents.MagicLevelChangeEvent;
 import com.github.jowashere.blackclover.init.ModAttributes;
 import com.github.jowashere.blackclover.networking.NetworkLoader;
 import com.github.jowashere.blackclover.networking.packets.PacketToggleInfusionBoolean;
 import com.github.jowashere.blackclover.networking.packets.mana.PacketManaSync;
+import com.github.jowashere.blackclover.util.helpers.BCMHelper;
+import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.player.PlayerEntity;
@@ -32,7 +35,7 @@ public class MagicPassives {
         private static final AttributeModifier FALL_RESISTANCE = new AttributeModifier(UUID.fromString("e81580bf-c648-4363-9d80-038b84af2364"), "Fall Resistance", 7, AttributeModifier.Operation.ADDITION);
 
         @SubscribeEvent
-        public static void onEntityUpdate(LivingEvent.LivingUpdateEvent event)
+        public static void onPlayerUpdate(LivingEvent.LivingUpdateEvent event)
         {
             if (!(event.getEntityLiving() instanceof PlayerEntity))
                 return;
@@ -166,40 +169,101 @@ public class MagicPassives {
 
         }
 
-        private static AttributeModifier getArmourModifier(PlayerEntity playerEntity) {
-            LazyOptional<IPlayerHandler> playerInCap = playerEntity.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
-            IPlayerHandler player_cap = playerInCap.orElse(new PlayerCapability());
+        @SubscribeEvent
+        public static void onEntityUpdate(LivingEvent.LivingUpdateEvent event)
+        {
+            if (!(event.getEntityLiving() instanceof BCEntity))
+                return;
+
+            BCEntity entity = (BCEntity) event.getEntityLiving();
+            World world = entity.level;
+
+            if(world.isClientSide)
+                return;
+
+            //Mana Skin Boosts
+
+            if(!entity.getAttribute(ModAttributes.DAMAGE_REDUCTION.get()).hasModifier(getResistanceModifier(entity)))
+                entity.getAttribute(ModAttributes.DAMAGE_REDUCTION.get()).addTransientModifier(getResistanceModifier(entity));
+
+            if(!entity.getAttribute(ModAttributes.FALL_RESISTANCE.get()).hasModifier(FALL_RESISTANCE))
+                entity.getAttribute(ModAttributes.FALL_RESISTANCE.get()).addTransientModifier(FALL_RESISTANCE);
+
+            if(!entity.getAttribute(Attributes.ARMOR).hasModifier(getArmourModifier(entity)))
+                entity.getAttribute(Attributes.ARMOR).addTransientModifier(getArmourModifier(entity));
+
+            //Reinforcement Boosts
+
+            if(entity.isSprinting()){
+                if(!entity.getAttribute(Attributes.MOVEMENT_SPEED).hasModifier(getSpeedModifier(entity)))
+                    entity.getAttribute(Attributes.MOVEMENT_SPEED).addTransientModifier(getSpeedModifier(entity));
+            }else{
+                if(entity.getAttribute(Attributes.MOVEMENT_SPEED).hasModifier(getSpeedModifier(entity)))
+                    entity.getAttribute(Attributes.MOVEMENT_SPEED).removeModifier(getSpeedModifier(entity));
+            }
+
+            if(!entity.getAttribute(Attributes.ARMOR_TOUGHNESS).hasModifier(getArmourModifier(entity)))
+                entity.getAttribute(Attributes.ARMOR_TOUGHNESS).addTransientModifier(getArmourModifier(entity));
+
+            if(!entity.getAttribute(Attributes.ATTACK_DAMAGE).hasModifier(getStrengthModifier(entity)))
+                entity.getAttribute(Attributes.ATTACK_DAMAGE).addTransientModifier(getStrengthModifier(entity));
+
+            if(!entity.getAttribute(ModAttributes.STEP_HEIGHT.get()).hasModifier(STEP_HEIGHT))
+                entity.getAttribute(ModAttributes.STEP_HEIGHT.get()).addTransientModifier(STEP_HEIGHT);
+
+            if(!entity.isCrouching()){
+                if(!entity.getAttribute(ModAttributes.JUMP_HEIGHT.get()).hasModifier(getJumpModifier(entity)) && !entity.isCrouching())
+                    entity.getAttribute(ModAttributes.JUMP_HEIGHT.get()).addTransientModifier(getJumpModifier(entity));
+            }else {
+                if(entity.getAttribute(ModAttributes.JUMP_HEIGHT.get()).hasModifier(getJumpModifier(entity)))
+                    entity.getAttribute(ModAttributes.JUMP_HEIGHT.get()).removeModifier(getJumpModifier(entity));
+            }
+
+            if(BCMHelper.getMagicLevel(entity) >= 55)
+                entity.fallDistance = 0;
+
+        }
+
+
+        private static AttributeModifier getArmourModifier(LivingEntity entity) {
+
+            int magicLevel = BCMHelper.getMagicLevel(entity);
+
             return new AttributeModifier(UUID.fromString("33280017-3519-4ed6-8a9e-b6ac952b6cd5"), "Mana Skin Armour Modifier"
-                    , 3 + ((float)player_cap.ReturnMagicLevel()/20), AttributeModifier.Operation.ADDITION);
+                    , 3 + ((float)magicLevel/20), AttributeModifier.Operation.ADDITION);
         }
 
-        private static AttributeModifier getResistanceModifier(PlayerEntity playerEntity) {
-            LazyOptional<IPlayerHandler> playerInCap = playerEntity.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
-            IPlayerHandler player_cap = playerInCap.orElse(new PlayerCapability());
+        private static AttributeModifier getResistanceModifier(LivingEntity entity) {
+
+            int magicLevel = BCMHelper.getMagicLevel(entity);
+
             return new AttributeModifier(UUID.fromString("44599c7d-fbdf-4863-b89f-bc53f23707ff"), "Mana Skin Resistance Modifier"
-                    , (player_cap.ReturnMagicLevel()/100)*0.75, AttributeModifier.Operation.ADDITION);
+                    , (magicLevel/100)*0.75, AttributeModifier.Operation.ADDITION);
         }
 
-        private static AttributeModifier getStrengthModifier(PlayerEntity playerEntity) {
-            LazyOptional<IPlayerHandler> playerInCap = playerEntity.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
-            IPlayerHandler player_cap = playerInCap.orElse(new PlayerCapability());
+        private static AttributeModifier getStrengthModifier(LivingEntity entity) {
+
+            int magicLevel = BCMHelper.getMagicLevel(entity);
+
             return new AttributeModifier(UUID.fromString("4d54f651-cf58-4157-8138-4a206129f023"), "Reinforcement Strength Modifier",
-                    2 + (player_cap.ReturnMagicLevel()/10), AttributeModifier.Operation.ADDITION);
+                    1 + (magicLevel/20), AttributeModifier.Operation.ADDITION);
 
         }
 
-        private static AttributeModifier getSpeedModifier(PlayerEntity playerEntity) {
-            LazyOptional<IPlayerHandler> playerInCap = playerEntity.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
-            IPlayerHandler player_cap = playerInCap.orElse(new PlayerCapability());
+        private static AttributeModifier getSpeedModifier(LivingEntity entity) {
+
+            int magicLevel = BCMHelper.getMagicLevel(entity);
+
             return new AttributeModifier(UUID.fromString("6bec2c8f-a85b-4955-9043-a473d59031b3"), "Reinforcement Speed Modifier",
-                    0.02 * player_cap.ReturnMagicLevel(), AttributeModifier.Operation.MULTIPLY_BASE);
+                    0.02 * magicLevel, AttributeModifier.Operation.MULTIPLY_BASE);
         }
 
-        private static AttributeModifier getJumpModifier(PlayerEntity playerEntity) {
-            LazyOptional<IPlayerHandler> playerInCap = playerEntity.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
-            IPlayerHandler player_cap = playerInCap.orElse(new PlayerCapability());
+        private static AttributeModifier getJumpModifier(LivingEntity entity) {
+
+            int magicLevel = BCMHelper.getMagicLevel(entity);
+
             return new AttributeModifier(UUID.fromString("1f08e9ed-f825-4fa3-a3e1-dd7cdf32aa3a"), "Reinforcement Jump Modifier",
-                    1 + ((player_cap.ReturnMagicLevel()/100)*3), AttributeModifier.Operation.ADDITION);
+                    1 + ((magicLevel/100)*3), AttributeModifier.Operation.ADDITION);
 
         }
 

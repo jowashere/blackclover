@@ -72,4 +72,26 @@ public class SpellHelper {
         return 0;
     }
 
+    public static int getSpellCooldown(LivingEntity entity, AbstractSpell spell) {
+
+        String nbtName = spell.getCorrelatedPlugin().getPluginId() + "_" + spell.getName() + "_cd";
+        int cooldown = entity.getPersistentData().getInt(nbtName);;
+
+        return cooldown;
+    }
+
+    public static void setSpellCooldown(LivingEntity entity, AbstractSpell spell, int cooldown) {
+
+        String nbtName = spell.getCorrelatedPlugin().getPluginId() + "_" + spell.getName() + "_cd";
+        entity.getPersistentData().putInt(nbtName, cooldown);
+
+    }
+
+    public static boolean hasSpellCooldown(LivingEntity entity, AbstractSpell spell) {
+        String nbtName = spell.getCorrelatedPlugin().getPluginId() + "_" + spell.getName() + "_cd";
+        int cooldown = entity.getPersistentData().getInt(nbtName);;
+
+        return cooldown > 0;
+    }
+
 }

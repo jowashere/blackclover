@@ -1,6 +1,7 @@
 package com.github.jowashere.blackclover.api.internal;
 
 import com.github.jowashere.blackclover.Main;
+import com.github.jowashere.blackclover.MainPlugin;
 import com.github.jowashere.blackclover.api.IBCMPlugin;
 import com.github.jowashere.blackclover.capabilities.player.IPlayerHandler;
 import com.github.jowashere.blackclover.capabilities.player.PlayerProvider;
@@ -41,9 +42,9 @@ public abstract class AbstractSpell {
 
     private int unlockLevel = 0;
 
-    public AbstractSpell(IBCMPlugin plugin, String registryName, BCMAttribute attribute) {
+    public AbstractSpell(String registryName, BCMAttribute attribute) {
         this.name = registryName;
-        this.correlatedPlugin = plugin;
+        this.correlatedPlugin = new MainPlugin();
         this.attribute = attribute;
 
         this.resourceLocation = SPELL_LOCATION;

@@ -1,8 +1,10 @@
 package com.github.jowashere.blackclover.entities.goals.spells.wind;
 
+import com.github.jowashere.blackclover.api.Beapi;
+import com.github.jowashere.blackclover.api.internal.AbstractSpell;
 import com.github.jowashere.blackclover.entities.goals.other.CooldownGoal;
 import com.github.jowashere.blackclover.entities.mobs.BCEntity;
-import com.github.jowashere.blackclover.entities.spells.wind.WindBladeEntity;
+import com.github.jowashere.blackclover.init.AttributeInit;
 import com.github.jowashere.blackclover.spells.wind.ToweringTornado;
 import com.github.jowashere.blackclover.util.helpers.BCMHelper;
 import com.github.jowashere.blackclover.util.helpers.SpellHelper;
@@ -16,10 +18,11 @@ import java.util.List;
 public class ToweringTornadoGoal extends CooldownGoal
 {
     private BCEntity entity;
+    private AbstractSpell spell = ToweringTornado.INSTANCE;
 
     public ToweringTornadoGoal(BCEntity entity)
     {
-        super(entity, 6, entity.getRandom().nextInt(5));
+        super(entity, ToweringTornado.INSTANCE);
         this.entity = entity;
         this.entity.addThreat(10);
     }
@@ -33,10 +36,19 @@ public class ToweringTornadoGoal extends CooldownGoal
         if (this.entity.getTarget() == null)
             return false;
 
+        if (!this.entity.getAttribute().equals(AttributeInit.WIND))
+            return false;
+
         if(!this.entity.canSee(this.entity.getTarget()))
             return false;
 
-        if (this.entity.distanceTo(this.entity.getTarget()) < 5)
+        if (this.entity.distanceTo(this.entity.getTarget()) > 5)
+            return false;
+
+        if(this.entity.getCurrentGoal() != null)
+            return false;
+
+        if (Beapi.randomWithRange(1, 10) <= 1)
             return false;
 
         this.execute();
@@ -44,15 +56,17 @@ public class ToweringTornadoGoal extends CooldownGoal
     }
 
     @Override
-    public void endCooldown()
+    public void onGoalEnd()
     {
-        super.endCooldown();
+        super.onGoalEnd();
         this.entity.setCurrentGoal(null);
         this.entity.setPreviousGoal(this);
     }
 
     public void execute()
     {
+        super.execute();
+
         List<LivingEntity> entities = BCMHelper.GetEntitiesNear(entity.blockPosition(), entity.level, 6F, LivingEntity.class);
         entities.remove(entity);
 
@@ -71,5 +85,8 @@ public class ToweringTornadoGoal extends CooldownGoal
         if (entity.level instanceof ServerWorld) {
             ((ServerWorld) entity.level).sendParticles(ParticleTypes.SPIT, entity.getX(), entity.getY(), entity.getZ(), (int) 100, 3, 2, 3, 1);
         }
+
+        this.entity.setCurrentGoal(this);
+        entity.applySpellCD(spell);
     }
 }

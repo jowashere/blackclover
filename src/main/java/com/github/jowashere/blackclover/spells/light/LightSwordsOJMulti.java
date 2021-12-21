@@ -1,6 +1,5 @@
 package com.github.jowashere.blackclover.spells.light;
 
-import com.github.jowashere.blackclover.api.IBCMPlugin;
 import com.github.jowashere.blackclover.api.internal.AbstractSpell;
 import com.github.jowashere.blackclover.entities.spells.light.LightSwordOJEntity;
 import com.github.jowashere.blackclover.init.AttributeInit;
@@ -8,8 +7,8 @@ import net.minecraft.entity.LivingEntity;
 
 public class LightSwordsOJMulti extends AbstractSpell {
 
-    public LightSwordsOJMulti(IBCMPlugin plugin) {
-        super(plugin, "light_swords_oj", AttributeInit.LIGHT);
+    public LightSwordsOJMulti() {
+        super("light_swords_oj", AttributeInit.LIGHT);
 
         this.setManaCost(75F);
         this.setCooldown(110);

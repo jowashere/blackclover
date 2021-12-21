@@ -1,20 +1,18 @@
 package com.github.jowashere.blackclover.spells.lightning;
 
-import com.github.jowashere.blackclover.api.IBCMPlugin;
 import com.github.jowashere.blackclover.api.internal.AbstractSpell;
 import com.github.jowashere.blackclover.entities.spells.lightning.ThunderOrbEntity;
 import com.github.jowashere.blackclover.init.AttributeInit;
-import com.github.jowashere.blackclover.spells.wind.ToweringTornado;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Hand;
 
 public class ThunderCrumblingOrb extends AbstractSpell {
 
-    public static final AbstractSpell INSTANCE = new ThunderCrumblingOrb(null);
+    public static final AbstractSpell INSTANCE = new ThunderCrumblingOrb();
 
-    public ThunderCrumblingOrb(IBCMPlugin plugin) {
-        super(plugin, "thunder_orb", AttributeInit.LIGHTNING);
+    public ThunderCrumblingOrb() {
+        super("thunder_orb", AttributeInit.LIGHTNING);
 
         this.setManaCost(20F);
         this.setCooldown(60);

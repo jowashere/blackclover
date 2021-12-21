@@ -29,10 +29,7 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.network.PacketDistributor;
 import net.minecraftforge.items.ItemHandlerHelper;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -322,6 +319,11 @@ public class BCMHelper {
         Vector3d endVec = startVec.add(0, -256, 0);
         RayTraceResult blockResult = player.level.clip(new RayTraceContext(startVec, endVec,  RayTraceContext.BlockMode.OUTLINE, RayTraceContext.FluidMode.ANY, player));
         return startVec.subtract(blockResult.getLocation()).y;
+    }
+
+    public static double randomWithRange(int min, int max)
+    {
+        return new Random().nextInt(max + 1 - min) + min;
     }
 
 }

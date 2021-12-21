@@ -1,7 +1,6 @@
 package com.github.jowashere.blackclover.spells.sword;
 
 import com.github.jowashere.blackclover.api.Beapi;
-import com.github.jowashere.blackclover.api.IBCMPlugin;
 import com.github.jowashere.blackclover.api.internal.AbstractSpell;
 import com.github.jowashere.blackclover.api.internal.entities.spells.AbstractAntiMagicProjectileEntity;
 import com.github.jowashere.blackclover.api.internal.entities.spells.AbstractSpellProjectileEntity;
@@ -19,8 +18,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 public class SpellAbsorption extends AbstractSpell {
 
-    public SpellAbsorption(IBCMPlugin plugin) {
-        super(plugin, "sword_absorption", AttributeInit.SWORD);
+    public SpellAbsorption() {
+        super("sword_absorption", AttributeInit.SWORD);
 
         this.setManaCost(20F);
         this.setCooldown(60);

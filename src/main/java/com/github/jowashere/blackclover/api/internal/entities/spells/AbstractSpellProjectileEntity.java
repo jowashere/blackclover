@@ -1,11 +1,10 @@
 package com.github.jowashere.blackclover.api.internal.entities.spells;
 
-import com.github.jowashere.blackclover.init.EffectInit;
+import com.github.jowashere.blackclover.util.helpers.BCMHelper;
 import com.github.jowashere.blackclover.util.helpers.SpellHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.ProjectileItemEntity;
 import net.minecraft.network.IPacket;
 import net.minecraft.util.DamageSource;
@@ -54,14 +53,12 @@ public abstract class AbstractSpellProjectileEntity extends ProjectileItemEntity
                     LivingEntity livingEntity = (LivingEntity) ((EntityRayTraceResult)result).getEntity();
                 }
                 if (this.getOwner() instanceof LivingEntity) {
+
                     LivingEntity livingShooter = (LivingEntity) this.getOwner();
-                    if(livingShooter instanceof PlayerEntity){
-                        entity.hurt(DamageSource.thrown(this, this.getOwner()), SpellHelper.spellDamageCalcP((PlayerEntity) livingShooter, damageTier, baseDamage));
-                    } else if(livingShooter.hasEffect(EffectInit.MAGIC_LEVEL.get())){
-                        entity.hurt(DamageSource.thrown(this, this.getOwner()), SpellHelper.spellDamageCalcE(livingShooter, damageTier, baseDamage));
-                    }else {
-                        entity.hurt(DamageSource.thrown(this, this.getOwner()), 3F);
-                    }
+                    int magicLevel = BCMHelper.getMagicLevel(livingShooter);
+
+                    entity.hurt(DamageSource.thrown(this, this.getOwner()), SpellHelper.spellDamageCalc(magicLevel, damageTier, baseDamage));
+
                 }else {
                     entity.hurt(DamageSource.thrown(this, this.getOwner()), 3F);
                 }

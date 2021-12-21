@@ -15,6 +15,8 @@ public class BCMAttribute {
 
     private AbstractSpell.Type spellType;
 
+    private boolean hasNPC;
+
     private String message = "";
     private int colour = 0;
     private int u;
@@ -23,6 +25,7 @@ public class BCMAttribute {
     public BCMAttribute(String attributeName, int weight, boolean hasNPC, AbstractSpell.Type spellType) {
         this.attributeName = attributeName;
         this.weight = weight;
+        this.hasNPC = hasNPC;
     }
 
     public BCMAttribute(String attributeName, int weight, boolean hasNPC, int u, int v, AbstractSpell.Type spellType) {
@@ -86,4 +89,7 @@ public class BCMAttribute {
         return this.colour;
     }
 
+    public boolean hasNPC(){
+        return hasNPC;
+    }
 }

@@ -1,6 +1,5 @@
 package com.github.jowashere.blackclover.spells.antimagic;
 
-import com.github.jowashere.blackclover.api.IBCMPlugin;
 import com.github.jowashere.blackclover.api.internal.AbstractSpell;
 import com.github.jowashere.blackclover.init.AttributeInit;
 import com.github.jowashere.blackclover.init.ItemInit;
@@ -16,8 +15,8 @@ import net.minecraftforge.fml.network.PacketDistributor;
 
 public class BullThrust extends AbstractSpell {
 
-    public BullThrust(IBCMPlugin plugin) {
-        super(plugin, "bull_thrust", AttributeInit.ANTI_MAGIC);
+    public BullThrust() {
+        super( "bull_thrust", AttributeInit.ANTI_MAGIC);
 
         this.setManaCost(15F);
         this.setCooldown(100);

@@ -1,6 +1,5 @@
 package com.github.jowashere.blackclover.spells.wind;
 
-import com.github.jowashere.blackclover.api.IBCMPlugin;
 import com.github.jowashere.blackclover.api.internal.AbstractSpell;
 import com.github.jowashere.blackclover.init.AttributeInit;
 import net.minecraft.entity.LivingEntity;
@@ -9,8 +8,8 @@ import net.minecraft.world.server.ServerWorld;
 
 public class WindFlight extends AbstractSpell {
 
-    public WindFlight(IBCMPlugin plugin) {
-        super(plugin, "wind_flight", AttributeInit.WIND);
+    public WindFlight() {
+        super("wind_flight", AttributeInit.WIND);
 
         this.setManaCost(0.3F);
         this.setCooldown(100);

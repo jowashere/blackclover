@@ -11,10 +11,7 @@ import com.github.jowashere.blackclover.networking.packets.PacketSetGrimoire;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.goal.HurtByTargetGoal;
-import net.minecraft.entity.ai.goal.LookAtGoal;
-import net.minecraft.entity.ai.goal.LookRandomlyGoal;
-import net.minecraft.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -53,13 +50,15 @@ public class GrimoireMagicianEntity extends BCEntity
 
     public static AttributeModifierMap.MutableAttribute setCustomAttributes()
     {
-        return MobEntity.createMobAttributes()
+        AttributeModifierMap.MutableAttribute attributes = MobEntity.createMobAttributes()
                 .add(Attributes.ATTACK_DAMAGE, 50)
                 .add(Attributes.ARMOR, 20)
                 .add(Attributes.MAX_HEALTH, 300)
                 .add(Attributes.FOLLOW_RANGE, 100)
                 .add(Attributes.MOVEMENT_SPEED, 3)
                 .add(ModAttributes.FALL_RESISTANCE.get(), 50);
+        return addModAttributes(attributes);
+
     }
 
     @Override

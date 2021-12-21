@@ -1,6 +1,5 @@
 package com.github.jowashere.blackclover.spells.wind;
 
-import com.github.jowashere.blackclover.api.IBCMPlugin;
 import com.github.jowashere.blackclover.api.internal.AbstractSpell;
 import com.github.jowashere.blackclover.capabilities.player.IPlayerHandler;
 import com.github.jowashere.blackclover.capabilities.player.PlayerCapability;
@@ -23,8 +22,8 @@ import net.minecraftforge.common.util.LazyOptional;
 
 public class WindHawk extends AbstractSpell {
 
-    public WindHawk(IBCMPlugin plugin) {
-        super(plugin, "wind_hawk", AttributeInit.WIND);
+    public WindHawk() {
+        super("wind_hawk", AttributeInit.WIND);
 
         this.setManaCost(60F);
         this.setCooldown(120);

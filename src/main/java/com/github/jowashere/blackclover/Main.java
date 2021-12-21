@@ -52,6 +52,7 @@ public class Main
         ModAttributes.ATTRIBUTES.register(modEventBus);
         EffectInit.EFFECT.register(modEventBus);
         EntityInit.ENTITIES.register(modEventBus);
+        EntityInit.SPAWN_EGGS.register(modEventBus);
         StructuresInit.DEFERRED_REGISTRY_STRUCTURE.register(modEventBus);
 
         modEventBus.addListener(this::onCommonSetup);

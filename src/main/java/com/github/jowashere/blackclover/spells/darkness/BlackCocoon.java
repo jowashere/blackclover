@@ -1,6 +1,5 @@
 package com.github.jowashere.blackclover.spells.darkness;
 
-import com.github.jowashere.blackclover.api.IBCMPlugin;
 import com.github.jowashere.blackclover.api.internal.AbstractToggleSpell;
 import com.github.jowashere.blackclover.capabilities.player.IPlayerHandler;
 import com.github.jowashere.blackclover.capabilities.player.PlayerCapability;
@@ -22,8 +21,8 @@ public class BlackCocoon extends AbstractToggleSpell {
 
     private static final AttributeModifier COCOON_DE = new AttributeModifier(UUID.fromString("ad388521-c053-4a67-a0d9-ff57379a2c68"), "Cocoon Speed", -2000, AttributeModifier.Operation.ADDITION);
 
-    public BlackCocoon(IBCMPlugin plugin) {
-        super(plugin, "black_cocoon", AttributeInit.DARKNESS);
+    public BlackCocoon() {
+        super("black_cocoon", AttributeInit.DARKNESS);
 
         this.setManaCost(0.6F);
         this.setCooldown(300);

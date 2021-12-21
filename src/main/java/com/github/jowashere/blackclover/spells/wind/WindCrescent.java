@@ -1,6 +1,5 @@
 package com.github.jowashere.blackclover.spells.wind;
 
-import com.github.jowashere.blackclover.api.IBCMPlugin;
 import com.github.jowashere.blackclover.api.internal.AbstractSpell;
 import com.github.jowashere.blackclover.entities.spells.wind.WindCrescentEntity;
 import com.github.jowashere.blackclover.init.AttributeInit;
@@ -9,8 +8,10 @@ import net.minecraft.util.Hand;
 
 public class WindCrescent extends AbstractSpell {
 
-    public WindCrescent(IBCMPlugin plugin) {
-        super(plugin, "wind_crescent", AttributeInit.WIND);
+    public static final AbstractSpell INSTANCE = new WindCrescent();
+
+    public WindCrescent() {
+        super("wind_crescent", AttributeInit.WIND);
 
         this.setManaCost(25F);
         this.setCooldown(70);

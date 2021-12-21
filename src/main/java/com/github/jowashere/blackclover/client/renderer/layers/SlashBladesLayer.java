@@ -1,9 +1,9 @@
 package com.github.jowashere.blackclover.client.renderer.layers;
 
 import com.github.jowashere.blackclover.client.renderer.layers.models.SlashBladesModel;
+import com.github.jowashere.blackclover.entities.mobs.BCEntity;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
-import net.minecraft.client.entity.player.AbstractClientPlayerEntity;
 import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.entity.IEntityRenderer;
@@ -25,13 +25,14 @@ public class SlashBladesLayer<T extends LivingEntity, M extends EntityModel<T>> 
 
     @Override
     public void render(MatrixStack matrixStackIn, IRenderTypeBuffer bufferIn, int packedLightIn, T entitylivingbaseIn, float limbSwing, float limbSwingAmount, float partialTicks, float ageInTicks, float netHeadYaw, float headPitch) {
-        if (!entitylivingbaseIn.isInvisible() && entitylivingbaseIn instanceof PlayerEntity) {
 
-            AbstractClientPlayerEntity player = (AbstractClientPlayerEntity) entitylivingbaseIn;
+        boolean playerOrBC = entitylivingbaseIn instanceof PlayerEntity || entitylivingbaseIn instanceof BCEntity;
 
-            boolean blackmode = player.getPersistentData().getBoolean("blackclover_slash_blades");
+        if (!entitylivingbaseIn.isInvisible() && playerOrBC) {
 
-            if (blackmode) {
+            boolean slashBlades = entitylivingbaseIn.getPersistentData().getBoolean("blackclover_slash_blades");
+
+            if (slashBlades) {
                 matrixStackIn.pushPose();
                 this.getParentModel().copyPropertiesTo(this.model);
                 this.model.setupAnim(entitylivingbaseIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);

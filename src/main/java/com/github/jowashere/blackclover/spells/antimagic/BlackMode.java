@@ -1,6 +1,5 @@
 package com.github.jowashere.blackclover.spells.antimagic;
 
-import com.github.jowashere.blackclover.api.IBCMPlugin;
 import com.github.jowashere.blackclover.api.internal.AbstractToggleSpell;
 import com.github.jowashere.blackclover.init.AttributeInit;
 import com.github.jowashere.blackclover.init.ModAttributes;
@@ -21,8 +20,8 @@ import java.util.UUID;
 
 public class BlackMode extends AbstractToggleSpell {
 
-    public BlackMode(IBCMPlugin plugin) {
-        super(plugin, "black_mode", AttributeInit.ANTI_MAGIC);
+    public BlackMode() {
+        super("black_mode", AttributeInit.ANTI_MAGIC);
 
         this.setManaCost(0.75F);
         this.setCooldown(12400);

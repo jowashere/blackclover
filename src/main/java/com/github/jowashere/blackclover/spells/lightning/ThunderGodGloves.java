@@ -1,6 +1,5 @@
 package com.github.jowashere.blackclover.spells.lightning;
 
-import com.github.jowashere.blackclover.api.IBCMPlugin;
 import com.github.jowashere.blackclover.api.internal.AbstractToggleSpell;
 import com.github.jowashere.blackclover.init.AttributeInit;
 import com.github.jowashere.blackclover.util.helpers.BCMHelper;
@@ -12,10 +11,12 @@ import java.util.UUID;
 
 public class ThunderGodGloves extends AbstractToggleSpell {
 
+    public static final ThunderGodGloves INSTANCE = new ThunderGodGloves();
+
     private static final AttributeModifier HAND_SPEED = new AttributeModifier(UUID.fromString("8f4c4640-64a4-46dd-bfee-c40195ef23f3"), "Thunder Gloves Hand Modifier", 3, AttributeModifier.Operation.ADDITION);
 
-    public ThunderGodGloves(IBCMPlugin plugin) {
-        super(plugin, "tg_gloves", AttributeInit.LIGHTNING);
+    public ThunderGodGloves() {
+        super("tg_gloves", AttributeInit.LIGHTNING);
 
         this.setManaCost(0.25F);
         this.setCooldown(40);
@@ -47,7 +48,7 @@ public class ThunderGodGloves extends AbstractToggleSpell {
         int magicLevel = BCMHelper.getMagicLevel(caster);
 
         return new AttributeModifier(UUID.fromString("f34729f7-aed7-4ae7-a11e-ce78f454fba5"), "Thunder Gloves Strength Modifier",
-                4 + ((float)magicLevel/10), AttributeModifier.Operation.ADDITION);
+                2 + ((float)magicLevel/15), AttributeModifier.Operation.ADDITION);
 
     }
 }
