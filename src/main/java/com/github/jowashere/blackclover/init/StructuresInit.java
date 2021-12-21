@@ -1,6 +1,7 @@
 package com.github.jowashere.blackclover.init;
 
 import com.github.jowashere.blackclover.Main;
+import com.github.jowashere.blackclover.world.structure.structures.BanditCampStructure;
 import com.github.jowashere.blackclover.world.structure.structures.MagicTowerStructure;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
@@ -37,6 +38,8 @@ public class StructuresInit
      *   So it is best to keep your structure names the same as long as you can instead of changing them frequently.
      */
     public static final RegistryObject<Structure<NoFeatureConfig>> MAGICTOWER = DEFERRED_REGISTRY_STRUCTURE.register("magictower", MagicTowerStructure::new);
+    public static final RegistryObject<Structure<NoFeatureConfig>> BANDIT_CAMP = DEFERRED_REGISTRY_STRUCTURE.register("bandit_camp", BanditCampStructure::new);
+
 
     /**
      * This is where we set the rarity of your structures and determine if land conforms to it.
@@ -50,7 +53,12 @@ public class StructuresInit
                         1234567890 /* this modifies the seed of the structure so no two structures always spawn over each-other. Make this large and unique. */),
                 true);
 
-
+        setupMapSpacingAndLand(
+                BANDIT_CAMP.get(), /* The instance of the structure */
+                new StructureSeparationSettings(20 /* average distance apart in chunks between spawn attempts */,
+                        17 /* minimum distance apart in chunks between spawn attempts. MUST BE LESS THAN ABOVE VALUE*/,
+                        987654543 /* this modifies the seed of the structure so no two structures always spawn over each-other. Make this large and unique. */),
+                true);
         // Add more structures here and so on
     }
 

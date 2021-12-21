@@ -15,6 +15,8 @@ public class ConfiguredStructures
      * Static instance of our structure so we can reference it and add it to biomes easily.
      */
     public static StructureFeature<?, ?> CONFIGURED_MAGICTOWER = StructuresInit.MAGICTOWER.get().configured(IFeatureConfig.NONE);
+    public static StructureFeature<?, ?> CONFIGURED_BANDIT_CAMP = StructuresInit.BANDIT_CAMP.get().configured(IFeatureConfig.NONE);
+
 
     /**
      * Registers the configured structure which is what gets added to the biomes.
@@ -26,6 +28,8 @@ public class ConfiguredStructures
     public static void registerConfiguredStructures() {
         Registry<StructureFeature<?, ?>> registry = WorldGenRegistries.CONFIGURED_STRUCTURE_FEATURE;
         Registry.register(registry, new ResourceLocation(Main.MODID, "magictower"), CONFIGURED_MAGICTOWER);
+        Registry.register(registry, new ResourceLocation(Main.MODID, "bandit_camp"), CONFIGURED_BANDIT_CAMP);
+
 
         /* Ok so, this part may be hard to grasp but basically, just add your structure to this to
          * prevent any sort of crash or issue with other mod's custom ChunkGenerators. If they use
@@ -43,5 +47,7 @@ public class ConfiguredStructures
          * Requires AccessTransformer ( see resources/META-INF/accesstransformer.cfg )
          */
         FlatGenerationSettings.STRUCTURE_FEATURES.put(StructuresInit.MAGICTOWER.get(), CONFIGURED_MAGICTOWER);
+        FlatGenerationSettings.STRUCTURE_FEATURES.put(StructuresInit.BANDIT_CAMP.get(), CONFIGURED_BANDIT_CAMP);
+
     }
 }
