@@ -21,7 +21,9 @@ package com.github.jowashere.blackclover.common.curios.item;
 
 import com.github.jowashere.blackclover.Main;
 import com.github.jowashere.blackclover.api.curios.CuriosApi;
+import com.github.jowashere.blackclover.api.curios.SlotTypePreset;
 import com.github.jowashere.blackclover.api.curios.type.capability.ICurio;
+import com.github.jowashere.blackclover.api.curios.type.capability.ICurioItem;
 import com.github.jowashere.blackclover.client.curios.render.model.CrownModel;
 import com.github.jowashere.blackclover.common.curios.capability.CurioItemCapability;
 import com.mojang.blaze3d.matrix.MatrixStack;
@@ -30,10 +32,12 @@ import net.minecraft.client.renderer.IRenderTypeBuffer;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.CompoundNBT;
+import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.Effects;
 import net.minecraft.util.ResourceLocation;
@@ -41,8 +45,9 @@ import net.minecraftforge.common.capabilities.ICapabilityProvider;
 
 
 import javax.annotation.Nonnull;
+import java.util.Objects;
 
-public class CrownItem extends Item {
+public class CrownItem extends Item implements ICurioItem {
 
   private static final ResourceLocation CROWN_TEXTURE = new ResourceLocation(Main.MODID,
       "textures/entity/crown.png");
@@ -58,7 +63,7 @@ public class CrownItem extends Item {
       private Object model;
 
       @Override
-      public void curioTick(String identifier, int index, LivingEntity livingEntity) {
+      public void curioTick(String identifier, int index, LivingEntity livingEntity) { //TODO give empty crown also a texture
 
         if (!livingEntity.getEntity().level.isClientSide && livingEntity.tickCount % 20 == 0) {
           livingEntity
@@ -67,6 +72,7 @@ public class CrownItem extends Item {
               damager -> CuriosApi.getCuriosHelper().onBrokenCurio(identifier, index, damager));
         }
       }
+
 
       @Override
       public boolean canRender(String identifier, int index, LivingEntity livingEntity) {

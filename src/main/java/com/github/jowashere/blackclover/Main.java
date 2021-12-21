@@ -138,12 +138,7 @@ public class Main
     //Here registering new stuff for curios
     private void enqueue(InterModEnqueueEvent evt)
     {
-        InterModComms.sendTo("blackclover", SlotTypeMessage.REGISTER_TYPE, () -> new SlotTypeMessage.Builder("head")
-                .icon(new ResourceLocation("blackclover:textures/gui/inventory"))
-                .priority(5)
-                .size(5)
-                .cosmetic()
-                .build());
+        InterModComms.sendTo(Main.MODID, SlotTypeMessage.REGISTER_TYPE, () -> SlotTypePreset.HEAD.getMessageBuilder().build());
 
         if (DEBUG) {
             InterModComms.sendTo(MODID, SlotTypeMessage.REGISTER_TYPE,

@@ -19,6 +19,7 @@
 
 package com.github.jowashere.blackclover.api.curios;
 
+import com.github.jowashere.blackclover.Main;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.Optional;
@@ -61,6 +62,8 @@ public enum SlotTypePreset {
 
   public SlotTypeMessage.Builder getMessageBuilder() {
     return new SlotTypeMessage.Builder(this.id).priority(this.priority).icon(
-        new ResourceLocation(CuriosApi.MODID, "item/empty_" + this.getIdentifier() + "_slot"));
+        new ResourceLocation(Main.MODID, "item/empty_" + this.getIdentifier() + "_slot"));
   }
+
+
 }
