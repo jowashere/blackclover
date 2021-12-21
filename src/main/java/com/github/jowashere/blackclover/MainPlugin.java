@@ -45,13 +45,6 @@ public class MainPlugin implements IBCMPlugin {
 
     @Override
     public void RegisterNewSpells(BCMRegistry.SpellRegistry spellRegistry) {
-        /*WindSpells.registerSpells(spellRegistry, this);
-        LightningSpells.registerSpells(spellRegistry, this);
-        DarknessSpells.registerSpells(spellRegistry, this);
-        AntiMagicSpells.registerSpells(spellRegistry, this);
-        SlashMagicSpells.registerSpells(spellRegistry, this);
-        SwordSpells.registerSpells(spellRegistry, this);
-        LightMagicSpells.registerSpells(spellRegistry, this);*/
 
         SpellRegistry.registerSpells(spellRegistry);
 
