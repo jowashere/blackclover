@@ -4,7 +4,7 @@ import com.github.jowashere.blackclover.Main;
 import com.github.jowashere.blackclover.api.IBCMPlugin;
 import com.github.jowashere.blackclover.capabilities.player.IPlayerHandler;
 import com.github.jowashere.blackclover.capabilities.player.PlayerProvider;
-import com.github.jowashere.blackclover.client.gui.widgets.spells.GuiButtonSpell;
+import com.github.jowashere.blackclover.client.curios.gui.widgets.spells.GuiButtonSpell;
 import com.github.jowashere.blackclover.entities.mobs.BCEntity;
 import com.github.jowashere.blackclover.init.AttributeInit;
 import com.github.jowashere.blackclover.networking.NetworkLoader;

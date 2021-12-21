@@ -3,7 +3,7 @@ package com.github.jowashere.blackclover.api.interfaces;
 import com.github.jowashere.blackclover.capabilities.player.IPlayerHandler;
 import com.github.jowashere.blackclover.capabilities.player.PlayerCapability;
 import com.github.jowashere.blackclover.capabilities.player.PlayerProvider;
-import com.github.jowashere.blackclover.client.gui.widgets.spells.GuiButtonSpell;
+import com.github.jowashere.blackclover.client.curios.gui.widgets.spells.GuiButtonSpell;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.gui.widget.button.Button;

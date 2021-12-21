@@ -4,7 +4,7 @@ import com.github.jowashere.blackclover.api.internal.AbstractSpell;
 import com.github.jowashere.blackclover.capabilities.player.IPlayerHandler;
 import com.github.jowashere.blackclover.capabilities.player.PlayerCapability;
 import com.github.jowashere.blackclover.capabilities.player.PlayerProvider;
-import com.github.jowashere.blackclover.client.gui.player.PlayerStatsScreen;
+import com.github.jowashere.blackclover.client.curios.gui.player.PlayerStatsScreen;
 import com.github.jowashere.blackclover.events.PlayerEvents;
 import com.github.jowashere.blackclover.init.AttributeInit;
 import com.github.jowashere.blackclover.init.KeybindInit;

@@ -6,7 +6,7 @@ import com.github.jowashere.blackclover.api.curios.type.util.ISlotHelper;
 
 public class CuriosApi
 {
-    public static final String MODID = "curios";
+    public static final String MODID = "blackclover";
 
     private static IIconHelper iconHelper;
     private static ISlotHelper slotHelper;
