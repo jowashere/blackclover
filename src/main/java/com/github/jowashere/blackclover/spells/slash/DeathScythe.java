@@ -9,6 +9,8 @@ import net.minecraft.util.Hand;
 
 public class DeathScythe extends AbstractSpell {
 
+    public static final AbstractSpell INSTANCE = new DeathScythe();
+
     public DeathScythe() {
         super("death_scythe", AttributeInit.SLASH);
 
