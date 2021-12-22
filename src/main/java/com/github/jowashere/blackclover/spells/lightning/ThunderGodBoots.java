@@ -16,8 +16,6 @@ import java.util.UUID;
 
 public class ThunderGodBoots extends AbstractToggleSpell {
 
-    public static final ThunderGodBoots INSTANCE = new ThunderGodBoots();
-
     private static final AttributeModifier STEP_HEIGHT = new AttributeModifier(UUID.fromString("ad388521-c053-4a67-a0d9-ff57379a2c68"), "Step Height Multiplier", 1, AttributeModifier.Operation.ADDITION);
 
     public ThunderGodBoots() {

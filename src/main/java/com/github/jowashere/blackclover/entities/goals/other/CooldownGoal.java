@@ -10,7 +10,7 @@ import net.minecraft.entity.ai.goal.Goal;
 public abstract class CooldownGoal extends Goal
 {
     private BCEntity entity;
-    private AbstractSpell spell;
+    protected final AbstractSpell spell;
 
     public CooldownGoal(BCEntity entity, AbstractSpell associatedSpell)
     {

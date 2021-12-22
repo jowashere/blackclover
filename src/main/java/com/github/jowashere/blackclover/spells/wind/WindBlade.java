@@ -7,8 +7,6 @@ import net.minecraft.entity.LivingEntity;
 
 public class WindBlade extends AbstractSpell {
 
-    public static final AbstractSpell INSTANCE = new WindBlade();
-
     public WindBlade() {
         super("wind_blade", AttributeInit.WIND);
 

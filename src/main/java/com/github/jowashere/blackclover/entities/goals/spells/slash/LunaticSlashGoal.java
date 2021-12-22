@@ -1,10 +1,9 @@
 package com.github.jowashere.blackclover.entities.goals.spells.slash;
 
 import com.github.jowashere.blackclover.api.Beapi;
-import com.github.jowashere.blackclover.api.internal.AbstractSpell;
 import com.github.jowashere.blackclover.entities.goals.other.CooldownGoal;
 import com.github.jowashere.blackclover.entities.mobs.BCEntity;
-import com.github.jowashere.blackclover.spells.slash.LunaticSlash;
+import com.github.jowashere.blackclover.spells.SpellRegistry;
 import com.github.jowashere.blackclover.util.helpers.BCMHelper;
 import com.github.jowashere.blackclover.util.helpers.SpellHelper;
 import net.minecraft.entity.LivingEntity;
@@ -20,11 +19,10 @@ import java.util.List;
 public class LunaticSlashGoal extends CooldownGoal
 {
     private BCEntity entity;
-    private AbstractSpell spell = LunaticSlash.INSTANCE;
 
     public LunaticSlashGoal(BCEntity entity)
     {
-        super(entity, LunaticSlash.INSTANCE);
+        super(entity, SpellRegistry.LUNATIC_SLASH);
         this.entity = entity;
         this.entity.addThreat(10);
     }

@@ -92,6 +92,8 @@
   "race.blackclover.elf": "Elf",
   "race.blackclover.human": "Human",
 
+  "commands.blackclover.race.set": "Set %s's race to %s.",
+  "commands.blackclover.race.set.norace": "Race supplied is invalid.",
   "commands.blackclover.attribute.set": "Set %s's attribute to %s.",
   "commands.blackclover.attribute.set.noattribute": "Attribute supplied is invalid.",
   "commands.blackclover.magiclevel.invalid": "An argument supplied was invalid.",
@@ -101,6 +103,8 @@
   "commands.blackclover.magiclevel.add": "Increased %s's magic level by %s.",
   "commands.blackclover.magicexp.set": "Set %s's magic experience to %s.",
   "commands.blackclover.magicexp.add": "Increased %s's magic experience by %s.",
+  "commands.blackclover.grimoire.give": "Gave %s a grimoire.",
+  "commands.blackclover.grimoire.take": "Took %s's grimoire away.",
 
   "message.blackclover.levelup": "You've now reached level %s",
 

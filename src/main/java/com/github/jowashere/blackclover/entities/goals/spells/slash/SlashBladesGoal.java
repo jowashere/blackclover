@@ -4,7 +4,7 @@ import com.github.jowashere.blackclover.api.internal.AbstractSpell;
 import com.github.jowashere.blackclover.entities.mobs.BCEntity;
 import com.github.jowashere.blackclover.networking.NetworkLoader;
 import com.github.jowashere.blackclover.networking.packets.spells.PacketSpellNBTSync;
-import com.github.jowashere.blackclover.spells.slash.SlashBlades;
+import com.github.jowashere.blackclover.spells.SpellRegistry;
 import com.github.jowashere.blackclover.util.helpers.BCMHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -17,7 +17,7 @@ import java.util.UUID;
 public class SlashBladesGoal extends Goal
 {
     private BCEntity entity;
-    private final AbstractSpell spell = SlashBlades.INSTANCE;
+    private final AbstractSpell spell = SpellRegistry.SLASH_BLADES;
 
     public SlashBladesGoal(BCEntity entity)
     {

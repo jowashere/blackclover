@@ -1,6 +1,7 @@
 package com.github.jowashere.blackclover.events;
 
 import com.github.jowashere.blackclover.Main;
+import com.github.jowashere.blackclover.commands.impl.GrimoireCommand;
 import com.github.jowashere.blackclover.commands.impl.MagicAttributeCommand;
 import com.github.jowashere.blackclover.commands.impl.MagicLevelCommand;
 import com.github.jowashere.blackclover.commands.impl.RaceCommand;
@@ -46,6 +47,7 @@ public class ModEventsSubscriber {
             MagicAttributeCommand.register(event.getServer().getCommands().getDispatcher());
             MagicLevelCommand.register(event.getServer().getCommands().getDispatcher());
             RaceCommand.register(event.getServer().getCommands().getDispatcher());
+            GrimoireCommand.register(event.getServer().getCommands().getDispatcher());
         }
     }
 

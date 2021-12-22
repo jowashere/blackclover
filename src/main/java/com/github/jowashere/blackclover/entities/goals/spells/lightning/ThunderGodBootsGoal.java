@@ -8,7 +8,7 @@ import com.github.jowashere.blackclover.entities.mobs.BCEntity;
 import com.github.jowashere.blackclover.init.ModAttributes;
 import com.github.jowashere.blackclover.networking.NetworkLoader;
 import com.github.jowashere.blackclover.networking.packets.spells.PacketSpellNBTSync;
-import com.github.jowashere.blackclover.spells.lightning.ThunderGodBoots;
+import com.github.jowashere.blackclover.spells.SpellRegistry;
 import com.github.jowashere.blackclover.util.helpers.BCMHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -22,7 +22,7 @@ import java.util.UUID;
 public class ThunderGodBootsGoal extends Goal
 {
     private BCEntity entity;
-    private final AbstractSpell spell = ThunderGodBoots.INSTANCE;
+    private final AbstractSpell spell = SpellRegistry.THUNDER_GOD_BOOTS;
 
     private static final AttributeModifier STEP_HEIGHT = new AttributeModifier(UUID.fromString("ad388521-c053-4a67-a0d9-ff57379a2c68"), "Step Height Multiplier", 1, AttributeModifier.Operation.ADDITION);
 

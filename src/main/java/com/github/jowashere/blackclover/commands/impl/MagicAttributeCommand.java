@@ -5,6 +5,7 @@ import com.github.jowashere.blackclover.api.BCMRegistry;
 import com.github.jowashere.blackclover.api.internal.BCMAttribute;
 import com.github.jowashere.blackclover.capabilities.player.IPlayerHandler;
 import com.github.jowashere.blackclover.capabilities.player.PlayerProvider;
+import com.github.jowashere.blackclover.init.AttributeInit;
 import com.github.jowashere.blackclover.networking.NetworkLoader;
 import com.github.jowashere.blackclover.networking.packets.PacketAttributeSync;
 import com.github.jowashere.blackclover.util.helpers.AttributeHelper;
@@ -28,7 +29,9 @@ public class MagicAttributeCommand {
     private static final SuggestionProvider<CommandSource> SUGGEST_ATTRIBUTE = (source, builder) -> {
         List<String> attributeNames = new ArrayList<>();
         for (BCMAttribute attribute : BCMRegistry.ATTRIBUTES.getValues()) {
-            attributeNames.add(attribute.getString());
+            if(!attribute.equals(AttributeInit.NULL)){
+                attributeNames.add(attribute.getString());
+            }
         }
         return ISuggestionProvider.suggest(attributeNames.stream(), builder);
     };

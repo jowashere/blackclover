@@ -23,6 +23,8 @@ public abstract class AbstractSpellProjectileEntity extends ProjectileItemEntity
     protected boolean removeOnGround = true;
     protected boolean removeOnEntity = true;
 
+    private int originalShooterLevel;
+
     private int damageTier;
     private float baseDamage;
 
@@ -40,6 +42,7 @@ public abstract class AbstractSpellProjectileEntity extends ProjectileItemEntity
     public AbstractSpellProjectileEntity(EntityType<? extends ProjectileItemEntity> type, LivingEntity livingEntityIn, World worldIn, float manaIn) {
         super(type, livingEntityIn, worldIn);
         this.manaIn = manaIn;
+        this.originalShooterLevel = BCMHelper.getMagicLevel(livingEntityIn);
     }
 
     @Override
@@ -48,16 +51,9 @@ public abstract class AbstractSpellProjectileEntity extends ProjectileItemEntity
         if (result.getType() == RayTraceResult.Type.ENTITY) {
             if (result.getType() == RayTraceResult.Type.ENTITY) {
                 Entity entity = ((EntityRayTraceResult)result).getEntity();
-                if (((EntityRayTraceResult)result).getEntity() instanceof LivingEntity)
-                {
-                    LivingEntity livingEntity = (LivingEntity) ((EntityRayTraceResult)result).getEntity();
-                }
                 if (this.getOwner() instanceof LivingEntity) {
 
-                    LivingEntity livingShooter = (LivingEntity) this.getOwner();
-                    int magicLevel = BCMHelper.getMagicLevel(livingShooter);
-
-                    entity.hurt(DamageSource.thrown(this, this.getOwner()), SpellHelper.spellDamageCalc(magicLevel, damageTier, baseDamage));
+                    entity.hurt(DamageSource.thrown(this, this.getOwner()), SpellHelper.spellDamageCalc(originalShooterLevel, damageTier, baseDamage));
 
                 }else {
                     entity.hurt(DamageSource.thrown(this, this.getOwner()), 3F);
@@ -120,5 +116,11 @@ public abstract class AbstractSpellProjectileEntity extends ProjectileItemEntity
 
     }
 
+    public int getOriginalShooterLevel() {
+        return originalShooterLevel;
+    }
 
+    public void setOriginalShooterLevel(LivingEntity livingEntityIn) {
+        this.originalShooterLevel = BCMHelper.getMagicLevel(livingEntityIn);
+    }
 }

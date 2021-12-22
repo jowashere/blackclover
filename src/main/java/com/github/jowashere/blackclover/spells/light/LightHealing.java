@@ -11,8 +11,6 @@ import net.minecraft.world.server.ServerWorld;
 
 public class LightHealing extends AbstractToggleSpell {
 
-    public static final LightHealing INSTANCE = new LightHealing();
-
     public LightHealing() {
         super("light_healing", AttributeInit.LIGHT);
 

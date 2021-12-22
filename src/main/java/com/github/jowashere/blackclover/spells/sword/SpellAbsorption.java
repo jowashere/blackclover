@@ -47,6 +47,7 @@ public class SpellAbsorption extends AbstractSpell {
                     spell.setOwner(caster);
                     spell.setDamageTier(nbt.getInt("stored_damage_tier"));
                     spell.setBaseDamage(nbt.getFloat("stored_base_damage"));
+                    spell.setOriginalShooterLevel((LivingEntity) spell.level.getEntity(nbt.getInt("original_shooter_lvl")));
                     spell.moveTo(caster.getX(), caster.getEyeY() - (double)0.1F, caster.getZ());
                     spell.shootFromRotation(caster, caster.xRot, caster.yRot, 0.0F, 1.6F, 2.5F);
                     caster.level.addFreshEntity(spell);
@@ -58,11 +59,16 @@ public class SpellAbsorption extends AbstractSpell {
             {
                 EntityRayTraceResult rayTraceResult = Beapi.rayTraceEntities(caster.getEntity(), 6, 0.2F);
                 //Entity traceEntity = trace.getEntity();
+
+                if(rayTraceResult == null)
+                    return;
+
                 if (rayTraceResult.getEntity() instanceof AbstractSpellProjectileEntity && !(rayTraceResult.getEntity() instanceof AbstractAntiMagicProjectileEntity))
                 {
                     nbt.putInt("absorption", 1);
                     nbt.putString("stored_spell", rayTraceResult.getEntity().getType().getRegistryName().toString());
                     nbt.putInt("stored_damage_tier", ((AbstractSpellProjectileEntity) rayTraceResult.getEntity()).getDamageTier());
+                    nbt.putInt("original_shooter_lvl", ((AbstractSpellProjectileEntity) rayTraceResult.getEntity()).getOriginalShooterLevel());
                     nbt.putFloat("stored_base_damage", ((AbstractSpellProjectileEntity) rayTraceResult.getEntity()).getBaseDamage());
                     rayTraceResult.getEntity().remove();
                 }
@@ -73,11 +79,16 @@ public class SpellAbsorption extends AbstractSpell {
             nbt = new CompoundNBT();
             EntityRayTraceResult rayTraceResult = Beapi.rayTraceEntities(caster.getEntity(), 6, 0.2F);
             //Entity traceEntity = trace.getEntity();
+
+            if(rayTraceResult == null)
+                return;
+
             if (rayTraceResult.getEntity() instanceof AbstractSpellProjectileEntity && !(rayTraceResult.getEntity() instanceof AbstractAntiMagicProjectileEntity))
             {
                 nbt.putInt("absorption", 1);
                 nbt.putString("stored_spell", rayTraceResult.getEntity().getType().getRegistryName().toString());
                 nbt.putInt("stored_damage_tier", ((AbstractSpellProjectileEntity) rayTraceResult.getEntity()).getDamageTier());
+                nbt.putInt("original_shooter_lvl", ((AbstractSpellProjectileEntity) rayTraceResult.getEntity()).getOriginalShooterLevel());
                 nbt.putFloat("stored_base_damage", ((AbstractSpellProjectileEntity) rayTraceResult.getEntity()).getBaseDamage());
                 rayTraceResult.getEntity().remove();
             }

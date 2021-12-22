@@ -25,7 +25,7 @@ public abstract class AbstractAntiMagicProjectileEntity extends AbstractSpellPro
     @Override
     public void tick() {
         super.tick();
-        List<AbstractSpellProjectileEntity> entities = BCMHelper.GetEntitiesNear(this.blockPosition(), this.level, 1.5, AbstractSpellProjectileEntity.class);
+        List<AbstractSpellProjectileEntity> entities = BCMHelper.GetEntitiesNear(this.blockPosition(), this.level, 3, AbstractSpellProjectileEntity.class);
 
         entities.forEach(entity -> {
             if(!(entity instanceof AbstractAntiMagicProjectileEntity)){

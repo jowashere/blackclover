@@ -2,6 +2,7 @@ package com.github.jowashere.blackclover.networking;
 
 import com.github.jowashere.blackclover.Main;
 import com.github.jowashere.blackclover.networking.packets.*;
+import com.github.jowashere.blackclover.networking.packets.entity.PacketSyncBCEntityTarget;
 import com.github.jowashere.blackclover.networking.packets.mana.*;
 import com.github.jowashere.blackclover.networking.packets.modes.PacketModeSync;
 import com.github.jowashere.blackclover.networking.packets.server.SPacketSpellNBTSync;
@@ -55,7 +56,7 @@ public class NetworkLoader {
 
         INSTANCE.registerMessage(nextID(), PacketToggleInfusionBoolean.class, PacketToggleInfusionBoolean::encode, PacketToggleInfusionBoolean::decode, PacketToggleInfusionBoolean::handle);
 
-        INSTANCE.registerMessage(nextID(), PacketSyncBCEntityData.class, PacketSyncBCEntityData::encode, PacketSyncBCEntityData::decode, PacketSyncBCEntityData::handle);
+        INSTANCE.registerMessage(nextID(), PacketSyncBCEntityTarget.class, PacketSyncBCEntityTarget::encode, PacketSyncBCEntityTarget::decode, PacketSyncBCEntityTarget::handle);
 
     }
 }

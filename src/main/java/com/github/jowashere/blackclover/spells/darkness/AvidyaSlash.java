@@ -10,7 +10,6 @@ import net.minecraft.util.Hand;
 
 public class AvidyaSlash extends AbstractSpell
 {
-    public static final AbstractSpell INSTANCE = new AvidyaSlash();
 
     public AvidyaSlash()
     {

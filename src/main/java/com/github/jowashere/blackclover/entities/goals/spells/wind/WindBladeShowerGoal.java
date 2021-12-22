@@ -1,21 +1,19 @@
 package com.github.jowashere.blackclover.entities.goals.spells.wind;
 
 import com.github.jowashere.blackclover.api.Beapi;
-import com.github.jowashere.blackclover.api.internal.AbstractSpell;
 import com.github.jowashere.blackclover.entities.goals.other.CooldownGoal;
 import com.github.jowashere.blackclover.entities.mobs.BCEntity;
 import com.github.jowashere.blackclover.entities.spells.wind.WindBladeEntity;
 import com.github.jowashere.blackclover.init.AttributeInit;
-import com.github.jowashere.blackclover.spells.wind.WindBladeShower;
+import com.github.jowashere.blackclover.spells.SpellRegistry;
 
 public class WindBladeShowerGoal extends CooldownGoal
 {
     private BCEntity entity;
-    private final AbstractSpell spell = WindBladeShower.INSTANCE;
 
     public WindBladeShowerGoal(BCEntity entity)
     {
-        super(entity, WindBladeShower.INSTANCE);
+        super(entity, SpellRegistry.WIND_BLADE_SHOWER);
         this.entity = entity;
         this.entity.addThreat(12);
     }

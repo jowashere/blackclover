@@ -17,8 +17,6 @@ import java.util.List;
 
 public class LunaticSlash extends AbstractSpell {
 
-    public static final AbstractSpell INSTANCE = new LunaticSlash();
-
     public LunaticSlash() {
         super("lunatic_slash", AttributeInit.SLASH);
 

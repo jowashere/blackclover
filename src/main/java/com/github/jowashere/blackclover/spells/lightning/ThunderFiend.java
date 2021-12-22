@@ -13,8 +13,6 @@ import net.minecraftforge.fml.network.PacketDistributor;
 
 public class ThunderFiend extends AbstractSpell {
 
-    public static final AbstractSpell INSTANCE = new ThunderFiend();
-
     public ThunderFiend() {
 
 

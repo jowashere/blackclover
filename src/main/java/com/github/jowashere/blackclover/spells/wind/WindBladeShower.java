@@ -8,8 +8,6 @@ import net.minecraft.entity.LivingEntity;
 public class WindBladeShower extends AbstractSpell
 {
 
-    public static final AbstractSpell INSTANCE = new WindBladeShower();
-
     public WindBladeShower() {
         super("wind_blade_shower", AttributeInit.WIND);
 

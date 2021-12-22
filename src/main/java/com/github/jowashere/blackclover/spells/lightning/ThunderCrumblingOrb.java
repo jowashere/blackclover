@@ -9,8 +9,6 @@ import net.minecraft.util.Hand;
 
 public class ThunderCrumblingOrb extends AbstractSpell {
 
-    public static final AbstractSpell INSTANCE = new ThunderCrumblingOrb();
-
     public ThunderCrumblingOrb() {
         super("thunder_orb", AttributeInit.LIGHTNING);
 

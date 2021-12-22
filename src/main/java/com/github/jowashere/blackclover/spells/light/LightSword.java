@@ -9,8 +9,6 @@ import net.minecraft.item.ItemStack;
 
 public class LightSword extends AbstractToggleSpell {
 
-    public static final LightSword INSTANCE = new LightSword();
-
     public LightSword() {
         super("light_sword", AttributeInit.LIGHT);
 

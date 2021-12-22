@@ -63,7 +63,7 @@ public class RaceCommand {
         IPlayerHandler playercap = player.getCapability(PlayerProvider.CAPABILITY_PLAYER).orElseThrow(() -> new RuntimeException("CAPABILITY_PLAYER NOT FOUND!"));
 
         if(RaceHelper.getRaceFromString(race) == (null)){
-            source.sendFailure(new TranslationTextComponent("commands." + Main.MODID + ".attribute.set.norace"));
+            source.sendFailure(new TranslationTextComponent("commands." + Main.MODID + ".race.set.norace"));
             return 0;
         }
 

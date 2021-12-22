@@ -52,7 +52,7 @@ public class GrimoireLayer <T extends LivingEntity, M extends EntityModel<T>> ex
                 BCEntity entity = (BCEntity) entitylivingbaseIn;
 
                 shouldShow = entity.getTarget() != null && entity.getMagicLevel() > 5;
-                textLoc = entity.getGrimoireTexLoc();
+                textLoc = entity.getGrimoireTexture();
 
             }
 

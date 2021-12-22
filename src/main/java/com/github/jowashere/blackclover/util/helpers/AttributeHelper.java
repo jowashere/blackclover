@@ -17,7 +17,7 @@ public class AttributeHelper {
                 return bcmAttribute;
             }
         }
-        return null;
+        return AttributeInit.NULL;
     }
 
     public static BCMAttribute getRandomAttribute(boolean onlyNPC) {

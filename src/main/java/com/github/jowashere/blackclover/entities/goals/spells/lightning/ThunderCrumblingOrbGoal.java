@@ -1,22 +1,20 @@
 package com.github.jowashere.blackclover.entities.goals.spells.lightning;
 
 import com.github.jowashere.blackclover.api.Beapi;
-import com.github.jowashere.blackclover.api.internal.AbstractSpell;
 import com.github.jowashere.blackclover.entities.goals.other.CooldownGoal;
 import com.github.jowashere.blackclover.entities.mobs.BCEntity;
 import com.github.jowashere.blackclover.entities.spells.lightning.ThunderOrbEntity;
 import com.github.jowashere.blackclover.init.AttributeInit;
-import com.github.jowashere.blackclover.spells.lightning.ThunderCrumblingOrb;
+import com.github.jowashere.blackclover.spells.SpellRegistry;
 import net.minecraft.util.Hand;
 
 public class ThunderCrumblingOrbGoal extends CooldownGoal
 {
     private BCEntity entity;
-    private final AbstractSpell spell = ThunderCrumblingOrb.INSTANCE;
 
     public ThunderCrumblingOrbGoal(BCEntity entity)
     {
-        super(entity, ThunderCrumblingOrb.INSTANCE);
+        super(entity, SpellRegistry.THUNDER_CRUMBLING_ORB);
         this.entity = entity;
         this.entity.addThreat(12);
     }

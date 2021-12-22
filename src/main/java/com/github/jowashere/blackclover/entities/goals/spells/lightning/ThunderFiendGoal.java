@@ -1,13 +1,12 @@
 package com.github.jowashere.blackclover.entities.goals.spells.lightning;
 
 import com.github.jowashere.blackclover.api.Beapi;
-import com.github.jowashere.blackclover.api.internal.AbstractSpell;
 import com.github.jowashere.blackclover.entities.goals.other.CooldownGoal;
 import com.github.jowashere.blackclover.entities.mobs.BCEntity;
 import com.github.jowashere.blackclover.init.AttributeInit;
 import com.github.jowashere.blackclover.networking.NetworkLoader;
 import com.github.jowashere.blackclover.networking.packets.spells.PacketIntSpellNBTSync;
-import com.github.jowashere.blackclover.spells.lightning.ThunderFiend;
+import com.github.jowashere.blackclover.spells.SpellRegistry;
 import com.github.jowashere.blackclover.util.helpers.BCMHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.util.Hand;
@@ -17,11 +16,10 @@ import net.minecraftforge.fml.network.PacketDistributor;
 public class ThunderFiendGoal extends CooldownGoal
 {
     private BCEntity entity;
-    private final AbstractSpell spell = ThunderFiend.INSTANCE;
 
     public ThunderFiendGoal(BCEntity entity)
     {
-        super(entity, ThunderFiend.INSTANCE);
+        super(entity, SpellRegistry.THUNDER_FIEND);
         this.entity = entity;
         this.entity.addThreat(12);
     }

@@ -4,7 +4,7 @@ import com.github.jowashere.blackclover.api.internal.AbstractSpell;
 import com.github.jowashere.blackclover.entities.mobs.BCEntity;
 import com.github.jowashere.blackclover.networking.NetworkLoader;
 import com.github.jowashere.blackclover.networking.packets.spells.PacketSpellNBTSync;
-import com.github.jowashere.blackclover.spells.lightning.ThunderGodGloves;
+import com.github.jowashere.blackclover.spells.SpellRegistry;
 import com.github.jowashere.blackclover.util.helpers.BCMHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -17,7 +17,7 @@ import java.util.UUID;
 public class ThunderGodGlovesGoal extends Goal
 {
     private BCEntity entity;
-    private final AbstractSpell spell = ThunderGodGloves.INSTANCE;
+    private final AbstractSpell spell = SpellRegistry.THUNDER_GOD_GLOVES;
 
     private static final AttributeModifier HAND_SPEED = new AttributeModifier(UUID.fromString("8f4c4640-64a4-46dd-bfee-c40195ef23f3"), "Thunder Gloves Hand Modifier", 3, AttributeModifier.Operation.ADDITION);
 

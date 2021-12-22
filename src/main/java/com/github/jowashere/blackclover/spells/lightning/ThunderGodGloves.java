@@ -11,8 +11,6 @@ import java.util.UUID;
 
 public class ThunderGodGloves extends AbstractToggleSpell {
 
-    public static final ThunderGodGloves INSTANCE = new ThunderGodGloves();
-
     private static final AttributeModifier HAND_SPEED = new AttributeModifier(UUID.fromString("8f4c4640-64a4-46dd-bfee-c40195ef23f3"), "Thunder Gloves Hand Modifier", 3, AttributeModifier.Operation.ADDITION);
 
     public ThunderGodGloves() {

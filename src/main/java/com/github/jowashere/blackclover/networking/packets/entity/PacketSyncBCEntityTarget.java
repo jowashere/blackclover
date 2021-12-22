@@ -1,4 +1,4 @@
-package com.github.jowashere.blackclover.networking.packets;
+package com.github.jowashere.blackclover.networking.packets.entity;
 
 import com.github.jowashere.blackclover.entities.mobs.BCEntity;
 import net.minecraft.client.Minecraft;
@@ -9,50 +9,40 @@ import net.minecraftforge.fml.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
-public class PacketSyncBCEntityData {
+public class PacketSyncBCEntityTarget {
 
     private int entityID;
     private int targetID;
-    private int magicLevel;
-    private String grimoireTexLoc;
 
-    public PacketSyncBCEntityData(int entityID, int targetID, int magicLevel, String grimoireTexLoc)
+    public PacketSyncBCEntityTarget(int entityID, int targetID)
     {
         this.entityID = entityID;
         this.targetID = targetID;
-        this.magicLevel = magicLevel;
-        this.grimoireTexLoc = grimoireTexLoc;
     }
 
-    public static void encode(PacketSyncBCEntityData msg, PacketBuffer buf)
+    public static void encode(PacketSyncBCEntityTarget msg, PacketBuffer buf)
     {
         buf.writeInt(msg.entityID);
         buf.writeInt(msg.targetID);
-        buf.writeInt(msg.magicLevel);
-        buf.writeUtf(msg.grimoireTexLoc);
 
     }
 
-    public static PacketSyncBCEntityData decode(PacketBuffer buf)
+    public static PacketSyncBCEntityTarget decode(PacketBuffer buf)
     {
         int entityID = buf.readInt();
         int targetID = buf.readInt();
-        int magicLevel = buf.readInt();
-        String grimoireTexLoc = buf.readUtf();
-        return new PacketSyncBCEntityData(entityID, targetID, magicLevel, grimoireTexLoc);
+        return new PacketSyncBCEntityTarget(entityID, targetID);
     }
 
-    public static void handle(PacketSyncBCEntityData msg, Supplier<NetworkEvent.Context> ctx)
+    public static void handle(PacketSyncBCEntityTarget msg, Supplier<NetworkEvent.Context> ctx)
     {
         if (ctx.get().getDirection().equals(NetworkDirection.PLAY_TO_CLIENT)) {
             ctx.get().enqueueWork(() -> {
 
                 BCEntity entity = (BCEntity) Minecraft.getInstance().level.getEntity(msg.entityID);
                 LivingEntity target = (LivingEntity) Minecraft.getInstance().level.getEntity(msg.targetID);
-
-                entity.setMagicLevel(msg.magicLevel);
                 entity.setTarget(target);
-                entity.setGrimoireTexLoc(msg.grimoireTexLoc);
+
             });
             ctx.get().setPacketHandled(true);
         }

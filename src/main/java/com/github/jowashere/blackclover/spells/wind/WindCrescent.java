@@ -8,8 +8,6 @@ import net.minecraft.util.Hand;
 
 public class WindCrescent extends AbstractSpell {
 
-    public static final AbstractSpell INSTANCE = new WindCrescent();
-
     public WindCrescent() {
         super("wind_crescent", AttributeInit.WIND);
 

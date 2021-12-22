@@ -1,11 +1,10 @@
 package com.github.jowashere.blackclover.entities.goals.spells.wind;
 
 import com.github.jowashere.blackclover.api.Beapi;
-import com.github.jowashere.blackclover.api.internal.AbstractSpell;
 import com.github.jowashere.blackclover.entities.goals.other.CooldownGoal;
 import com.github.jowashere.blackclover.entities.mobs.BCEntity;
 import com.github.jowashere.blackclover.init.AttributeInit;
-import com.github.jowashere.blackclover.spells.wind.ToweringTornado;
+import com.github.jowashere.blackclover.spells.SpellRegistry;
 import com.github.jowashere.blackclover.util.helpers.BCMHelper;
 import com.github.jowashere.blackclover.util.helpers.SpellHelper;
 import net.minecraft.entity.LivingEntity;
@@ -18,11 +17,10 @@ import java.util.List;
 public class ToweringTornadoGoal extends CooldownGoal
 {
     private BCEntity entity;
-    private AbstractSpell spell = ToweringTornado.INSTANCE;
 
     public ToweringTornadoGoal(BCEntity entity)
     {
-        super(entity, ToweringTornado.INSTANCE);
+        super(entity, SpellRegistry.TOWERING_TORNADO);
         this.entity = entity;
         this.entity.addThreat(10);
     }

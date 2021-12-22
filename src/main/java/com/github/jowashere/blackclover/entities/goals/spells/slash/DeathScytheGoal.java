@@ -1,21 +1,19 @@
 package com.github.jowashere.blackclover.entities.goals.spells.slash;
 
 import com.github.jowashere.blackclover.api.Beapi;
-import com.github.jowashere.blackclover.api.internal.AbstractSpell;
 import com.github.jowashere.blackclover.entities.goals.other.CooldownGoal;
 import com.github.jowashere.blackclover.entities.mobs.BCEntity;
 import com.github.jowashere.blackclover.entities.spells.slash.DeathScytheEntity;
-import com.github.jowashere.blackclover.spells.slash.DeathScythe;
+import com.github.jowashere.blackclover.spells.SpellRegistry;
 import net.minecraft.util.Hand;
 
 public class DeathScytheGoal extends CooldownGoal
 {
     private BCEntity entity;
-    private final AbstractSpell spell = DeathScythe.INSTANCE;
 
     public DeathScytheGoal(BCEntity entity)
     {
-        super(entity, DeathScythe.INSTANCE);
+        super(entity, SpellRegistry.DEATH_SCYTHE);
         this.entity = entity;
         this.entity.addThreat(12);
     }
