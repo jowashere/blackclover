@@ -6,6 +6,7 @@ import com.github.jowashere.blackclover.capabilities.player.PlayerCapability;
 import com.github.jowashere.blackclover.capabilities.player.PlayerProvider;
 import com.github.jowashere.blackclover.client.renderer.layers.models.ModelGrimoire;
 import com.github.jowashere.blackclover.entities.mobs.BCEntity;
+import com.github.jowashere.blackclover.init.AttributeInit;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
 import net.minecraft.client.entity.player.AbstractClientPlayerEntity;
@@ -51,7 +52,7 @@ public class GrimoireLayer <T extends LivingEntity, M extends EntityModel<T>> ex
             } else {
                 BCEntity entity = (BCEntity) entitylivingbaseIn;
 
-                shouldShow = entity.getTarget() != null && entity.getMagicLevel() > 5;
+                shouldShow = entity.getTarget() != null && entity.getMagicLevel() > 5 && !entity.getAttribute().equals(AttributeInit.NULL);
                 textLoc = entity.getGrimoireTexture();
 
             }

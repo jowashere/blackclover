@@ -26,7 +26,7 @@ public class BlackMode extends AbstractToggleSpell {
         this.setManaCost(0.75F);
         this.setCooldown(12400);
         this.setUnlockLevel(30);
-        this.setToggleTimer(200);
+        this.setToggleTimer(2800);
         this.setUV(0, 112);
 
         this.action = this::action;
