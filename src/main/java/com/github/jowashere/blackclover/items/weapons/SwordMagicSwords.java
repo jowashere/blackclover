@@ -28,7 +28,7 @@ public class SwordMagicSwords extends SwordItem {
     };*/
 
     public SwordMagicSwords(Properties properties, int damage, float speed) {
-        super(GenericItemTier.WEAPON, damage, speed, properties);
+        super(GenericItemTier.SWORDMAGIC, damage, speed, properties);
 
     }
 

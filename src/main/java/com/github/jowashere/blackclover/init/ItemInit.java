@@ -50,11 +50,11 @@ public class ItemInit {
     //Weapons
     public static final RegistryObject<Item> YAMIS_KATANA = ITEMS.register("yamis_katana", () -> new YamisKatana(new Item.Properties().tab(ItemGroups.EQUIPMENT).stacksTo(1), 6, -1.6f));
 
-    public static final RegistryObject<Item> DEMON_SLAYER = ITEMS.register("demon_slayer", () -> new SwordMagicSwords(new Item.Properties().tab(ItemGroups.EQUIPMENT).stacksTo(1).setNoRepair().durability(0), 8, -3.2f));
-    public static final RegistryObject<Item> DEMON_DESTROYER = ITEMS.register("demon_destroyer", () -> new SwordMagicSwords(new Item.Properties().tab(ItemGroups.EQUIPMENT).stacksTo(1).setNoRepair().durability(0), 6, -2.4f));
-    public static final RegistryObject<Item> DEMON_DWELLER = ITEMS.register("demon_dweller", () -> new SwordMagicSwords(new Item.Properties().tab(ItemGroups.EQUIPMENT).stacksTo(1).setNoRepair().durability(0), 6, -2.4f));
+    public static final RegistryObject<Item> DEMON_SLAYER = ITEMS.register("demon_slayer", () -> new SwordMagicSwords(new Item.Properties().tab(ItemGroups.EQUIPMENT).stacksTo(1).setNoRepair(), 8, -3.2f));
+    public static final RegistryObject<Item> DEMON_DESTROYER = ITEMS.register("demon_destroyer", () -> new SwordMagicSwords(new Item.Properties().tab(ItemGroups.EQUIPMENT).stacksTo(1).setNoRepair(), 6, -2.4f));
+    public static final RegistryObject<Item> DEMON_DWELLER = ITEMS.register("demon_dweller", () -> new SwordMagicSwords(new Item.Properties().tab(ItemGroups.EQUIPMENT).stacksTo(1).setNoRepair(), 6, -2.4f));
 
-    public static final RegistryObject<Item> LIGHT_SWORD = ITEMS.register("light_sword", () -> new MagicSwordItem(SpellRegistry.LIGHT_SWORD, 5, -2.4f, new Item.Properties().tab(ItemGroups.EQUIPMENT).stacksTo(1)));
+    public static final RegistryObject<Item> LIGHT_SWORD = ITEMS.register("light_sword", () -> new MagicSwordItem(SpellRegistry.LIGHT_SWORD, 5, -2.4f, new Item.Properties().tab(ItemGroups.EQUIPMENT).stacksTo(1).setNoRepair()));
 
     //Spawn Eggs
     public static final RegistryObject<ModSpawnEgg> BANDIT_SPAWN_EGG = ITEMS.register("bandit_spawn_egg", () -> new ModSpawnEgg(EntityInit.BANDIT, 5660240, 8213829, new Item.Properties().tab(ItemGroup.TAB_MISC)));

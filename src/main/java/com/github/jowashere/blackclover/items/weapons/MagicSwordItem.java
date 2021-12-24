@@ -16,7 +16,7 @@ public class MagicSwordItem extends SwordItem {
 
     public MagicSwordItem(AbstractSpell spell, int damage, float speed, Properties properties)
     {
-        super(GenericItemTier.WEAPON, damage, speed, properties);
+        super(GenericItemTier.SWORDMAGIC, damage, speed, properties);
         this.spell = spell;
     }
 

@@ -80,22 +80,23 @@ public class ForgeEventsSubscriber {
         PlayerEntity player = event.player;
 
         if (player.isAlive()) {
-            IPlayerHandler playercap = player.getCapability(PlayerProvider.CAPABILITY_PLAYER).orElseThrow(() -> new RuntimeException("CAPABILITY_PLAYER NOT FOUND!"));
-            for (AbstractSpell spell : BCMRegistry.SPELLS.getValues()) {
-                if (spell.isToggle()) {
-                    String nbtName = spell.getCorrelatedPlugin().getPluginId() + "_" + spell.getName();
-                    if (player.getPersistentData().getBoolean(nbtName)) {
-                        if(playercap.ReturnMagicAttribute().equals(spell.getAttribute()))
-                            spell.act(player);
-                        else {
-                            player.getPersistentData().putBoolean(nbtName, false);
-                            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketSpellNBTSync(player.getId(), nbtName, false));
+            if (!player.level.isClientSide) {
+
+                IPlayerHandler playercap = player.getCapability(PlayerProvider.CAPABILITY_PLAYER).orElseThrow(() -> new RuntimeException("CAPABILITY_PLAYER NOT FOUND!"));
+                for (AbstractSpell spell : BCMRegistry.SPELLS.getValues()) {
+                    if (spell.isToggle()) {
+                        String nbtName = spell.getCorrelatedPlugin().getPluginId() + "_" + spell.getName();
+                        if (player.getPersistentData().getBoolean(nbtName)) {
+                            if(playercap.ReturnMagicAttribute().equals(spell.getAttribute()))
+                                spell.act(player);
+                            else {
+                                player.getPersistentData().putBoolean(nbtName, false);
+                                NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketSpellNBTSync(player.getId(), nbtName, false));
+                            }
                         }
                     }
                 }
-            }
 
-            if (!player.level.isClientSide) {
                 if(playercap.ReturnMagicAttribute().equals(AttributeInit.ANTI_MAGIC)){
                     playercap.setManaBoolean(false);
                     NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketManaBoolean(false, true));
