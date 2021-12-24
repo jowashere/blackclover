@@ -1,12 +1,12 @@
 package com.github.jowashere.blackclover.spells.wind;
 
-import com.github.jowashere.blackclover.api.internal.AbstractSpell;
+import com.github.jowashere.blackclover.api.internal.AbstractToggleSpell;
 import com.github.jowashere.blackclover.init.AttributeInit;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.world.server.ServerWorld;
 
-public class WindFlight extends AbstractSpell {
+public class WindFlight extends AbstractToggleSpell {
 
     public WindFlight() {
         super("wind_flight", AttributeInit.WIND);

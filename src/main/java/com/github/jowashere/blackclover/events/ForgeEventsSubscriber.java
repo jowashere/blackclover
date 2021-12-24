@@ -85,8 +85,12 @@ public class ForgeEventsSubscriber {
                 if (spell.isToggle()) {
                     String nbtName = spell.getCorrelatedPlugin().getPluginId() + "_" + spell.getName();
                     if (player.getPersistentData().getBoolean(nbtName)) {
-
-                        spell.act(player);
+                        if(playercap.ReturnMagicAttribute().equals(spell.getAttribute()))
+                            spell.act(player);
+                        else {
+                            player.getPersistentData().putBoolean(nbtName, false);
+                            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketSpellNBTSync(player.getId(), nbtName, false));
+                        }
                     }
                 }
             }
