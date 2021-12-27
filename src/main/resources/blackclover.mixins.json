@@ -4,8 +4,8 @@
   "compatibilityLevel": "JAVA_8",
   "refmap": "blackclover.refmap.json",
   "mixins": [
-    "MixinItem",
     "PlayerEntityMixin",
+    "MixinSwordItem",
     "ServerPlayNetHandlerMixin"
   ],
   "minVersion": "0.8",

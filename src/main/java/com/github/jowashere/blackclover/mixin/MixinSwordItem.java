@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Item.class)
-public abstract class MixinItem {
+public abstract class MixinSwordItem {
 
     //@Shadow public abstract void inventoryTick(ItemStack pStack, World pLevel, Entity pEntity, int pItemSlot, boolean pIsSelected);
 
@@ -22,13 +22,16 @@ public abstract class MixinItem {
     @Inject(at = @At("HEAD"), method = "inventoryTick", cancellable = true)
     public void inventoryTick(ItemStack stack, World world, Entity entity, int slot, boolean selected, CallbackInfo ci) {
 
-        if(!selected || !entity.getPersistentData().getBoolean("blackclover_dark_cloaked_blade")){
-            if(stack.getItem() instanceof SwordItem && stack.getMaxStackSize() == 1) {
-                if (stack.getOrCreateTag().getInt("dark_cloak") != 0) {
-                    stack.getOrCreateTag().putInt("dark_cloak", 0);
+        if(stack.getItem() instanceof SwordItem) {
+            if(!selected || !entity.getPersistentData().getBoolean("blackclover_dark_cloaked_blade")){
+                if(stack.getItem() instanceof SwordItem && stack.getMaxStackSize() == 1) {
+                    if (stack.getOrCreateTag().getInt("dark_cloak") != 0) {
+                        stack.getOrCreateTag().putInt("dark_cloak", 0);
+                    }
                 }
             }
         }
+
     }
 
     /*@Inject(at = @At("HEAD"), method = "onEntitySwing", cancellable = true)
@@ -39,7 +42,7 @@ public abstract class MixinItem {
 
     @Inject(at = @At("HEAD"), method = "isFoil", cancellable = true)
     public void isFoil(ItemStack pStack, CallbackInfoReturnable<Boolean> cir) {
-        cir.setReturnValue((pStack.getOrCreateTag().getInt("dark_cloak") > 0) || pStack.isEnchanted());
+        cir.setReturnValue(((pStack.getOrCreateTag().getInt("dark_cloak") > 0) && pStack.getItem() instanceof SwordItem ) || pStack.isEnchanted());
         return;
     }
 }

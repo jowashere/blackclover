@@ -3,10 +3,12 @@ package com.github.jowashere.blackclover.client.renderer.layers.models;
 import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
+import net.minecraft.client.entity.player.AbstractClientPlayerEntity;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.model.BipedModel;
 import net.minecraft.client.renderer.model.ModelRenderer;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.CrossbowItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
@@ -210,16 +212,24 @@ public class BlackModeModel<T extends LivingEntity> extends BipedModel<T>{
     @Override
     public void setupAnim(T entityIn, float limbSwing, float limbSwingAmount, float ageInTicks, float netHeadYaw, float headPitch) {
         super.setupAnim(entityIn, limbSwing, limbSwingAmount, ageInTicks, netHeadYaw, headPitch);
+
         this.crouching = entityIn.isCrouching();
 
-        //AbstractClientPlayerEntity clientPlayer = (AbstractClientPlayerEntity) entityIn;
+        this.Head2.copyFrom(this.head);
+        this.LeftArm3.copyFrom(this.rightArm);
+        this.Body2.copyFrom(this.body);
 
-        BipedModel.ArmPose mainHandPos = armPose(entityIn, Hand.MAIN_HAND);
-        BipedModel.ArmPose offHandPos = armPose(entityIn, Hand.OFF_HAND);
+        if(!(entityIn instanceof PlayerEntity))
+            return;
 
-        this.swimAmount = entityIn.getSwimAmount(ageInTicks);
+        AbstractClientPlayerEntity clientPlayer = (AbstractClientPlayerEntity) entityIn;
 
-        if (entityIn.getMainArm() == HandSide.RIGHT) {
+        BipedModel.ArmPose mainHandPos = armPose(clientPlayer, Hand.MAIN_HAND);
+        BipedModel.ArmPose offHandPos = armPose(clientPlayer, Hand.OFF_HAND);
+
+        this.swimAmount = clientPlayer.getSwimAmount(ageInTicks);
+
+        if (clientPlayer.getMainArm() == HandSide.RIGHT) {
             this.rightArmPose = mainHandPos;
             this.leftArmPose = offHandPos;
         } else {
@@ -232,12 +242,12 @@ public class BlackModeModel<T extends LivingEntity> extends BipedModel<T>{
         this.Body2.copyFrom(this.body);
     }
 
-    private static BipedModel.ArmPose armPose(LivingEntity livingEntity, Hand hand) {
-        ItemStack itemstack = livingEntity.getItemInHand(hand);
+    private static BipedModel.ArmPose armPose(AbstractClientPlayerEntity player, Hand hand) {
+        ItemStack itemstack = player.getItemInHand(hand);
         if (itemstack.isEmpty()) {
             return BipedModel.ArmPose.EMPTY;
         } else {
-            if (livingEntity.getUsedItemHand() == hand && livingEntity.getUseItemRemainingTicks() > 0) {
+            if (player.getUsedItemHand() == hand && player.getUseItemRemainingTicks() > 0) {
                 UseAction useaction = itemstack.getUseAnimation();
                 if (useaction == UseAction.BLOCK) {
                     return BipedModel.ArmPose.BLOCK;
@@ -251,10 +261,10 @@ public class BlackModeModel<T extends LivingEntity> extends BipedModel<T>{
                     return BipedModel.ArmPose.THROW_SPEAR;
                 }
 
-                if (useaction == UseAction.CROSSBOW && hand == livingEntity.getUsedItemHand()) {
+                if (useaction == UseAction.CROSSBOW && hand == player.getUsedItemHand()) {
                     return BipedModel.ArmPose.CROSSBOW_CHARGE;
                 }
-            } else if (!livingEntity.swinging && itemstack.getItem() == Items.CROSSBOW && CrossbowItem.isCharged(itemstack)) {
+            } else if (!player.swinging && itemstack.getItem() == Items.CROSSBOW && CrossbowItem.isCharged(itemstack)) {
                 return BipedModel.ArmPose.CROSSBOW_HOLD;
             }
 
