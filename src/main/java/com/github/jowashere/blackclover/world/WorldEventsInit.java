@@ -15,6 +15,7 @@ import net.minecraft.world.gen.settings.DimensionStructuresSettings;
 import net.minecraft.world.gen.settings.StructureSeparationSettings;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
+import net.minecraftforge.event.world.StructureSpawnListGatherEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -33,6 +34,13 @@ public class WorldEventsInit
     {
         ModStructureGeneration.generateStructures(event);
         ModEntityGeneration.onEntitySpawn(event);
+
+    }
+
+    @SubscribeEvent
+    public static void structuresLoadingEvent(final StructureSpawnListGatherEvent event)
+    {
+        ModEntityGeneration.onEntitySpawnInStructure(event);
     }
 
     @SubscribeEvent
