@@ -302,9 +302,11 @@ public class PlayerEvents {
             ItemStack stackMain = event.player.getItemInHand(Hand.MAIN_HAND);
             ItemStack stackOff = event.player.getItemInHand(Hand.OFF_HAND);
 
-            if(stackMain.getOrCreateTag().getBoolean("antimagic") || stackOff.getOrCreateTag().getBoolean("antimagic")){
-                player_cap.addMana(-3);
-                NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.player), new PacketManaSync(player_cap.returnMana()));
+            if(stackMain.hasTag()) {
+                if(stackMain.getTag().getBoolean("antimagic") || stackOff.getTag().getBoolean("antimagic")){
+                    player_cap.addMana(-3);
+                    NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.player), new PacketManaSync(player_cap.returnMana()));
+                }
             }
 
             if(player_cap.returnMana() <= 0 && !event.player.isCreative()){

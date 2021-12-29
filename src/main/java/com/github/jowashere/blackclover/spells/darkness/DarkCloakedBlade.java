@@ -63,8 +63,10 @@ public class DarkCloakedBlade extends AbstractToggleSpell {
         if(caster.getAttribute(Attributes.ATTACK_DAMAGE).hasModifier(getDarkCloakModifier(level)))
             caster.getAttribute(Attributes.ATTACK_DAMAGE).removeModifier(getDarkCloakModifier(level));
 
-        if(stack.getOrCreateTag().getInt("dark_cloak") > 0){
-            stack.getOrCreateTag().putInt("dark_cloak", 0);
+        if(stack.hasTag()){
+            if (stack.getTag().getInt("dark_cloak") > 0) {
+                stack.getTag().putInt("dark_cloak", 0);
+            }
         }
 
     }
