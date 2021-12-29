@@ -1,7 +1,7 @@
 package com.github.jowashere.blackclover.spells.antimagic;
 
 import com.github.jowashere.blackclover.api.internal.AbstractSpell;
-import com.github.jowashere.blackclover.entities.spells.sword.OriginFlashEntity;
+import com.github.jowashere.blackclover.entities.spells.antimagic.BlackSlashEntity;
 import com.github.jowashere.blackclover.init.AttributeInit;
 import com.github.jowashere.blackclover.init.ItemInit;
 import net.minecraft.entity.LivingEntity;
@@ -28,7 +28,7 @@ public class BlackSlash extends AbstractSpell {
     private void action(LivingEntity caster, float manaIn) {
         if (!caster.level.isClientSide)
         {
-            OriginFlashEntity entity = new OriginFlashEntity(caster.level, caster, manaIn);
+            BlackSlashEntity entity = new BlackSlashEntity(caster.level, caster, manaIn);
             entity.shootFromRotation(caster, caster.xRot, caster.yRot, 0.0F, 1.6F, 2.5F);
             caster.level.addFreshEntity(entity);
             caster.swing(Hand.MAIN_HAND, true);

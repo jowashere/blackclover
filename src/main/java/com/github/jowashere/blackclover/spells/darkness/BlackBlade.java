@@ -61,6 +61,6 @@ public class BlackBlade extends AbstractSpell {
 
     private boolean extraCheck(PlayerEntity caster){
         ItemStack mainItem = caster.getItemInHand(Hand.MAIN_HAND);
-        return mainItem.getOrCreateTag().getBoolean("dark_cloak");
+        return mainItem.getOrCreateTag().contains("dark_cloak");
     }
 }
