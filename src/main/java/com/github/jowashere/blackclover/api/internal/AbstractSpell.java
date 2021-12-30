@@ -240,7 +240,7 @@ public abstract class AbstractSpell {
     }
 
     public enum Type {
-        WIND_MAGIC, ANTI_MAGIC, DARKNESS_MAGIC, LIGHTNING_MAGIC, SLASH_MAGIC, LIGHT_MAGIC, SWORD_MAGIC
+        WIND_MAGIC, ANTI_MAGIC, DARKNESS_MAGIC, LIGHTNING_MAGIC, SLASH_MAGIC, LIGHT_MAGIC, SWORD_MAGIC, WATER
     }
 
     public interface IAction {
