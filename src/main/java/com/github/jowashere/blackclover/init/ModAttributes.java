@@ -23,6 +23,7 @@ public class ModAttributes {
     public static final RegistryObject<Attribute> DAMAGE_REDUCTION = ATTRIBUTES.register("damage_reduction", () -> (new RangedAttribute("damageReduction", 0.0D, -1D, 1D)).setSyncable(true));
     public static final RegistryObject<Attribute> SPECIAL_DAMAGE_REDUCTION = ATTRIBUTES.register("special_damage_reduction", () -> (new RangedAttribute("specialDamageReduction", 0.0D, -1D, 1D)).setSyncable(true));
     public static final RegistryObject<Attribute> ATTACK_RANGE = ATTRIBUTES.register("attack_range", () -> (new RangedAttribute("attackRange", 0.0D, -1024D, 1024D)).setSyncable(true));
+    public static final RegistryObject<Attribute> MULTIPLIER = ATTRIBUTES.register("multiplier_experience", () -> new RangedAttribute("multiplier", 1.0D, 1.0D, 5.0D).setSyncable(true));
 
 
 

@@ -3,6 +3,7 @@ package com.github.jowashere.blackclover.init;
 import com.github.jowashere.blackclover.Main;
 import com.github.jowashere.blackclover.items.ModSpawnEgg;
 import com.github.jowashere.blackclover.items.armors.*;
+import com.github.jowashere.blackclover.items.misc.MoguroLeafJuice;
 import com.github.jowashere.blackclover.items.weapons.MagicSwordItem;
 import com.github.jowashere.blackclover.items.weapons.SwordMagicSwords;
 import com.github.jowashere.blackclover.items.weapons.YamisKatana;
@@ -24,6 +25,9 @@ public class ItemInit {
 
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Main.MODID);
     public List<Supplier<Item>> items = new ArrayList<>();
+
+    //Misc
+    public static final RegistryObject<Item> MOGURO_LEAF_JUICE = ITEMS.register("moguro_leaf_juice", () -> new MoguroLeafJuice(new Item.Properties().tab(ItemGroup.TAB_BREWING)));
 
     //Block Items
     public static final RegistryObject<BlockItem> MOGURO_LOG = ITEMS.register("moguro_log", () -> new BlockItem(BlocksInit.MOGURO_LOG.get(),

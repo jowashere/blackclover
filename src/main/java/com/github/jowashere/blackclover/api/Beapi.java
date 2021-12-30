@@ -1,11 +1,17 @@
 package com.github.jowashere.blackclover.api;
 
 import com.github.jowashere.blackclover.Main;
+import com.github.jowashere.blackclover.capabilities.player.IPlayerHandler;
+import com.github.jowashere.blackclover.capabilities.player.PlayerProvider;
+import com.github.jowashere.blackclover.init.ModAttributes;
 import com.google.common.collect.Lists;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.LivingEntity;
+import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.nbt.CompoundNBT;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
@@ -239,5 +245,15 @@ public class Beapi
         int int_random = rand.nextInt(cap);
 
         return int_random;
+    }
+
+    public static void experienceMultiplier(LivingEntity player, float extraMagicExperience)
+    {
+        IPlayerHandler playercap = player.getCapability(PlayerProvider.CAPABILITY_PLAYER).orElseThrow(() -> new RuntimeException("CAPABILITY_PLAYER NOT FOUND!"));
+
+        ModifiableAttributeInstance attributeInstance = player.getAttribute(ModAttributes.MULTIPLIER.get());
+
+
+        playercap.addMagicExp((float) (extraMagicExperience * attributeInstance.getValue()));
     }
 }

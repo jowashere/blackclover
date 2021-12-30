@@ -55,6 +55,8 @@ public class Main
         ItemInit.ITEMS.register(modEventBus);
         ModAttributes.ATTRIBUTES.register(modEventBus);
         EffectInit.EFFECT.register(modEventBus);
+        PotionInit.POTIONS.register(modEventBus);
+        PotionInit.EFFECTS.register(modEventBus);
         EntityInit.ENTITIES.register(modEventBus);
         EntityInit.SPAWN_EGGS.register(modEventBus);
         StructuresInit.DEFERRED_REGISTRY_STRUCTURE.register(modEventBus);

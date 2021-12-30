@@ -161,7 +161,8 @@ public abstract class BCEntity extends CreatureEntity implements IDynamicRendere
             PlayerEntity player = (PlayerEntity) cause.getEntity();
             IPlayerHandler playercap = player.getCapability(PlayerProvider.CAPABILITY_PLAYER).orElseThrow(() -> new RuntimeException("CAPABILITY_PLAYER NOT FOUND!"));
 
-            playercap.addMagicExp(this.magicXPDrop);
+            Beapi.experienceMultiplier(player, this.magicXPDrop);
+
             NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketMagicExpSync(playercap.returnMagicExp(), player.getId()));
 
         }
