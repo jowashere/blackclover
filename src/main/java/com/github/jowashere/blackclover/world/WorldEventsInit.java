@@ -4,6 +4,7 @@ import com.github.jowashere.blackclover.Main;
 import com.github.jowashere.blackclover.init.StructuresInit;
 import com.github.jowashere.blackclover.world.gen.ModEntityGeneration;
 import com.github.jowashere.blackclover.world.gen.ModStructureGeneration;
+import com.github.jowashere.blackclover.world.gen.ModTreeGeneration;
 import com.mojang.serialization.Codec;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
@@ -34,7 +35,7 @@ public class WorldEventsInit
     {
         ModStructureGeneration.generateStructures(event);
         ModEntityGeneration.onEntitySpawn(event);
-
+        ModTreeGeneration.generateTrees(event);
     }
 
     @SubscribeEvent

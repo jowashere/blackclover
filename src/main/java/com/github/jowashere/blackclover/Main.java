@@ -17,6 +17,9 @@ import com.github.jowashere.blackclover.networking.NetworkLoader;
 import com.github.jowashere.blackclover.util.helpers.KeyboardHelper;
 import com.github.jowashere.blackclover.util.helpers.RaceHelper;
 import com.github.jowashere.blackclover.world.structure.configured.ConfiguredStructures;
+import net.minecraft.block.Blocks;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.CapabilityManager;
@@ -48,6 +51,7 @@ public class Main
 
         MinecraftForge.EVENT_BUS.register(this);
 
+        BlocksInit.BLOCKS.register(modEventBus);
         ItemInit.ITEMS.register(modEventBus);
         ModAttributes.ATTRIBUTES.register(modEventBus);
         EffectInit.EFFECT.register(modEventBus);
@@ -63,6 +67,8 @@ public class Main
     {
         CapabilityManager.INSTANCE.register(IPlayerHandler.class, new PlayerCapability.Storage(), PlayerCapability::new);
 
+        RenderTypeLookup.setRenderLayer(BlocksInit.MOGURO_LEAF.get(), RenderType.cutout());
+        RenderTypeLookup.setRenderLayer(BlocksInit.MOGURO_SAPLING.get(), RenderType.cutout());
         event.enqueueWork(() ->
         {
             StructuresInit.setupStructures();

@@ -65,7 +65,7 @@ public class BanditEntity extends BCEntity implements ISpellUser
     @Override
     public boolean removeWhenFarAway(double d)
     {
-        if (d > 48)
+        if (d > 1000)
             return true;
         else
             return false;
@@ -78,6 +78,8 @@ public class BanditEntity extends BCEntity implements ISpellUser
             this.addSpells(this, 6);
         }
     }
+
+
 
     @Override
     @Nullable

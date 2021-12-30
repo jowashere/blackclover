@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/leaves",
+  "textures":
+  {
+    "all": "blackclover:blocks/moguro_leaf"
+  }
+}

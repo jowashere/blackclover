@@ -7,7 +7,9 @@ import com.github.jowashere.blackclover.items.weapons.MagicSwordItem;
 import com.github.jowashere.blackclover.items.weapons.SwordMagicSwords;
 import com.github.jowashere.blackclover.items.weapons.YamisKatana;
 import com.github.jowashere.blackclover.spells.SpellRegistry;
+import jdk.nashorn.internal.ir.Block;
 import net.minecraft.inventory.EquipmentSlotType;
+import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroup;
 import net.minecraftforge.fml.RegistryObject;
@@ -22,6 +24,14 @@ public class ItemInit {
 
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, Main.MODID);
     public List<Supplier<Item>> items = new ArrayList<>();
+
+    //Block Items
+    public static final RegistryObject<BlockItem> MOGURO_LOG = ITEMS.register("moguro_log", () -> new BlockItem(BlocksInit.MOGURO_LOG.get(),
+            new Item.Properties().tab(ItemGroup.TAB_BUILDING_BLOCKS)));
+    public static final RegistryObject<BlockItem> MOGURO_LEAF = ITEMS.register("moguro_leaf", () -> new BlockItem(BlocksInit.MOGURO_LEAF.get(),
+            new Item.Properties().tab(ItemGroup.TAB_BUILDING_BLOCKS)));
+    public static final RegistryObject<BlockItem> MOGURO_SAPLING = ITEMS.register("moguro_sapling", () -> new BlockItem(BlocksInit.MOGURO_SAPLING.get(),
+            new Item.Properties().tab(ItemGroup.TAB_BUILDING_BLOCKS)));
 
     //Armors
     public static final RegistryObject<Item> MAGE_HAT = ITEMS.register("mage_hat", ()-> new MageArmorItem("mage", EquipmentSlotType.HEAD));
