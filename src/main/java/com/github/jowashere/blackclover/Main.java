@@ -16,6 +16,8 @@ import com.github.jowashere.blackclover.init.*;
 import com.github.jowashere.blackclover.networking.NetworkLoader;
 import com.github.jowashere.blackclover.util.helpers.KeyboardHelper;
 import com.github.jowashere.blackclover.util.helpers.RaceHelper;
+import com.github.jowashere.blackclover.world.biome.ModBiomes;
+import com.github.jowashere.blackclover.world.gen.ModBiomeGeneration;
 import com.github.jowashere.blackclover.world.structure.configured.ConfiguredStructures;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.renderer.RenderType;
@@ -60,6 +62,7 @@ public class Main
         EntityInit.ENTITIES.register(modEventBus);
         EntityInit.SPAWN_EGGS.register(modEventBus);
         StructuresInit.DEFERRED_REGISTRY_STRUCTURE.register(modEventBus);
+        ModBiomes.register(modEventBus);
 
         modEventBus.addListener(this::onCommonSetup);
         modEventBus.addListener(this::onClientSetup);
@@ -77,6 +80,7 @@ public class Main
             ConfiguredStructures.registerConfiguredStructures();
         });
 
+        ModBiomeGeneration.generateBiomes();
         for (IBCMPlugin plugin : BCMRegistry.PLUGINS) {
             System.out.println("Black Clover Mod Plugin, id: " + plugin.getPluginId() + ". Has been registered.");
             plugin.RegisterNewSpells(BCMRegistry.SPELLS);

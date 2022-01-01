@@ -9,7 +9,6 @@ import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectType;
 
-import java.util.Map;
 import java.util.UUID;
 
 public class ExperienceMultiplierEffect extends Effect
