@@ -66,7 +66,6 @@ public class NetworkLoader {
 
         INSTANCE.registerMessage(nextID(), PacketSyncBCEntityTarget.class, PacketSyncBCEntityTarget::encode, PacketSyncBCEntityTarget::decode, PacketSyncBCEntityTarget::handle);
 
-
         //CURIOS
 
         // Client Packets
