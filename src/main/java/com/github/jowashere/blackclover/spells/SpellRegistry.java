@@ -10,6 +10,7 @@ import com.github.jowashere.blackclover.spells.lightning.ThunderFiend;
 import com.github.jowashere.blackclover.spells.lightning.ThunderGodBoots;
 import com.github.jowashere.blackclover.spells.lightning.ThunderGodGloves;
 import com.github.jowashere.blackclover.spells.slash.DeathScythe;
+import com.github.jowashere.blackclover.spells.slash.ForwardThrust;
 import com.github.jowashere.blackclover.spells.slash.LunaticSlash;
 import com.github.jowashere.blackclover.spells.slash.SlashBlades;
 import com.github.jowashere.blackclover.spells.sword.CausalityBreakSword;
@@ -57,6 +58,7 @@ public class SpellRegistry {
     public static final AbstractSpell SLASH_BLADES = register(new SlashBlades());
     public static final AbstractSpell DEATH_SCYTHE = register(new DeathScythe());
     public static final AbstractSpell LUNATIC_SLASH = register(new LunaticSlash());
+    public static final AbstractSpell FORWARD_THRUST = register(new ForwardThrust());
 
     //Sword Magic
     public static final AbstractSpell ORIGIN_FLASH = register(new OriginFlash());

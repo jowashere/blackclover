@@ -2,6 +2,7 @@ package com.github.jowashere.blackclover.api.internal;
 
 import com.github.jowashere.blackclover.Main;
 import com.github.jowashere.blackclover.MainPlugin;
+import com.github.jowashere.blackclover.api.Beapi;
 import com.github.jowashere.blackclover.api.IBCMPlugin;
 import com.github.jowashere.blackclover.capabilities.player.IPlayerHandler;
 import com.github.jowashere.blackclover.capabilities.player.PlayerProvider;
@@ -185,11 +186,11 @@ public abstract class AbstractSpell {
                         return;
                     }
 
-                    //Adds magic experience (Will replace with better method soon)
+                    //Adds magic experience
                     if (!this.isToggle()) {
-                        playercap.addMagicExp(this.getManaCost());
+                        Beapi.experienceMultiplier(caster, this.getManaCost());
                     } else {
-                        playercap.addMagicExp(this.getManaCost() / 2);
+                        Beapi.experienceMultiplier(caster, (this.getManaCost()/2));
                     }
                     NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketMagicExpSync(playercap.returnMagicExp(), player.getId()));
                     BCMHelper.recaculateMagicLevel(player);
