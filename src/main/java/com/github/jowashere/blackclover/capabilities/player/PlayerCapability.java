@@ -106,6 +106,15 @@ public class PlayerCapability implements IPlayerHandler {
             this.mana = 0;
     }
 
+    @Override
+    public void reduceMana(float amount)
+    {
+        this.mana -= amount;
+
+        if (this.mana < 0)
+            this.mana = 0;
+    }
+
 
     @Override
     public void setJoinWorld(boolean joined) {
@@ -133,6 +142,7 @@ public class PlayerCapability implements IPlayerHandler {
     public void addMaxMana(float amount) {
     	this.maxMana += amount;
     }
+
     @Override
     public float returnMaxMana() {
     	return this.maxMana;

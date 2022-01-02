@@ -1,6 +1,7 @@
 package com.github.jowashere.blackclover.events;
 
 import com.github.jowashere.blackclover.Main;
+import com.github.jowashere.blackclover.api.Beapi;
 import com.github.jowashere.blackclover.capabilities.player.IPlayerHandler;
 import com.github.jowashere.blackclover.capabilities.player.PlayerCapability;
 import com.github.jowashere.blackclover.capabilities.player.PlayerProvider;
@@ -45,7 +46,12 @@ public class WorldEvents
 
             if (biome.equals(ModBiomes.GRAND_MAGIC_ZONE_VOLCANO.getId()))
             {
-                if (magiclevel < 30 || !player_cap.ReturnManaSkinToggled())
+                Beapi.experienceMultiplier(player, 2);
+                player.addEffect(new EffectInstance(PotionInit.MULTIPLIER_EFFECT.get(), 1));
+                player_cap.reduceMana(0.5F);
+
+
+                if (magiclevel < 30 || !player_cap.ReturnManaSkinToggled() || player_cap.returnMana() == 0)
                 {
                     if (player.getHealth() > 1.0F)
                     {

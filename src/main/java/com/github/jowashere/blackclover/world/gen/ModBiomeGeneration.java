@@ -14,7 +14,7 @@ import static net.minecraftforge.common.BiomeDictionary.Type.*;
 public class ModBiomeGeneration
 {
     public static void generateBiomes() {
-        addBiome(ModBiomes.GRAND_MAGIC_ZONE_VOLCANO.get(), BiomeManager.BiomeType.WARM, 20, HOT, DEAD, DRY);
+        addBiome(ModBiomes.GRAND_MAGIC_ZONE_VOLCANO.get(), BiomeManager.BiomeType.WARM, (int) 1, HOT, DEAD, DRY);
     }
 
     private static void addBiome(Biome biome, BiomeManager.BiomeType type, int weight, BiomeDictionary.Type... types) {

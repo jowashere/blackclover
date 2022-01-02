@@ -1,5 +1,6 @@
 package com.github.jowashere.blackclover.world.gen;
 
+import com.github.jowashere.blackclover.world.biome.ModBiomes;
 import com.github.jowashere.blackclover.world.structure.configured.ConfiguredStructures;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.registry.Registry;

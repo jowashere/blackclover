@@ -7,6 +7,7 @@ import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.AttributeModifierManager;
 import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.potion.Effect;
+import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.EffectType;
 
 import java.util.UUID;
@@ -23,7 +24,6 @@ public class ExperienceMultiplierEffect extends Effect
     @Override
     public void applyEffectTick(LivingEntity entity, int amplifier)
     {
-        System.out.println("Effect");
     }
 
     @Override
@@ -50,5 +50,20 @@ public class ExperienceMultiplierEffect extends Effect
     {
         return new AttributeModifier(UUID.fromString("f9ef9433-fbe9-4f0a-9f5b-4eecd6f57ff8"), "Experience Multiplier",
                 0.1 + (amplifier/10), AttributeModifier.Operation.MULTIPLY_TOTAL);
+    }
+
+    @Override
+    public boolean shouldRenderInvText(EffectInstance effect) {
+        return false;
+    }
+
+    @Override
+    public boolean shouldRender(EffectInstance effect) {
+        return false;
+    }
+
+    @Override
+    public boolean shouldRenderHUD(EffectInstance effect) {
+        return false;
     }
 }

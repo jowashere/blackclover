@@ -1,6 +1,8 @@
 package com.github.jowashere.blackclover.world.biome;
 
 import com.github.jowashere.blackclover.Main;
+import com.github.jowashere.blackclover.init.StructuresInit;
+import com.github.jowashere.blackclover.world.structure.configured.ConfiguredStructures;
 import net.minecraft.client.audio.BackgroundMusicTracks;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
@@ -24,7 +26,7 @@ public class ModBiomes
 {
     public static final DeferredRegister<Biome> BIOMES = DeferredRegister.create(ForgeRegistries.BIOMES, Main.MODID);
 
-    public static final RegistryObject<Biome> GRAND_MAGIC_ZONE_VOLCANO = BIOMES.register("volcano_zone", () -> makeVolcanoBiome(() -> ModConfiguredSurfaceBuilders.GRAND_MAGIC_ZONE_VOLCANO, 0.125f, 0.05f));
+    public static final RegistryObject<Biome> GRAND_MAGIC_ZONE_VOLCANO = BIOMES.register("volcano_zone", () -> makeVolcanoBiome(() -> ModConfiguredSurfaceBuilders.GRAND_MAGIC_ZONE_VOLCANO, 0.2f, 0.3f));
 
     private static Biome makeVolcanoBiome(final Supplier<ConfiguredSurfaceBuilder<?>> surfaceBuilder, float depth, float scale) {
         MobSpawnInfo.Builder mobspawninfo$builder = new MobSpawnInfo.Builder();
@@ -38,17 +40,16 @@ public class ModBiomes
                 (new BiomeGenerationSettings.Builder()).surfaceBuilder(surfaceBuilder);
 
         biomegenerationsettings$builder.addStructureStart(StructureFeatures.RUINED_PORTAL_SWAMP);
+        biomegenerationsettings$builder.addStructureStart(ConfiguredStructures.CONFIGURED_MINI_VOLCANO);
 
         DefaultBiomeFeatures.addDefaultCarvers(biomegenerationsettings$builder);
 
-        DefaultBiomeFeatures.addDefaultLakes(biomegenerationsettings$builder);
         DefaultBiomeFeatures.addDefaultMonsterRoom(biomegenerationsettings$builder);
         DefaultBiomeFeatures.addDefaultUndergroundVariety(biomegenerationsettings$builder);
         DefaultBiomeFeatures.addDefaultOres(biomegenerationsettings$builder);
         DefaultBiomeFeatures.addSwampClayDisk(biomegenerationsettings$builder);
         DefaultBiomeFeatures.addDefaultMushrooms(biomegenerationsettings$builder);
         DefaultBiomeFeatures.addDesertExtraVegetation(biomegenerationsettings$builder);
-        DefaultBiomeFeatures.addDefaultSprings(biomegenerationsettings$builder);
 
         biomegenerationsettings$builder.addFeature(GenerationStage.Decoration.LAKES, Features.LAKE_LAVA);
         DefaultBiomeFeatures.addSurfaceFreezing(biomegenerationsettings$builder);
