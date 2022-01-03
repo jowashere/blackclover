@@ -7,7 +7,7 @@ import com.github.jowashere.blackclover.entities.mobs.BCEntity;
 import com.github.jowashere.blackclover.init.ItemInit;
 import com.github.jowashere.blackclover.init.ModAttributes;
 import com.github.jowashere.blackclover.networking.NetworkLoader;
-import com.github.jowashere.blackclover.networking.packets.PacketSetGrimoire;
+import com.github.jowashere.blackclover.networking.packets.settings.PacketSetGrimoire;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;

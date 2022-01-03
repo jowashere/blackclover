@@ -54,7 +54,7 @@ public class SpellHelper {
         LazyOptional<IPlayerHandler> playerInCap = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
         IPlayerHandler player_cap = playerInCap.orElse(new PlayerCapability());
 
-        return baseDamage + ((damageTier * baseDamage / 2) * player_cap.ReturnMagicLevel() / 10);
+        return baseDamage + ((damageTier * baseDamage / 2) * player_cap.getMagicLevel() / 10);
     }
 
     public static int findSpellKey(PlayerEntity player, AbstractSpell spell) {

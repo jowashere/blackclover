@@ -170,7 +170,7 @@ public abstract class AbstractSpell {
                     ((AbstractToggleSpell) this).toggleTimerChecks(player);
 
                 float manaCost;
-                manaCost = this.getManaCost() + ((float) Math.sqrt(playercap.ReturnMagicLevel()) * (this.getManaCost() / 5));
+                manaCost = this.getManaCost() + ((float) Math.sqrt(playercap.getMagicLevel()) * (this.getManaCost() / 5));
 
                 if (this.isSkillSpell() || playercap.returnHasGrimoire()) {
 

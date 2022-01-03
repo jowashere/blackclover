@@ -67,7 +67,7 @@ public class ManalessPassives {
                 if(!player.getAttribute(Attributes.ARMOR_TOUGHNESS).hasModifier(getArmourModifier(player)))
                     player.getAttribute(Attributes.ARMOR_TOUGHNESS).addTransientModifier(getArmourModifier(player));
 
-                if(playercap.ReturnMagicLevel() >= 55)
+                if(playercap.getMagicLevel() >= 55)
                     player.fallDistance = 0;
 
                 if(!player.isCrouching()){
@@ -124,21 +124,21 @@ public class ManalessPassives {
             LazyOptional<IPlayerHandler> playerInCap = playerEntity.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
             IPlayerHandler player_cap = playerInCap.orElse(new PlayerCapability());
             return new AttributeModifier(UUID.fromString("2096d841-4fe1-4678-ba90-80ff10f115b8"), "Black Mode Armour Modifier"
-                    , 4 + ((float)player_cap.ReturnMagicLevel()/20), AttributeModifier.Operation.ADDITION);
+                    , 4 + ((float)player_cap.getMagicLevel()/20), AttributeModifier.Operation.ADDITION);
         }
 
         private static AttributeModifier getResistanceModifier(PlayerEntity playerEntity) {
             LazyOptional<IPlayerHandler> playerInCap = playerEntity.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
             IPlayerHandler player_cap = playerInCap.orElse(new PlayerCapability());
             return new AttributeModifier(UUID.fromString("9b772daa-fed8-4f82-bee3-79879d7ba66c"), "Manaless Resistance Modifier",
-                    (player_cap.ReturnMagicLevel()/100)*0.85, AttributeModifier.Operation.ADDITION);
+                    (player_cap.getMagicLevel()/100)*0.85, AttributeModifier.Operation.ADDITION);
         }
 
         private static AttributeModifier getStrengthModifier(PlayerEntity playerEntity) {
             LazyOptional<IPlayerHandler> playerInCap = playerEntity.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
             IPlayerHandler player_cap = playerInCap.orElse(new PlayerCapability());
             return new AttributeModifier(UUID.fromString("e87fa53c-ba29-45e7-bda9-6f85b2b6f4f7"), "Manaless Strength Modifier",
-                    3 + (player_cap.ReturnMagicLevel()/10), AttributeModifier.Operation.ADDITION);
+                    3 + (player_cap.getMagicLevel()/10), AttributeModifier.Operation.ADDITION);
 
         }
 
@@ -146,7 +146,7 @@ public class ManalessPassives {
             LazyOptional<IPlayerHandler> playerInCap = playerEntity.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
             IPlayerHandler player_cap = playerInCap.orElse(new PlayerCapability());
             return new AttributeModifier(UUID.fromString("c43bdc53-4b8e-4a1e-8bca-6358c9bc210f"), "Manaless Speed Modifier",
-                    0.025 * player_cap.ReturnMagicLevel(), AttributeModifier.Operation.MULTIPLY_BASE);
+                    0.025 * player_cap.getMagicLevel(), AttributeModifier.Operation.MULTIPLY_BASE);
 
         }
 
@@ -154,7 +154,7 @@ public class ManalessPassives {
             LazyOptional<IPlayerHandler> playerInCap = playerEntity.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
             IPlayerHandler player_cap = playerInCap.orElse(new PlayerCapability());
             return new AttributeModifier(UUID.fromString("38d0ad64-d927-45c2-9ef7-713fb864d936"), "Manaless Jump Modifier",
-                    2 + ((player_cap.ReturnMagicLevel()/100)*3), AttributeModifier.Operation.ADDITION);
+                    2 + ((player_cap.getMagicLevel()/100)*3), AttributeModifier.Operation.ADDITION);
 
         }
 

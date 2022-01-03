@@ -35,7 +35,7 @@ public class Notifications {
             ClientPlayerEntity player = mc.player;
             LazyOptional<IPlayerHandler> playerc = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
             IPlayerHandler player_cap = playerc.orElse(new PlayerCapability());
-            if (player_cap.ReturnManaSkinToggled())
+            if (player_cap.returnManaSkinToggled())
             {
                 mc.gui.blit(event.getMatrixStack(), 25, 2, 0,0, 16, 16);
             }

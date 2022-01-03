@@ -2,14 +2,11 @@ package com.github.jowashere.blackclover.effects;
 
 import com.github.jowashere.blackclover.init.ModAttributes;
 import net.minecraft.entity.LivingEntity;
-import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.AttributeModifierManager;
-import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectType;
 
-import java.util.Map;
 import java.util.UUID;
 
 public class ExperienceMultiplierEffect extends Effect
@@ -24,7 +21,7 @@ public class ExperienceMultiplierEffect extends Effect
     @Override
     public void applyEffectTick(LivingEntity entity, int amplifier)
     {
-        System.out.println("Effect");
+
     }
 
     @Override

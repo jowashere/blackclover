@@ -44,7 +44,7 @@ public final class SlotType implements ISlotType {
     this.visible = builder.visible;
     this.cosmetic = builder.cosmetic;
     this.icon = builder.icon != null ? builder.icon
-        : new ResourceLocation(CuriosApi.MODID, "item/empty_curio_slot");
+        : new ResourceLocation(CuriosApi.MODID, "curios/empty_curio_slot");
   }
 
   @Override

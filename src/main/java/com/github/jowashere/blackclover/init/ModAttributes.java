@@ -25,6 +25,9 @@ public class ModAttributes {
     public static final RegistryObject<Attribute> ATTACK_RANGE = ATTRIBUTES.register("attack_range", () -> (new RangedAttribute("attackRange", 0.0D, -1024D, 1024D)).setSyncable(true));
     public static final RegistryObject<Attribute> MULTIPLIER = ATTRIBUTES.register("multiplier_experience", () -> new RangedAttribute("multiplier", 1.0D, 1.0D, 5.0D).setSyncable(true));
 
-
+    public static final RegistryObject<Attribute> HEALTH_STAT = ATTRIBUTES.register("health_stat", () -> new RangedAttribute("healthStat", 20.0D, 20.0D, 100.0D).setSyncable(true));
+    public static final RegistryObject<Attribute> PHYSICAL_STAT = ATTRIBUTES.register("physical_stat", () -> new RangedAttribute("physicalStat", 1.0D, -256.0D, 256.0D).setSyncable(true));
+    public static final RegistryObject<Attribute> MANA_STAT = ATTRIBUTES.register("mana_stat", () -> new RangedAttribute("manaStat", 1.0D, 0.0D, 256.0D).setSyncable(true));
+    public static final RegistryObject<Attribute> MANA_CONTROL_STAT = ATTRIBUTES.register("mana_control_stat", () -> new RangedAttribute("manaControlStat", 1.0D, -256.0D, 256.0D).setSyncable(true));
 
 }

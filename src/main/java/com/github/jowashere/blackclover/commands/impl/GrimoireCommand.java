@@ -4,7 +4,7 @@ import com.github.jowashere.blackclover.Main;
 import com.github.jowashere.blackclover.capabilities.player.IPlayerHandler;
 import com.github.jowashere.blackclover.capabilities.player.PlayerProvider;
 import com.github.jowashere.blackclover.networking.NetworkLoader;
-import com.github.jowashere.blackclover.networking.packets.PacketSetGrimoire;
+import com.github.jowashere.blackclover.networking.packets.settings.PacketSetGrimoire;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.suggestion.SuggestionProvider;

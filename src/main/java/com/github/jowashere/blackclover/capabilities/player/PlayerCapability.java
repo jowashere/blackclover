@@ -34,17 +34,13 @@ public class PlayerCapability implements IPlayerHandler {
     private String key7 = "";
     private String key8 = "";
     private String key9 = "";
-    private String skillSpell = "";
-    private int key1cd = 0;
-    private int key2cd = 0;
-    private int key3cd = 0;
-    private int key4cd = 0;
-    private int key5cd = 0;
-    private int key6cd = 0;
-    private int key7cd = 0;
-    private int key8cd = 0;
-    private int key9cd = 0;
-    private int skillSpellcd = 0;
+
+    private int healthStat;
+    private int physicalStat;
+    private int manaStat;
+    private int manaControlStat;
+
+    private int statPoints;
 
     private String grimoireTextureLoc = "";
 
@@ -199,6 +195,82 @@ public class PlayerCapability implements IPlayerHandler {
     }
 
     @Override
+    public void setHealthStat(int amount) {
+        this.healthStat = amount;
+    }
+
+    @Override
+    public void addHealthStat(int add) {
+        this.healthStat += add;
+    }
+
+    @Override
+    public int getHealthStat() {
+        return this.healthStat;
+    }
+
+    @Override
+    public void setPhysicalStat(int amount) {
+        this.physicalStat = amount;
+    }
+
+    @Override
+    public void addPhysicalStat(int add){
+        this.physicalStat += add;
+    }
+
+    @Override
+    public int getPhysicalStat() {
+        return this.physicalStat;
+    }
+
+    @Override
+    public void setManaStat(int amount) {
+        this.manaStat = amount;
+    }
+
+    @Override
+    public void addManaStat(int add) {
+        this.manaStat += add;
+    }
+
+    @Override
+    public int getManaStat() {
+        return this.manaStat;
+    }
+
+    @Override
+    public void setManaControlStat(int amount) {
+        this.manaControlStat = amount;
+    }
+
+    @Override
+    public void addManaControlStat(int add) {
+        this.manaControlStat += add;
+    }
+
+    @Override
+    public int getManaControlStat() {
+        return this.manaControlStat;
+    }
+
+    @Override
+    public void setStatPoints (int amount) {
+        this.statPoints = amount;
+    }
+
+    @Override
+    public void addStatPoints (int add) {
+        this.statPoints += add;
+    }
+
+    @Override
+    public int getStatPoints() {
+        return this.statPoints;
+    }
+
+
+    @Override
     public void setMagicLevel(int amount)
     {
         this.magicLevel = amount;
@@ -210,11 +282,6 @@ public class PlayerCapability implements IPlayerHandler {
     }
     @Override
     public int getMagicLevel()
-    {
-        return this.magicLevel;
-    }
-    @Override
-    public int ReturnMagicLevel()
     {
         return this.magicLevel;
     }
@@ -249,7 +316,7 @@ public class PlayerCapability implements IPlayerHandler {
         this.manaSkinToggled = handInfusion;
     }
     @Override
-    public boolean ReturnManaSkinToggled()
+    public boolean returnManaSkinToggled()
     {
         return this.manaSkinToggled;
     }
@@ -282,54 +349,6 @@ public class PlayerCapability implements IPlayerHandler {
     @Override
     public String getGrimoireTexture(){
 	    return grimoireTextureLoc;
-    }
-
-    @Override
-    public void setKeybindCD(int key, int cd)
-    {
-        if(key == 1){
-            this.key1cd = cd;
-        }else if(key == 2){
-            this.key2cd = cd;
-        }else if(key == 3){
-            this.key3cd = cd;
-        }else if(key == 4){
-            this.key4cd = cd;
-        }else if(key == 5){
-            this.key5cd = cd;
-        }else if(key == 6){
-            this.key6cd = cd;
-        }else if(key == 7){
-            this.key7cd = cd;
-        }else if(key == 8){
-            this.key8cd = cd;
-        }else if(key == 9){
-            this.key9cd = cd;
-        }
-    }
-    @Override
-    public int returnKeybindCD(int key)
-    {
-        if(key == 1){
-            return this.key1cd;
-        }else if(key == 2){
-            return this.key2cd;
-        }else if(key == 3){
-            return this.key3cd;
-        }else if(key == 4){
-            return this.key4cd;
-        }else if(key == 5){
-            return this.key5cd;
-        }else if(key == 6){
-            return this.key6cd;
-        }else if(key == 7){
-            return this.key7cd;
-        }else if(key == 8){
-            return this.key8cd;
-        }else if(key == 9){
-            return this.key9cd;
-        }
-        return 0;
     }
 
     @Override
@@ -458,7 +477,7 @@ public class PlayerCapability implements IPlayerHandler {
 
             tag.putBoolean("joined", instance.JoinWorld());
             tag.putBoolean("spellMode", instance.returnSpellModeToggle());
-            tag.putBoolean("manaskin", instance.ReturnManaSkinToggled());
+            tag.putBoolean("manaskin", instance.returnManaSkinToggled());
             tag.putBoolean("reinforcement", instance.returnReinforcementToggled());
             tag.putBoolean("spellmessage", instance.returnToggleSpellMessage());
             tag.putFloat("mana", instance.returnMana());
@@ -466,13 +485,18 @@ public class PlayerCapability implements IPlayerHandler {
             tag.putFloat("regenMana", instance.returnRegenMana());
             tag.putInt("colorMana", instance.returnColourMana());
             tag.putFloat("magicExp", instance.returnMagicExp());
-            tag.putInt("magicLevel", instance.ReturnMagicLevel());
+            tag.putInt("magicLevel", instance.getMagicLevel());
             tag.putString("playerRace", instance.returnRace().getString());
             tag.putString("playerMode", instance.returnPlayerMode().getName());
             tag.putString("magicAttribute", instance.ReturnMagicAttribute().getString());
             tag.putBoolean("hasGrimoire", instance.returnHasGrimoire());
 
             tag.putString("grimoireTex", instance.getGrimoireTexture());
+
+            tag.putInt("healthStat", instance.getHealthStat());
+            tag.putInt("physicalStat", instance.getPhysicalStat());
+            tag.putInt("manaStat", instance.getManaStat());
+            tag.putInt("manaControlStat", instance.getManaControlStat());
 
             tag.putString("key1", instance.returnKeybind(1));
             tag.putString("key2", instance.returnKeybind(2));
@@ -483,16 +507,6 @@ public class PlayerCapability implements IPlayerHandler {
             tag.putString("key7", instance.returnKeybind(7));
             tag.putString("key8", instance.returnKeybind(8));
             tag.putString("key9", instance.returnKeybind(9));
-
-            tag.putInt("key1cd", instance.returnKeybindCD(1));
-            tag.putInt("key2cd", instance.returnKeybindCD(2));
-            tag.putInt("key3cd", instance.returnKeybindCD(3));
-            tag.putInt("key4cd", instance.returnKeybindCD(4));
-            tag.putInt("key5cd", instance.returnKeybindCD(5));
-            tag.putInt("key6cd", instance.returnKeybindCD(6));
-            tag.putInt("key7cd", instance.returnKeybindCD(7));
-            tag.putInt("key8cd", instance.returnKeybindCD(8));
-            tag.putInt("key9cd", instance.returnKeybindCD(9));
 
             CompoundNBT swordSlot1 = new CompoundNBT();
             instance.returnSwordSlot(1).save(swordSlot1);
@@ -562,6 +576,11 @@ public class PlayerCapability implements IPlayerHandler {
 
             instance.SetGrimoireTexture(((CompoundNBT) tag).getString("grimoireTex"));
 
+            instance.setHealthStat(((CompoundNBT) tag).getInt("healthStat"));
+            instance.setPhysicalStat(((CompoundNBT) tag).getInt("physicalStat"));
+            instance.setManaStat(((CompoundNBT) tag).getInt("manaStat"));
+            instance.setManaStat(((CompoundNBT) tag).getInt("manaControlStat"));
+
             instance.setSwordSlot(1, ItemStack.of(((CompoundNBT) tag).getCompound("swordslot1")));
             instance.setSwordSlot(2, ItemStack.of(((CompoundNBT) tag).getCompound("swordslot2")));
             instance.setSwordSlot(3, ItemStack.of(((CompoundNBT) tag).getCompound("swordslot3")));
@@ -582,16 +601,6 @@ public class PlayerCapability implements IPlayerHandler {
             instance.setKeybind(7, ((CompoundNBT) tag).getString("key7"));
             instance.setKeybind(8, ((CompoundNBT) tag).getString("key8"));
             instance.setKeybind(9, ((CompoundNBT) tag).getString("key9"));
-
-            instance.setKeybindCD(1, ((CompoundNBT) tag).getInt("key1cd"));
-            instance.setKeybindCD(2, ((CompoundNBT) tag).getInt("key2cd"));
-            instance.setKeybindCD(3, ((CompoundNBT) tag).getInt("key3cd"));
-            instance.setKeybindCD(4, ((CompoundNBT) tag).getInt("key4cd"));
-            instance.setKeybindCD(5, ((CompoundNBT) tag).getInt("key5cd"));
-            instance.setKeybindCD(6, ((CompoundNBT) tag).getInt("key6cd"));
-            instance.setKeybindCD(7, ((CompoundNBT) tag).getInt("key7cd"));
-            instance.setKeybindCD(8, ((CompoundNBT) tag).getInt("key8cd"));
-            instance.setKeybindCD(9, ((CompoundNBT) tag).getInt("key9cd"));
 
             instance.setToggleSpellMessage(((CompoundNBT) tag).getBoolean("spellmessage"));
 

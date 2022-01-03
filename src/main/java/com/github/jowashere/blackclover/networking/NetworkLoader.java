@@ -1,7 +1,6 @@
 package com.github.jowashere.blackclover.networking;
 
 import com.github.jowashere.blackclover.Main;
-import com.github.jowashere.blackclover.api.curios.CuriosApi;
 import com.github.jowashere.blackclover.common.curios.network.client.*;
 import com.github.jowashere.blackclover.common.curios.network.server.SPacketBreak;
 import com.github.jowashere.blackclover.common.curios.network.server.SPacketGrabbedItem;
@@ -11,15 +10,21 @@ import com.github.jowashere.blackclover.common.curios.network.server.sync.*;
 import com.github.jowashere.blackclover.networking.packets.*;
 import com.github.jowashere.blackclover.networking.packets.entity.PacketSyncBCEntityTarget;
 import com.github.jowashere.blackclover.networking.packets.mana.*;
+import com.github.jowashere.blackclover.networking.packets.modes.PacketHasModeSync;
 import com.github.jowashere.blackclover.networking.packets.modes.PacketModeSync;
 import com.github.jowashere.blackclover.networking.packets.server.SPacketSpellNBTSync;
 import com.github.jowashere.blackclover.networking.packets.server.SSyncManaPacket;
 import com.github.jowashere.blackclover.networking.packets.settings.PacketKeybindSet;
+import com.github.jowashere.blackclover.networking.packets.settings.PacketSetGrimoire;
 import com.github.jowashere.blackclover.networking.packets.settings.PacketSetGrimoireTexture;
+import com.github.jowashere.blackclover.networking.packets.settings.PacketSwordSlotSet;
 import com.github.jowashere.blackclover.networking.packets.spells.*;
+import com.github.jowashere.blackclover.networking.packets.stats.PacketHealthStatSync;
+import com.github.jowashere.blackclover.networking.packets.stats.PacketManaControlStatSync;
+import com.github.jowashere.blackclover.networking.packets.stats.PacketManaStatSync;
+import com.github.jowashere.blackclover.networking.packets.stats.PacketPhysicalStatSync;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.network.NetworkRegistry;
-import net.minecraftforge.fml.network.PacketDistributor;
 import net.minecraftforge.fml.network.simple.SimpleChannel;
 
 public class NetworkLoader {
@@ -52,6 +57,11 @@ public class NetworkLoader {
         INSTANCE.registerMessage(nextID(), PacketSetGrimoireTexture.class, PacketSetGrimoireTexture::encode, PacketSetGrimoireTexture::decode, PacketSetGrimoireTexture::handle);
         INSTANCE.registerMessage(nextID(), PacketSwordSlotSet.class, PacketSwordSlotSet::encode, PacketSwordSlotSet::decode, PacketSwordSlotSet::handle);
         INSTANCE.registerMessage(nextID(), PacketGrimoireSword.class, PacketGrimoireSword::encode, PacketGrimoireSword::decode, PacketGrimoireSword::handle);
+
+        INSTANCE.registerMessage(nextID(), PacketHealthStatSync.class, PacketHealthStatSync::encode, PacketHealthStatSync::decode, PacketHealthStatSync::handle);
+        INSTANCE.registerMessage(nextID(), PacketPhysicalStatSync.class, PacketPhysicalStatSync::encode, PacketPhysicalStatSync::decode, PacketPhysicalStatSync::handle);
+        INSTANCE.registerMessage(nextID(), PacketManaStatSync.class, PacketManaStatSync::encode, PacketManaStatSync::decode, PacketManaStatSync::handle);
+        INSTANCE.registerMessage(nextID(), PacketManaControlStatSync.class, PacketManaControlStatSync::encode, PacketManaControlStatSync::decode, PacketManaControlStatSync::handle);
 
         INSTANCE.registerMessage(nextID(), PacketSetGrimoire.class, PacketSetGrimoire::encode, PacketSetGrimoire::decode, PacketSetGrimoire::handle);
         INSTANCE.registerMessage(nextID(), PacketMagicLevel.class, PacketMagicLevel::encode, PacketMagicLevel::decode, PacketMagicLevel::handle);

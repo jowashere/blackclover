@@ -41,17 +41,36 @@ public interface IPlayerHandler {
 	void setColourMana(int amount);
 	int returnColourMana();
 
+	void setHealthStat(int amount);
+	void addHealthStat(int add);
+	int getHealthStat();
+
+	void setPhysicalStat(int amount);
+	void addPhysicalStat(int add);
+	int getPhysicalStat();
+
+	void setManaStat(int amount);
+	void addManaStat(int add);
+	int getManaStat();
+
+	void setManaControlStat(int amount);
+	void addManaControlStat(int add);
+	int getManaControlStat();
+
+	void setStatPoints(int amount);
+	void addStatPoints(int add);
+	int getStatPoints();
+
 	void setMagicLevel(int level);
 	void addMagicLevel(int add);
 	int getMagicLevel();
-	int ReturnMagicLevel();
 
 	void setMagicExp(float amount);
 	void addMagicExp(float amount);
 	float returnMagicExp();
 
 	void setManaSkinToggled(boolean handInfusion);
-	boolean ReturnManaSkinToggled();
+	boolean returnManaSkinToggled();
 	void setReinforcementToggled(boolean bodyInfusion);
 	boolean returnReinforcementToggled();
 
@@ -69,9 +88,6 @@ public interface IPlayerHandler {
 
 	void setSwordSlot(int slot, ItemStack name);
 	ItemStack returnSwordSlot(int slot);
-
-	void setKeybindCD(int key, int cd);
-	int returnKeybindCD(int key);
 
 	void setSpellBoolean(AbstractSpell spell, boolean has);
 	boolean hasSpellBoolean(AbstractSpell spell);

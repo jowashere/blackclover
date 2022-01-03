@@ -43,7 +43,7 @@ public class WindMagicEvents {
                 return;
 
             if(player.getPersistentData().getBoolean("blackclover_wind_flight")) {
-                float maxSpeed = 0.5f + (player_cap.ReturnMagicLevel() / 100);
+                float maxSpeed = 0.5f + (player_cap.getMagicLevel() / 100);
                 float acceleration = 0.005f;
 
                 acceleration *= (flightSpeed > 0 ? (1 - flightSpeed / maxSpeed) : 1);

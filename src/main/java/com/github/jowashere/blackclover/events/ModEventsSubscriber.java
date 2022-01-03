@@ -31,7 +31,15 @@ public class ModEventsSubscriber {
             event.add(entityType, ModAttributes.DAMAGE_REDUCTION.get());
             event.add(entityType, ModAttributes.SPECIAL_DAMAGE_REDUCTION.get());
             event.add(entityType, ModAttributes.ATTACK_RANGE.get());
-            event.add(entityType, ModAttributes.MULTIPLIER.get());
+
+            if(entityType.equals(EntityType.PLAYER)) {
+                event.add(entityType, ModAttributes.MULTIPLIER.get());
+                event.add(entityType, ModAttributes.HEALTH_STAT.get());
+                event.add(entityType, ModAttributes.PHYSICAL_STAT.get());
+                event.add(entityType, ModAttributes.MANA_STAT.get());
+                event.add(entityType, ModAttributes.MANA_CONTROL_STAT.get());
+            }
+
         });
     }
 

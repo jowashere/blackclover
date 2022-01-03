@@ -3,7 +3,7 @@ package com.github.jowashere.blackclover.networking.packets.spells;
 import com.github.jowashere.blackclover.capabilities.player.IPlayerHandler;
 import com.github.jowashere.blackclover.capabilities.player.PlayerProvider;
 import com.github.jowashere.blackclover.networking.NetworkLoader;
-import com.github.jowashere.blackclover.networking.packets.PacketSwordSlotSet;
+import com.github.jowashere.blackclover.networking.packets.settings.PacketSwordSlotSet;
 import com.github.jowashere.blackclover.util.helpers.BCMHelper;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;

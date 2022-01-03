@@ -10,7 +10,7 @@ import com.github.jowashere.blackclover.capabilities.player.PlayerProvider;
 import com.github.jowashere.blackclover.events.bcevents.MagicLevelChangeEvent;
 import com.github.jowashere.blackclover.init.AttributeInit;
 import com.github.jowashere.blackclover.networking.NetworkLoader;
-import com.github.jowashere.blackclover.networking.packets.PacketSetGrimoire;
+import com.github.jowashere.blackclover.networking.packets.settings.PacketSetGrimoire;
 import com.github.jowashere.blackclover.networking.packets.PacketSpellModeToggle;
 import com.github.jowashere.blackclover.networking.packets.PacketToggleInfusionBoolean;
 import com.github.jowashere.blackclover.networking.packets.mana.PacketManaBoolean;
@@ -56,7 +56,7 @@ public class ForgeEventsSubscriber {
 
         ModifiableAttributeInstance maxHpAttribute = event.getPlayer().getAttribute(Attributes.MAX_HEALTH);
 
-        maxHpAttribute.setBaseValue(Math.max(playercap.ReturnMagicLevel(), 20));
+        maxHpAttribute.setBaseValue(Math.max(playercap.getMagicLevel(), 20));
 
         event.getPlayer().setHealth(event.getPlayer().getMaxHealth());
 
@@ -137,7 +137,7 @@ public class ForgeEventsSubscriber {
                 IPlayerHandler targetcap = targetCapability.orElse(new PlayerCapability());
                 NetworkLoader.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> (ServerPlayerEntity) event.getPlayer()), new PacketModeSync(targetcap.returnPlayerMode().getName(), targetID, true));
                 NetworkLoader.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> (ServerPlayerEntity) event.getPlayer()), new PacketSpellModeToggle(true, targetcap.returnSpellModeToggle(), targetID));
-                NetworkLoader.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> (ServerPlayerEntity) event.getPlayer()), new PacketToggleInfusionBoolean(1, true, targetcap.ReturnManaSkinToggled(), targetID));
+                NetworkLoader.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> (ServerPlayerEntity) event.getPlayer()), new PacketToggleInfusionBoolean(1, true, targetcap.returnManaSkinToggled(), targetID));
                 NetworkLoader.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> (ServerPlayerEntity) event.getPlayer()), new PacketToggleInfusionBoolean(2, true, targetcap.returnReinforcementToggled(), targetID));
                 NetworkLoader.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> (ServerPlayerEntity) event.getPlayer()), new PacketSetGrimoire(targetcap.returnHasGrimoire(), true, targetID));
                 NetworkLoader.INSTANCE.send(PacketDistributor.TRACKING_ENTITY_AND_SELF.with(() -> (ServerPlayerEntity) event.getPlayer()), new PacketSetGrimoireTexture(targetcap.getGrimoireTexture(), true, targetID));

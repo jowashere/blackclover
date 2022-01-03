@@ -1,17 +1,16 @@
 package com.github.jowashere.blackclover.client.curios.gui.player;
 
+import com.github.jowashere.blackclover.Main;
 import com.github.jowashere.blackclover.capabilities.player.IPlayerHandler;
 import com.github.jowashere.blackclover.capabilities.player.PlayerCapability;
 import com.github.jowashere.blackclover.capabilities.player.PlayerProvider;
-import com.github.jowashere.blackclover.util.helpers.BCMHelper;
+import com.github.jowashere.blackclover.client.curios.gui.widgets.buttons.GuiButtonPlus;
 import com.github.jowashere.blackclover.util.helpers.GUIHelper;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.PlayerEntity;
-import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.api.distmarker.Dist;
@@ -20,16 +19,53 @@ import net.minecraftforge.common.util.LazyOptional;
 import org.lwjgl.opengl.GL11;
 
 @OnlyIn(Dist.CLIENT)
-public class PlayerStatsScreen extends Screen {
+public class PlayerStatsScreen extends AbstractTabbedBackground {
 
     private IPlayerHandler playerHandler;
+
+    private GuiButtonPlus healthStatUp;
+    private GuiButtonPlus physStatUp;
+    private GuiButtonPlus manaStatUp;
+    private GuiButtonPlus manaCStatUp;
+
 
     float xMouse;
     float yMouse;
 
-    public PlayerStatsScreen()
+    protected PlayerStatsScreen()
     {
-        super(new StringTextComponent(""));
+        super(new TranslationTextComponent("gui." + Main.MODID + ".stats"));
+    }
+
+    @Override
+    public void registerTabsAndWidgets(IPlayerHandler playerCapability) {
+
+        int posX = (this.width - 256) / 2;
+        int posY = (this.height - 256) / 2;
+
+        //Tabs
+        addButton(new GuiButtonTab(this.getWidthInFromTab(0), this.getHeightInFromTab(0), 0, 240, 0, "Chakra Control", $ -> {
+            openedTab = 0;
+        }));
+
+        //Page 1
+        addButton(healthStatUp = new GuiButtonPlus(posX - 70, this.guiTop + 30, false, $ -> {
+            chakraControlUpPressed();
+        }));
+
+        addButton(physStatUp = new GuiButtonPlus(posX - 70, this.guiTop + 30, false, $ -> {
+            chakraControlUpPressed();
+        }));
+
+        addButton(manaStatUp = new GuiButtonPlus(posX - 70, this.guiTop + 30, false, $ -> {
+            chakraControlUpPressed();
+        }));
+
+        addButton(manaCStatUp = new GuiButtonPlus(posX - 70, this.guiTop + 30, false, $ -> {
+            chakraControlUpPressed();
+        }));
+
+
     }
 
     @Override
@@ -45,58 +81,54 @@ public class PlayerStatsScreen extends Screen {
         int posX = (this.width - 256) / 2;
         int posY = (this.height - 256) / 2;
 
-        String raceGUI = I18n.get("gui.blackclover.race.name");
         String magicLevelGUI = I18n.get("gui.blackclover.magiclevel");
-        String magicAttributeGUI = I18n.get("gui.blackclover.magicattribute");
-        String magicExpGUI = I18n.get("gui.blackclover.magicexp");
+        String healthGUI = I18n.get("gui.blackclover.health");
+        String physicalGUI = I18n.get("gui.blackclover.physical");
+        String manaGUI = I18n.get("gui.blackclover.mana");
+        String manaControlExpGUI = I18n.get("gui.blackclover.manaControl");
 
 
-        String race = this.playerHandler.returnRace().getString().toLowerCase();
-        String magicAttribute = this.playerHandler.ReturnMagicAttribute().getString().toLowerCase();
-        String magicLevel = String.valueOf(this.playerHandler.ReturnMagicLevel());
-        String magicExp = ((int) (this.playerHandler.returnMagicExp() - BCMHelper.CalculateExp(this.playerHandler.ReturnMagicLevel()))) + " / " + ((int) (BCMHelper.CalculateExp(this.playerHandler.ReturnMagicLevel()+1) - BCMHelper.CalculateExp(this.playerHandler.ReturnMagicLevel())));
+        String magicLevel = String.valueOf(this.playerHandler.getMagicLevel());
+        String healthStat = String.valueOf(this.playerHandler.getHealthStat());
+        String physicalStat = String.valueOf(this.playerHandler.getPhysicalStat());
+        String manaStat = String.valueOf(this.playerHandler.getManaStat());
+        String manaControlStat = String.valueOf(this.playerHandler.getManaControlStat());
 
-        String raceActual = I18n.get("race.blackclover." + race);
-        String attributeActual = I18n.get("attribute.blackclover." + magicAttribute);
 
         GUIHelper.drawStringWithBorder(matrixStack, this.font, TextFormatting.BOLD + magicLevelGUI + ": " + TextFormatting.RESET + magicLevel, posX - 30, posY + 70, -1);
-        GUIHelper.drawStringWithBorder(matrixStack, this.font, TextFormatting.BOLD + magicAttributeGUI + ": " + TextFormatting.RESET + attributeActual, posX - 30, posY + 90, -1);
-        GUIHelper.drawStringWithBorder(matrixStack, this.font, TextFormatting.BOLD + raceGUI + ": " + TextFormatting.RESET + raceActual, posX - 30, posY + 110, -1);
-        GUIHelper.drawStringWithBorder(matrixStack, this.font, TextFormatting.BOLD + magicExpGUI + ": " + TextFormatting.RESET + magicExp, posX - 30, posY + 130, -1);
-
-        GUIHelper.renderEntityInInventory(posX + 190, posY + 190, 70, (float)(posX + 190) - this.xMouse, (float)(posY + 190 - 120) - this.yMouse, this.minecraft.player);
+        GUIHelper.drawStringWithBorder(matrixStack, this.font, TextFormatting.BOLD + healthGUI + ": " + TextFormatting.RESET + healthStat, posX - 30, posY + 100, -1);
+        GUIHelper.drawStringWithBorder(matrixStack, this.font, TextFormatting.BOLD + physicalGUI + ": " + TextFormatting.RESET + physicalStat, posX - 30, posY + 120, -1);
+        GUIHelper.drawStringWithBorder(matrixStack, this.font, TextFormatting.BOLD + manaGUI + ": " + TextFormatting.RESET + manaStat, posX - 30, posY + 140, -1);
+        GUIHelper.drawStringWithBorder(matrixStack, this.font, TextFormatting.BOLD + manaControlExpGUI + ": " + TextFormatting.RESET + manaControlStat, posX - 30, posY + 160, -1);
 
         super.render(matrixStack, x, y, f);
     }
 
     @Override
-    public void init()
-    {
-        Minecraft mc = Minecraft.getInstance();
-        PlayerEntity player = mc.player;
-
-        LazyOptional<IPlayerHandler> player_cap = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
-        IPlayerHandler playerc = player_cap.orElse(new PlayerCapability());
-
-        this.playerHandler = playerc;
-
-        int posX = ((this.width - 256) / 2) - 110;
-        int posY = (this.height - 256) / 2;
-
-        posX += 80;
-        this.addButton(new Button(posX, posY + 190, 70, 20, new TranslationTextComponent("gui.blackclover.stats.spells"), b ->
+    public void renderPage(int openedTab, int p_render_1_, int p_render_2_, float p_render_3_) {
         {
-            Minecraft.getInstance().setScreen(new PlayerSpellsScreen());
-        }));
+            Minecraft mc = Minecraft.getInstance();
+            PlayerEntity player = mc.player;
+
+            LazyOptional<IPlayerHandler> player_cap = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
+            IPlayerHandler playerc = player_cap.orElse(new PlayerCapability());
+
+            this.playerHandler = playerc;
+
+            int posX = ((this.width - 256) / 2) - 110;
+            int posY = (this.height - 256) / 2;
+
+            posX += 80;
+            this.addButton(new Button(posX, posY + 190, 70, 20, new TranslationTextComponent("gui.blackclover.menu"), b ->
+            {
+                Minecraft.getInstance().setScreen(new PlayerMenuScreen());
+            }));
+
+            posX += 80;
+            this.addButton(new Button(posX, posY + 190, 70, 20, new TranslationTextComponent("gui.blackclover.spells"), b ->
+            {
+                Minecraft.getInstance().setScreen(new PlayerSpellsScreen());
+            }));
+        }
     }
-
-    @Override
-    public boolean isPauseScreen()
-    {
-        return false;
-    }
-
-
-
-
 }

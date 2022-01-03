@@ -1,19 +1,14 @@
-package com.github.jowashere.blackclover.networking.packets;
+package com.github.jowashere.blackclover.networking.packets.settings;
 
 import com.github.jowashere.blackclover.capabilities.player.IPlayerHandler;
 import com.github.jowashere.blackclover.capabilities.player.PlayerCapability;
 import com.github.jowashere.blackclover.capabilities.player.PlayerProvider;
-import com.github.jowashere.blackclover.networking.NetworkLoader;
-import com.github.jowashere.blackclover.util.helpers.RaceHelper;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.player.ClientPlayerEntity;
-import net.minecraft.client.entity.player.RemoteClientPlayerEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.network.PacketBuffer;
 import net.minecraftforge.common.util.LazyOptional;
 import net.minecraftforge.fml.network.NetworkEvent;
-import net.minecraftforge.fml.network.PacketDistributor;
 
 import java.util.function.Supplier;
 

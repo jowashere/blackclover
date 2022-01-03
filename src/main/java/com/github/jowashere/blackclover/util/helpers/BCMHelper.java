@@ -231,9 +231,9 @@ public class BCMHelper {
 
         int magicLevel = BCMHelper.CalculateLevel(player_cap.returnMagicExp());
 
-        if(magicLevel != player_cap.ReturnMagicLevel()){
+        if(magicLevel != player_cap.getMagicLevel()){
 
-            MinecraftForge.EVENT_BUS.post(new MagicLevelChangeEvent(player, player_cap.ReturnMagicLevel(), magicLevel));
+            MinecraftForge.EVENT_BUS.post(new MagicLevelChangeEvent(player, player_cap.getMagicLevel(), magicLevel));
 
             player.displayClientMessage(new TranslationTextComponent("message." + Main.MODID + ".levelup", magicLevel), false);
             player_cap.setMagicLevel(magicLevel);
@@ -249,7 +249,7 @@ public class BCMHelper {
             LazyOptional<IPlayerHandler> playerCapability = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
             IPlayerHandler player_cap = playerCapability.orElse(new PlayerCapability());
 
-            return player_cap.ReturnMagicLevel();
+            return player_cap.getMagicLevel();
 
         }else if (entity instanceof BCEntity){
 

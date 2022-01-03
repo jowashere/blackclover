@@ -53,7 +53,7 @@ public class SpellCaller {
                                         NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) playerIn), new PacketIntSpellNBTSync(playerIn.getId(), "black_mode_fatigue", 900));
                                     }
 
-                                    float manaCost = spell.getManaCost() + ((float) Math.sqrt(playercap.ReturnMagicLevel()) * (spell.getManaCost() / 5));
+                                    float manaCost = spell.getManaCost() + ((float) Math.sqrt(playercap.getMagicLevel()) * (spell.getManaCost() / 5));
 
                                     ((AbstractToggleSpell) spell).throwStartEvent(playerIn, manaCost);
                                     playerIn.getPersistentData().putBoolean(nbtName, true);

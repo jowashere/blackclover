@@ -51,7 +51,7 @@ public class MagicPassives {
 
             if (playercap.HasManaBoolean())
             {
-                if(playercap.ReturnManaSkinToggled()){
+                if(playercap.returnManaSkinToggled()){
                     if(!player.getAttribute(ModAttributes.DAMAGE_REDUCTION.get()).hasModifier(getResistanceModifier(player)))
                         player.getAttribute(ModAttributes.DAMAGE_REDUCTION.get()).addTransientModifier(getResistanceModifier(player));
 
@@ -64,7 +64,7 @@ public class MagicPassives {
                     if(!player.getAttribute(Attributes.ARMOR_TOUGHNESS).hasModifier(getArmourModifier(player)))
                         player.getAttribute(Attributes.ARMOR_TOUGHNESS).addTransientModifier(getArmourModifier(player));
 
-                    if(playercap.ReturnMagicLevel() >= 55)
+                    if(playercap.getMagicLevel() >= 55)
                         player.fallDistance = 0;
 
                     float manaNeeded = (float) (0.2 + (0.2 * Math.sqrt(playercap.getMagicLevel() / 2)));

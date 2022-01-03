@@ -41,7 +41,7 @@ public class WindHawk extends AbstractSpell {
             LazyOptional<IPlayerHandler> casterCap = caster.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
             IPlayerHandler player_cap = casterCap.orElse(new PlayerCapability());
 
-            magicLevel = player_cap.ReturnMagicLevel();
+            magicLevel = player_cap.getMagicLevel();
         } else if (caster instanceof BCEntity) {
             magicLevel = ((BCEntity) caster).getMagicLevel();
         }

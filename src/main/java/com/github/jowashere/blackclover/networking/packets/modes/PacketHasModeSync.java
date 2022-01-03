@@ -13,20 +13,23 @@ import java.util.function.Supplier;
 
 public class PacketHasModeSync {
 
-    private int bodyMode;
+    //1 = Black Mode
+    //2 = Thunder God Gear
+
+    private int mode;
     private int value;
     private boolean toClient;
 
-    public PacketHasModeSync(int bodyMode, int value, boolean toClient)
+    public PacketHasModeSync(int mode, int value, boolean toClient)
     {
-        this.bodyMode = bodyMode;
+        this.mode = mode;
         this.value = value;
         this.toClient = toClient;
     }
 
     public static void encode(PacketHasModeSync msg, PacketBuffer buf)
     {
-        buf.writeInt(msg.bodyMode);
+        buf.writeInt(msg.mode);
         buf.writeInt(msg.value);
         buf.writeBoolean(msg.toClient);
     }
@@ -42,7 +45,7 @@ public class PacketHasModeSync {
     public static void handle(PacketHasModeSync msg, Supplier<NetworkEvent.Context> ctx)
     {
         ctx.get().enqueueWork(() -> {
-            switch (msg.bodyMode) {
+            switch (msg.mode) {
                 case 1:
                     if (msg.toClient) {
                         ClientPlayerEntity player = Minecraft.getInstance().player;
@@ -71,4 +74,5 @@ public class PacketHasModeSync {
         });
         ctx.get().setPacketHandled(true);
     }
+
 }

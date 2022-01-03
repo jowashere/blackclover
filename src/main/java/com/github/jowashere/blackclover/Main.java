@@ -28,20 +28,19 @@ import com.github.jowashere.blackclover.common.curios.server.command.CurioArgume
 import com.github.jowashere.blackclover.common.curios.server.command.CuriosCommand;
 import com.github.jowashere.blackclover.common.curios.slottype.SlotTypeManager;
 import com.github.jowashere.blackclover.common.curios.triggers.EquipCurioTrigger;
-import com.github.jowashere.blackclover.entities.mobs.quester.GrimoireMagicianEntity;
 import com.github.jowashere.blackclover.entities.mobs.hostile.BanditEntity;
+import com.github.jowashere.blackclover.entities.mobs.quester.GrimoireMagicianEntity;
 import com.github.jowashere.blackclover.events.GrimoireTextures;
 import com.github.jowashere.blackclover.init.*;
 import com.github.jowashere.blackclover.networking.NetworkLoader;
 import com.github.jowashere.blackclover.util.helpers.KeyboardHelper;
 import com.github.jowashere.blackclover.util.helpers.RaceHelper;
 import com.github.jowashere.blackclover.world.structure.configured.ConfiguredStructures;
-import net.minecraft.block.Blocks;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.ScreenManager;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.client.renderer.entity.PlayerRenderer;
 import net.minecraft.client.resources.ReloadListener;
 import net.minecraft.command.arguments.ArgumentSerializer;
@@ -244,7 +243,7 @@ public class Main
         @SubscribeEvent
         public static void stitchTextures(TextureStitchEvent.Pre evt) {
             CuriosClientMod.stitch(evt);
-            evt.addSprite(new ResourceLocation(Main.MODID, "item/crown"));
+            evt.addSprite(new ResourceLocation(Main.MODID, "items/crown"));
         }
 
         @SubscribeEvent

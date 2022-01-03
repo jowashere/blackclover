@@ -34,10 +34,10 @@ public class CuriosClientMod {
 
       for (SlotTypePreset preset : SlotTypePreset.values()) {
         evt.addSprite(
-            new ResourceLocation(CuriosApi.MODID, "item/empty_" + preset.getIdentifier() + "_slot"));
+            new ResourceLocation(CuriosApi.MODID, "curios/empty_" + preset.getIdentifier() + "_slot"));
       }
-      evt.addSprite(new ResourceLocation(CuriosApi.MODID, "item/empty_cosmetic_slot"));
-      evt.addSprite(new ResourceLocation(CuriosApi.MODID, "item/empty_curio_slot"));
+      evt.addSprite(new ResourceLocation(CuriosApi.MODID, "curios/empty_cosmetic_slot"));
+      evt.addSprite(new ResourceLocation(CuriosApi.MODID, "curios/empty_curio_slot"));
 
       for (ResourceLocation sprite : SPRITE_LISTENER.getSprites()) {
         evt.addSprite(sprite);

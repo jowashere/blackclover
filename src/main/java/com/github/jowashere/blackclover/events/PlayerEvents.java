@@ -10,6 +10,7 @@ import com.github.jowashere.blackclover.capabilities.player.PlayerProvider;
 import com.github.jowashere.blackclover.common.spells.EffectSpells;
 import com.github.jowashere.blackclover.init.AttributeInit;
 import com.github.jowashere.blackclover.init.EffectInit;
+import com.github.jowashere.blackclover.init.ModAttributes;
 import com.github.jowashere.blackclover.init.RaceInit;
 import com.github.jowashere.blackclover.networking.NetworkLoader;
 import com.github.jowashere.blackclover.networking.packets.*;
@@ -19,6 +20,7 @@ import com.github.jowashere.blackclover.networking.packets.mana.PacketMaxManaSyn
 import com.github.jowashere.blackclover.networking.packets.mana.PacketRegenManaSync;
 import com.github.jowashere.blackclover.networking.packets.server.SSyncManaPacket;
 import com.github.jowashere.blackclover.networking.packets.settings.PacketKeybindSet;
+import com.github.jowashere.blackclover.networking.packets.settings.PacketSetGrimoire;
 import com.github.jowashere.blackclover.networking.packets.settings.PacketSetGrimoireTexture;
 import com.github.jowashere.blackclover.networking.packets.spells.PacketIntSpellNBTSync;
 import com.github.jowashere.blackclover.networking.packets.spells.PacketSetSpellBoolean;
@@ -60,7 +62,7 @@ public class PlayerEvents {
                 NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketMaxManaSync(maxMana, true));
                 NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new SSyncManaPacket(player.getId(), mana, maxMana, regenMana));
 
-                NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketColourManaSync(playercap.ReturnMagicLevel()));
+                NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketColourManaSync(playercap.getMagicLevel()));
                 player.getPersistentData().putInt("regentick", 0);
             }
         }
@@ -256,15 +258,19 @@ public class PlayerEvents {
         IPlayerHandler player_cap = playerCapability.orElse(new PlayerCapability());
 
         if (!event.player.hasEffect(EffectInit.MAGIC_LEVEL.get()))
-            event.player.addEffect(new EffectInstance(EffectInit.MAGIC_LEVEL.get(), (int) Float.POSITIVE_INFINITY, player_cap.ReturnMagicLevel(), false, false, false));
+            event.player.addEffect(new EffectInstance(EffectInit.MAGIC_LEVEL.get(), (int) Float.POSITIVE_INFINITY, player_cap.getMagicLevel(), false, false, false));
 
-        int magicLevel = player_cap.ReturnMagicLevel();
+        int magicLevel = player_cap.getMagicLevel();
         float manaMultiplier = player_cap.returnRace().getManaMultiplier();
 
         if(player_cap.HasManaBoolean()){
+
             int maxMana = (int) (player_cap.returnRace().getStartingMana() + ((((player_cap.returnRace().getStartingMana() / 10) * magicLevel) - 15)) * manaMultiplier);
 
-            player_cap.setMaxMana(maxMana);
+            float manaVal = player_cap.returnRace().getStartingMana() + ((player_cap.getManaStat() - 1) * 10);
+            event.player.getAttribute(ModAttributes.MANA_STAT.get()).setBaseValue(manaVal);
+
+            player_cap.setMaxMana((float) event.player.getAttribute(ModAttributes.MANA_STAT.get()).getValue());
             NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.player), new PacketMaxManaSync(maxMana, true));
 
             int regenMana = maxMana / 20;
@@ -323,7 +329,7 @@ public class PlayerEvents {
         NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.player), new PacketRaceSync(player_cap.returnRace().getString(), true));
 
         if(!player_cap.HasManaBoolean()){
-            if (player_cap.ReturnManaSkinToggled()) {
+            if (player_cap.returnManaSkinToggled()) {
                 player_cap.setManaSkinToggled(false);
                 NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.player), new PacketToggleInfusionBoolean(1, true, false, event.player.getId()));
             }
@@ -388,7 +394,7 @@ public class PlayerEvents {
 
         if(player.level.isClientSide){
             if(playerc.HasManaBoolean()){
-                if (!playerc.ReturnManaSkinToggled()) {
+                if (!playerc.returnManaSkinToggled()) {
                     playerc.setManaSkinToggled(true);
                     NetworkLoader.INSTANCE.sendToServer(new PacketToggleInfusionBoolean(1, false, true, player.getId()));
                 } else {
@@ -415,5 +421,10 @@ public class PlayerEvents {
                 }
             }
         }
+    }
+
+    public static void calculateStatAdditions (PlayerEntity player) {
+        LazyOptional<IPlayerHandler> player_cap = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
+        IPlayerHandler playerc = player_cap.orElse(new PlayerCapability());
     }
 }

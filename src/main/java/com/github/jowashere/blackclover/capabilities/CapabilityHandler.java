@@ -10,9 +10,15 @@ import com.github.jowashere.blackclover.networking.NetworkLoader;
 import com.github.jowashere.blackclover.networking.packets.*;
 import com.github.jowashere.blackclover.networking.packets.modes.PacketModeSync;
 import com.github.jowashere.blackclover.networking.packets.settings.PacketKeybindSet;
+import com.github.jowashere.blackclover.networking.packets.settings.PacketSetGrimoire;
 import com.github.jowashere.blackclover.networking.packets.settings.PacketSetGrimoireTexture;
+import com.github.jowashere.blackclover.networking.packets.settings.PacketSwordSlotSet;
 import com.github.jowashere.blackclover.networking.packets.spells.PacketSetSpellBoolean;
 import com.github.jowashere.blackclover.networking.packets.spells.PacketSpellNBTSync;
+import com.github.jowashere.blackclover.networking.packets.stats.PacketHealthStatSync;
+import com.github.jowashere.blackclover.networking.packets.stats.PacketManaControlStatSync;
+import com.github.jowashere.blackclover.networking.packets.stats.PacketManaStatSync;
+import com.github.jowashere.blackclover.networking.packets.stats.PacketPhysicalStatSync;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -45,18 +51,23 @@ public class CapabilityHandler {
             LazyOptional<IPlayerHandler> capabilities = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
             IPlayerHandler playercap = capabilities.orElse(new PlayerCapability());
 
-            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketToggleInfusionBoolean(1, true, playercap.ReturnManaSkinToggled(), player.getId()));
+            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketToggleInfusionBoolean(1, true, playercap.returnManaSkinToggled(), player.getId()));
             NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketToggleInfusionBoolean(2, true, playercap.returnReinforcementToggled(), player.getId()));
 
             NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketSpellModeToggle(true, playercap.returnSpellModeToggle(), player.getId()));
 
             NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketMagicExpSync(playercap.returnMagicExp(), player.getId()));
-            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketMagicLevel(playercap.ReturnMagicLevel(), player.getId()));
+            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketMagicLevel(playercap.getMagicLevel(), player.getId()));
             NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketModeSync(playercap.returnPlayerMode().getName(), player.getId(), true));
             NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketRaceSync(playercap.returnRace().getString(), true));
             NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketSetGrimoireTexture(playercap.getGrimoireTexture(), true, player.getId()));
 
             //NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketHasModeSync(1, playercap.returnPlayerCurseMark(), true));
+
+            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketHealthStatSync(playercap.getHealthStat(), player.getId()));
+            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketPhysicalStatSync(playercap.getPhysicalStat(), player.getId()));
+            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketManaStatSync(playercap.getManaStat(), player.getId()));
+            NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketManaControlStatSync(playercap.getManaControlStat(), player.getId()));
 
             NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketSetGrimoire(playercap.returnHasGrimoire(), true, player.getId()));
             NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> player), new PacketAttributeSync(playercap.ReturnMagicAttribute().getString(), true));
@@ -125,15 +136,10 @@ public class CapabilityHandler {
 
         mana.SetGrimoireTexture(oldMana.getGrimoireTexture());
 
-        mana.setKeybindCD(1, oldMana.returnKeybindCD(1));
-        mana.setKeybindCD(2, oldMana.returnKeybindCD(2));
-        mana.setKeybindCD(3, oldMana.returnKeybindCD(3));
-        mana.setKeybindCD(4, oldMana.returnKeybindCD(4));
-        mana.setKeybindCD(5, oldMana.returnKeybindCD(5));
-        mana.setKeybindCD(6, oldMana.returnKeybindCD(6));
-        mana.setKeybindCD(7, oldMana.returnKeybindCD(7));
-        mana.setKeybindCD(8, oldMana.returnKeybindCD(8));
-        mana.setKeybindCD(9, oldMana.returnKeybindCD(9));
+        mana.setHealthStat(oldMana.getHealthStat());
+        mana.setPhysicalStat(oldMana.getPhysicalStat());
+        mana.setManaStat(oldMana.getManaStat());
+        mana.setManaControlStat(oldMana.getManaControlStat());
 
         mana.setToggleSpellMessage(oldMana.returnToggleSpellMessage());
 
@@ -149,7 +155,7 @@ public class CapabilityHandler {
         mana.setRace(oldMana.returnRace());
         mana.setPlayerBodyMode(oldMana.returnPlayerMode());
         mana.setMagicAttribute(oldMana.ReturnMagicAttribute());
-        mana.setMagicLevel(oldMana.ReturnMagicLevel());
+        mana.setMagicLevel(oldMana.getMagicLevel());
         mana.setMagicExp(oldMana.returnMagicExp());
         mana.setHasGrimoire(oldMana.returnHasGrimoire());
 

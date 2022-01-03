@@ -81,7 +81,7 @@ public class MagicLevelCommand {
         float maxExp = BCMHelper.CalculateExp(maxLevel);
 
         if(levelOrPoints.equals(LevelOrPoints.LEVEL) && ((addOrSet.equals(AddOrSet.SET) && amount > maxLevel) ||
-                addOrSet.equals(AddOrSet.ADD) && amount + playercap.ReturnMagicLevel() > maxLevel)){
+                addOrSet.equals(AddOrSet.ADD) && amount + playercap.getMagicLevel() > maxLevel)){
             source.sendFailure(new TranslationTextComponent("commands." + Main.MODID + ".magiclevel.toohigh", amount));
             return 0;
         } else if(levelOrPoints.equals(LevelOrPoints.LEVEL) && amount <= 0){
@@ -110,7 +110,7 @@ public class MagicLevelCommand {
                 source.sendSuccess(new TranslationTextComponent("commands." + Main.MODID + ".magiclevel.set", player.getDisplayName(), amount), true);
             }else if(addOrSet.equals(AddOrSet.ADD)){
 
-                float expNeeded = BCMHelper.CalculateExp(playercap.ReturnMagicLevel() + amount) - playercap.returnMagicExp();
+                float expNeeded = BCMHelper.CalculateExp(playercap.getMagicLevel() + amount) - playercap.returnMagicExp();
                 float newXP = expNeeded + playercap.returnMagicExp();
                 playercap.setMagicExp(newXP);
                 NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketMagicExpSync(newXP, player.getId()));

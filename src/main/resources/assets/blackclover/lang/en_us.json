@@ -120,6 +120,13 @@
   "gui.blackclover.magiclevel": "Magic Level",
   "gui.blackclover.magicattribute": "Magic Attribute",
   "gui.blackclover.magicexp": "Magic XP",
-  "gui.blackclover.stats.spells": "Spells"
+  "gui.blackclover.spells": "Spells",
+  "gui.blackclover.stats": "Stats",
+  "gui.blackclover.menu": "Menu",
+  "curios.cosmetic": "Cosmetic",
+  "gui.blackclover.health": "Health",
+  "gui.blackclover.physical": "Physical",
+  "gui.blackclover.manaControl": "Mana Control",
+  "gui.blackclover.mana": "Mana"
 
 }
