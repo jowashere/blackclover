@@ -26,7 +26,7 @@ public abstract class AbstractTabbedBackground extends Screen {
     public int openedTab;
 
     public abstract void registerTabsAndWidgets(IPlayerHandler playerCapability);
-    public abstract void renderPage(int openedTab, int p_render_1_, int p_render_2_, float p_render_3_);
+    public abstract void renderPage(MatrixStack stack, int openedTab, int p_render_1_, int p_render_2_, float p_render_3_);
 
     protected AbstractTabbedBackground(ITextComponent titleIn) {
         super(titleIn);
@@ -61,9 +61,9 @@ public abstract class AbstractTabbedBackground extends Screen {
 
 
     @Override
-    public void render(MatrixStack matrixStack, int p_render_1_, int p_render_2_, float p_render_3_) {
+    public void render(MatrixStack matrixStack, int x, int y, float f) {
         Minecraft mc = Minecraft.getInstance();
-        super.render(matrixStack, p_render_1_, p_render_2_, p_render_3_);
+        super.render(matrixStack, x, y, f);
 
         boolean flag = true;
         for (Widget tab : this.buttons) {
@@ -85,13 +85,13 @@ public abstract class AbstractTabbedBackground extends Screen {
 
         for (Widget tab : this.buttons) {
             if (tab instanceof GuiButtonTab) {
-                if (!((GuiButtonTab) tab).toggled) tab.renderButton(matrixStack, p_render_1_, p_render_2_, p_render_3_);
+                if (!((GuiButtonTab) tab).toggled) tab.renderButton(matrixStack, x, y, f);
             }
         }
         mc.gui.blit(matrixStack, guiLeft - 112, guiTop - 73, 0, 209, 224, 4);
         for (Widget tab : this.buttons) {
             if (tab instanceof GuiButtonTab) {
-                if (((GuiButtonTab) tab).toggled) tab.renderButton(matrixStack, p_render_1_, p_render_2_, p_render_3_);
+                if (((GuiButtonTab) tab).toggled) tab.renderButton(matrixStack, x, y, f);
             }
         }
 
@@ -104,8 +104,8 @@ public abstract class AbstractTabbedBackground extends Screen {
         }
 
         checkForToggled();
-        checkForToolTip(matrixStack, p_render_1_, p_render_2_);
-        renderPage(openedTab, p_render_1_, p_render_2_, p_render_3_);
+        checkForToolTip(matrixStack, x, y);
+        renderPage(matrixStack, openedTab, x, y, f);
     }
 
     @Override

@@ -51,7 +51,7 @@ public class PlayerSpellsScreen extends AbstractTabbedBackground {
     }
 
     @Override
-    public void renderPage(int openedTab, int p_render_1_, int p_render_2_, float p_render_3_) {
+    public void renderPage(MatrixStack stack, int openedTab, int p_render_1_, int p_render_2_, float p_render_3_) {
         AbstractClientPlayerEntity player = Minecraft.getInstance().player;
         LazyOptional<IPlayerHandler> player_cap = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
         IPlayerHandler playerc = player_cap.orElse(new PlayerCapability());
