@@ -7,8 +7,10 @@ import net.minecraft.client.audio.BackgroundMusicTracks;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.entity.EntityType;
 import net.minecraft.particles.ParticleTypes;
+import net.minecraft.util.RegistryKey;
 import net.minecraft.util.SoundEvents;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.*;
 import net.minecraft.world.gen.GenerationStage;
 import net.minecraft.world.gen.feature.Features;
@@ -26,7 +28,9 @@ public class ModBiomes
 {
     public static final DeferredRegister<Biome> BIOMES = DeferredRegister.create(ForgeRegistries.BIOMES, Main.MODID);
 
-    public static final RegistryObject<Biome> GRAND_MAGIC_ZONE_VOLCANO = BIOMES.register("volcano_zone", () -> makeVolcanoBiome(() -> ModConfiguredSurfaceBuilders.GRAND_MAGIC_ZONE_VOLCANO, 0.2f, 0.3f));
+    public static final RegistryObject<Biome> GRAND_MAGIC_ZONE_VOLCANO = BIOMES.register("volcano_zone", () -> makeVolcanoBiome(() -> ModConfiguredSurfaceBuilders.GRAND_MAGIC_ZONE_VOLCANO, 0.18f, 0.15f));
+
+
 
     private static Biome makeVolcanoBiome(final Supplier<ConfiguredSurfaceBuilder<?>> surfaceBuilder, float depth, float scale) {
         MobSpawnInfo.Builder mobspawninfo$builder = new MobSpawnInfo.Builder();
@@ -40,7 +44,7 @@ public class ModBiomes
                 (new BiomeGenerationSettings.Builder()).surfaceBuilder(surfaceBuilder);
 
         biomegenerationsettings$builder.addStructureStart(StructureFeatures.RUINED_PORTAL_SWAMP);
-        biomegenerationsettings$builder.addStructureStart(ConfiguredStructures.CONFIGURED_MINI_VOLCANO);
+        //TODO fix the crash with volcano not generating
 
         DefaultBiomeFeatures.addDefaultCarvers(biomegenerationsettings$builder);
 

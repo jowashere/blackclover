@@ -70,6 +70,7 @@ public class Main
 
     private void onCommonSetup(final FMLCommonSetupEvent event)
     {
+        ModBiomeGeneration.generateBiomes();
         CapabilityManager.INSTANCE.register(IPlayerHandler.class, new PlayerCapability.Storage(), PlayerCapability::new);
 
         RenderTypeLookup.setRenderLayer(BlocksInit.MOGURO_LEAF.get(), RenderType.cutout());
@@ -80,7 +81,6 @@ public class Main
             ConfiguredStructures.registerConfiguredStructures();
         });
 
-        ModBiomeGeneration.generateBiomes();
         for (IBCMPlugin plugin : BCMRegistry.PLUGINS) {
             System.out.println("Black Clover Mod Plugin, id: " + plugin.getPluginId() + ". Has been registered.");
             plugin.RegisterNewSpells(BCMRegistry.SPELLS);

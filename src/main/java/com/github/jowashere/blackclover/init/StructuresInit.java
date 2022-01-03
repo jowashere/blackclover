@@ -66,7 +66,7 @@ public class StructuresInit
                 MINI_VOLCANO.get(), /* The instance of the structure */
                 new StructureSeparationSettings(3 /* average distance apart in chunks between spawn attempts */,
                         2 /* minimum distance apart in chunks between spawn attempts. MUST BE LESS THAN ABOVE VALUE*/,
-                        987654543 /* this modifies the seed of the structure so no two structures always spawn over each-other. Make this large and unique. */),
+                        465132894 /* this modifies the seed of the structure so no two structures always spawn over each-other. Make this large and unique. */),
                 true);
         // Add more structures here and so on
     }

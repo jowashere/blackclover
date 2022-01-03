@@ -3,6 +3,7 @@ package com.github.jowashere.blackclover.world.gen;
 import com.github.jowashere.blackclover.world.biome.ModBiomes;
 import com.github.jowashere.blackclover.world.structure.configured.ConfiguredStructures;
 import net.minecraft.util.RegistryKey;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.BiomeDictionary;
@@ -24,9 +25,15 @@ public class ModStructureGeneration
         {
             event.getGeneration().getStructures().add(() -> ConfiguredStructures.CONFIGURED_MAGICTOWER);
         }
-        if (!types.contains(BiomeDictionary.Type.OCEAN) || !types.contains(BiomeDictionary.Type.DEAD) || !types.contains(BiomeDictionary.Type.COLD) || !types.contains(BiomeDictionary.Type.HOT) || !types.contains(BiomeDictionary.Type.WET) || !types.contains(BiomeDictionary.Type.WATER) || !types.contains(BiomeDictionary.Type.END) || !types.contains(BiomeDictionary.Type.NETHER)  )
+        if (!types.contains(BiomeDictionary.Type.OCEAN) && !types.contains(BiomeDictionary.Type.DEAD) && !types.contains(BiomeDictionary.Type.COLD) && !types.contains(BiomeDictionary.Type.HOT) && !types.contains(BiomeDictionary.Type.WET) && !types.contains(BiomeDictionary.Type.WATER) && !types.contains(BiomeDictionary.Type.END) && !types.contains(BiomeDictionary.Type.NETHER)  )
         {
             event.getGeneration().getStructures().add(() -> ConfiguredStructures.CONFIGURED_BANDIT_CAMP);
         }
+        if (event.getCategory() == ModBiomes.GRAND_MAGIC_ZONE_VOLCANO.get().getBiomeCategory())
+        {
+            event.getGeneration().getStructures().add(() -> ConfiguredStructures.CONFIGURED_MINI_VOLCANO);
+
+        }
+
     }
 }

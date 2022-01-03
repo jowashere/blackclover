@@ -5,6 +5,7 @@ import com.github.jowashere.blackclover.init.StructuresInit;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.WorldGenRegistries;
+import net.minecraft.world.biome.DefaultBiomeFeatures;
 import net.minecraft.world.gen.FlatGenerationSettings;
 import net.minecraft.world.gen.feature.IFeatureConfig;
 import net.minecraft.world.gen.feature.StructureFeature;
@@ -17,6 +18,7 @@ public class ConfiguredStructures
     public static StructureFeature<?, ?> CONFIGURED_MAGICTOWER = StructuresInit.MAGICTOWER.get().configured(IFeatureConfig.NONE);
     public static StructureFeature<?, ?> CONFIGURED_BANDIT_CAMP = StructuresInit.BANDIT_CAMP.get().configured(IFeatureConfig.NONE);
     public static StructureFeature<?, ?> CONFIGURED_MINI_VOLCANO = StructuresInit.MINI_VOLCANO.get().configured(IFeatureConfig.NONE);
+
 
 
 

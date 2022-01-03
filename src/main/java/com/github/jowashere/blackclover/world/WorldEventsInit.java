@@ -76,6 +76,18 @@ public class WorldEventsInit
             tempMap.putIfAbsent(StructuresInit.MAGICTOWER.get(),
                     DimensionStructuresSettings.DEFAULTS.get(StructuresInit.MAGICTOWER.get()));
             serverWorld.getChunkSource().generator.getSettings().structureConfig= tempMap;
+
+            Map<Structure<?>, StructureSeparationSettings> volcMap =
+                    new HashMap<>(serverWorld.getChunkSource().generator.getSettings().structureConfig());
+            volcMap.putIfAbsent(StructuresInit.MINI_VOLCANO.get(),
+                    DimensionStructuresSettings.DEFAULTS.get(StructuresInit.MINI_VOLCANO.get()));
+            serverWorld.getChunkSource().generator.getSettings().structureConfig= tempMap;
+
+            Map<Structure<?>, StructureSeparationSettings> bMap =
+                    new HashMap<>(serverWorld.getChunkSource().generator.getSettings().structureConfig());
+            bMap.putIfAbsent(StructuresInit.BANDIT_CAMP.get(),
+                    DimensionStructuresSettings.DEFAULTS.get(StructuresInit.BANDIT_CAMP.get()));
+            serverWorld.getChunkSource().generator.getSettings().structureConfig= tempMap;
         }
     }
 }
