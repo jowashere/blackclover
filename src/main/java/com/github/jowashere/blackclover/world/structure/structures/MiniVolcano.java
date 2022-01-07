@@ -68,7 +68,7 @@ public class MiniVolcano extends Structure<NoFeatureConfig>
         {
             int x = chunkX * 16;
             int z = chunkZ * 16;
-            BlockPos blockpos = new BlockPos(x, 0, z);
+            BlockPos blockpos = new BlockPos(x, 2, z);
 
             JigsawManager.addPieces(dynamicRegistryManager,
                     new VillageConfig(() -> dynamicRegistryManager.registryOrThrow(Registry.TEMPLATE_POOL_REGISTRY)

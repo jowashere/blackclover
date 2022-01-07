@@ -8,6 +8,7 @@ import com.github.jowashere.blackclover.init.ModeInit;
 import com.github.jowashere.blackclover.init.RaceInit;
 import com.github.jowashere.blackclover.spells.SpellRegistry;
 import net.minecraft.potion.Effects;
+import org.w3c.dom.Attr;
 
 public class MainPlugin implements IBCMPlugin {
 
@@ -26,6 +27,7 @@ public class MainPlugin implements IBCMPlugin {
         attributeRegistry.register(AttributeInit.LIGHT);
         attributeRegistry.register(AttributeInit.SLASH);
         attributeRegistry.register(AttributeInit.SWORD);
+        attributeRegistry.register(AttributeInit.WATER);
 
     }
 

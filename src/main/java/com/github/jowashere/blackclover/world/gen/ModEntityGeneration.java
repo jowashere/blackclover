@@ -3,6 +3,7 @@ package com.github.jowashere.blackclover.world.gen;
 import com.github.jowashere.blackclover.Main;
 import com.github.jowashere.blackclover.init.EntityInit;
 import com.github.jowashere.blackclover.init.StructuresInit;
+import com.github.jowashere.blackclover.world.biome.ModBiomes;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityClassification;
 import net.minecraft.util.RegistryKey;
@@ -32,6 +33,10 @@ public class ModEntityGeneration
             //Weight of spawn: 100, minimum: 4, max: 6
             event.getSpawns().addSpawn(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(EntityInit.BANDIT.get(), 100, 4, 6)).build();
         }
+        if (event.getName().equals(ModBiomes.GRAND_MAGIC_ZONE_VOLCANO.get().getRegistryName()))
+        {
+            event.getSpawns().addSpawn(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(EntityInit.VOLCANO_MONSTER.get(), 100, 4, 6)).build();
+        }
     }
 
     //entities that spawn in specific structures
@@ -43,7 +48,6 @@ public class ModEntityGeneration
 
             if (isCamp)
             {
-                System.out.println("Spawning");
                 event.addEntitySpawn(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(EntityInit.BANDIT.get(), 200, 5, 5));
             }
         }

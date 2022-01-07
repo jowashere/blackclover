@@ -35,8 +35,8 @@ public class ForwardThrust extends AbstractSpell
         if (!caster.level.isClientSide)
         {
             int magicLevel = BCMHelper.getMagicLevel(caster);
-            Vector3d speed = BCMHelper.Propulsion(caster, magicLevel , 3 );
-            caster.setDeltaMovement(speed.x, 0.7, speed.z);
+            Vector3d speed = BCMHelper.Propulsion(caster, 3 , 3 );
+            caster.setDeltaMovement(speed.x, 0.4, speed.z);
             caster.hurtMarked = true;
             caster.hasImpulse = true;
             caster.swing(Hand.MAIN_HAND, true);

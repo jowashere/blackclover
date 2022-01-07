@@ -1,6 +1,7 @@
 package com.github.jowashere.blackclover.client.handler;
 
 import com.github.jowashere.blackclover.Main;
+import com.github.jowashere.blackclover.client.renderer.entities.hostile.VolcanoMonsterRenderer;
 import com.github.jowashere.blackclover.client.renderer.handler.HumanoidRenderer;
 import com.github.jowashere.blackclover.client.renderer.item.FullBrightItem;
 import com.github.jowashere.blackclover.client.renderer.layers.*;
@@ -12,6 +13,7 @@ import com.github.jowashere.blackclover.client.renderer.spells.projectiles.light
 import com.github.jowashere.blackclover.client.renderer.spells.projectiles.lightning.ThunderOrbRenderer;
 import com.github.jowashere.blackclover.client.renderer.spells.projectiles.slash.DeathScytheRenderer;
 import com.github.jowashere.blackclover.client.renderer.spells.projectiles.sword.OriginFlashRenderer;
+import com.github.jowashere.blackclover.client.renderer.spells.projectiles.water.WaterBallRenderer;
 import com.github.jowashere.blackclover.client.renderer.spells.projectiles.wind.WindBladeRenderer;
 import com.github.jowashere.blackclover.client.renderer.spells.projectiles.wind.WindCrescentRenderer;
 import com.github.jowashere.blackclover.client.renderer.spells.summons.WindHawkRenderer;
@@ -48,6 +50,8 @@ public class ClientHandler {
     public static void OnSetup(){
 
         //Spells
+        RenderingRegistry.registerEntityRenderingHandler(EntityInit.WATER_BALL.get(), new WaterBallRenderer.Factory());
+
         RenderingRegistry.registerEntityRenderingHandler(EntityInit.WIND_BLADE.get(), new WindBladeRenderer.Factory());
         RenderingRegistry.registerEntityRenderingHandler(EntityInit.WIND_CRESCENT.get(), new WindCrescentRenderer.Factory());
         RenderingRegistry.registerEntityRenderingHandler(EntityInit.WIND_HAWK.get(), WindHawkRenderer::new);
@@ -70,6 +74,7 @@ public class ClientHandler {
 
         //Hostile mobs
         RenderingRegistry.registerEntityRenderingHandler(EntityInit.BANDIT.get(), new HumanoidRenderer.Factory(new HumanoidModel(), 1F));
+        RenderingRegistry.registerEntityRenderingHandler(EntityInit.VOLCANO_MONSTER.get(), new VolcanoMonsterRenderer.Factory());
 
         Map<String, PlayerRenderer> playerSkinMap = Minecraft.getInstance().getEntityRenderDispatcher().getSkinMap();
         ClientHandler.addPlayerLayers(playerSkinMap.get("default"));

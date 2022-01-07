@@ -29,7 +29,7 @@ public class ModStructureGeneration
         {
             event.getGeneration().getStructures().add(() -> ConfiguredStructures.CONFIGURED_BANDIT_CAMP);
         }
-        if (event.getCategory() == ModBiomes.GRAND_MAGIC_ZONE_VOLCANO.get().getBiomeCategory())
+        if (event.getName().equals(ModBiomes.GRAND_MAGIC_ZONE_VOLCANO.get().getRegistryName()))
         {
             event.getGeneration().getStructures().add(() -> ConfiguredStructures.CONFIGURED_MINI_VOLCANO);
 

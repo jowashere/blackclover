@@ -1,6 +1,7 @@
 package com.github.jowashere.blackclover.world.biome;
 
 import com.github.jowashere.blackclover.Main;
+import com.github.jowashere.blackclover.init.EntityInit;
 import com.github.jowashere.blackclover.init.StructuresInit;
 import com.github.jowashere.blackclover.world.structure.configured.ConfiguredStructures;
 import net.minecraft.client.audio.BackgroundMusicTracks;
@@ -37,14 +38,16 @@ public class ModBiomes
         DefaultBiomeFeatures.farmAnimals(mobspawninfo$builder);
         DefaultBiomeFeatures.commonSpawns(mobspawninfo$builder);
         mobspawninfo$builder.addSpawn(EntityClassification.MONSTER,
-                new MobSpawnInfo.Spawners(EntityType.BLAZE, 100, 7, 10));
-        mobspawninfo$builder.addSpawn(EntityClassification.MONSTER,
-                new MobSpawnInfo.Spawners(EntityType.ZOMBIFIED_PIGLIN, 50, 4, 4));
+                new MobSpawnInfo.Spawners(EntityType.BLAZE, 45, 7, 10));
+
+        //TODO make it generate
+        mobspawninfo$builder.addSpawn(EntityClassification.CREATURE,
+                new MobSpawnInfo.Spawners(EntityInit.VOLCANO_MONSTER.get(), 50, 1, 2));
+
         BiomeGenerationSettings.Builder biomegenerationsettings$builder =
                 (new BiomeGenerationSettings.Builder()).surfaceBuilder(surfaceBuilder);
 
         biomegenerationsettings$builder.addStructureStart(StructureFeatures.RUINED_PORTAL_SWAMP);
-        //TODO fix the crash with volcano not generating
 
         DefaultBiomeFeatures.addDefaultCarvers(biomegenerationsettings$builder);
 

@@ -95,6 +95,8 @@ public class Main
         {
             GlobalEntityTypeAttributes.put(EntityInit.GRIMOIRE_MAGICIAN.get(), GrimoireMagicianEntity.setCustomAttributes().build());
             GlobalEntityTypeAttributes.put(EntityInit.BANDIT.get(), BanditEntity.setCustomAttributes().build());
+            GlobalEntityTypeAttributes.put(EntityInit.VOLCANO_MONSTER.get(), BanditEntity.setCustomAttributes().build());
+
         });
 
     }
