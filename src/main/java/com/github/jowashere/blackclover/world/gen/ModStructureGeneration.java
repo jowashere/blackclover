@@ -32,7 +32,6 @@ public class ModStructureGeneration
         if (event.getName().equals(ModBiomes.GRAND_MAGIC_ZONE_VOLCANO.get().getRegistryName()))
         {
             event.getGeneration().getStructures().add(() -> ConfiguredStructures.CONFIGURED_MINI_VOLCANO);
-
         }
 
     }

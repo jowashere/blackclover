@@ -61,7 +61,15 @@ public class VolcanoMonsterEntity extends BCEntity
         return false;
     }
 
+    @Override
+    public float getBrightness() {
+        return 2.0F;
+    }
 
+    @Override
+    public boolean isSensitiveToWater() {
+        return true;
+    }
 
 
 

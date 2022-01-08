@@ -1,6 +1,7 @@
 package com.github.jowashere.blackclover.world.biome;
 
 import com.github.jowashere.blackclover.Main;
+import com.github.jowashere.blackclover.entities.mobs.hostile.VolcanoMonsterEntity;
 import com.github.jowashere.blackclover.init.EntityInit;
 import com.github.jowashere.blackclover.init.StructuresInit;
 import com.github.jowashere.blackclover.world.structure.configured.ConfiguredStructures;
@@ -42,7 +43,8 @@ public class ModBiomes
 
         //TODO make it generate
         mobspawninfo$builder.addSpawn(EntityClassification.CREATURE,
-                new MobSpawnInfo.Spawners(EntityInit.VOLCANO_MONSTER.get(), 50, 1, 2));
+                new MobSpawnInfo.Spawners(EntityInit.VOLCANO_MONSTER.get(), 200, 1, 2));
+
 
         BiomeGenerationSettings.Builder biomegenerationsettings$builder =
                 (new BiomeGenerationSettings.Builder()).surfaceBuilder(surfaceBuilder);

@@ -1,0 +1,12 @@
+{
+  "spawners": {
+    "creature": [
+      {
+        "type": "blackclover:volcano_monster",
+        "weight": 600,
+        "minCount": 2,
+        "maxCount": 4
+      }
+    ]
+  }
+}
