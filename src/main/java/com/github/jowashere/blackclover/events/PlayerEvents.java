@@ -356,6 +356,15 @@ public class PlayerEvents {
             }
         }
 
+        if(player_cap.ReturnMagicAttribute().equals(AttributeInit.SLASH)){
+            if(event.player.getPersistentData().getInt("forward_thrust_dmg") > 0){
+                EffectSpells.ForwardThrustDamage(event.player);
+                int newAmount = event.player.getPersistentData().getInt("forward_thrust_dmg") - 1;
+                event.player.getPersistentData().putInt("forward_thrust_dmg", newAmount);
+                NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(()-> (ServerPlayerEntity) event.player), new PacketIntSpellNBTSync(event.player.getId(), "forward_thrust_dmg", newAmount));
+            }
+        }
+
         if(player_cap.ReturnMagicAttribute().equals(AttributeInit.ANTI_MAGIC)){
             if(event.player.getPersistentData().getInt("bull_thrust_dmg") > 0){
                 EffectSpells.BullThrustDamage(event.player);

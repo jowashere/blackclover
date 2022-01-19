@@ -8,6 +8,7 @@ import com.github.jowashere.blackclover.entities.mobs.BCEntity;
 import com.github.jowashere.blackclover.events.bcevents.MagicLevelChangeEvent;
 import com.github.jowashere.blackclover.networking.NetworkLoader;
 import com.github.jowashere.blackclover.networking.packets.PacketMagicLevel;
+import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -85,6 +86,7 @@ public class BCMHelper {
 
         return list;
     }
+
 
     public static RayTraceResult RayTraceBlocksAndEntities(Entity entity) {
         return BCMHelper.RayTraceBlocksAndEntities(entity, 1024, 0.4f);
@@ -295,7 +297,7 @@ public class BCMHelper {
             }
 
             @SubscribeEvent
-            public void tick (TickEvent.ServerTickEvent event){
+            public void tick (TickEvent.ServerTickEvent event) throws InterruptedException {
                 if (event.phase == TickEvent.Phase.END) {
                     this.ticks += 1;
                     if (this.ticks >= this.waitTicks){
@@ -311,7 +313,7 @@ public class BCMHelper {
     }
 
     public interface Wait {
-        void waitThen();
+        void waitThen() throws InterruptedException;
     }
 
     public static double getDifferenceToFloor(PlayerEntity player) {
