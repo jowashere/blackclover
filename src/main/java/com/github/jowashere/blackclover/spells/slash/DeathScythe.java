@@ -26,7 +26,8 @@ public class DeathScythe extends AbstractSpell {
     }
 
     private void action(LivingEntity caster, float manaIn) {
-        if (!caster.level.isClientSide) {
+        if (!caster.level.isClientSide)
+        {
             DeathScytheEntity entity = new DeathScytheEntity(caster.level, caster, manaIn);
             entity.shootFromRotation(caster, caster.xRot, caster.yRot, 0.0F, 1.8F, 1.0F);
             caster.level.addFreshEntity(entity);

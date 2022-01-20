@@ -22,7 +22,7 @@ public class ForwardThrust extends AbstractSpell
 
         this.setManaCost(25F);
         this.setCooldown(80);
-        this.setUnlockLevel(15);
+        this.setUnlockLevel(10);
         this.setUV(32, 48);
 
         this.action = this::action;

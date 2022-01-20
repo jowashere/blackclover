@@ -4,9 +4,7 @@ import com.github.jowashere.blackclover.api.internal.AbstractSpell;
 import com.github.jowashere.blackclover.init.AttributeInit;
 import com.github.jowashere.blackclover.util.helpers.BCMHelper;
 import com.github.jowashere.blackclover.util.helpers.SpellHelper;
-import net.minecraft.block.Block;
-import net.minecraft.block.Blocks;
-import net.minecraft.dispenser.IPosition;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
