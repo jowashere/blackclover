@@ -9,6 +9,7 @@ import com.github.jowashere.blackclover.client.gui.overlay.ManaBar;
 import com.github.jowashere.blackclover.client.gui.overlay.Notifications;
 import com.github.jowashere.blackclover.client.gui.overlay.SpellMode;
 import com.github.jowashere.blackclover.client.handler.ClientHandler;
+import com.github.jowashere.blackclover.entities.mobs.hostile.VolcanoMonsterEntity;
 import com.github.jowashere.blackclover.entities.mobs.quester.GrimoireMagicianEntity;
 import com.github.jowashere.blackclover.entities.mobs.hostile.BanditEntity;
 import com.github.jowashere.blackclover.events.GrimoireTextures;
@@ -95,7 +96,7 @@ public class Main
         {
             GlobalEntityTypeAttributes.put(EntityInit.GRIMOIRE_MAGICIAN.get(), GrimoireMagicianEntity.setCustomAttributes().build());
             GlobalEntityTypeAttributes.put(EntityInit.BANDIT.get(), BanditEntity.setCustomAttributes().build());
-            GlobalEntityTypeAttributes.put(EntityInit.VOLCANO_MONSTER.get(), BanditEntity.setCustomAttributes().build());
+            GlobalEntityTypeAttributes.put(EntityInit.VOLCANO_MONSTER.get(), VolcanoMonsterEntity.setCustomAttributes().build());
 
         });
 
