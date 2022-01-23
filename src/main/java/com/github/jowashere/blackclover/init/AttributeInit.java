@@ -21,6 +21,6 @@ public class AttributeInit {
     public static final BCMAttribute DARKNESS = new BCMAttribute("darkness", 5, false, 0, 64,  AbstractSpell.Type.DARKNESS_MAGIC).setAttributeMessage("You have Darkness Magic.").setAttributeColour(2).setGrimoireTextures(GrimoireTextures.DarknessGrimoires);
     public static final BCMAttribute LIGHT = new BCMAttribute("light", 5, false, 0, 32,  AbstractSpell.Type.LIGHT_MAGIC).setAttributeMessage("You have Light Magic.").setAttributeColour(7).setGrimoireTextures(GrimoireTextures.LightGrimoires);
     public static final BCMAttribute ANTI_MAGIC = new BCMAttribute("antimagic", 0, false, 0, 0,  AbstractSpell.Type.ANTI_MAGIC).setAttributeMessage("You have no magic.").setAttributeColour(0).setGrimoireTextures(GrimoireTextures.AntiMagicGrimoires);
-    public static final BCMAttribute WATER = new BCMAttribute("water", 30, false, 0, 0, AbstractSpell.Type.WATER).setAttributeMessage("You have Water Magic").setAttributeColour(3).setGrimoireTextures(GrimoireTextures.WindGrimoires);
+    public static final BCMAttribute WATER = new BCMAttribute("water", 0, false, 0, 0, AbstractSpell.Type.WATER).setAttributeMessage("You have Water Magic").setAttributeColour(3).setGrimoireTextures(GrimoireTextures.WindGrimoires);
 
 }

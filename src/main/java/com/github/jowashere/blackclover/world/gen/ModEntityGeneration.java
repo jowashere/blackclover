@@ -24,16 +24,15 @@ public class ModEntityGeneration
         RegistryKey key = RegistryKey.create(Registry.BIOME_REGISTRY, event.getName());
         Set types = BiomeDictionary.getTypes(key);
 
-        if (types.contains(BiomeDictionary.Type.PLAINS)) // Only spawns in plains
+        if (types.contains(BiomeDictionary.Type.PLAINS) || types.contains(BiomeDictionary.Type.HOT) || types.contains(BiomeDictionary.Type.COLD)) // Only spawns in plains
         {
             //Weight of spawn: 100, minimum: 4, max: 6
             event.getSpawns().addSpawn(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(EntityInit.BANDIT.get(), 400, 3, 4)).build();
 
         }
-        if (event.getName().toString().equals(ModBiomes.GRAND_MAGIC_ZONE_VOLCANO.getId().toString()))
+        if (event.getName().equals(ModBiomes.GRAND_MAGIC_ZONE_VOLCANO.get().getRegistryName()))
         {
             event.getSpawns().addSpawn(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(EntityInit.VOLCANO_MONSTER.get(), 600, 1, 2)).build();
-            event.getSpawns().getSpawner(EntityClassification.CREATURE).add(new MobSpawnInfo.Spawners(EntityInit.VOLCANO_MONSTER.get(), 600, 1, 2));
         }
     }
 

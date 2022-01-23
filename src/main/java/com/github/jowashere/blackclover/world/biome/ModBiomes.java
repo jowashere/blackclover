@@ -46,6 +46,10 @@ public class ModBiomes
                 new MobSpawnInfo.Spawners(EntityInit.VOLCANO_MONSTER.get(), 200, 1, 2));
 
 
+        mobspawninfo$builder.addSpawn(EntityClassification.CREATURE,
+                new MobSpawnInfo.Spawners(EntityInit.VOLCANO_MONSTER.get(), 40, 1, 2)).build();
+
+
         BiomeGenerationSettings.Builder biomegenerationsettings$builder =
                 (new BiomeGenerationSettings.Builder()).surfaceBuilder(surfaceBuilder);
 
