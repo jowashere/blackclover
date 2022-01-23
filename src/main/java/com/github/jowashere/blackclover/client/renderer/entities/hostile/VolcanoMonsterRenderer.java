@@ -23,7 +23,6 @@ import net.minecraft.util.math.vector.Vector3f;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
-import org.omg.PortableInterceptor.DISCARDING;
 
 import java.util.function.Function;
 
