@@ -30,7 +30,9 @@ public class LightHealing extends AbstractToggleSpell {
             int magicLevel = BCMHelper.getMagicLevel(caster);
 
             caster.addEffect(new EffectInstance(Effects.REGENERATION, 5, Math.max(1, magicLevel/2), false, false, false));
-            ((ServerWorld) caster.level).sendParticles(ParticleTypes.END_ROD, caster.getX(), caster.getY(), caster.getZ(), 2, 0, 1, 0, 0.1);
+            ((ServerWorld) caster.level).sendParticles(ParticleTypes.END_ROD,
+                    caster.getX(), caster.getY(), caster.getZ(),
+                    2, 0, 1, 0, 0.1);
         }
     }
 }

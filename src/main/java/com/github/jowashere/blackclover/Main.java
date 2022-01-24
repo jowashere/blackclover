@@ -20,6 +20,7 @@ import com.github.jowashere.blackclover.util.helpers.RaceHelper;
 import com.github.jowashere.blackclover.world.biome.ModBiomes;
 import com.github.jowashere.blackclover.world.gen.ModBiomeGeneration;
 import com.github.jowashere.blackclover.world.structure.configured.ConfiguredStructures;
+import com.ibm.icu.text.MessagePattern;
 import net.minecraft.block.Blocks;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
@@ -54,6 +55,7 @@ public class Main
 
         MinecraftForge.EVENT_BUS.register(this);
 
+        ParticleInit.PARTICLES.register(modEventBus);
         BlocksInit.BLOCKS.register(modEventBus);
         ItemInit.ITEMS.register(modEventBus);
         ModAttributes.ATTRIBUTES.register(modEventBus);
