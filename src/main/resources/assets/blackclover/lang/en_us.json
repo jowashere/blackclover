@@ -163,6 +163,12 @@
   "gui.blackclover.magiclevel": "Magic Level",
   "gui.blackclover.magicattribute": "Magic Attribute",
   "gui.blackclover.magicexp": "Magic XP",
-  "gui.blackclover.stats.spells": "Spells"
+  "gui.blackclover.stats.spells": "Spells",
+
+  "effect.blackclover.multiplier": "Magic multiplier",
+  "item.blackclover.moguro_leaf_juice": "Moguro leaf juice",
+  "block.blackclover.moguro_log": "Moguro log",
+  "block.blackclover.moguro_leaf": "Moguro leaf",
+  "block.blackclover.moguro_sapling": "Moguro sapling"
 
 }

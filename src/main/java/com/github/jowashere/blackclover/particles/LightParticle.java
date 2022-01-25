@@ -1,14 +1,11 @@
 package com.github.jowashere.blackclover.particles;
 
-import com.github.jowashere.blackclover.events.WorldEvents;
 import net.minecraft.client.particle.*;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.particles.BasicParticleType;
-import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 
-import javax.annotation.Nullable;
 
 @OnlyIn(Dist.CLIENT)
 public class LightParticle extends SpriteTexturedParticle {

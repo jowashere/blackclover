@@ -1,5 +1,6 @@
 package com.github.jowashere.blackclover.items.misc;
 
+import com.github.jowashere.blackclover.init.EffectInit;
 import com.github.jowashere.blackclover.init.PotionInit;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.entity.LivingEntity;

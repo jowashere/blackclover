@@ -1,6 +1,7 @@
 package com.github.jowashere.blackclover.effects;
 
 import com.github.jowashere.blackclover.init.ModAttributes;
+import net.minecraft.client.Minecraft;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.Attribute;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -9,12 +10,14 @@ import net.minecraft.entity.ai.attributes.ModifiableAttributeInstance;
 import net.minecraft.potion.Effect;
 import net.minecraft.potion.EffectInstance;
 import net.minecraft.potion.EffectType;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 
 import java.util.UUID;
 
 public class ExperienceMultiplierEffect extends Effect
 {
-    private static final AttributeModifier MULTIPLIER_MODIFIER = new AttributeModifier(UUID.fromString("ff5c8feb-6598-4d30-81de-e1ca1084f51b"), "Multiplier Modifier", 4.5, AttributeModifier.Operation.ADDITION);
+    private static final AttributeModifier MULTIPLIER_MODIFIER = new AttributeModifier(UUID.fromString("ff5c8feb-6598-4d30-81de-e1ca1084f51b"), "multiplier modifier", 4.5, AttributeModifier.Operation.ADDITION);
 
     public ExperienceMultiplierEffect()
     {
@@ -54,16 +57,18 @@ public class ExperienceMultiplierEffect extends Effect
 
     @Override
     public boolean shouldRenderInvText(EffectInstance effect) {
-        return false;
+        return true;
     }
 
     @Override
     public boolean shouldRender(EffectInstance effect) {
-        return false;
+        return true;
     }
 
     @Override
     public boolean shouldRenderHUD(EffectInstance effect) {
-        return false;
+        return true;
     }
+
+
 }
