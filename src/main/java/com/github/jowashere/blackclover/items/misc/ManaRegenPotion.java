@@ -1,6 +1,5 @@
 package com.github.jowashere.blackclover.items.misc;
 
-import com.github.jowashere.blackclover.init.EffectInit;
 import com.github.jowashere.blackclover.init.PotionInit;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.entity.LivingEntity;
@@ -8,30 +7,25 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.item.*;
 import net.minecraft.potion.EffectInstance;
-import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionUtils;
-import net.minecraft.potion.Potions;
 import net.minecraft.stats.Stats;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.DrinkHelper;
 import net.minecraft.util.Hand;
-import net.minecraft.util.NonNullList;
-import net.minecraft.util.registry.Registry;
 import net.minecraft.world.World;
 
-import java.util.Properties;
+public class ManaRegenPotion extends Item {
 
-public class MoguroLeafJuice extends Item
-{
-    public MoguroLeafJuice(Properties properties)
+    public ManaRegenPotion(Properties properties)
     {
         super(properties);
     }
 
+
     @Override
     public ItemStack getDefaultInstance()
     {
-        return PotionUtils.setPotion(super.getDefaultInstance(), PotionInit.MULTIPLIER_POTION.get());
+        return PotionUtils.setPotion(super.getDefaultInstance(), PotionInit.MANA_REGEN_POTION.get());
     }
 
     @Override
@@ -43,7 +37,7 @@ public class MoguroLeafJuice extends Item
 
         if (!p_77654_2_.isClientSide)
         {
-            entity.addEffect(new EffectInstance(PotionInit.MULTIPLIER_EFFECT.get(), 1200, 0));
+            entity.addEffect(new EffectInstance(PotionInit.MANA_REGEN.get(), 1200, 0));
         }
 
         if (playerentity != null) {

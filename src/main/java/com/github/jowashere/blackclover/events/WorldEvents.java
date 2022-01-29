@@ -25,6 +25,7 @@ public class WorldEvents
     @Mod.EventBusSubscriber(modid = Main.MODID)
     public static class biomeStuff
     {
+        //When entering grand magic mana zone
         @SubscribeEvent
         public static void enteringManaZone(LivingEvent.LivingUpdateEvent event)
         {
@@ -37,16 +38,21 @@ public class WorldEvents
             if(world.isClientSide)
                 return;
 
+            //Check the level
+            //Check if he uses mana skin
             LazyOptional<IPlayerHandler> playerc = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
             IPlayerHandler player_cap = playerc.orElse(new PlayerCapability());
             int magiclevel = player_cap.getMagicLevel();
             BlockPos pos = player.getEntity().blockPosition();
+            //Check if he enters the biome
             ResourceLocation biome = world.registryAccess().registryOrThrow(Registry.BIOME_REGISTRY).getKey(world.getBiome(pos));
 
 
+            //If both are ight don't get damaged
             if (biome.equals(ModBiomes.GRAND_MAGIC_ZONE_VOLCANO.getId()))
             {
                 Beapi.experienceMultiplier(player, 2);
+                //TODO doesn't give the multiplier effect
                 player.addEffect(new EffectInstance(PotionInit.MULTIPLIER_EFFECT.get(), 1));
                 player_cap.reduceMana(0.5F);
 

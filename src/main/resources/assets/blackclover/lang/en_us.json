@@ -80,7 +80,7 @@
   "spell.blackclover.avidya_slash": "Avidya Slash",
   "description.blackclover.avidya_slash": "Throws a slash of darkness",
   "spell.blackclover.black_blade": "Black Blade",
-  "description.blackclover_black_blade": "Concentrate and use your sword enveloped with darkness for massive damage",
+  "description.blackclover.black_blade": "Concentrate and use your sword enveloped with darkness for massive damage",
   "spell.blackclover.black_cocoon": "Black Cocoon",
   "description.blackclover.black_cocoon": "Envelops yourself with darkness protecting yourself from enemies",
   "spell.blackclover.black_hole": "Black Hole",
@@ -169,6 +169,10 @@
   "item.blackclover.moguro_leaf_juice": "Moguro leaf juice",
   "block.blackclover.moguro_log": "Moguro log",
   "block.blackclover.moguro_leaf": "Moguro leaf",
-  "block.blackclover.moguro_sapling": "Moguro sapling"
+  "block.blackclover.moguro_sapling": "Moguro sapling",
+  "item.minecraft.potion.effect.mana_regen": "Mana regen potion",
+
+  "effect.blackclover.mana_regen_effect": "Mana regeneration",
+  "item.blackclover.mana_regen_potion": "Mana regeneration potion"
 
 }

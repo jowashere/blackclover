@@ -3,6 +3,7 @@ package com.github.jowashere.blackclover.init;
 import com.github.jowashere.blackclover.Main;
 import com.github.jowashere.blackclover.items.ModSpawnEgg;
 import com.github.jowashere.blackclover.items.armors.*;
+import com.github.jowashere.blackclover.items.misc.ManaRegenPotion;
 import com.github.jowashere.blackclover.items.misc.MoguroLeafJuice;
 import com.github.jowashere.blackclover.items.weapons.MagicSwordItem;
 import com.github.jowashere.blackclover.items.weapons.SwordMagicSwords;
@@ -27,7 +28,8 @@ public class ItemInit {
     public List<Supplier<Item>> items = new ArrayList<>();
 
     //Misc
-    public static final RegistryObject<Item> MOGURO_LEAF_JUICE = ITEMS.register("moguro_leaf_juice", () -> new MoguroLeafJuice(new Item.Properties().tab(ItemGroup.TAB_BREWING)));
+    public static final RegistryObject<Item> MOGURO_LEAF_JUICE = ITEMS.register("moguro_leaf_juice", () -> new MoguroLeafJuice(new Item.Properties().tab(ItemGroup.TAB_BREWING).stacksTo(1)));
+    public static final RegistryObject<Item> MANA_REGEN_POTION = ITEMS.register("mana_regen_potion", () -> new ManaRegenPotion(new Item.Properties().tab(ItemGroup.TAB_BREWING).stacksTo(1)));
 
     //Block Items
     public static final RegistryObject<BlockItem> MOGURO_LOG = ITEMS.register("moguro_log", () -> new BlockItem(BlocksInit.MOGURO_LOG.get(),

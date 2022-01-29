@@ -15,6 +15,8 @@ import com.github.jowashere.blackclover.entities.mobs.hostile.BanditEntity;
 import com.github.jowashere.blackclover.events.GrimoireTextures;
 import com.github.jowashere.blackclover.init.*;
 import com.github.jowashere.blackclover.networking.NetworkLoader;
+import com.github.jowashere.blackclover.particles.StartupClientParticle;
+import com.github.jowashere.blackclover.particles.StartupCommonParticle;
 import com.github.jowashere.blackclover.util.helpers.KeyboardHelper;
 import com.github.jowashere.blackclover.util.helpers.RaceHelper;
 import com.github.jowashere.blackclover.world.biome.ModBiomes;
@@ -22,9 +24,11 @@ import com.github.jowashere.blackclover.world.gen.ModBiomeGeneration;
 import com.github.jowashere.blackclover.world.structure.configured.ConfiguredStructures;
 import com.ibm.icu.text.MessagePattern;
 import net.minecraft.block.Blocks;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
+import net.minecraft.item.Items;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -55,7 +59,10 @@ public class Main
 
         MinecraftForge.EVENT_BUS.register(this);
 
-        ParticleInit.PARTICLES.register(modEventBus);
+
+        modEventBus.register(StartupCommonParticle.class);
+        modEventBus.register(StartupClientParticle.class);
+
         BlocksInit.BLOCKS.register(modEventBus);
         ItemInit.ITEMS.register(modEventBus);
         ModAttributes.ATTRIBUTES.register(modEventBus);
@@ -71,11 +78,13 @@ public class Main
         modEventBus.addListener(this::onClientSetup);
     }
 
+
     private void onCommonSetup(final FMLCommonSetupEvent event)
     {
         ModBiomeGeneration.generateBiomes();
         CapabilityManager.INSTANCE.register(IPlayerHandler.class, new PlayerCapability.Storage(), PlayerCapability::new);
 
+        PotionInit.addPotionRecipes();
         RenderTypeLookup.setRenderLayer(BlocksInit.MOGURO_LEAF.get(), RenderType.cutout());
         RenderTypeLookup.setRenderLayer(BlocksInit.MOGURO_SAPLING.get(), RenderType.cutout());
         event.enqueueWork(() ->
@@ -107,6 +116,8 @@ public class Main
     private void onClientSetup(final FMLClientSetupEvent event) {
 
         ClientHandler.OnSetup();
+
+
         MinecraftForge.EVENT_BUS.register(new Notifications());
         MinecraftForge.EVENT_BUS.register(new SpellMode());
         MinecraftForge.EVENT_BUS.register(new ManaBar());

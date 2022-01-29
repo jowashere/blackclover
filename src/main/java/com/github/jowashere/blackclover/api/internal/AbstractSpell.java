@@ -37,6 +37,7 @@ public abstract class AbstractSpell {
     private int cooldown = 1;
     private boolean skillSpell = false;
     protected AbstractSpell.IAction action;
+    protected AbstractSpell.IClientAction clientAction;
     protected AbstractSpell.IExtraCheck extraCheck;
     private ResourceLocation resourceLocation;
     private String checkFailMsg;
@@ -199,6 +200,9 @@ public abstract class AbstractSpell {
                     if (this.action != null)
                         this.action.action(player, manaCost);
 
+                    if (this.clientAction != null)
+                        this.clientAction.clientAction(player, manaCost);
+
                     //Handles cooldown
                     if (!this.isToggle())
                         this.applySpellCD(this, player);
@@ -218,6 +222,9 @@ public abstract class AbstractSpell {
             }else if(caster instanceof BCEntity) {
                 if (this.action != null)
                     this.action.action(caster, manaCost);
+
+                if (this.clientAction != null)
+                    this.clientAction.clientAction(caster, manaCost);
             }
         }
     }
@@ -245,6 +252,11 @@ public abstract class AbstractSpell {
 
     public interface IAction {
         void action(LivingEntity livingEntity, float manaIn);
+    }
+
+    public interface IClientAction
+    {
+        void clientAction(LivingEntity livingEntity, float manaIn);
     }
 
     public interface ISpellServerSync {
