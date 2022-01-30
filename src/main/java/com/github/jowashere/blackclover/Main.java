@@ -7,6 +7,7 @@ import com.github.jowashere.blackclover.capabilities.player.IPlayerHandler;
 import com.github.jowashere.blackclover.capabilities.player.PlayerCapability;
 import com.github.jowashere.blackclover.client.gui.overlay.ManaBar;
 import com.github.jowashere.blackclover.client.gui.overlay.Notifications;
+import com.github.jowashere.blackclover.client.gui.overlay.Quest;
 import com.github.jowashere.blackclover.client.gui.overlay.SpellMode;
 import com.github.jowashere.blackclover.client.handler.ClientHandler;
 import com.github.jowashere.blackclover.entities.mobs.hostile.VolcanoMonsterEntity;
@@ -118,6 +119,7 @@ public class Main
         ClientHandler.OnSetup();
 
 
+        MinecraftForge.EVENT_BUS.register(new Quest());
         MinecraftForge.EVENT_BUS.register(new Notifications());
         MinecraftForge.EVENT_BUS.register(new SpellMode());
         MinecraftForge.EVENT_BUS.register(new ManaBar());
