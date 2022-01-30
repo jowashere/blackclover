@@ -1,5 +1,6 @@
 package com.github.jowashere.blackclover.particles;
 
+import com.github.jowashere.blackclover.particles.dark.DarkParticleFactory;
 import com.github.jowashere.blackclover.particles.light.LightParticleFactory;
 import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
@@ -13,6 +14,7 @@ public class StartupClientParticle
         // beware - there are two registerFactory methods with different signatures.
         // If you use the wrong one it will put Minecraft into an infinite loading loop with no console errors
         Minecraft.getInstance().particleEngine.register(StartupCommonParticle.lightParticleType, sprite -> new LightParticleFactory(sprite));
+        Minecraft.getInstance().particleEngine.register(StartupCommonParticle.darkParticleType, sprite -> new DarkParticleFactory(sprite));
         //  This lambda may not be obvious: its purpose is:
         //  the registerFactory method creates an IAnimatedSprite, then passes it to the constructor of FlameParticleFactory
 

@@ -18,7 +18,7 @@ public class ForwardThrust extends AbstractSpell
 
     public ForwardThrust()
     {
-        super("foward_thrust", AttributeInit.SLASH);
+        super("forward_thrust", AttributeInit.SLASH);
 
         this.setManaCost(25F);
         this.setCooldown(80);

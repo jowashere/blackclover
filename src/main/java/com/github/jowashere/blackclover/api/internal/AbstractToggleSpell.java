@@ -16,6 +16,7 @@ public abstract class AbstractToggleSpell extends AbstractSpell {
 
     protected ICancelEventListener onCancelEvent;
     protected IStartEventListener onStartEvent;
+    protected IDuringEventListener onDuringEvent;
     protected IAttackEventListener onAttackEvent;
     protected IDamageEventListener onDamageEvent;
     protected IDeathEventListener onDeathEvent;
@@ -59,6 +60,11 @@ public abstract class AbstractToggleSpell extends AbstractSpell {
 
     public interface IStartEventListener {
         void onStart(LivingEntity caster, float manaIn);
+    }
+
+    public interface IDuringEventListener
+    {
+        void onDuring(LivingEntity caster);
     }
 
     public interface IAttackEventListener {

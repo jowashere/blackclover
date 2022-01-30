@@ -52,6 +52,8 @@
   "description.blackclover.black_mode": "Makes you go into black mode",
   "spell.blackclover.black_meteorite": "Black Meteorite",
   "description.blackclover.black_meteorite": "You dash forward dealing massive anti magic damage",
+  "spell.blackclover.black_divider": "Black divider",
+  "description.blackclover.black_divider": "Enhance your blade with anti magic for giant reach",
 
   "spell.blackclover.wind_blade": "Wind Blade",
   "description.blackclover.wind_blade": "Throws a wind blade",
@@ -62,7 +64,7 @@
   "spell.blackclover.wind_blade_shower": "Wind Blade Shower",
   "description.blackclover.wind_blade_shower": "Throws a shower of wind blades",
   "spell.blackclover.wind_hawk": "Swift White Hawk",
-  "description.blackclover_wind_hawk": "Summons a wind white hawk",
+  "description.blackclover.wind_hawk": "Summons a wind white hawk",
   "spell.blackclover.wind_flight": "Wind Flight",
   "description.blackclover.wind_flight": "Makes you fly with wind",
 
