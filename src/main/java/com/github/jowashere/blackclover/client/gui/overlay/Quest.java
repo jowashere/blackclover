@@ -14,21 +14,20 @@ import net.minecraftforge.eventbus.api.SubscribeEvent;
 
 @OnlyIn(Dist.CLIENT)
 public class Quest {
-    private final ResourceLocation questGUI = new ResourceLocation(Main.MODID + ":textures/gui/questGUI.png");
-    private final int tex_width = 9, tex_height = 102, bar_width = 7, bar_height = 100;
+    private final ResourceLocation questGUI = new ResourceLocation(Main.MODID + ":textures/gui/quest_gui.png");
 
     @SubscribeEvent
     public void renderOverlay(RenderGameOverlayEvent.Post event)
     {
         if (event.getType() == RenderGameOverlayEvent.ElementType.TEXT)
         {
-            ClientPlayerEntity player = Minecraft.getInstance().player;
-            LazyOptional<IPlayerHandler> player_cap;
-            player_cap = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
-            Minecraft mc = Minecraft.getInstance();
+          //  ClientPlayerEntity player = Minecraft.getInstance().player;
+           // LazyOptional<IPlayerHandler> player_cap;
+           // player_cap = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
+            //Minecraft mc = Minecraft.getInstance();
 
-            mc.textureManager.bind(questGUI);
-            mc.gui.blit(event.getMatrixStack(), 20, 130, 0, 0, tex_width, tex_height);
+            //mc.textureManager.bind(questGUI);
+            //mc.gui.blit(event.getMatrixStack(), 180, 60, 0, 0, 256, 256);
         }
     }
 }

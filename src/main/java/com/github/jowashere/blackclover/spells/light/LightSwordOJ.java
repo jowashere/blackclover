@@ -38,31 +38,22 @@ public class LightSwordOJ extends AbstractSpell {
             entity.shootFromRotation(caster, caster.xRot, caster.yRot, 0.0F, 3.6F, 1F);
             caster.level.addFreshEntity(entity);
             caster.swing(Hand.MAIN_HAND, true);
-
             LightParticleData lightParticleData = new LightParticleData(new Color(255, 255, 255),  0.5);
-            IPacket<?> ipacket = new SSpawnParticlePacket(lightParticleData, true, caster.getX() + Math.random() / 2, caster.getY() + 1 + Math.random() , caster.getZ() + Math.random() / 2, 0, 0, 0, 0, 1);
-            IPacket<?> ipacket2 = new SSpawnParticlePacket(lightParticleData, true, caster.getX() + Math.random() / 2, caster.getY() + 1 + Math.random() , caster.getZ() + Math.random() / 2, 0, 0, 0, 0, 1);
-            IPacket<?> ipacket3 = new SSpawnParticlePacket(lightParticleData, true, caster.getX() + Math.random() / 2, caster.getY() + 1 + Math.random() , caster.getZ() + Math.random() / 2, 0, 0, 0, 0, 1);
-            IPacket<?> ipacket4 = new SSpawnParticlePacket(lightParticleData, true, caster.getX() + Math.random() / 2, caster.getY() + 1 + Math.random() , caster.getZ() + Math.random() / 2, 0, 0, 0, 0, 1);
-            IPacket<?> ipacket5 = new SSpawnParticlePacket(lightParticleData, true, caster.getX() + Math.random() / 2, caster.getY() + 1 + Math.random() , caster.getZ() + Math.random() / 2, 0, 0, 0, 0, 1);
-            IPacket<?> ipacket6 = new SSpawnParticlePacket(lightParticleData, true, caster.getX() + Math.random() / 2, caster.getY()+ 1 + Math.random() , caster.getZ() + Math.random() / 2, 0, 0, 0, 0, 1);
-            IPacket<?> ipacket7 = new SSpawnParticlePacket(lightParticleData, true, caster.getX() + Math.random() / 2, caster.getY() + 1 + Math.random() , caster.getZ() + Math.random() / 2, 0, 0, 0, 0, 1);
 
-            for (int j = 0; j < caster.level.players().size(); ++j)
+            Vector3d vec3 = caster.getLookAngle();
+
+            IPacket<?>[] packets = new IPacket[7];
+            for (int i = 0; i < 7; ++i)
             {
-                ServerPlayerEntity player = (ServerPlayerEntity) caster.level.players().get(j);
-                BlockPos blockpos = new BlockPos(player.getX(), player.getY(), player.getZ());
-                if (blockpos.closerThan(new Vector3d(caster.getX(), caster.getY(), caster.getZ()), 512))
+                packets[i] = new SSpawnParticlePacket(lightParticleData, true, caster.getX() + vec3.x + Math.random(), caster.getY() + vec3.y + 1 + Math.random(), caster.getZ() + vec3.z + Math.random(), 0, 0, 0, 0, 1);
+                for (int j = 0; j < caster.level.players().size(); ++j)
                 {
-                    player.connection.send(ipacket);
-                    player.connection.send(ipacket2);
-                    player.connection.send(ipacket3);
-                    player.connection.send(ipacket4);
-                    player.connection.send(ipacket5);
-                    player.connection.send(ipacket6);
-                    player.connection.send(ipacket7);
-
-
+                    ServerPlayerEntity player = (ServerPlayerEntity) caster.level.players().get(j);
+                    BlockPos blockpos = new BlockPos(player.getX(), player.getY(), player.getZ());
+                    if (blockpos.closerThan(new Vector3d(caster.getX(), caster.getY(), caster.getZ()), 512))
+                    {
+                        player.connection.send(packets[i]);
+                    }
                 }
             }
         }

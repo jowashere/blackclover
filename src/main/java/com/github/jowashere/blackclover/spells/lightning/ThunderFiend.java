@@ -8,6 +8,7 @@ import com.github.jowashere.blackclover.util.helpers.BCMHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.util.Hand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraftforge.fml.network.PacketDistributor;
 
@@ -31,7 +32,7 @@ public class ThunderFiend extends AbstractSpell {
 
     private void action(LivingEntity caster, float manaIn) {
         if (!caster.level.isClientSide) {
-            Vector3d speed = BCMHelper.Propulsion(caster, 3, 3);
+            Vector3d speed = BCMHelper.Propulsion(caster, 3, 0.3, 3);
             caster.setDeltaMovement(speed.x, 0.3, speed.z);
             caster.hurtMarked = true;
             caster.hasImpulse = true;

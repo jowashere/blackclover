@@ -249,6 +249,7 @@ public class KeyboardHelper {
                 PlayerEvents.toggleReinforcement(player);
             }
 
+            //TODO check issue with playerscreen
             if (KeybindInit.MAGIC_MENU.isDown()){
                 Minecraft.getInstance().setScreen(new PlayerStatsScreen());
             }
