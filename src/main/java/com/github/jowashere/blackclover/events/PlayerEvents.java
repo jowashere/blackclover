@@ -303,7 +303,14 @@ public class PlayerEvents {
             ItemStack stackOff = event.player.getItemInHand(Hand.OFF_HAND);
 
             if(stackMain.hasTag()) {
-                if(stackMain.getTag().getBoolean("antimagic") || stackOff.getTag().getBoolean("antimagic")){
+                if(stackMain.getTag().getBoolean("antimagic")){
+                    player_cap.addMana(-3);
+                    NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.player), new PacketManaSync(player_cap.returnMana()));
+                }
+            }
+
+            if(stackOff.hasTag()) {
+                if(stackOff.getTag().getBoolean("antimagic")){
                     player_cap.addMana(-3);
                     NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) event.player), new PacketManaSync(player_cap.returnMana()));
                 }
@@ -346,6 +353,15 @@ public class PlayerEvents {
                 int newAmount = event.player.getPersistentData().getInt("thunder_fiend_dmg") - 1;
                 event.player.getPersistentData().putInt("thunder_fiend_dmg", newAmount);
                 NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(()-> (ServerPlayerEntity) event.player), new PacketIntSpellNBTSync(event.player.getId(), "thunder_fiend_dmg", newAmount));
+            }
+        }
+
+        if(player_cap.ReturnMagicAttribute().equals(AttributeInit.SLASH)){
+            if(event.player.getPersistentData().getInt("forward_thrust_dmg") > 0){
+                EffectSpells.ForwardThrustDamage(event.player);
+                int newAmount = event.player.getPersistentData().getInt("forward_thrust_dmg") - 1;
+                event.player.getPersistentData().putInt("forward_thrust_dmg", newAmount);
+                NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(()-> (ServerPlayerEntity) event.player), new PacketIntSpellNBTSync(event.player.getId(), "forward_thrust_dmg", newAmount));
             }
         }
 

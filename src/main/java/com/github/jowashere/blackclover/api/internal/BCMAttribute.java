@@ -63,10 +63,12 @@ public class BCMAttribute {
         return this.spellType;
     }
 
+    //What the fuck is this
     public int getU(){
         return this.u;
     }
 
+    //What the fuck is this
     public int getV(){
         return this.v;
     }
@@ -80,6 +82,7 @@ public class BCMAttribute {
         return this.grimoireTextures;
     }
 
+    //What's the int for water?
     public BCMAttribute setAttributeColour(int colour) {
         this.colour = colour;
         return this;

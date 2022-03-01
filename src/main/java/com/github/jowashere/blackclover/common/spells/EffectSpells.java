@@ -35,6 +35,23 @@ public class EffectSpells {
 
     }
 
+    public static void ForwardThrustDamage (LivingEntity caster) {
+        LazyOptional<IPlayerHandler> capabilities = caster.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
+        IPlayerHandler playercap = capabilities.orElse(new PlayerCapability());
+
+        List<LivingEntity> list = BCMHelper.GetEntitiesNear(caster.blockPosition(), caster.level, 3, LivingEntity.class);
+        list.remove(caster);
+
+        int magicLevel = BCMHelper.getMagicLevel(caster);
+
+        list.forEach(entity ->
+        {
+            if(caster.canSee(entity))
+                BCMHelper.doSpellDamage(caster, entity, SpellHelper.spellDamageCalc(magicLevel, 2, 4));
+        });
+
+    }
+
     public static void BullThrustDamage (LivingEntity caster) {
         LazyOptional<IPlayerHandler> capabilities = caster.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
         IPlayerHandler playercap = capabilities.orElse(new PlayerCapability());

@@ -86,7 +86,8 @@ public class ForgeEventsSubscriber {
                 for (AbstractSpell spell : BCMRegistry.SPELLS.getValues()) {
                     if (spell.isToggle()) {
                         String nbtName = spell.getCorrelatedPlugin().getPluginId() + "_" + spell.getName();
-                        if (player.getPersistentData().getBoolean(nbtName)) {
+                        if (player.getPersistentData().getBoolean(nbtName))
+                        {
                             if(playercap.ReturnMagicAttribute().equals(spell.getAttribute()))
                                 spell.act(player);
                             else {

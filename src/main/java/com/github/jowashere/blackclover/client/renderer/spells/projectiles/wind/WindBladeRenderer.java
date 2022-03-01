@@ -19,7 +19,8 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
 @OnlyIn(Dist.CLIENT)
-public class WindBladeRenderer extends EntityRenderer<WindBladeEntity>{
+public class WindBladeRenderer extends EntityRenderer<WindBladeEntity>
+{
 
     private static final ResourceLocation texture = new ResourceLocation("blackclover:textures/entities/projectiles/windblade.png");
 

@@ -3,9 +3,18 @@ package com.github.jowashere.blackclover.spells.light;
 import com.github.jowashere.blackclover.api.internal.AbstractSpell;
 import com.github.jowashere.blackclover.entities.spells.light.LightSwordOJEntity;
 import com.github.jowashere.blackclover.init.AttributeInit;
+import com.github.jowashere.blackclover.particles.light.LightParticle;
+import com.github.jowashere.blackclover.particles.light.LightParticleData;
+import com.github.jowashere.blackclover.particles.light.LightParticleFactory;
 import com.github.jowashere.blackclover.util.helpers.BCMHelper;
+import net.minecraft.client.particle.IAnimatedSprite;
+import net.minecraft.client.world.ClientWorld;
 import net.minecraft.entity.LivingEntity;
+import net.minecraft.particles.IParticleData;
+import net.minecraft.world.World;
+import net.minecraft.world.server.ServerWorld;
 
+import java.awt.*;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -23,7 +32,8 @@ public class ArrowsOfJudgement extends AbstractSpell {
 
     }
 
-    private void action(LivingEntity caster, float manaIn) {
+    private void action(LivingEntity caster, float manaIn)
+    {
 
         int maxArrowCount = 5 + ((BCMHelper.getMagicLevel(caster)/100)*30);
 
@@ -43,6 +53,8 @@ public class ArrowsOfJudgement extends AbstractSpell {
                 }
             });
         }
+        World world = caster.level;
+
     }
 
 }

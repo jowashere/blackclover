@@ -31,6 +31,7 @@ public class ModEventsSubscriber {
             event.add(entityType, ModAttributes.DAMAGE_REDUCTION.get());
             event.add(entityType, ModAttributes.SPECIAL_DAMAGE_REDUCTION.get());
             event.add(entityType, ModAttributes.ATTACK_RANGE.get());
+            event.add(entityType, ModAttributes.MULTIPLIER.get());
         });
     }
 

@@ -5,6 +5,7 @@ import com.github.jowashere.blackclover.init.StructuresInit;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
 import net.minecraft.util.registry.WorldGenRegistries;
+import net.minecraft.world.biome.DefaultBiomeFeatures;
 import net.minecraft.world.gen.FlatGenerationSettings;
 import net.minecraft.world.gen.feature.IFeatureConfig;
 import net.minecraft.world.gen.feature.StructureFeature;
@@ -16,6 +17,9 @@ public class ConfiguredStructures
      */
     public static StructureFeature<?, ?> CONFIGURED_MAGICTOWER = StructuresInit.MAGICTOWER.get().configured(IFeatureConfig.NONE);
     public static StructureFeature<?, ?> CONFIGURED_BANDIT_CAMP = StructuresInit.BANDIT_CAMP.get().configured(IFeatureConfig.NONE);
+    public static StructureFeature<?, ?> CONFIGURED_MINI_VOLCANO = StructuresInit.MINI_VOLCANO.get().configured(IFeatureConfig.NONE);
+
+
 
 
     /**
@@ -29,6 +33,7 @@ public class ConfiguredStructures
         Registry<StructureFeature<?, ?>> registry = WorldGenRegistries.CONFIGURED_STRUCTURE_FEATURE;
         Registry.register(registry, new ResourceLocation(Main.MODID, "magictower"), CONFIGURED_MAGICTOWER);
         Registry.register(registry, new ResourceLocation(Main.MODID, "bandit_camp"), CONFIGURED_BANDIT_CAMP);
+        Registry.register(registry, new ResourceLocation(Main.MODID, "mini_volcano"), CONFIGURED_MINI_VOLCANO);
 
 
         /* Ok so, this part may be hard to grasp but basically, just add your structure to this to
@@ -48,6 +53,7 @@ public class ConfiguredStructures
          */
         FlatGenerationSettings.STRUCTURE_FEATURES.put(StructuresInit.MAGICTOWER.get(), CONFIGURED_MAGICTOWER);
         FlatGenerationSettings.STRUCTURE_FEATURES.put(StructuresInit.BANDIT_CAMP.get(), CONFIGURED_BANDIT_CAMP);
+        FlatGenerationSettings.STRUCTURE_FEATURES.put(StructuresInit.MINI_VOLCANO.get(), CONFIGURED_MINI_VOLCANO);
 
     }
 }

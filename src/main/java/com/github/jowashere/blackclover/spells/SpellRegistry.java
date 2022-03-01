@@ -9,13 +9,12 @@ import com.github.jowashere.blackclover.spells.lightning.ThunderCrumblingOrb;
 import com.github.jowashere.blackclover.spells.lightning.ThunderFiend;
 import com.github.jowashere.blackclover.spells.lightning.ThunderGodBoots;
 import com.github.jowashere.blackclover.spells.lightning.ThunderGodGloves;
-import com.github.jowashere.blackclover.spells.slash.DeathScythe;
-import com.github.jowashere.blackclover.spells.slash.LunaticSlash;
-import com.github.jowashere.blackclover.spells.slash.SlashBlades;
+import com.github.jowashere.blackclover.spells.slash.*;
 import com.github.jowashere.blackclover.spells.sword.CausalityBreakSword;
 import com.github.jowashere.blackclover.spells.sword.OriginFlash;
 import com.github.jowashere.blackclover.spells.sword.OriginFlashBarrage;
 import com.github.jowashere.blackclover.spells.sword.SpellAbsorption;
+import com.github.jowashere.blackclover.spells.water.WaterBall;
 import com.github.jowashere.blackclover.spells.wind.*;
 
 import java.util.ArrayList;
@@ -53,10 +52,16 @@ public class SpellRegistry {
     public static final AbstractSpell THUNDER_CRUMBLING_ORB = register(new ThunderCrumblingOrb());
     public static final AbstractSpell THUNDER_FIEND = register(new ThunderFiend());
 
+    //Water Spells
+    public static final AbstractSpell WATER_BALL = register(new WaterBall());
+
     //Slash Magic
     public static final AbstractSpell SLASH_BLADES = register(new SlashBlades());
     public static final AbstractSpell DEATH_SCYTHE = register(new DeathScythe());
     public static final AbstractSpell LUNATIC_SLASH = register(new LunaticSlash());
+    public static final AbstractSpell DEATH_SCYTHE_SHOWER = register(new DeathScytheShower());
+    public static final AbstractSpell FORWARD_THRUST = register(new ForwardThrust());
+    public static final AbstractSpell ROUND_SCYTHE = register(new RoundLunaticSlash());
 
     //Sword Magic
     public static final AbstractSpell ORIGIN_FLASH = register(new OriginFlash());

@@ -2,8 +2,10 @@ package com.github.jowashere.blackclover.world;
 
 import com.github.jowashere.blackclover.Main;
 import com.github.jowashere.blackclover.init.StructuresInit;
+import com.github.jowashere.blackclover.world.gen.ModBiomeGeneration;
 import com.github.jowashere.blackclover.world.gen.ModEntityGeneration;
 import com.github.jowashere.blackclover.world.gen.ModStructureGeneration;
+import com.github.jowashere.blackclover.world.gen.ModTreeGeneration;
 import com.mojang.serialization.Codec;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.registry.Registry;
@@ -15,6 +17,7 @@ import net.minecraft.world.gen.settings.DimensionStructuresSettings;
 import net.minecraft.world.gen.settings.StructureSeparationSettings;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
+import net.minecraftforge.event.world.StructureSpawnListGatherEvent;
 import net.minecraftforge.event.world.WorldEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -33,6 +36,13 @@ public class WorldEventsInit
     {
         ModStructureGeneration.generateStructures(event);
         ModEntityGeneration.onEntitySpawn(event);
+        ModTreeGeneration.generateTrees(event);
+    }
+
+    @SubscribeEvent
+    public static void structuresLoadingEvent(final StructureSpawnListGatherEvent event)
+    {
+        ModEntityGeneration.onEntitySpawnInStructure(event);
     }
 
     @SubscribeEvent
@@ -65,6 +75,18 @@ public class WorldEventsInit
                     new HashMap<>(serverWorld.getChunkSource().generator.getSettings().structureConfig());
             tempMap.putIfAbsent(StructuresInit.MAGICTOWER.get(),
                     DimensionStructuresSettings.DEFAULTS.get(StructuresInit.MAGICTOWER.get()));
+            serverWorld.getChunkSource().generator.getSettings().structureConfig= tempMap;
+
+            Map<Structure<?>, StructureSeparationSettings> volcMap =
+                    new HashMap<>(serverWorld.getChunkSource().generator.getSettings().structureConfig());
+            volcMap.putIfAbsent(StructuresInit.MINI_VOLCANO.get(),
+                    DimensionStructuresSettings.DEFAULTS.get(StructuresInit.MINI_VOLCANO.get()));
+            serverWorld.getChunkSource().generator.getSettings().structureConfig= tempMap;
+
+            Map<Structure<?>, StructureSeparationSettings> bMap =
+                    new HashMap<>(serverWorld.getChunkSource().generator.getSettings().structureConfig());
+            bMap.putIfAbsent(StructuresInit.BANDIT_CAMP.get(),
+                    DimensionStructuresSettings.DEFAULTS.get(StructuresInit.BANDIT_CAMP.get()));
             serverWorld.getChunkSource().generator.getSettings().structureConfig= tempMap;
         }
     }

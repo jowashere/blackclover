@@ -64,8 +64,6 @@ public class ThunderGodBoots extends AbstractToggleSpell {
 
         int magicLevel = BCMHelper.getMagicLevel(caster);
 
-        LazyOptional<IPlayerHandler> playerInCap = caster.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
-        IPlayerHandler player_cap = playerInCap.orElse(new PlayerCapability());
         return new AttributeModifier(UUID.fromString("c6d81aa4-76af-4040-b7c2-ebe3c6616af1"), "Thunder Boots Speed Modifier",
                 0.055 * magicLevel, AttributeModifier.Operation.MULTIPLY_BASE);
     }

@@ -13,6 +13,7 @@ public interface IPlayerHandler {
 
 	void setMana(float amount);
 	void addMana(float amount);
+	void reduceMana(float amount);
 	float returnMana();
 	
 	void setMaxMana(float amount);

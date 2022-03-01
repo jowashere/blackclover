@@ -3,6 +3,7 @@ package com.github.jowashere.blackclover.init;
 import com.github.jowashere.blackclover.Main;
 import com.github.jowashere.blackclover.world.structure.structures.BanditCampStructure;
 import com.github.jowashere.blackclover.world.structure.structures.MagicTowerStructure;
+import com.github.jowashere.blackclover.world.structure.structures.MiniVolcano;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.util.registry.WorldGenRegistries;
@@ -39,6 +40,7 @@ public class StructuresInit
      */
     public static final RegistryObject<Structure<NoFeatureConfig>> MAGICTOWER = DEFERRED_REGISTRY_STRUCTURE.register("magictower", MagicTowerStructure::new);
     public static final RegistryObject<Structure<NoFeatureConfig>> BANDIT_CAMP = DEFERRED_REGISTRY_STRUCTURE.register("bandit_camp", BanditCampStructure::new);
+    public static final RegistryObject<Structure<NoFeatureConfig>> MINI_VOLCANO = DEFERRED_REGISTRY_STRUCTURE.register("mini_volcano", MiniVolcano::new);
 
 
     /**
@@ -58,6 +60,13 @@ public class StructuresInit
                 new StructureSeparationSettings(20 /* average distance apart in chunks between spawn attempts */,
                         17 /* minimum distance apart in chunks between spawn attempts. MUST BE LESS THAN ABOVE VALUE*/,
                         987654543 /* this modifies the seed of the structure so no two structures always spawn over each-other. Make this large and unique. */),
+                true);
+
+        setupMapSpacingAndLand(
+                MINI_VOLCANO.get(), /* The instance of the structure */
+                new StructureSeparationSettings(4 /* average distance apart in chunks between spawn attempts */,
+                        3 /* minimum distance apart in chunks between spawn attempts. MUST BE LESS THAN ABOVE VALUE*/,
+                        465132894 /* this modifies the seed of the structure so no two structures always spawn over each-other. Make this large and unique. */),
                 true);
         // Add more structures here and so on
     }

@@ -255,6 +255,8 @@ public class SpellsScreen extends Screen {
         for (Widget button : this.buttons) {
             if (button.isHovered() && button instanceof GuiButtonSpell) {
                 renderTooltip(matrixStack, new StringTextComponent(new TranslationTextComponent("spell." + ((GuiButtonSpell) button).getTranslationName()).getString()), p_render_1_, p_render_2_);
+                renderTooltip(matrixStack, new StringTextComponent(new TranslationTextComponent("description." + ((GuiButtonSpell) button).getTranslationName()).getString()), p_render_1_, p_render_2_ + 10);
+
             }
         }
         GL11.glPopMatrix();

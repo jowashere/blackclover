@@ -2,12 +2,15 @@ package com.github.jowashere.blackclover.api.internal.entities.spells;
 
 import com.github.jowashere.blackclover.util.helpers.BCMHelper;
 import com.github.jowashere.blackclover.util.helpers.SpellHelper;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.projectile.ProjectileItemEntity;
 import net.minecraft.network.IPacket;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.util.math.EntityRayTraceResult;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
@@ -46,9 +49,15 @@ public abstract class AbstractSpellProjectileEntity extends ProjectileItemEntity
     }
 
     @Override
-    protected void onHit(RayTraceResult result) {
+    protected void onHitBlock(BlockRayTraceResult result) {
+        if (removeOnGround)
+            this.remove();
+    }
 
-        if (result.getType() == RayTraceResult.Type.ENTITY) {
+
+    @Override
+    protected void onHitEntity(EntityRayTraceResult result)
+    {
             if (result.getType() == RayTraceResult.Type.ENTITY) {
                 Entity entity = ((EntityRayTraceResult)result).getEntity();
                 if (this.getOwner() instanceof LivingEntity) {
@@ -59,7 +68,7 @@ public abstract class AbstractSpellProjectileEntity extends ProjectileItemEntity
                     entity.hurt(DamageSource.thrown(this, this.getOwner()), 3F);
                 }
             }
-        }
+
 
         onHitEffect();
 
@@ -75,10 +84,12 @@ public abstract class AbstractSpellProjectileEntity extends ProjectileItemEntity
         }
     }
 
+
+
     @Override
     public void tick() {
         super.tick();
-        if (this.tickCount >= 600) {
+        if (this.tickCount >= 300) {
             this.remove();
         }
     }

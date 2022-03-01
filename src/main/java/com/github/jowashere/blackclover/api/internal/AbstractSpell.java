@@ -2,6 +2,7 @@ package com.github.jowashere.blackclover.api.internal;
 
 import com.github.jowashere.blackclover.Main;
 import com.github.jowashere.blackclover.MainPlugin;
+import com.github.jowashere.blackclover.api.Beapi;
 import com.github.jowashere.blackclover.api.IBCMPlugin;
 import com.github.jowashere.blackclover.capabilities.player.IPlayerHandler;
 import com.github.jowashere.blackclover.capabilities.player.PlayerProvider;
@@ -36,6 +37,7 @@ public abstract class AbstractSpell {
     private int cooldown = 1;
     private boolean skillSpell = false;
     protected AbstractSpell.IAction action;
+    protected AbstractSpell.IClientAction clientAction;
     protected AbstractSpell.IExtraCheck extraCheck;
     private ResourceLocation resourceLocation;
     private String checkFailMsg;
@@ -185,11 +187,11 @@ public abstract class AbstractSpell {
                         return;
                     }
 
-                    //Adds magic experience (Will replace with better method soon)
+                    //Adds magic experience
                     if (!this.isToggle()) {
-                        playercap.addMagicExp(this.getManaCost());
+                        Beapi.experienceMultiplier(caster, this.getManaCost());
                     } else {
-                        playercap.addMagicExp(this.getManaCost() / 2);
+                        Beapi.experienceMultiplier(caster, (this.getManaCost()/2));
                     }
                     NetworkLoader.INSTANCE.send(PacketDistributor.PLAYER.with(() -> (ServerPlayerEntity) player), new PacketMagicExpSync(playercap.returnMagicExp(), player.getId()));
                     BCMHelper.recaculateMagicLevel(player);
@@ -197,6 +199,9 @@ public abstract class AbstractSpell {
                     //Casts the spell
                     if (this.action != null)
                         this.action.action(player, manaCost);
+
+                    if (this.clientAction != null)
+                        this.clientAction.clientAction(player, manaCost);
 
                     //Handles cooldown
                     if (!this.isToggle())
@@ -217,6 +222,9 @@ public abstract class AbstractSpell {
             }else if(caster instanceof BCEntity) {
                 if (this.action != null)
                     this.action.action(caster, manaCost);
+
+                if (this.clientAction != null)
+                    this.clientAction.clientAction(caster, manaCost);
             }
         }
     }
@@ -239,11 +247,16 @@ public abstract class AbstractSpell {
     }
 
     public enum Type {
-        WIND_MAGIC, ANTI_MAGIC, DARKNESS_MAGIC, LIGHTNING_MAGIC, SLASH_MAGIC, LIGHT_MAGIC, SWORD_MAGIC
+        WIND_MAGIC, ANTI_MAGIC, DARKNESS_MAGIC, LIGHTNING_MAGIC, SLASH_MAGIC, LIGHT_MAGIC, SWORD_MAGIC, WATER
     }
 
     public interface IAction {
         void action(LivingEntity livingEntity, float manaIn);
+    }
+
+    public interface IClientAction
+    {
+        void clientAction(LivingEntity livingEntity, float manaIn);
     }
 
     public interface ISpellServerSync {

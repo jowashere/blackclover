@@ -2,10 +2,13 @@ package com.github.jowashere.blackclover.entities.spells.slash;
 
 import com.github.jowashere.blackclover.api.internal.entities.spells.AbstractSlashProjectileEntity;
 import com.github.jowashere.blackclover.init.EntityInit;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
 import net.minecraft.network.IPacket;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
@@ -35,6 +38,7 @@ public class DeathScytheEntity extends AbstractSlashProjectileEntity {
     public IPacket<?> getAddEntityPacket() {
         return NetworkHooks.getEntitySpawningPacket(this);
     }
+
 
     @Override
     protected Item getDefaultItem() {

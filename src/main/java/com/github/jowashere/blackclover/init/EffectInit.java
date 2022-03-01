@@ -1,6 +1,7 @@
 package com.github.jowashere.blackclover.init;
 
 import com.github.jowashere.blackclover.Main;
+import com.github.jowashere.blackclover.effects.ExperienceMultiplierEffect;
 import com.github.jowashere.blackclover.effects.MagicLevelEffect;
 import net.minecraft.potion.Effect;
 import net.minecraftforge.fml.RegistryObject;
