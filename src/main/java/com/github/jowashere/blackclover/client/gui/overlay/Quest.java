@@ -22,13 +22,13 @@ public class Quest {
     {
         if (event.getType() == RenderGameOverlayEvent.ElementType.TEXT)
         {
-            ClientPlayerEntity player = Minecraft.getInstance().player;
-            LazyOptional<IPlayerHandler> player_cap;
-            player_cap = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
-            Minecraft mc = Minecraft.getInstance();
+          //  ClientPlayerEntity player = Minecraft.getInstance().player;
+           // LazyOptional<IPlayerHandler> player_cap;
+           // player_cap = player.getCapability(PlayerProvider.CAPABILITY_PLAYER, null);
+            //Minecraft mc = Minecraft.getInstance();
 
-            mc.textureManager.bind(questGUI);
-            mc.gui.blit(event.getMatrixStack(), 20, 130, 0, 0, tex_width, tex_height);
+            //mc.textureManager.bind(questGUI);
+            //mc.gui.blit(event.getMatrixStack(), 180, 60, 0, 0, 256, 256);
         }
     }
 }

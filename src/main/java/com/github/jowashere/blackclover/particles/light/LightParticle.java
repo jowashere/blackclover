@@ -35,7 +35,7 @@ public class LightParticle extends SpriteTexturedParticle {
         final float PARTICLE_SCALE_FOR_ONE_METRE = 0.5F; //  if the particleScale is 0.5, the texture will be rendered as 1 metre high
         quadSize = PARTICLE_SCALE_FOR_ONE_METRE * (float)diameter; // sets the rendering size of the particle for a TexturedParticle.
 
-        lifetime = 1;  // lifetime in ticks: 100 ticks = 5 seconds
+        lifetime = 10;  // lifetime in ticks: 100 ticks = 5 seconds
 
         final float ALPHA_VALUE = 1.0F;
         this.alpha = ALPHA_VALUE;

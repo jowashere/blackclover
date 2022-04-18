@@ -10,6 +10,8 @@ import com.github.jowashere.blackclover.client.gui.overlay.Notifications;
 import com.github.jowashere.blackclover.client.gui.overlay.Quest;
 import com.github.jowashere.blackclover.client.gui.overlay.SpellMode;
 import com.github.jowashere.blackclover.client.handler.ClientHandler;
+import com.github.jowashere.blackclover.entities.mobs.hostile.VolcanoMonsterEntity;
+import com.github.jowashere.blackclover.entities.mobs.quester.GrimoireMagicianEntity;
 import com.github.jowashere.blackclover.entities.mobs.hostile.BanditEntity;
 import com.github.jowashere.blackclover.entities.mobs.hostile.VolcanoMonsterEntity;
 import com.github.jowashere.blackclover.entities.mobs.quester.GrimoireMagicianEntity;
@@ -23,9 +25,15 @@ import com.github.jowashere.blackclover.util.helpers.RaceHelper;
 import com.github.jowashere.blackclover.world.biome.ModBiomes;
 import com.github.jowashere.blackclover.world.gen.ModBiomeGeneration;
 import com.github.jowashere.blackclover.world.structure.configured.ConfiguredStructures;
+import com.ibm.icu.text.MessagePattern;
+import net.minecraft.block.Blocks;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
+import net.minecraft.item.Items;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.CapabilityManager;
@@ -72,6 +80,7 @@ public class Main
         modEventBus.addListener(this::onClientSetup);
         modEventBus.addListener(this::onParticleSetup);
     }
+
 
 
     private void onCommonSetup(final FMLCommonSetupEvent event)

@@ -10,6 +10,8 @@ import com.github.jowashere.blackclover.spells.lightning.ThunderFiend;
 import com.github.jowashere.blackclover.spells.lightning.ThunderGodBoots;
 import com.github.jowashere.blackclover.spells.lightning.ThunderGodGloves;
 import com.github.jowashere.blackclover.spells.slash.*;
+import com.github.jowashere.blackclover.spells.lightning.*;
+import com.github.jowashere.blackclover.spells.slash.*;
 import com.github.jowashere.blackclover.spells.sword.CausalityBreakSword;
 import com.github.jowashere.blackclover.spells.sword.OriginFlash;
 import com.github.jowashere.blackclover.spells.sword.OriginFlashBarrage;
@@ -50,7 +52,10 @@ public class SpellRegistry {
     public static final AbstractSpell THUNDER_GOD_BOOTS = register(new ThunderGodBoots());
     public static final AbstractSpell THUNDER_GOD_GLOVES = register(new ThunderGodGloves());
     public static final AbstractSpell THUNDER_CRUMBLING_ORB = register(new ThunderCrumblingOrb());
+    public static final AbstractSpell THUNDER_CRUMBLING_ORB_MULTI = register(new ThunderCrumblingOrbMulti());
     public static final AbstractSpell THUNDER_FIEND = register(new ThunderFiend());
+    public static final AbstractSpell THUNDER_FIEND_STRIKE = register(new ThunderFiendStrike());
+    public static final AbstractSpell THUNDER_DISCHARGE = register(new ThunderDischarge());
 
     //Water Spells
     public static final AbstractSpell WATER_BALL = register(new WaterBall());
