@@ -49,7 +49,7 @@ public class Notifications {
 
             for (AbstractSpell toggledSpell : this.toggledSpell) {
                 mc.textureManager.bind(toggledSpell.getResourceLocationForGUI());
-                mc.gui.blit(event.getMatrixStack(), 5, i, toggledSpell.getU(), toggledSpell.getV(), 16, 16, 256, 256);
+                mc.gui.blit(event.getMatrixStack(), 5, i, 0, 0, 16, 16, 16, 16);
                 i += 20;
             }
             this.toggledSpell.clear();

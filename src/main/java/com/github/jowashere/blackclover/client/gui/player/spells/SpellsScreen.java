@@ -65,7 +65,7 @@ public class SpellsScreen extends Screen {
         int x = -90;
         int y = -90;
         for (AbstractSpell spell : this.spells) {
-            addButton(new GuiButtonSpell(this.guiLeft + x, this.guiTop + y, spell.getU(), spell.getV(), spell.getCorrelatedPlugin().getPluginId() + "." + spell.getName(), false, spell.getResourceLocationForGUI()));
+            addButton(new GuiButtonSpell(this.guiLeft + x, this.guiTop + y, spell, false, spell.getResourceLocationForGUI()));
             if (x == 90) {
                 x = -90;
                 y += 20;
@@ -192,7 +192,9 @@ public class SpellsScreen extends Screen {
             {
                 AbstractSpell spell = null;
 
-                if(i == 0){
+                SpellHelper.getSpellFromString(playerc.returnKeybind(i+1));
+
+                /*if(i == 0){
                     spell = SpellHelper.getSpellFromString(playerc.returnKeybind(1));
                 }else if (i == 1){
                     spell = SpellHelper.getSpellFromString(playerc.returnKeybind(2));
@@ -210,7 +212,7 @@ public class SpellsScreen extends Screen {
                     spell = SpellHelper.getSpellFromString(playerc.returnKeybind(8));
                 }else if (i == 8){
                     spell = SpellHelper.getSpellFromString(playerc.returnKeybind(9));
-                }
+                }*/
 
                 if(spell == null)
                 {
@@ -230,7 +232,8 @@ public class SpellsScreen extends Screen {
 
                 // Drawing the spells
                 mc.getTextureManager().bind(spell.getResourceLocationForGUI());
-                GuiUtils.drawTexturedModalRect( matrixStack, ((posX - 200 + (i * 50)) / 2) + 4, posY - 19, spell.getU(), spell.getV(), 16, 16, 0);
+                ResourceLocation texture = spell.getResourceLocationForGUI();
+                GuiUtils.drawTexturedModalRect( matrixStack, ((posX - 200 + (i * 50)) / 2) + 4, posY - 19, 0, 0, 16, 16, 0);
 
                 // Reverting the color back to avoid future slots being wrongly colored
                 GlStateManager._color4f(1, 1, 1, 1);

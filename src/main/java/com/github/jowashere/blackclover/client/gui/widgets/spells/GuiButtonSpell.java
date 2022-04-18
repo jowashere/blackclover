@@ -2,6 +2,7 @@ package com.github.jowashere.blackclover.client.gui.widgets.spells;
 
 import com.github.jowashere.blackclover.Main;
 import com.github.jowashere.blackclover.api.interfaces.IBCMSpellButtonPress;
+import com.github.jowashere.blackclover.api.internal.AbstractSpell;
 import com.github.jowashere.blackclover.capabilities.player.IPlayerHandler;
 import com.github.jowashere.blackclover.capabilities.player.PlayerCapability;
 import com.github.jowashere.blackclover.capabilities.player.PlayerProvider;
@@ -19,16 +20,15 @@ import net.minecraftforge.common.util.LazyOptional;
 
 public class GuiButtonSpell extends Button {
 
-    ResourceLocation texture = new ResourceLocation(Main.MODID + ":textures/gui/spells.png");
+    final ResourceLocation texture;
 
-    final int u;
-    final int v;
     public int widthIn;
     public int heightIn;
+    public String textureLoc;
     private final String name;
     private boolean has;
 
-    public GuiButtonSpell(int widthIn, int heightIn, int u, int v, String name, boolean has, ResourceLocation resourceLocation) {
+    public GuiButtonSpell(int widthIn, int heightIn, AbstractSpell spell, boolean has, ResourceLocation resourceLocation) {
         super(widthIn, heightIn, 16, 16, new StringTextComponent(""), new IBCMSpellButtonPress() {
             @Override
             public void onPress(GuiButtonSpell buttonSpell, IPlayerHandler playerCapability) {
@@ -41,13 +41,14 @@ public class GuiButtonSpell extends Button {
                 }
             }
         });
+
+        String attributeName = spell.getAttribute().getString();
+
         this.widthIn = widthIn;
         this.heightIn = heightIn;
-        this.u = u;
-        this.v = v;
-        this.name = name;
+        this.name = spell.getCorrelatedPlugin().getPluginId() + "." + spell.getName();
         this.has = has;
-        this.texture = resourceLocation;
+        this.texture = new ResourceLocation(Main.MODID + ":textures/gui/spells/" + attributeName + "/" + spell.getName() + ".png");
     }
 
     @Override
@@ -58,7 +59,7 @@ public class GuiButtonSpell extends Button {
         {
             return;
         }
-        mc.gui.blit(matrixStack, widthIn, heightIn, u, v, width, height, 256, 256);
+        mc.gui.blit(matrixStack, widthIn, heightIn, 0, 0, width, height, 16, 16);
     }
 
     public boolean hasSpell() {
@@ -74,6 +75,15 @@ public class GuiButtonSpell extends Button {
     }
 
     public String getSpellName() {
+        String string = getTranslationName();
+        String[] parts = string.split("\\.");
+        if (parts.length > 1) {
+            return parts[1];
+        }
+        return string;
+    }
+
+    public String getSpellAttribute() {
         String string = getTranslationName();
         String[] parts = string.split("\\.");
         if (parts.length > 1) {

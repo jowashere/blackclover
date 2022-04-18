@@ -9,11 +9,9 @@ import com.github.jowashere.blackclover.client.gui.player.spells.SpellsScreen;
 import com.github.jowashere.blackclover.init.AttributeInit;
 import com.github.jowashere.blackclover.util.helpers.SpellHelper;
 import com.mojang.blaze3d.platform.GlStateManager;
+import com.mojang.blaze3d.systems.RenderSystem;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.IRenderTypeBuffer;
-import net.minecraft.client.renderer.model.IBakedModel;
-import net.minecraft.client.renderer.model.ItemCameraTransforms;
-import net.minecraft.client.renderer.texture.OverlayTexture;
+import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
@@ -104,15 +102,39 @@ public class SpellMode {
                         // Drawing the spells
 
                         if(!(player_cap.ReturnMagicAttribute().equals(AttributeInit.ANTI_MAGIC) && player.isCrouching())){
-                            mc.getTextureManager().bind(spell.getResourceLocationForGUI());
-                            GuiUtils.drawTexturedModalRect( event.getMatrixStack(), ((posX - 200 + (i * 50)) / 2) + 4, posY - 19, spell.getU(), spell.getV(), 16, 16, 0);
+                            mc.textureManager.bind(spell.getResourceLocationForGUI());
+                            mc.gui.blit(event.getMatrixStack(), ((posX - 200 + (i * 50)) / 2) + 4, posY - 19, 0, 0, 16, 16, 16, 16);
                         }else {
 
-                            IBakedModel model = mc.getItemRenderer().getModel(storedSword, null, null);
+                            //IBakedModel model = mc.getItemRenderer().getModel(storedSword, null, null);
 
                             if(!storedSword.isEmpty()){
 
-                                event.getMatrixStack().translate(((posX - 200 + (i * 50)) / 2) + 4, posY - 19, 100.0F);
+                                ItemRenderer itemRenderer = mc.getItemRenderer();
+                                itemRenderer.renderAndDecorateItem(player, storedSword, -(((posX - 200 + (i * 50)) / 2) + 4), -(posY - 19));
+
+                                if (!storedSword.isEmpty()) {
+                                    float f = (float)storedSword.getPopTime() - event.getPartialTicks();
+                                    if (f > 0.0F) {
+                                        RenderSystem.pushMatrix();
+                                        float f1 = 1.0F + f / 5.0F;
+                                        RenderSystem.translatef(((posX - 200 + (i * 50)) / 2) + 4, posY - 19, 100.0F);
+                                        RenderSystem.scalef(1.0F / f1, (f1 + 1.0F) / 2.0F, 1.0F);
+                                        RenderSystem.translatef(-(((posX - 200 + (i * 50)) / 2) + 4), -(posY - 19), -100.0F);
+                                    }
+
+                                    int i2 = mc.screen.height - 16 - 3;
+
+                                    itemRenderer.renderAndDecorateItem(player, storedSword, 91, i2);
+                                    if (f > 0.0F) {
+                                        RenderSystem.popMatrix();
+                                    }
+
+                                    itemRenderer.renderGuiItemDecorations(mc.font, storedSword, 91, i2);
+                                }
+
+
+                                /*event.getMatrixStack().translate(((posX - 200 + (i * 50)) / 2) + 4, posY - 19, 100.0F);
                                 event.getMatrixStack().translate(8.0F, 8.0F, 0.0F);
                                 event.getMatrixStack().scale(1.0F, -1.0F, 1.0F);
                                 event.getMatrixStack().scale(16.0F, 16.0F, 16.0F);
@@ -125,7 +147,7 @@ public class SpellMode {
                                 event.getMatrixStack().translate(-(((posX - 200 + (i * 50)) / 2) + 4), -(posY - 19), -100.0F);
                                 event.getMatrixStack().translate(-8.0F, -8.0F, 0.0F);
                                 event.getMatrixStack().scale(-1.0F, 1.0F, -1.0F);
-                                event.getMatrixStack().scale(-16.0F, -16.0F, -16.0F);
+                                event.getMatrixStack().scale(-16.0F, -16.0F, -16.0F);*/
 
                             }
                         }

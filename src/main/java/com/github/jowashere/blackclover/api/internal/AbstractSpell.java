@@ -49,7 +49,7 @@ public abstract class AbstractSpell {
         this.correlatedPlugin = new MainPlugin();
         this.attribute = attribute;
 
-        this.resourceLocation = SPELL_LOCATION;
+        this.resourceLocation = new ResourceLocation(Main.MODID + ":textures/gui/spells/" + this.getAttribute().getString() + "/" + this.getName() + ".png");
     }
 
     public IBCMPlugin getCorrelatedPlugin() {

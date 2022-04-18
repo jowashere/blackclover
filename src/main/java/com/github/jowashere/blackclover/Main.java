@@ -26,6 +26,7 @@ import com.github.jowashere.blackclover.world.structure.configured.ConfiguredStr
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
 import net.minecraft.entity.ai.attributes.GlobalEntityTypeAttributes;
+import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.eventbus.api.IEventBus;
@@ -56,9 +57,6 @@ public class Main
 
         MinecraftForge.EVENT_BUS.register(this);
 
-
-        modEventBus.register(StartupCommonParticle.class);
-
         BlocksInit.BLOCKS.register(modEventBus);
         ItemInit.ITEMS.register(modEventBus);
         ModAttributes.ATTRIBUTES.register(modEventBus);
@@ -72,6 +70,7 @@ public class Main
 
         modEventBus.addListener(this::onCommonSetup);
         modEventBus.addListener(this::onClientSetup);
+        modEventBus.addListener(this::onParticleSetup);
     }
 
 
@@ -115,14 +114,16 @@ public class Main
 
         ClientHandler.OnSetup();
 
-        MinecraftForge.EVENT_BUS.register(StartupClientParticle.class);
-
         MinecraftForge.EVENT_BUS.register(new Quest());
         MinecraftForge.EVENT_BUS.register(new Notifications());
         MinecraftForge.EVENT_BUS.register(new SpellMode());
         MinecraftForge.EVENT_BUS.register(new ManaBar());
         KeybindInit.register();
+    }
 
-
+    private void onParticleSetup(final ParticleFactoryRegisterEvent event)
+    {
+        MinecraftForge.EVENT_BUS.register(StartupCommonParticle.class);
+        MinecraftForge.EVENT_BUS.register(StartupClientParticle.class);
     }
 }
