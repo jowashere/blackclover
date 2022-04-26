@@ -22,7 +22,6 @@ import java.util.UUID;
 public class DarkCloakedBlade extends AbstractToggleSpell {
 
     private static final AttributeModifier COCOON_DE = new AttributeModifier(UUID.fromString("ad388521-c053-4a67-a0d9-ff57379a2c68"), "Cocoon Speed", -2000, AttributeModifier.Operation.ADDITION);
-    DarkParticleData darkParticleData = new DarkParticleData(new Color(0, 0, 0), 0.3);
 
     public DarkCloakedBlade() {
         super("dark_cloaked_blade", AttributeInit.DARKNESS);
@@ -53,21 +52,6 @@ public class DarkCloakedBlade extends AbstractToggleSpell {
                 double x = 0.5 * Math.sin(yawRightHandDirection) + caster.getX() ;
                 double y = caster.getY() + 1.2;
                 double z = 0.5 * Math.cos(yawRightHandDirection) + caster.getZ();
-                IPacket<?> ipacket = new SSpawnParticlePacket(darkParticleData, true, x, y, z, 0, 0.1f, 0, 0.01f, 2);
-               // IPacket<?> ipacket2 = new SSpawnParticlePacket(darkParticleData, true, x * 0.99, y, z * 0.99, 0, 0.1f, 0, 0.01f, 2);
-             //   IPacket<?> ipacket3 = new SSpawnParticlePacket(darkParticleData, true, x + 0.4, y, z + 0.4, 0, 0.1f, 0, 0.01f, 2);
-                for (int j = 0; j < caster.level.players().size(); ++j)
-                {
-                    ServerPlayerEntity player = (ServerPlayerEntity) caster.level.players().get(j);
-                    BlockPos blockpos = new BlockPos(player.getX(), player.getY(), player.getZ());
-                    if (blockpos.closerThan(new Vector3d(caster.getX(), caster.getY(), caster.getZ()), 512))
-                    {
-                        player.connection.send(ipacket);
-                     //   player.connection.send(ipacket2);
-                       // player.connection.send(ipacket2);
-
-                    }
-                }
                 int level = BCMHelper.getMagicLevel(caster);
                 item.getOrCreateTag().putInt("dark_cloak", level);
             }

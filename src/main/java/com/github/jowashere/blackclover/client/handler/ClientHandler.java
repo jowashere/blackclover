@@ -7,13 +7,18 @@ import com.github.jowashere.blackclover.client.renderer.item.FullBrightItem;
 import com.github.jowashere.blackclover.client.renderer.layers.*;
 import com.github.jowashere.blackclover.client.renderer.models.HumanoidModel;
 import com.github.jowashere.blackclover.client.renderer.spells.others.BlackHoleRenderer;
+import com.github.jowashere.blackclover.client.renderer.spells.others.WaterDomeRenderer;
+import com.github.jowashere.blackclover.client.renderer.spells.others.WaterShieldRenderer;
 import com.github.jowashere.blackclover.client.renderer.spells.projectiles.antimagic.BlackSlashRenderer;
 import com.github.jowashere.blackclover.client.renderer.spells.projectiles.darkness.AvidyaSlashRenderer;
 import com.github.jowashere.blackclover.client.renderer.spells.projectiles.light.LightSwordOJRenderer;
 import com.github.jowashere.blackclover.client.renderer.spells.projectiles.lightning.ThunderOrbRenderer;
 import com.github.jowashere.blackclover.client.renderer.spells.projectiles.slash.DeathScytheRenderer;
 import com.github.jowashere.blackclover.client.renderer.spells.projectiles.sword.OriginFlashRenderer;
+import com.github.jowashere.blackclover.client.renderer.spells.projectiles.water.PointBlankWaterDragonRenderer;
 import com.github.jowashere.blackclover.client.renderer.spells.projectiles.water.WaterBallRenderer;
+import com.github.jowashere.blackclover.client.renderer.spells.projectiles.water.WaterDragonRender;
+import com.github.jowashere.blackclover.client.renderer.spells.projectiles.water.WaterSpearRenderer;
 import com.github.jowashere.blackclover.client.renderer.spells.projectiles.wind.WindBladeRenderer;
 import com.github.jowashere.blackclover.client.renderer.spells.projectiles.wind.WindCrescentRenderer;
 import com.github.jowashere.blackclover.client.renderer.spells.summons.WindHawkRenderer;
@@ -51,6 +56,11 @@ public class ClientHandler {
 
         //Spells
         RenderingRegistry.registerEntityRenderingHandler(EntityInit.WATER_BALL.get(), new WaterBallRenderer.Factory());
+        RenderingRegistry.registerEntityRenderingHandler(EntityInit.WATER_SPEAR.get(), new WaterSpearRenderer.Factory());
+        RenderingRegistry.registerEntityRenderingHandler(EntityInit.WATER_DRAGON.get(), new WaterDragonRender.Factory());
+        RenderingRegistry.registerEntityRenderingHandler(EntityInit.WATER_SHIELD.get(), new WaterShieldRenderer.Factory());
+        RenderingRegistry.registerEntityRenderingHandler(EntityInit.WATER_DOME.get(), new WaterDomeRenderer.Factory());
+        RenderingRegistry.registerEntityRenderingHandler(EntityInit.POINT_BLANK_DRAGON.get(), new PointBlankWaterDragonRenderer.Factory());
 
         RenderingRegistry.registerEntityRenderingHandler(EntityInit.WIND_BLADE.get(), new WindBladeRenderer.Factory());
         RenderingRegistry.registerEntityRenderingHandler(EntityInit.WIND_CRESCENT.get(), new WindCrescentRenderer.Factory());

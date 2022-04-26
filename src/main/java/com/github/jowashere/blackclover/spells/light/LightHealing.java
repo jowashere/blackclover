@@ -34,25 +34,11 @@ public class LightHealing extends AbstractToggleSpell {
 
     public void action(LivingEntity caster, float manaIn) {
         if (!caster.level.isClientSide) {
-            LightParticleData lightParticleData = new LightParticleData(new Color(255, 255, 255),  0.5);
 
             int magicLevel = BCMHelper.getMagicLevel(caster);
 
             caster.addEffect(new EffectInstance(Effects.REGENERATION, 5, Math.max(1, magicLevel/2), false, false, false));
-            //IPacket<?> ipacket = new SSpawnParticlePacket(lightParticleData, true, caster.getX(), caster.getY(), caster.getZ(), 2, 0, 1, 0, 1);
 
-            //for (int j = 0; j < caster.level.players().size(); ++j)
-            //{
-              //  ServerPlayerEntity player = (ServerPlayerEntity) caster.level.players().get(j);
-                //BlockPos blockpos = new BlockPos(player.getX(), player.getY(), player.getZ());
-                //if (blockpos.closerThan(new Vector3d(caster.getX(), caster.getY(), caster.getZ()), 512))
-                //{
-                 //   player.connection.send(ipacket);
-               // }
-            //}
-            ((ServerWorld) caster.level).sendParticles(lightParticleData,
-                    caster.getX(), caster.getY(), caster.getZ(),
-                    2, 0, 1, 0, 0.1);
         }
     }
 }

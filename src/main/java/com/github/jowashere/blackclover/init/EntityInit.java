@@ -11,7 +11,7 @@ import com.github.jowashere.blackclover.entities.spells.light.LightSwordOJEntity
 import com.github.jowashere.blackclover.entities.spells.lightning.ThunderOrbEntity;
 import com.github.jowashere.blackclover.entities.spells.slash.DeathScytheEntity;
 import com.github.jowashere.blackclover.entities.spells.sword.OriginFlashEntity;
-import com.github.jowashere.blackclover.entities.spells.water.WaterBallEntity;
+import com.github.jowashere.blackclover.entities.spells.water.*;
 import com.github.jowashere.blackclover.entities.spells.wind.WindBladeEntity;
 import com.github.jowashere.blackclover.entities.spells.wind.WindCrescentEntity;
 import com.github.jowashere.blackclover.entities.spells.wind.WindHawkEntity;
@@ -39,6 +39,15 @@ public class EntityInit {
 
     //Spells
     public static final RegistryObject<EntityType<WaterBallEntity>> WATER_BALL = ENTITIES.register("water_ball", () -> EntityType.Builder.<WaterBallEntity>of(WaterBallEntity::new, EntityClassification.MISC).setShouldReceiveVelocityUpdates(true).setUpdateInterval(1).setTrackingRange(128).sized(0.4F, 0.2F).build(Main.MODID + ":water_ball"));
+    public static final RegistryObject<EntityType<WaterSpearEntity>> WATER_SPEAR = ENTITIES.register("water_spear", () -> EntityType.Builder.<WaterSpearEntity>of(WaterSpearEntity::new, EntityClassification.MISC).setShouldReceiveVelocityUpdates(true).setUpdateInterval(1).setTrackingRange(128).sized(0.6F, 0.4F).build(Main.MODID + ":water_spear"));
+    public static final RegistryObject<EntityType<WaterDragonEntity>> WATER_DRAGON = ENTITIES.register("water_dragon", () -> EntityType.Builder.<WaterDragonEntity>of(WaterDragonEntity::new, EntityClassification.MISC).setShouldReceiveVelocityUpdates(true).setUpdateInterval(1).setTrackingRange(128).sized(1, 1).build(Main.MODID + ":water_dragon"));
+    public static final RegistryObject<EntityType<WaterShieldEntity>> WATER_SHIELD = ENTITIES.register("water_shield", () -> EntityType.Builder.<WaterShieldEntity>of(WaterShieldEntity::new, EntityClassification.MISC).setShouldReceiveVelocityUpdates(true).setUpdateInterval(1).setTrackingRange(128).sized(1, 1).build(Main.MODID + ":water_shield"));
+    public static final RegistryObject<EntityType<WaterDomeEntity>> WATER_DOME = ENTITIES.register("water_dome", () -> EntityType.Builder.<WaterDomeEntity>of(WaterDomeEntity::new, EntityClassification.MISC).setShouldReceiveVelocityUpdates(true).setUpdateInterval(1).setTrackingRange(128).sized(1, 1).build(Main.MODID + ":water_dome"));
+    public static final RegistryObject<EntityType<PointBlankDragonEntity>> POINT_BLANK_DRAGON = ENTITIES.register("point_blank_dragon", () -> EntityType.Builder.<PointBlankDragonEntity>of(PointBlankDragonEntity::new, EntityClassification.MISC).setShouldReceiveVelocityUpdates(true).setUpdateInterval(1).setTrackingRange(128).sized(1, 1).build(Main.MODID + ":point_blank_dragon"));
+
+
+
+
 
     public static final RegistryObject<EntityType<WindBladeEntity>> WIND_BLADE = ENTITIES.register("wind_blade", () -> EntityType.Builder.<WindBladeEntity>of(WindBladeEntity::new, EntityClassification.MISC).setShouldReceiveVelocityUpdates(true).setUpdateInterval(1).setTrackingRange(128).sized(0.4F, 0.2F).build(Main.MODID + ":wind_blade"));
     public static final RegistryObject<EntityType<WindCrescentEntity>> WIND_CRESCENT = ENTITIES.register("wind_crescent", () -> EntityType.Builder.<WindCrescentEntity>of(WindCrescentEntity::new, EntityClassification.MISC).setShouldReceiveVelocityUpdates(true).setUpdateInterval(1).setTrackingRange(128).sized(3.8F, 0.2F).build(Main.MODID + ":wind_crescent"));

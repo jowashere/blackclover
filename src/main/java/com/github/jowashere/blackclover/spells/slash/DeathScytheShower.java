@@ -38,12 +38,7 @@ public class DeathScytheShower extends AbstractSpell
     {
         if (!caster.level.isClientSide)
         {
-            DeathScytheEntity entity1 = new DeathScytheEntity(caster.level, caster, manaIn);
-            entity1.shootFromRotation(caster, caster.xRot, caster.yRot, 0.0F, 1.8F, 1.0F);
-            entity1.shootFromRotation(caster, caster.xRot, caster.yRot, 0.0F, 1.8F, 1.0F);
-            caster.level.addFreshEntity(entity1);
-            caster.swing(Hand.MAIN_HAND, true);
-            BCMHelper.waitThen(caster.level, 10, () ->
+            BCMHelper.waitThen(caster.level, 0, () ->
             {
                 DeathScytheEntity entity = new DeathScytheEntity(caster.level, caster, manaIn);
                 entity.shootFromRotation(caster, caster.xRot, caster.yRot, 0.0F, 1.8F, 1.0F);
@@ -51,7 +46,7 @@ public class DeathScytheShower extends AbstractSpell
                 caster.level.addFreshEntity(entity);
                 caster.swing(Hand.MAIN_HAND, true);
             });
-            BCMHelper.waitThen(caster.level, 20, () ->
+            BCMHelper.waitThen(caster.level, 10, () ->
             {
                 DeathScytheEntity entity2 = new DeathScytheEntity(caster.level, caster, manaIn);
                 entity2.shootFromRotation(caster, caster.xRot, caster.yRot, 0.0F, 1.8F, 1.0F);
@@ -59,7 +54,7 @@ public class DeathScytheShower extends AbstractSpell
                 caster.level.addFreshEntity(entity2);
                 caster.swing(Hand.MAIN_HAND, true);
             });
-            BCMHelper.waitThen(caster.level, 25, () ->
+            BCMHelper.waitThen(caster.level, 20, () ->
             {
                 DeathScytheEntity entity3 = new DeathScytheEntity(caster.level, caster, manaIn);
                 entity3.shootFromRotation(caster, caster.xRot, caster.yRot, 0.0F, 1.8F, 1.0F);

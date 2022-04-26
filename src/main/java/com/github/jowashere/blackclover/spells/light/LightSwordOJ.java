@@ -39,22 +39,16 @@ public class LightSwordOJ extends AbstractSpell {
             entity.shootFromRotation(caster, caster.xRot, caster.yRot, 0.0F, 3.6F, 1F);
             caster.level.addFreshEntity(entity);
             caster.swing(Hand.MAIN_HAND, true);
-            LightParticleData lightParticleData = new LightParticleData(new Color(255, 255, 255),  0.5);
 
             Vector3d vec3 = caster.getLookAngle();
 
-            IPacket<?>[] packets = new IPacket[7];
             for (int i = 0; i < 7; ++i)
             {
-                packets[i] = new SSpawnParticlePacket(lightParticleData, true, caster.getX() + vec3.x + Math.random(), caster.getY() + vec3.y + 1 + Math.random(), caster.getZ() + vec3.z + Math.random(), 0, 0, 0, 0, 1);
                 for (int j = 0; j < caster.level.players().size(); ++j)
                 {
                     ServerPlayerEntity player = (ServerPlayerEntity) caster.level.players().get(j);
                     BlockPos blockpos = new BlockPos(player.getX(), player.getY(), player.getZ());
-                    if (blockpos.closerThan(new Vector3d(caster.getX(), caster.getY(), caster.getZ()), 512))
-                    {
-                        player.connection.send(packets[i]);
-                    }
+
                 }
             }
         }

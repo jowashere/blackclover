@@ -14,18 +14,19 @@ import net.minecraftforge.fml.common.Mod;
 @Mod.EventBusSubscriber(modid = Main.MODID)
 public class AttributeHandlers {
 
+    public static float stepHeight;
     @SubscribeEvent
     public static void onTick(TickEvent.PlayerTickEvent e)
     {
-        if (!e.player.level.isClientSide)
+        if (e.phase == TickEvent.Phase.END && e.player.tickCount > 0 && e.player.level.isClientSide)
+        {
+            e.player.maxUpStep = stepHeight;
             return;
-
-        if(e.player.getAttribute(ModAttributes.DAMAGE_REDUCTION.get()) == null)
-            return;
-
+        }
+        //TODO make this work
+        stepHeight = e.player.maxUpStep;
         ModifiableAttributeInstance attributeInstance = e.player.getAttribute(ModAttributes.STEP_HEIGHT.get());
         e.player.maxUpStep = (float) attributeInstance.getValue();
-
     }
 
     @SubscribeEvent

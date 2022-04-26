@@ -10,6 +10,7 @@ import com.github.jowashere.blackclover.util.helpers.BCMHelper;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.Attributes;
+import net.minecraft.entity.player.PlayerEntity;
 import net.minecraftforge.common.util.LazyOptional;
 
 import java.util.UUID;
@@ -44,8 +45,12 @@ public class ThunderGodBoots extends AbstractToggleSpell {
         if(!caster.getAttribute(ModAttributes.JUMP_HEIGHT.get()).hasModifier(getThunderJumpModifier(caster)))
             caster.getAttribute(ModAttributes.JUMP_HEIGHT.get()).addTransientModifier(getThunderJumpModifier(caster));
 
-        if(!caster.getAttribute(ModAttributes.STEP_HEIGHT.get()).hasModifier(STEP_HEIGHT))
-            caster.getAttribute(ModAttributes.STEP_HEIGHT.get()).addTransientModifier(STEP_HEIGHT);
+
+
+        caster.getAttribute(ModAttributes.STEP_HEIGHT.get()).addTransientModifier(STEP_HEIGHT);
+
+
+
     }
 
     public void onEnd(LivingEntity playerIn) {
@@ -55,8 +60,9 @@ public class ThunderGodBoots extends AbstractToggleSpell {
         if(playerIn.getAttribute(ModAttributes.JUMP_HEIGHT.get()).hasModifier(getThunderJumpModifier(playerIn)))
             playerIn.getAttribute(ModAttributes.JUMP_HEIGHT.get()).removeModifier(getThunderJumpModifier(playerIn));
 
-        if(playerIn.getAttribute(ModAttributes.STEP_HEIGHT.get()).hasModifier(STEP_HEIGHT))
-            playerIn.getAttribute(ModAttributes.STEP_HEIGHT.get()).removeModifier(STEP_HEIGHT);
+
+        playerIn.getAttribute(ModAttributes.STEP_HEIGHT.get()).removeModifier(STEP_HEIGHT);
+
 
     }
 

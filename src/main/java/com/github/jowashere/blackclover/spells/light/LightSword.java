@@ -21,7 +21,6 @@ import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class LightSword extends AbstractToggleSpell {
-    LightParticleData lightParticleData = new LightParticleData(new Color(255, 255, 0, 1), 0.1);
 
     public LightSword() {
         super("light_sword", AttributeInit.LIGHT);
@@ -48,26 +47,9 @@ public class LightSword extends AbstractToggleSpell {
                 double x = 0.5 * Math.sin(yawRightHandDirection) + caster.getX();
                 double y = caster.getY() + 1.2 ;
                 double z = 0.5 * Math.cos(yawRightHandDirection) + caster.getZ() ;
-                IPacket<?> ipacket = new SSpawnParticlePacket(lightParticleData, true, x + random * Math.sin(yawRightHandDirection) * 0.5, caster.getY() + 0.65 + random, z + random * Math.cos(yawRightHandDirection) * 0.5, 0, 0.1f, 0, 0.01f, 2);
-                IPacket<?> ipacket2 = new SSpawnParticlePacket(lightParticleData, true, x + 0.2 * random * Math.sin(yawRightHandDirection) * 0.5 ,  caster.getY() + 0.7 + random, z + 0.2 * random * Math.cos(yawRightHandDirection) * 0.5, 0, 0.1f, 0, 0.01f, 2);
-                IPacket<?> ipacket3 = new SSpawnParticlePacket(lightParticleData, true, x + 0.3 * random * Math.sin(yawRightHandDirection) * 0.5 ,  caster.getY() + 0.75 + random, z + 3 * random * Math.cos(yawRightHandDirection) * 0.5, 0, 0.1f, 0, 0.01f, 2);
-                IPacket<?> ipacket4 = new SSpawnParticlePacket(lightParticleData, true, x + 0.4 * random * Math.sin(yawRightHandDirection) * 0.5 ,  caster.getY() + 0.8 + random, z + 0.4 * random * Math.cos(yawRightHandDirection) * 0.5, 0, 0.1f, 0, 0.01f, 2);
-                IPacket<?> ipacket5 = new SSpawnParticlePacket(lightParticleData, true, x + 0.5 * random * Math.sin(yawRightHandDirection) * 0.5 ,  caster.getY() + 0.85 + random, z + 0.5 * random * Math.cos(yawRightHandDirection) * 0.5, 0, 0.1f, 0, 0.01f, 2);
 
 
-                for (int j = 0; j < caster.level.players().size(); ++j)
-                {
-                    ServerPlayerEntity player = (ServerPlayerEntity) caster.level.players().get(j);
-                    BlockPos blockpos = new BlockPos(player.getX(), player.getY(), player.getZ());
-                    if (blockpos.closerThan(new Vector3d(caster.getX(), caster.getY(), caster.getZ()), 512))
-                    {
-                        player.connection.send(ipacket);
-                        player.connection.send(ipacket2);
-                        player.connection.send(ipacket3);
-                        player.connection.send(ipacket4);
-                        player.connection.send(ipacket5);
-                    }
-                }
+
             }
         }
     }

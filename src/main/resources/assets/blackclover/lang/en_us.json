@@ -76,6 +76,12 @@
   "description.blackclover.thunder_orb": "Throws a thunder orb",
   "spell.blackclover.thunder_fiend": "Thunder Fiend",
   "description.blackclover.thunder_fiend": "Dash forward, dealing lightning damage",
+  "spell.blkclover.thunder_orb_multi": "Thunder Orb Multi",
+  "description.blackclover.thunder_orb_multi": "Throws three thunder orbs rapidly after each other",
+  "spell.blackclover.thunder_fiend_strike": "Thunder Fiend Strike",
+  "description.blackclover.thunder_fiend_strike": "Dashes forward three times in a row, dealing lightning damage",
+  "spell.blackclover.thunder_discharge": "Thunder Discharge",
+  "description.blackclover.thunder_discharge": "Discharges a huge amount of electricity around you",
 
   "spell.blackclover.dark_cloaked_blade": "Dark Cloaked Blade",
   "description.blackclover.dark_cloaked_blade": "Envelops the sword you're holding in darkness",
@@ -175,6 +181,21 @@
   "item.minecraft.potion.effect.mana_regen": "Mana regen potion",
 
   "effect.blackclover.mana_regen_effect": "Mana regeneration",
-  "item.blackclover.mana_regen_potion": "Mana regeneration potion"
+  "item.blackclover.mana_regen_potion": "Mana regeneration potion",
+
+  "key.blackclover.keybind1": "Spell 1",
+  "key.blackclover.keybind2": "Spell 2",
+  "key.blackclover.keybind3": "Spell 3",
+  "key.blackclover.keybind4": "Spell 4",
+  "key.blackclover.keybind5": "Spell 5",
+  "key.blackclover.keybind6": "Spell 6",
+  "key.blackclover.keybind7": "Spell 7",
+  "key.blackclover.keybind8": "Spell 8",
+  "key.blackclover.keybind9": "Spell 9",
+
+  "key.blackclover.magicmenu": "Magic Menu",
+  "key.blackclover.manaskin": "Mana Skin",
+  "key.blackclover.reinforcement": "Mana reinforcement",
+  "key.blackclover.spellmode": "Spell mode"
 
 }

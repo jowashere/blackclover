@@ -1,7 +1,6 @@
 package com.github.jowashere.blackclover.entities.spells.water;
 
 import com.github.jowashere.blackclover.api.internal.entities.spells.AbstractWaterProjectileEntity;
-import com.github.jowashere.blackclover.entities.spells.wind.WindBladeEntity;
 import com.github.jowashere.blackclover.init.EntityInit;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
@@ -10,19 +9,20 @@ import net.minecraft.network.IPacket;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
-public class WaterBallEntity extends AbstractWaterProjectileEntity
-{
+public class WaterSpearEntity extends AbstractWaterProjectileEntity {
+
     String affiliatedSpell;
 
-    public WaterBallEntity(EntityType<? extends WaterBallEntity> type, World worldIn) {
-        super(type, worldIn);
+    public WaterSpearEntity(EntityType<? extends WaterSpearEntity> type, World worlIn)
+    {
+        super(type, worlIn);
     }
 
-    public WaterBallEntity(World worldIn, LivingEntity throwerIn, String affiliatedSpell, float manaIn) {
-        super(EntityInit.WATER_BALL.get(), throwerIn, worldIn, manaIn);
+    public WaterSpearEntity(World worldIn, LivingEntity throwerIn, String affiliatedSpell, float manaIn) {
+        super(EntityInit.WATER_SPEAR.get(), throwerIn, worldIn, manaIn);
         this.affiliatedSpell = affiliatedSpell;
         this.setDamageTier(1);
-        this.setBaseDamage(10F);
+        this.setBaseDamage(3.5F);
     }
 
     @Override

@@ -20,8 +20,11 @@ import net.minecraft.entity.MobEntity;
 import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.fml.client.registry.IRenderFactory;
 
+@OnlyIn(Dist.CLIENT)
 public class HumanoidRenderer<T extends MobEntity, M extends BipedModel<T>> extends BipedRenderer<T, M> {
 
     protected ResourceLocation texture;
